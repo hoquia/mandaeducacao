@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="2023081920310000-1" author="Ramiro Cardoso">
+        <sql>
+            insert into "app_user" ("activated", "activation_key", "created_by", "created_date", "email", "first_name", "id", "image_url", "lang_key", "last_modified_by", "last_modified_date", "last_name", "login", "password_hash", "reset_date", "reset_key") values (true, 'vr8SGZdwRfOxg5M76X1n', 'anonymousUser', '2023-08-19 19:15:01.080812', 'docente@ravunana.com', NULL, '1', NULL, 'pt-pt', 'admin', '2023-08-19 19:16:45.676676', NULL, 'docente', '$2a$10$WAH8HDJwKuordu.WeLEr6eeH8S1fpS/B1vO.mIXcbOS3aL4NwrY5a', NULL, NULL);
+            insert into "app_user" ("activated", "activation_key", "created_by", "created_date", "email", "first_name", "id", "image_url", "lang_key", "last_modified_by", "last_modified_date", "last_name", "login", "password_hash", "reset_date", "reset_key") values (true, 'GOVpYsgNKUbFgiYnzcXv', 'anonymousUser', '2023-08-19 19:16:02.008351', 'encarregado@ravunana.com', NULL, '3', NULL, 'pt-pt', 'admin', '2023-08-19 19:16:47.533297', NULL, 'encarregado', '$2a$10$PuTxGDd074BjJ9JrFoP4X.NA.pwIS8SB2aA2mOmRxozag74DU1fna', NULL, NULL);
+            insert into "app_user" ("activated", "activation_key", "created_by", "created_date", "email", "first_name", "id", "image_url", "lang_key", "last_modified_by", "last_modified_date", "last_name", "login", "password_hash", "reset_date", "reset_key") values (true, 'qxHy4ad1QDDBF5u9baAM', 'anonymousUser', '2023-08-19 19:16:23.031034', 'director@ravunana.com', NULL, '4', NULL, 'pt-pt', 'admin', '2023-08-19 19:16:48.606837', NULL, 'director', '$2a$10$PkY8sCrG2Py31FMU/AZ7UuUnMOWofMEvpdtQxIjcbOTr7S4xmoXWG', NULL, NULL);
+            insert into "app_user" ("activated", "activation_key", "created_by", "created_date", "email", "first_name", "id", "image_url", "lang_key", "last_modified_by", "last_modified_date", "last_name", "login", "password_hash", "reset_date", "reset_key") values (true, 'fMkD0OoorGFsYU45EWkG', 'anonymousUser', '2023-08-19 19:15:31.56127', 'discente@ravunana.com', NULL, '2', NULL, 'pt-pt', 'longokelo', '2023-09-03 11:42:46.886497', NULL, 'discente', '$2a$10$mMDfy6LxMmxoyLnddKC/LuLJlUQyYPnD/naN7W48C5yshn9AeoSr2', NULL, NULL);
+            insert into "app_user" ("activated", "activation_key", "created_by", "created_date", "email", "first_name", "id", "image_url", "lang_key", "last_modified_by", "last_modified_date", "last_name", "login", "password_hash", "reset_date", "reset_key") values (true, 'cqS0DWVkE9JJuzF4fxHc', 'anonymousUser', '2023-08-19 19:17:36.395617', 'longonkelo@ravunana.com', NULL, '5', NULL, 'pt-pt', 'longokelo', '2023-09-03 11:43:15.607336', NULL, 'longonkelo', '$2a$10$pTzWr4OchCC2WE3tqnzZIexCSXaLgWiDY7zDIExbT.AkoRRcfSjuy', NULL, NULL);
+        </sql>
+
+        <sql>
+            insert into "app_user_authority" ("authority_name", "user_id") values ('ROLE_USER', '1');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('ROLE_USER', '2');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('ROLE_USER', '3');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('ROLE_USER', '4');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('ROLE_USER', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('SUB_DIRECTOR_ADIMNISTRATIVO', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('COORDENAODR_DISCIPLINA', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('RESPONSAVEL_SECRETARIA_ADMINISTRATIVA', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('SECRETARIO_ADMINISTRATIVO', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('RESPONSAVEL_SECRETARIA_PEDAGOGICA', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('SECRETARIO_PEDAGOGICO', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('DIRECTOR_TURMA', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('COORDENADOR_GIVA', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('GERENTE', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('DIRECTOR_GERAL', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('RESPONSAVEL_ASSCOIACAO_ENCARREGADO', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('ESTUDANTE', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('DOCENTE', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('ENCARREGADO', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('COORDENADOR_AREA_FORMACAO', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('ROLE_ADMIN', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('COORDENADOR_CURSO', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('RESPONSAVEL_ASSOCIACAO_ESTUDANTE', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('COORDENADOR_TURNO', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('SUB_DIRECTOR_PEDAGOGICO', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('DELEGADO_TURMA', '5');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('SUB_DIRECTOR_ADIMNISTRATIVO', '4');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('COORDENAODR_DISCIPLINA', '4');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('RESPONSAVEL_SECRETARIA_ADMINISTRATIVA', '4');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('SECRETARIO_ADMINISTRATIVO', '4');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('RESPONSAVEL_SECRETARIA_PEDAGOGICA', '4');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('SECRETARIO_PEDAGOGICO', '4');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('DIRECTOR_TURMA', '4');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('COORDENADOR_GIVA', '4');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('GERENTE', '4');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('DIRECTOR_GERAL', '4');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('RESPONSAVEL_ASSCOIACAO_ENCARREGADO', '4');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('ESTUDANTE', '4');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('DOCENTE', '4');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('ENCARREGADO', '4');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('COORDENADOR_AREA_FORMACAO', '4');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('COORDENADOR_CURSO', '4');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('RESPONSAVEL_ASSOCIACAO_ESTUDANTE', '4');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('COORDENADOR_TURNO', '4');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('SUB_DIRECTOR_PEDAGOGICO', '4');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('DELEGADO_TURMA', '4');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('ENCARREGADO', '3');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('ESTUDANTE', '2');
+            insert into "app_user_authority" ("authority_name", "user_id") values ('DOCENTE', '1');
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

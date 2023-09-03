@@ -1,5 +1,7 @@
 # longonkelo
 
+# (longo = 'ensinar, saber, conhecimento' nkelo = 'fonte' ) - Fonte de conhecimento
+
 This application was generated using JHipster 7.9.3, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v7.9.3](https://www.jhipster.tech/documentation-archive/v7.9.3).
 
 ## Project Structure
@@ -124,7 +126,10 @@ docker-compose -f src/main/docker/jhipster-control-center.yml up
 To build the final jar and optimize the longonkelo application for production, run:
 
 ```
+Com Tests
 ./mvnw -Pprod clean verify
+Sem Tests
+./mvnw package -Pprod -DskipTests
 ```
 
 This will concatenate and minify the client CSS and JavaScript files. It will also modify `index.html` so it references these new files.

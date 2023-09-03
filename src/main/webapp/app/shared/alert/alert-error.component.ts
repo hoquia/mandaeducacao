@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { Component, OnDestroy } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
@@ -19,7 +20,8 @@ export class AlertErrorComponent implements OnDestroy {
   constructor(private alertService: AlertService, private eventManager: EventManager, translateService: TranslateService) {
     this.errorListener = eventManager.subscribe('longonkeloApp.error', (response: EventWithContent<unknown> | string) => {
       const errorResponse = (response as EventWithContent<AlertError>).content;
-      this.addErrorAlert(errorResponse.message, errorResponse.key, errorResponse.params);
+      // eslint-disable-next-line no-console
+      this.addErrorAlert(errorResponse.detail, errorResponse.key, errorResponse.params);
     });
 
     this.httpErrorListener = eventManager.subscribe('longonkeloApp.httpError', (response: EventWithContent<unknown> | string) => {
@@ -75,10 +77,11 @@ export class AlertErrorComponent implements OnDestroy {
           if (httpErrorResponse.error !== '' && httpErrorResponse.error.message) {
             this.addErrorAlert(
               httpErrorResponse.error.detail ?? httpErrorResponse.error.message,
-              httpErrorResponse.error.message,
+              httpErrorResponse.error.detail,
               httpErrorResponse.error.params
             );
           } else {
+            console.log('default else - Erro:', httpErrorResponse.error.detail);
             this.addErrorAlert(httpErrorResponse.error, httpErrorResponse.error);
           }
       }

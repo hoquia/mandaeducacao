@@ -1,12 +1,13 @@
 <div class="row">
-  <div class="col-md-3">
+  <div class="col-md-5">
     <span class="hipster img-fluid rounded"></span>
+    <!-- <img src="../../content/images/Longokelo.png" height="800px" width="1024px" /> -->
   </div>
 
-  <div class="col-md-9">
-    <h1 class="display-4"><span appTranslate="home.title">Bem-vindo, Java Hipster!</span> (Longonkelo)</h1>
+  <div class="col-md-6">
+    <h1 class="display-4"><span appTranslate="home.title">Bem-vindo, Java Hipster!</span></h1>
 
-    <p class="lead" appTranslate="home.subtitle">Esta é a página principal</p>
+    <!-- <p class="lead" appTranslate="home.subtitle">Esta é a página principal</p> -->
 
     <div [ngSwitch]="account !== null">
       <div class="alert alert-success" *ngSwitchCase="true">
@@ -17,20 +18,38 @@
 
       <div class="alert alert-warning" *ngSwitchCase="false">
         <span appTranslate="global.messages.info.authenticated.prefix">Para </span>
-        <a class="alert-link" (click)="login()" appTranslate="global.messages.info.authenticated.link">entrar</a
-        ><span appTranslate="global.messages.info.authenticated.suffix"
-          >, utilize as seguintes contas:<br />- Administrador (utilizador="admin" e palavra-passe="admin") <br />- Utilizador
-          (utilizador="user" e palavra-passe="user").</span
-        >
+        <button class="btn alert-link" (click)="login()">Entrar na instituição</button>
+        <span
+          >, como demostração utilize as seguintes contas:<br />
+          - Director (utilizador="director" e palavra-passe="director") <br />
+          - Docente (utilizador="docente" e palavra-passe="docente") <br />
+          - Encarregado (utilizador="encarregado" e palavra-passe="encarregado") <br />
+          - Estudante (Estudante="estudante" e palavra-passe="estudante"). <br />
+        </span>
       </div>
 
-      <div class="alert alert-warning" *ngSwitchCase="false">
-        <span appTranslate="global.messages.info.register.noaccount">Ainda não tem uma conta?</span>&nbsp;
-        <a class="alert-link" routerLink="account/register" appTranslate="global.messages.info.register.link">Crie uma nova conta</a>
+      <div *ngSwitchCase="false">
+        <h3 appTranslate="global.messages.info.register.noaccount">Ainda não tem uma conta?</h3>
+        &nbsp;
+        <div>
+          <button class="btn btn-lg btn-primary mb-2" routerLink="account/register" [queryParams]="{ tipo: 'R' }">
+            Crie uma nova conta como Pai ou Encarregado de educação
+          </button>
+        </div>
+        <div>
+          <button class="btn btn-lg btn-success mb-2" routerLink="account/register" [queryParams]="{ tipo: 'E' }">
+            Crie uma nova conta como Estudante
+          </button>
+        </div>
+        <div>
+          <button class="btn btn-lg btn-warning mb-2" routerLink="account/register" [queryParams]="{ tipo: 'P' }">
+            Crie uma nova conta como Docente
+          </button>
+        </div>
       </div>
     </div>
 
-    <p appTranslate="home.question">Em caso de dúvida sobre o JHipster:</p>
+    <!-- <p appTranslate="home.question">Em caso de dúvida sobre o JHipster:</p>
 
     <ul>
       <li>
@@ -73,6 +92,6 @@
       <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer" appTranslate="home.github"
         >GitHub</a
       >!
-    </p>
+    </p> -->
   </div>
 </div>

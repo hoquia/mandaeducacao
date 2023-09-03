@@ -1,13 +1,16 @@
 <app-page-ribbon></app-page-ribbon>
+<ngx-loading-bar></ngx-loading-bar>
 
 <div>
   <router-outlet name="navbar"></router-outlet>
 </div>
 
 <div class="container-fluid">
-  <div class="card jh-card">
-    <router-outlet></router-outlet>
+  <div class="m-4">
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 
-  <app-footer></app-footer>
+  <!-- <app-footer></app-footer> -->
 </div>

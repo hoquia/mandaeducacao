@@ -13,9 +13,21 @@ import { SortByDirective } from './sort/sort-by.directive';
 import { SortDirective } from './sort/sort.directive';
 import { ItemCountComponent } from './pagination/item-count.component';
 import { FilterComponent } from './filter/filter.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { LoadingBarHttpClientModule } from '@ngx-loading-bar/http-client';
+import { NgxEchartsModule } from 'ngx-echarts';
+import { ModalModule } from '@developer-partners/ngx-modal-dialog';
 
 @NgModule({
-  imports: [SharedLibsModule],
+  imports: [
+    SharedLibsModule,
+    NgSelectModule,
+    LoadingBarHttpClientModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts'),
+    }),
+    ModalModule,
+  ],
   declarations: [
     FindLanguageFromKeyPipe,
     TranslateDirective,
@@ -44,6 +56,10 @@ import { FilterComponent } from './filter/filter.component';
     SortDirective,
     ItemCountComponent,
     FilterComponent,
+    NgSelectModule,
+    LoadingBarHttpClientModule,
+    NgxEchartsModule,
+    ModalModule,
   ],
 })
 export class SharedModule {}
