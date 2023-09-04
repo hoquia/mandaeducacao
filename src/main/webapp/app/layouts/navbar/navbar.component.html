@@ -1,8 +1,8 @@
-<nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md bg-dark">
+<nav data-cy="navbar" class="navbar navbar-dark navbar-expand-md bg-dark p-4">
   <div class="container-fluid">
     <a class="navbar-brand logo" routerLink="/" (click)="collapseNavbar()">
-      <span class="logo-img"></span>
-      <span appTranslate="global.title" class="navbar-title">Longonkelo</span>
+      <!-- <span class="logo-img"></span> -->
+      <span appTranslate="global.title" class="navbar-title">Longokelo</span>
       <span class="navbar-version">{{ version }}</span>
     </a>
     <a
@@ -19,16 +19,16 @@
     </a>
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="account !== null">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <!-- <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <a class="nav-link" routerLink="/" (click)="collapseNavbar()">
             <span>
               <fa-icon icon="home"></fa-icon>
               <span appTranslate="global.menu.home">Início</span>
             </span>
           </a>
-        </li>
+        </li> -->
         <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-        <li
+        <!-- <li
           *ngSwitchCase="true"
           ngbDropdown
           class="nav-item dropdown pointer"
@@ -42,79 +42,28 @@
               <span appTranslate="global.menu.entities.main">Entidades</span>
             </span>
           </a>
-          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="instituicao-ensino"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.instituicaoEnsino">Instituicao Ensino</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="provedor-notificacao"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.provedorNotificacao">Provedor Notificacao</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="lookup"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.lookup">Lookup</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="lookup-item"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.lookupItem">Lookup Item</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="turno"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.turno">Turno</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="responsavel-turno"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.responsavelTurno">Responsavel Turno</span>
-              </a>
-            </li>
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu"> -->
+
+        <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
+        <!-- </ul>
+        </li> -->
+
+        <!-- Pedagogico -->
+        <li
+          *appHasAnyAuthority="'ROLE_ADMIN'"
+          ngbDropdown
+          class="nav-item dropdown pointer"
+          display="dynamic"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="pedagogico-menu" data-cy="pedagogicoMenu">
+            <span>
+              <fa-icon icon="th-list"></fa-icon>
+              <span>Pedagogico</span>
+            </span>
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="pedagogico-menu">
             <li>
               <a
                 class="dropdown-item"
@@ -125,18 +74,6 @@
               >
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                 <span appTranslate="global.menu.entities.nivelEnsino">Nivel Ensino</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="ano-lectivo"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.anoLectivo">Ano Lectivo</span>
               </a>
             </li>
             <li>
@@ -154,18 +91,6 @@
             <li>
               <a
                 class="dropdown-item"
-                routerLink="responsavel-area-formacao"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.responsavelAreaFormacao">Responsavel Area Formacao</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
                 routerLink="curso"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
@@ -173,18 +98,6 @@
               >
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                 <span appTranslate="global.menu.entities.curso">Curso</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="responsavel-curso"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.responsavelCurso">Responsavel Curso</span>
               </a>
             </li>
             <li>
@@ -199,7 +112,7 @@
                 <span appTranslate="global.menu.entities.classe">Classe</span>
               </a>
             </li>
-            <li>
+            <li *appHasAnyAuthority="'GERENTE'">
               <a
                 class="dropdown-item"
                 routerLink="disciplina"
@@ -214,16 +127,31 @@
             <li>
               <a
                 class="dropdown-item"
-                routerLink="responsavel-disciplina"
+                routerLink="ano-lectivo"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
                 (click)="collapseNavbar()"
               >
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.responsavelDisciplina">Responsavel Disciplina</span>
+                <span appTranslate="global.menu.entities.anoLectivo">Ano Lectivo</span>
               </a>
             </li>
-            <li>
+
+            <hr />
+
+            <li *appHasAnyAuthority="'GERENTE'">
+              <a
+                class="dropdown-item"
+                routerLink="medida-disciplinar"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.medidaDisciplinar">Medida Disciplinar</span>
+              </a>
+            </li>
+            <li *appHasAnyAuthority="'GERENTE'">
               <a
                 class="dropdown-item"
                 routerLink="docente"
@@ -235,7 +163,7 @@
                 <span appTranslate="global.menu.entities.docente">Docente</span>
               </a>
             </li>
-            <li>
+            <!-- <li>
               <a
                 class="dropdown-item"
                 routerLink="formacao-docente"
@@ -246,7 +174,293 @@
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                 <span appTranslate="global.menu.entities.formacaoDocente">Formacao Docente</span>
               </a>
+            </li> -->
+
+            <li *appHasAnyAuthority="'GERENTE'">
+              <a
+                class="dropdown-item"
+                routerLink="periodo-lancamento-nota"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.periodoLancamentoNota">Periodo Lancamento Nota</span>
+              </a>
             </li>
+
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="disciplina-curricular"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.disciplinaCurricular">Disciplina Curricular</span>
+              </a>
+            </li>
+
+            <!-- <li *appHasAnyAuthority="'GERENTE'">
+              <a
+                class="dropdown-item"
+                routerLink="situacao-disciplina-curricular"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.situacaoDisciplinaCurricular">Situacao Disciplina Curricular</span>
+              </a>
+            </li> -->
+            <!-- <li *appHasAnyAuthority="'GERENTE'">
+              <a
+                class="dropdown-item"
+                routerLink="cargo"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.cargo">Cargo</span>
+              </a>
+            </li> -->
+
+            <hr />
+
+            <li *appHasAnyAuthority="'GERENTE'">
+              <a
+                class="dropdown-item"
+                routerLink="periodo-horario"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.periodoHorario">Periodo Horario</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="plano-curricular"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.planoCurricular">Plano Curricular</span>
+              </a>
+            </li>
+            <!-- <li>
+              <a
+                class="dropdown-item"
+                routerLink="cargo-docente"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.cargoDocente">Cargo Docente</span>
+              </a>
+            </li> -->
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="turma"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.turma">Turma</span>
+              </a>
+            </li>
+            <li *appHasAnyAuthority="'GERENTE'">
+              <a
+                class="dropdown-item"
+                routerLink="horario"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.horario">Horario</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Tesouraria -->
+        <li
+          *appHasAnyAuthority="'ROLE_ADMIN'"
+          ngbDropdown
+          class="nav-item dropdown pointer"
+          display="dynamic"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="tesouraria-menu" data-cy="tesourariaMenu">
+            <span>
+              <fa-icon icon="th-list"></fa-icon>
+              <span>Tesouraria</span>
+            </span>
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="tesouraria-menu">
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="conta"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.conta">Conta</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="categoria-emolumento"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.categoriaEmolumento">Categoria Emolumento</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="emolumento"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.emolumento">Emolumento</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="plano-multa"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.planoMulta">Plano Multa</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="meio-pagamento"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.meioPagamento">Meio Pagamento</span>
+              </a>
+            </li>
+            <hr />
+            <!-- <li>
+              <a
+                class="dropdown-item"
+                routerLink="emolumento-turma"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.emolumentoTurma">Emolumento Turma</span>
+              </a>
+            </li> -->
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="transacao"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.transacao">Transacao</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="factura"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.factura">Factura</span>
+              </a>
+            </li>
+            <li *appHasAnyAuthority="'GERENTE'">
+              <a
+                class="dropdown-item"
+                routerLink="transferencia-saldo"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.transferenciaSaldo">Transferencia Saldo</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Secretaria -->
+        <li
+          *appHasAnyAuthority="'ROLE_ADMIN'"
+          ngbDropdown
+          class="nav-item dropdown pointer"
+          display="dynamic"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="secretaria-menu" data-cy="secretariaMenu">
+            <span>
+              <fa-icon icon="th-list"></fa-icon>
+              <span>Secretaria</span>
+            </span>
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="secretari-menu">
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="plano-desconto"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.planoDesconto">Plano Desconto</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="categoria-ocorrencia"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.categoriaOcorrencia">Categoria Ocorrencia</span>
+              </a>
+            </li>
+            <hr />
             <li>
               <a
                 class="dropdown-item"
@@ -271,7 +485,7 @@
                 <span appTranslate="global.menu.entities.discente">Discente</span>
               </a>
             </li>
-            <li>
+            <!-- <li>
               <a
                 class="dropdown-item"
                 routerLink="anexo-discente"
@@ -282,8 +496,8 @@
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                 <span appTranslate="global.menu.entities.anexoDiscente">Anexo Discente</span>
               </a>
-            </li>
-            <li>
+            </li> -->
+            <!-- <li>
               <a
                 class="dropdown-item"
                 routerLink="endereco-discente"
@@ -294,128 +508,9 @@
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                 <span appTranslate="global.menu.entities.enderecoDiscente">Endereco Discente</span>
               </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="plano-curricular"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.planoCurricular">Plano Curricular</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="disciplina-curricular"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.disciplinaCurricular">Disciplina Curricular</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="estado-disciplina-curricular"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.estadoDisciplinaCurricular">Estado Disciplina Curricular</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="periodo-horario"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.periodoHorario">Periodo Horario</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="turma"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.turma">Turma</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="responsavel-turma"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.responsavelTurma">Responsavel Turma</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="horario"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.horario">Horario</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="plano-aula"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.planoAula">Plano Aula</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="detalhe-plano-aula"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.detalhePlanoAula">Detalhe Plano Aula</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="licao"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.licao">Licao</span>
-              </a>
-            </li>
-            <li>
+            </li> -->
+
+            <!-- <li>
               <a
                 class="dropdown-item"
                 routerLink="historico-saude"
@@ -425,6 +520,19 @@
               >
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                 <span appTranslate="global.menu.entities.historicoSaude">Historico Saude</span>
+              </a>
+            </li> -->
+            <hr />
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="matricula"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.matricula">Matricula</span>
               </a>
             </li>
             <li>
@@ -442,18 +550,6 @@
             <li>
               <a
                 class="dropdown-item"
-                routerLink="matricula"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.matricula">Matricula</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
                 routerLink="transferencia-turma"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
@@ -463,30 +559,7 @@
                 <span appTranslate="global.menu.entities.transferenciaTurma">Transferencia Turma</span>
               </a>
             </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="medida-disciplinar"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.medidaDisciplinar">Medida Disciplinar</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="categoria-ocorrencia"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.categoriaOcorrencia">Categoria Ocorrencia</span>
-              </a>
-            </li>
+            <hr />
             <li>
               <a
                 class="dropdown-item"
@@ -499,42 +572,25 @@
                 <span appTranslate="global.menu.entities.ocorrencia">Ocorrencia</span>
               </a>
             </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="periodo-lancamento-nota"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.periodoLancamentoNota">Periodo Lancamento Nota</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="notas-periodica-disciplina"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.notasPeriodicaDisciplina">Notas Periodica Disciplina</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="notas-geral-disciplina"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.notasGeralDisciplina">Notas Geral Disciplina</span>
-              </a>
-            </li>
+          </ul>
+        </li>
+
+        <!-- Coordenacao -->
+        <li
+          *appHasAnyAuthority="'GERENTE'"
+          ngbDropdown
+          class="nav-item dropdown pointer"
+          display="dynamic"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="coordenacao-menu" data-cy="coordenacaoMenu">
+            <span>
+              <fa-icon icon="th-list"></fa-icon>
+              <span>Coordenação</span>
+            </span>
+          </a>
+          <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="coordenacao-menu">
             <li>
               <a
                 class="dropdown-item"
@@ -571,6 +627,70 @@
                 <span appTranslate="global.menu.entities.naturezaTrabalho">Natureza Trabalho</span>
               </a>
             </li>
+            <hr />
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="plano-aula"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.planoAula">Plano Aula</span>
+              </a>
+            </li>
+            <!-- <li>
+              <a
+                class="dropdown-item"
+                routerLink="detalhe-plano-aula"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.detalhePlanoAula">Detalhe Plano Aula</span>
+              </a>
+            </li> -->
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="licao"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.licao">Licao</span>
+              </a>
+            </li>
+
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="notas-periodica-disciplina"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.notasPeriodicaDisciplina">Nota Periodica Disciplina</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="notas-geral-disciplina"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.notasGeralDisciplina">Notas Geral Disciplina</span>
+              </a>
+            </li>
+            <hr />
+
             <li>
               <a
                 class="dropdown-item"
@@ -595,237 +715,9 @@
                 <span appTranslate="global.menu.entities.resumoAcademico">Resumo Academico</span>
               </a>
             </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="documento-comercial"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.documentoComercial">Documento Comercial</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="serie-documento"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.serieDocumento">Serie Documento</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="sequencia-documento"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.sequenciaDocumento">Sequencia Documento</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="conta"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.conta">Conta</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="plano-multa"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.planoMulta">Plano Multa</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="categoria-emolumento"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.categoriaEmolumento">Categoria Emolumento</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="imposto"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.imposto">Imposto</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="emolumento"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.emolumento">Emolumento</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="preco-emolumento"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.precoEmolumento">Preco Emolumento</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="plano-desconto"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.planoDesconto">Plano Desconto</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="meio-pagamento"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.meioPagamento">Meio Pagamento</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="transacao"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.transacao">Transacao</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="factura"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.factura">Factura</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="item-factura"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.itemFactura">Item Factura</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="resumo-imposto-factura"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.resumoImpostoFactura">Resumo Imposto Factura</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="recibo"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.recibo">Recibo</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="aplicacao-recibo"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.aplicacaoRecibo">Aplicacao Recibo</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="transferencia-saldo"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.transferenciaSaldo">Transferencia Saldo</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="longonkelo-historico"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.longonkeloHistorico">Longonkelo Historico</span>
-              </a>
-            </li>
-            <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
           </ul>
         </li>
+
         <li
           *appHasAnyAuthority="'ROLE_ADMIN'"
           ngbDropdown
@@ -884,6 +776,67 @@
               </a>
             </li>
             <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
+            <hr />
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="instituicao-ensino"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.instituicaoEnsino">Instituicao Ensino</span>
+              </a>
+            </li>
+            <!-- <li>
+              <a
+                class="dropdown-item"
+                routerLink="user-info"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.userInfo">User Info</span>
+              </a>
+            </li> -->
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="lookup"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.lookup">Lookup</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="lookup-item"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.lookupItem">Lookup Item</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="longonkelo-historico"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.longonkeloHistorico">Longonkelo Historico</span>
+              </a>
+            </li>
           </ul>
         </li>
         <li ngbDropdown class="nav-item dropdown pointer" display="dynamic" *ngIf="languages && languages.length > 1">
@@ -905,7 +858,9 @@
             </li>
           </ul>
         </li>
+
         <li
+          *ngSwitchCase="true"
           ngbDropdown
           class="nav-item dropdown pointer"
           display="dynamic"
