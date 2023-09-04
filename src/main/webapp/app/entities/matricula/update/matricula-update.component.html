@@ -30,49 +30,43 @@
 
         <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.matricula.referencia" for="field_referencia">Referencia</label>
-          <select
-            class="form-control"
+          <ng-select
             id="field_referencia"
             data-cy="referencia"
             name="referencia"
             formControlName="referencia"
             [compareWith]="compareMatricula"
           >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="matriculaOption" *ngFor="let matriculaOption of matriculasSharedCollection">{{ matriculaOption.id }}</option>
-          </select>
+            <ng-option [value]="null"></ng-option>
+            <ng-option [value]="matriculaOption" *ngFor="let matriculaOption of matriculasSharedCollection">{{
+              matriculaOption.id
+            }}</ng-option>
+          </ng-select>
         </div>
 
         <div class="mb-3">
           <label appTranslate="longonkeloApp.matricula.categoriasMatriculas" for="field_categoriasMatriculas">Categorias Matriculas</label>
-          <select
-            class="form-control"
+          <ng-select
             id="field_categoriasMatriculas"
             data-cy="categoriasMatriculas"
-            multiple
             name="categoriasMatriculas"
             formControlName="categoriasMatriculas"
             [compareWith]="comparePlanoDesconto"
           >
-            <option [ngValue]="planoDescontoOption" *ngFor="let planoDescontoOption of planoDescontosSharedCollection">
+            <option [value]="planoDescontoOption" *ngFor="let planoDescontoOption of planoDescontosSharedCollection">
               {{ planoDescontoOption.nome }}
             </option>
-          </select>
+          </ng-select>
         </div>
 
         <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.matricula.discente" for="field_discente">Discente</label>
-          <select
-            class="form-control"
-            id="field_discente"
-            data-cy="discente"
-            name="discente"
-            formControlName="discente"
-            [compareWith]="compareDiscente"
-          >
-            <option *ngIf="editForm.get(['discente'])!.value == null" [ngValue]="null" selected></option>
-            <option [ngValue]="discenteOption" *ngFor="let discenteOption of discentesSharedCollection">{{ discenteOption.nome }}</option>
-          </select>
+          <ng-select id="field_discente" data-cy="discente" name="discente" formControlName="discente" [compareWith]="compareDiscente">
+            <ng-option *ngIf="editForm.get(['discente'])!.value == null" [value]="null" selected></ng-option>
+            <ng-option [value]="discenteOption" *ngFor="let discenteOption of discentesSharedCollection">{{
+              discenteOption.nome
+            }}</ng-option>
+          </ng-select>
         </div>
         <div *ngIf="editForm.get(['discente'])!.invalid && (editForm.get(['discente'])!.dirty || editForm.get(['discente'])!.touched)">
           <small
@@ -319,12 +313,12 @@
 
         <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.matricula.estado" for="field_estado">Estado</label>
-          <select class="form-control" name="estado" formControlName="estado" id="field_estado" data-cy="estado">
+          <ng-select name="estado" formControlName="estado" id="field_estado" data-cy="estado">
             <option [ngValue]="null">{{ 'longonkeloApp.EstadoAcademico.null' | translate }}</option>
             <option *ngFor="let estadoAcademico of estadoAcademicoValues" [value]="estadoAcademico">
               {{ 'longonkeloApp.EstadoAcademico.' + estadoAcademico | translate }}
             </option>
-          </select>
+          </ng-select>
           <div *ngIf="editForm.get('estado')!.invalid && (editForm.get('estado')!.dirty || editForm.get('estado')!.touched)">
             <small class="form-text text-danger" *ngIf="editForm.get('estado')?.errors?.required" appTranslate="entity.validation.required">
               O campo é obrigatório.

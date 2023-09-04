@@ -18,11 +18,51 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.lookupItem.codigo" for="field_codigo">Codigo</label>
-          <input type="text" class="form-control" name="codigo" id="field_codigo" data-cy="codigo" formControlName="codigo" />
+          <div class="col-md-3 col-sm-12">
+            <label class="form-label" appTranslate="longonkeloApp.lookupItem.codigo" for="field_codigo">Codigo</label>
+            <input type="text" class="form-control" name="codigo" id="field_codigo" data-cy="codigo" formControlName="codigo" />
+          </div>
+
+          <div class="col-md-3 col-sm-12">
+            <label class="form-label" appTranslate="longonkeloApp.lookupItem.lookup" for="field_lookup">Lookup</label>
+            <select
+              class="form-control"
+              id="field_lookup"
+              data-cy="lookup"
+              name="lookup"
+              formControlName="lookup"
+              [compareWith]="compareLookup"
+            >
+              <option *ngIf="editForm.get(['lookup'])!.value == null" [ngValue]="null" selected></option>
+              <option [ngValue]="lookupOption" *ngFor="let lookupOption of lookupsSharedCollection">{{ lookupOption.nome }}</option>
+            </select>
+          </div>
+          <div *ngIf="editForm.get(['lookup'])!.invalid && (editForm.get(['lookup'])!.dirty || editForm.get(['lookup'])!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get(['lookup'])?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+
+          <div class="col-md-3 col-sm-12">
+            <label class="form-label" appTranslate="longonkeloApp.lookupItem.descricao" for="field_descricao">Descricao</label>
+            <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
+            <div *ngIf="editForm.get('descricao')!.invalid && (editForm.get('descricao')!.dirty || editForm.get('descricao')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('descricao')?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                O campo é obrigatório.
+              </small>
+            </div>
+          </div>
         </div>
 
-        <div class="row mb-3">
+        <div class="col-md-5 col-sm-12 mb-3">
           <label class="form-label" appTranslate="longonkeloApp.lookupItem.ordem" for="field_ordem">Ordem</label>
           <input type="number" class="form-control" name="ordem" id="field_ordem" data-cy="ordem" formControlName="ordem" />
           <div *ngIf="editForm.get('ordem')!.invalid && (editForm.get('ordem')!.dirty || editForm.get('ordem')!.touched)">
@@ -40,43 +80,16 @@
           </div>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.lookupItem.isSistema" for="field_isSistema">Is Sistema</label>
-          <input type="checkbox" class="form-check" name="isSistema" id="field_isSistema" data-cy="isSistema" formControlName="isSistema" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.lookupItem.descricao" for="field_descricao">Descricao</label>
-          <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
-          <div *ngIf="editForm.get('descricao')!.invalid && (editForm.get('descricao')!.dirty || editForm.get('descricao')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('descricao')?.errors?.required"
-              appTranslate="entity.validation.required"
-            >
-              O campo é obrigatório.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.lookupItem.lookup" for="field_lookup">Lookup</label>
-          <select
-            class="form-control"
-            id="field_lookup"
-            data-cy="lookup"
-            name="lookup"
-            formControlName="lookup"
-            [compareWith]="compareLookup"
-          >
-            <option *ngIf="editForm.get(['lookup'])!.value == null" [ngValue]="null" selected></option>
-            <option [ngValue]="lookupOption" *ngFor="let lookupOption of lookupsSharedCollection">{{ lookupOption.nome }}</option>
-          </select>
-        </div>
-        <div *ngIf="editForm.get(['lookup'])!.invalid && (editForm.get(['lookup'])!.dirty || editForm.get(['lookup'])!.touched)">
-          <small class="form-text text-danger" *ngIf="editForm.get(['lookup'])?.errors?.required" appTranslate="entity.validation.required">
-            O campo é obrigatório.
-          </small>
+        <div class="mb-3">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="isSistema"
+            id="field_isSistema"
+            data-cy="isSistema"
+            formControlName="isSistema"
+          />
+          <span class="form-check-label" appTranslate="longonkeloApp.lookup.isSistema" for="field_isSistema">Is Sistema</span>
         </div>
       </div>
 

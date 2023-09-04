@@ -14,45 +14,57 @@
         </div>
 
         <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.lookup.codigo" for="field_codigo">Codigo</label>
-          <input type="text" class="form-control" name="codigo" id="field_codigo" data-cy="codigo" formControlName="codigo" />
-          <div *ngIf="editForm.get('codigo')!.invalid && (editForm.get('codigo')!.dirty || editForm.get('codigo')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('codigo')?.errors?.required" appTranslate="entity.validation.required">
-              O campo é obrigatório.
-            </small>
+          <div class="col-md-4 col-sm-12">
+            <label class="form-label" appTranslate="longonkeloApp.lookup.codigo" for="field_codigo">Codigo</label>
+            <input type="text" class="form-control" name="codigo" id="field_codigo" data-cy="codigo" formControlName="codigo" />
+            <div *ngIf="editForm.get('codigo')!.invalid && (editForm.get('codigo')!.dirty || editForm.get('codigo')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('codigo')?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                O campo é obrigatório.
+              </small>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-12">
+            <label class="form-label" appTranslate="longonkeloApp.lookup.nome" for="field_nome">Nome</label>
+            <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
+            <div *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)">
+              <small class="form-text text-danger" *ngIf="editForm.get('nome')?.errors?.required" appTranslate="entity.validation.required">
+                O campo é obrigatório.
+              </small>
+            </div>
           </div>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.lookup.nome" for="field_nome">Nome</label>
-          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
-          <div *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('nome')?.errors?.required" appTranslate="entity.validation.required">
-              O campo é obrigatório.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
+        <div class="col-md-6 col-sm-12 mb-3">
           <label class="form-label" appTranslate="longonkeloApp.lookup.descricao" for="field_descricao">Descricao</label>
           <textarea class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao"></textarea>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.lookup.isSistema" for="field_isSistema">Is Sistema</label>
-          <input type="checkbox" class="form-check" name="isSistema" id="field_isSistema" data-cy="isSistema" formControlName="isSistema" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.lookup.isModificavel" for="field_isModificavel">Is Modificavel</label>
+        <div class="mb-3">
           <input
             type="checkbox"
-            class="form-check"
+            class="form-check-input"
+            name="isSistema"
+            id="field_isSistema"
+            data-cy="isSistema"
+            formControlName="isSistema"
+          />
+          <span class="form-check-label" appTranslate="longonkeloApp.lookup.isSistema" for="field_isSistema">Is Sistema</span>
+        </div>
+
+        <div class="mb-3">
+          <input
+            type="checkbox"
+            class="form-check-input"
             name="isModificavel"
             id="field_isModificavel"
             data-cy="isModificavel"
             formControlName="isModificavel"
           />
+          <span class="form-check-label" appTranslate="longonkeloApp.lookup.isModificavel" for="field_isModificavel">Is Modificavel</span>
         </div>
       </div>
 
