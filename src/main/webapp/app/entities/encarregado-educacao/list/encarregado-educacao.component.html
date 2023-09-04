@@ -34,12 +34,12 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="fotografia">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.encarregadoEducacao.fotografia">Fotografia</span>
@@ -52,12 +52,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="nascimento">
+          <!-- <th scope="col" appSortBy="nascimento">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.encarregadoEducacao.nascimento">Nascimento</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="nif">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.encarregadoEducacao.nif">Nif</span>
@@ -70,18 +70,24 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="documentoNumero">
+          <!-- <th scope="col" appSortBy="nacionalidade">
             <div class="d-flex">
-              <span appTranslate="longonkeloApp.encarregadoEducacao.documentoNumero">Documento Numero</span>
+              <span appTranslate="longonkeloApp.encarregadoEducacao.nacionalidade">Nacionalidade</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" appSortBy="naturalidade">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.encarregadoEducacao.naturalidade">Naturalidade</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th> -->
           <th scope="col" appSortBy="telefonePrincipal">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.encarregadoEducacao.telefonePrincipal">Telefone Principal</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+            <!-- </th>
           <th scope="col" appSortBy="telefoneAlternativo">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.encarregadoEducacao.telefoneAlternativo">Telefone Alternativo</span>
@@ -111,45 +117,41 @@
               <span appTranslate="longonkeloApp.encarregadoEducacao.rendaMensal">Renda Mensal</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
+          </th> -->
+          </th>
+
+          <th scope="col" appSortBy="grauParentesco">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.encarregadoEducacao.grauParentesco">Grau Parentesco</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <!-- <th scope="col" appSortBy="profissao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.encarregadoEducacao.profissao">Profissao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="cargoOcupacional">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.encarregadoEducacao.cargoOcupacional">Cargo Ocupacional</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
           </th>
           <th scope="col" appSortBy="empresaTrabalho">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.encarregadoEducacao.empresaTrabalho">Empresa Trabalho</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="hash">
-            <div class="d-flex">
-              <span appTranslate="longonkeloApp.encarregadoEducacao.hash">Hash</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" appSortBy="grauParentesco.descricao">
-            <div class="d-flex">
-              <span appTranslate="longonkeloApp.encarregadoEducacao.grauParentesco">Grau Parentesco</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" appSortBy="tipoDocumento.descricao">
-            <div class="d-flex">
-              <span appTranslate="longonkeloApp.encarregadoEducacao.tipoDocumento">Tipo Documento</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" appSortBy="profissao.descricao">
-            <div class="d-flex">
-              <span appTranslate="longonkeloApp.encarregadoEducacao.profissao">Profissao</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
+          </th> -->
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let encarregadoEducacao of encarregadoEducacaos; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/encarregado-educacao', encarregadoEducacao.id, 'view']">{{ encarregadoEducacao.id }}</a>
-          </td>
+          </td> -->
           <td>
             <a
               *ngIf="encarregadoEducacao.fotografia"
@@ -161,45 +163,30 @@
                 alt="encarregadoEducacao image"
               />
             </a>
-            <span *ngIf="encarregadoEducacao.fotografia"
-              >{{ encarregadoEducacao.fotografiaContentType }}, {{ byteSize(encarregadoEducacao.fotografia) }}</span
-            >
+            <!-- <span *ngIf="encarregadoEducacao.fotografia"
+              >{{ encarregadoEducacao.fotografiaContentType }}, {{ byteSize(encarregadoEducacao.fotografia) }}</span -->
           </td>
           <td>{{ encarregadoEducacao.nome }}</td>
-          <td>{{ encarregadoEducacao.nascimento | formatMediumDate }}</td>
+          <!-- <td>{{ encarregadoEducacao.nascimento | formatMediumDate }}</td> -->
           <td>{{ encarregadoEducacao.nif }}</td>
-          <td appTranslate="{{ 'longonkeloApp.Sexo.' + encarregadoEducacao.sexo }}">{{ encarregadoEducacao.sexo }}</td>
-          <td>{{ encarregadoEducacao.documentoNumero }}</td>
+          <td>{{ encarregadoEducacao.sexo }}</td>
+          <!-- <td>{{ encarregadoEducacao.nacionalidade }}</td>
+          <td>{{ encarregadoEducacao.naturalidade }}</td> -->
           <td>{{ encarregadoEducacao.telefonePrincipal }}</td>
-          <td>{{ encarregadoEducacao.telefoneAlternativo }}</td>
+          <!-- <td>{{ encarregadoEducacao.telefoneAlternativo }}</td>
           <td>{{ encarregadoEducacao.email }}</td>
           <td>{{ encarregadoEducacao.residencia }}</td>
           <td>{{ encarregadoEducacao.enderecoTrabalho }}</td>
-          <td>{{ encarregadoEducacao.rendaMensal }}</td>
-          <td>{{ encarregadoEducacao.empresaTrabalho }}</td>
-          <td>{{ encarregadoEducacao.hash }}</td>
-          <td>
-            <div *ngIf="encarregadoEducacao.grauParentesco">
-              <a [routerLink]="['/lookup-item', encarregadoEducacao.grauParentesco.id, 'view']">{{
-                encarregadoEducacao.grauParentesco.descricao
-              }}</a>
-            </div>
+          <td>{{ encarregadoEducacao.rendaMensal }}</td> -->
+          <td appTranslate="{{ 'longonkeloApp.GrauParentesco.' + encarregadoEducacao.grauParentesco }}">
+            {{ encarregadoEducacao.grauParentesco }}
           </td>
-          <td>
-            <div *ngIf="encarregadoEducacao.tipoDocumento">
-              <a [routerLink]="['/lookup-item', encarregadoEducacao.tipoDocumento.id, 'view']">{{
-                encarregadoEducacao.tipoDocumento.descricao
-              }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="encarregadoEducacao.profissao">
-              <a [routerLink]="['/lookup-item', encarregadoEducacao.profissao.id, 'view']">{{ encarregadoEducacao.profissao.descricao }}</a>
-            </div>
-          </td>
+          <!-- <td>{{ encarregadoEducacao.profissao }}</td>
+          <td>{{ encarregadoEducacao.cargoOcupacional }}</td>
+          <td>{{ encarregadoEducacao.empresaTrabalho }}</td> -->
           <td class="text-end">
             <div class="btn-group">
-              <button
+              <!-- <button
                 type="submit"
                 [routerLink]="['/discente']"
                 [queryParams]="{ 'filter[encarregadoEducacaoId.in]': encarregadoEducacao.id }"
@@ -217,7 +204,7 @@
               <button
                 type="submit"
                 [routerLink]="['/matricula']"
-                [queryParams]="{ 'filter[responsavelFinanceiroId.in]': encarregadoEducacao.id }"
+                [queryParams]="{ 'filter[encarregadoEducacaoId.in]': encarregadoEducacao.id }"
                 class="btn btn-info btn-sm"
                 data-cy="filterOtherEntityButton"
               >
@@ -228,7 +215,7 @@
                   [translateValues]="{ otherEntity: ('longonkeloApp.encarregadoEducacao.matricula' | translate) }"
                   >Show Matricula</span
                 >
-              </button>
+              </button> -->
               <button
                 type="submit"
                 [routerLink]="['/encarregado-educacao', encarregadoEducacao.id, 'view']"

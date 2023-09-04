@@ -43,12 +43,16 @@
         </dd>
         <dt><span appTranslate="longonkeloApp.encarregadoEducacao.sexo">Sexo</span></dt>
         <dd>
-          <span appTranslate="{{ 'longonkeloApp.Sexo.' + encarregadoEducacao.sexo }}">{{ encarregadoEducacao.sexo }}</span>
+          <span>{{ encarregadoEducacao.sexo }}</span>
         </dd>
-        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.documentoNumero">Documento Numero</span></dt>
+        <!-- <dt><span appTranslate="longonkeloApp.encarregadoEducacao.nacionalidade">Nacionalidade</span></dt>
         <dd>
-          <span>{{ encarregadoEducacao.documentoNumero }}</span>
+          <span>{{ encarregadoEducacao.nacionalidade }}</span>
         </dd>
+        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.naturalidade">Naturalidade</span></dt>
+        <dd>
+          <span>{{ encarregadoEducacao.naturalidade }}</span>
+        </dd> -->
         <dt><span appTranslate="longonkeloApp.encarregadoEducacao.telefonePrincipal">Telefone Principal</span></dt>
         <dd>
           <span>{{ encarregadoEducacao.telefonePrincipal }}</span>
@@ -73,35 +77,23 @@
         <dd>
           <span>{{ encarregadoEducacao.rendaMensal }}</span>
         </dd>
-        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.empresaTrabalho">Empresa Trabalho</span></dt>
-        <dd>
-          <span>{{ encarregadoEducacao.empresaTrabalho }}</span>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.hash">Hash</span></dt>
-        <dd>
-          <span>{{ encarregadoEducacao.hash }}</span>
-        </dd>
         <dt><span appTranslate="longonkeloApp.encarregadoEducacao.grauParentesco">Grau Parentesco</span></dt>
         <dd>
-          <div *ngIf="encarregadoEducacao.grauParentesco">
-            <a [routerLink]="['/lookup-item', encarregadoEducacao.grauParentesco.id, 'view']">{{
-              encarregadoEducacao.grauParentesco.descricao
-            }}</a>
-          </div>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.tipoDocumento">Tipo Documento</span></dt>
-        <dd>
-          <div *ngIf="encarregadoEducacao.tipoDocumento">
-            <a [routerLink]="['/lookup-item', encarregadoEducacao.tipoDocumento.id, 'view']">{{
-              encarregadoEducacao.tipoDocumento.descricao
-            }}</a>
-          </div>
+          <span appTranslate="{{ 'longonkeloApp.GrauParentesco.' + encarregadoEducacao.grauParentesco }}">{{
+            encarregadoEducacao.grauParentesco
+          }}</span>
         </dd>
         <dt><span appTranslate="longonkeloApp.encarregadoEducacao.profissao">Profissao</span></dt>
         <dd>
-          <div *ngIf="encarregadoEducacao.profissao">
-            <a [routerLink]="['/lookup-item', encarregadoEducacao.profissao.id, 'view']">{{ encarregadoEducacao.profissao.descricao }}</a>
-          </div>
+          <span>{{ encarregadoEducacao.profissao }}</span>
+        </dd>
+        <!-- <dt><span appTranslate="longonkeloApp.encarregadoEducacao.cargoOcupacional">Cargo Ocupacional</span></dt>
+        <dd>
+          <span>{{ encarregadoEducacao.cargoOcupacional }}</span>
+        </dd> -->
+        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.empresaTrabalho">Empresa Trabalho</span></dt>
+        <dd>
+          <span>{{ encarregadoEducacao.empresaTrabalho }}</span>
         </dd>
       </dl>
 
