@@ -26,6 +26,16 @@
 
   <app-filter [filters]="filters"></app-filter>
 
+  <div class="row mb-4">
+    <!-- <input
+      class="form-control"
+      placeholder="Número do processo do discente"
+      #tagVal
+      type="search"
+      (change)="searchMatricula(tagVal.value)"
+    /> -->
+  </div>
+
   <div class="alert alert-warning" id="no-result" *ngIf="matriculas?.length === 0">
     <span appTranslate="longonkeloApp.matricula.home.notFound">Nenhum Matriculas encontrado</span>
   </div>
@@ -34,7 +44,7 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -52,9 +62,51 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="numeroMatricula">
+          <th scope="col" appSortBy="isPago">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.isPago">Is Pago</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="user">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.user">User</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th> -->
+          <!-- <th scope="col" appSortBy="numeroMatricula">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.matricula.numeroMatricula">Numero Matricula</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th> -->
+          <!-- <th scope="col" appSortBy="encarregadoEducacao.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.encarregadoEducacao">Encarregado Educacao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th> -->
+          <th scope="col" appSortBy="numeroProcesso">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.numeroProcesso">Numero Processo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="discente.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.discente">Discente</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="categoriaMatricula.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.categoriaMatricula">Categoria Matricula</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="turma.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.turma">Turma</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -64,21 +116,63 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <!-- <th scope="col" appSortBy="dataAssinatura">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.dataAssinatura">Data Assinatura</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th> -->
+          <!-- <th scope="col" appSortBy="inicioVigencia">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.inicioVigencia">Inicio Vigencia</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="fimVigencia">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.fimVigencia">Fim Vigencia</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th> -->
           <th scope="col" appSortBy="estado">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.matricula.estado">Estado</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="timestamp">
+          <!-- <th scope="col" appSortBy="timestamp">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.matricula.timestamp">Timestamp</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="dataIngresso">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.dataIngresso">Data Ingresso</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="utilizador">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.utilizador">Utilizador</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
           <th scope="col" appSortBy="descricao">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.matricula.descricao">Descricao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="debito">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.debito">Debito</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="credito">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.credito">Credito</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -94,51 +188,67 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="utilizador.login">
+          <th scope="col" appSortBy="instituicao.tenant">
             <div class="d-flex">
-              <span appTranslate="longonkeloApp.matricula.utilizador">Utilizador</span>
+              <span appTranslate="longonkeloApp.matricula.instituicao">Instituicao</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="turma.descricao">
-            <div class="d-flex">
-              <span appTranslate="longonkeloApp.matricula.turma">Turma</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" appSortBy="responsavelFinanceiro.nome">
-            <div class="d-flex">
-              <span appTranslate="longonkeloApp.matricula.responsavelFinanceiro">Responsavel Financeiro</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" appSortBy="discente.nome">
-            <div class="d-flex">
-              <span appTranslate="longonkeloApp.matricula.discente">Discente</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" appSortBy="referencia.id">
+          </th> -->
+          <!-- <th scope="col" appSortBy="referencia.id">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.matricula.referencia">Referencia</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let matricula of matriculas; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/matricula', matricula.id, 'view']">{{ matricula.id }}</a>
           </td>
           <td>{{ matricula.chaveComposta1 }}</td>
           <td>{{ matricula.chaveComposta2 }}</td>
+          <td>{{ matricula.isPago }}</td>
+          <td>{{ matricula.user }}</td> -->
           <td>{{ matricula.numeroMatricula }}</td>
+          <!-- <td>{{ matricula.numeroProcesso }}</td> -->
+          <!-- <td>
+            <div *ngIf="matricula.encarregadoEducacao">
+              <a [routerLink]="['/encarregado-educacao', matricula.encarregadoEducacao.id, 'view']">{{
+                matricula.encarregadoEducacao.nome
+              }}</a>
+            </div>
+          </td> -->
+          <td>
+            <div *ngIf="matricula.discente">
+              <a [routerLink]="['/discente', matricula.discente.id, 'view']">{{ matricula.discente.nome }}</a>
+            </div>
+          </td>
+          <!-- <td>
+            <div *ngIf="matricula.categoriaMatricula">
+              <a [routerLink]="['/categoria-matricula', matricula.categoriaMatricula.id, 'view']">{{
+                matricula.categoriaMatricula.nome
+              }}</a>
+            </div>
+          </td> -->
+          <td>
+            <div *ngIf="matricula.turma">
+              <a [routerLink]="['/turma', matricula.turma.id, 'view']">{{ matricula.turma.descricao }}</a>
+            </div>
+          </td>
           <td>{{ matricula.numeroChamada }}</td>
+          <!-- <td>{{ matricula.dataAssinatura | formatMediumDate }}</td>
+          <td>{{ matricula.inicioVigencia | formatMediumDate }}</td>
+          <td>{{ matricula.fimVigencia | formatMediumDate }}</td> -->
           <td appTranslate="{{ 'longonkeloApp.EstadoAcademico.' + matricula.estado }}">{{ matricula.estado }}</td>
-          <td>{{ matricula.timestamp | formatMediumDatetime }}</td>
+          <!-- <td>{{ matricula.timestamp | formatMediumDatetime }}</td>
+          <td>{{ matricula.dataIngresso | formatMediumDatetime }}</td>
+          <td>{{ matricula.utilizador }}</td>
           <td>{{ matricula.descricao }}</td>
+          <td>{{ matricula.debito }}</td>
+          <td>{{ matricula.credito }}</td>
           <td>
             <a
               *ngIf="matricula.termosCompromissos"
@@ -152,32 +262,32 @@
           </td>
           <td>{{ matricula.isAceiteTermosCompromisso }}</td>
           <td>
-            {{ matricula.utilizador?.login }}
-          </td>
-          <td>
-            <div *ngIf="matricula.turma">
-              <a [routerLink]="['/turma', matricula.turma.id, 'view']">{{ matricula.turma.descricao }}</a>
+            <div *ngIf="matricula.instituicao">
+              <a [routerLink]="['/instituicao-ensino', matricula.instituicao.id, 'view']">{{ matricula.instituicao.tenant }}</a>
             </div>
-          </td>
-          <td>
-            <div *ngIf="matricula.responsavelFinanceiro">
-              <a [routerLink]="['/encarregado-educacao', matricula.responsavelFinanceiro.id, 'view']">{{
-                matricula.responsavelFinanceiro.nome
-              }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="matricula.discente">
-              <a [routerLink]="['/discente', matricula.discente.id, 'view']">{{ matricula.discente.nome }}</a>
-            </div>
-          </td>
-          <td>
+          </td> -->
+          <!-- <td>
             <div *ngIf="matricula.referencia">
               <a [routerLink]="['/matricula', matricula.referencia.id, 'view']">{{ matricula.referencia.id }}</a>
             </div>
-          </td>
+          </td> -->
           <td class="text-end">
             <div class="btn-group">
+              <!-- <button
+                type="submit"
+                [routerLink]="['/pagamento-emolumento']"
+                [queryParams]="{ 'filter[matriculaId.in]': matricula.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.matricula.pagamentos' | translate) }"
+                  >Show Pagamento Emolumento</span
+                >
+              </button>
               <button
                 type="submit"
                 [routerLink]="['/matricula']"
@@ -192,112 +302,11 @@
                   [translateValues]="{ otherEntity: ('longonkeloApp.matricula.matricula' | translate) }"
                   >Show Matricula</span
                 >
-              </button>
-              <button
-                type="submit"
-                [routerLink]="['/factura']"
-                [queryParams]="{ 'filter[matriculaId.in]': matricula.id }"
-                class="btn btn-info btn-sm"
-                data-cy="filterOtherEntityButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span
-                  class="d-none d-md-inline"
-                  appTranslate="entity.action.show"
-                  [translateValues]="{ otherEntity: ('longonkeloApp.matricula.facturas' | translate) }"
-                  >Show Factura</span
-                >
-              </button>
-              <button
-                type="submit"
-                [routerLink]="['/transacao']"
-                [queryParams]="{ 'filter[matriculaId.in]': matricula.id }"
-                class="btn btn-info btn-sm"
-                data-cy="filterOtherEntityButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span
-                  class="d-none d-md-inline"
-                  appTranslate="entity.action.show"
-                  [translateValues]="{ otherEntity: ('longonkeloApp.matricula.transacoes' | translate) }"
-                  >Show Transacao</span
-                >
-              </button>
-              <button
-                type="submit"
-                [routerLink]="['/recibo']"
-                [queryParams]="{ 'filter[matriculaId.in]': matricula.id }"
-                class="btn btn-info btn-sm"
-                data-cy="filterOtherEntityButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span
-                  class="d-none d-md-inline"
-                  appTranslate="entity.action.show"
-                  [translateValues]="{ otherEntity: ('longonkeloApp.matricula.recibos' | translate) }"
-                  >Show Recibo</span
-                >
-              </button>
-              <button
-                type="submit"
-                [routerLink]="['/notas-periodica-disciplina']"
-                [queryParams]="{ 'filter[matriculaId.in]': matricula.id }"
-                class="btn btn-info btn-sm"
-                data-cy="filterOtherEntityButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span
-                  class="d-none d-md-inline"
-                  appTranslate="entity.action.show"
-                  [translateValues]="{ otherEntity: ('longonkeloApp.matricula.notasPeriodicaDisciplina' | translate) }"
-                  >Show Notas Periodica Disciplina</span
-                >
-              </button>
-              <button
-                type="submit"
-                [routerLink]="['/notas-geral-disciplina']"
-                [queryParams]="{ 'filter[matriculaId.in]': matricula.id }"
-                class="btn btn-info btn-sm"
-                data-cy="filterOtherEntityButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span
-                  class="d-none d-md-inline"
-                  appTranslate="entity.action.show"
-                  [translateValues]="{ otherEntity: ('longonkeloApp.matricula.notasGeralDisciplina' | translate) }"
-                  >Show Notas Geral Disciplina</span
-                >
-              </button>
-              <button
-                type="submit"
-                [routerLink]="['/transferencia-turma']"
-                [queryParams]="{ 'filter[matriculaId.in]': matricula.id }"
-                class="btn btn-info btn-sm"
-                data-cy="filterOtherEntityButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span
-                  class="d-none d-md-inline"
-                  appTranslate="entity.action.show"
-                  [translateValues]="{ otherEntity: ('longonkeloApp.matricula.transferenciaTurma' | translate) }"
-                  >Show Transferencia Turma</span
-                >
-              </button>
-              <button
-                type="submit"
-                [routerLink]="['/ocorrencia']"
-                [queryParams]="{ 'filter[matriculaId.in]': matricula.id }"
-                class="btn btn-info btn-sm"
-                data-cy="filterOtherEntityButton"
-              >
-                <fa-icon icon="eye"></fa-icon>
-                <span
-                  class="d-none d-md-inline"
-                  appTranslate="entity.action.show"
-                  [translateValues]="{ otherEntity: ('longonkeloApp.matricula.ocorrencia' | translate) }"
-                  >Show Ocorrencia</span
-                >
-              </button>
+              </button> -->
+              <!-- <button type="submit" class="btn btn-warning btn-sm" data-cy="entityDetailsButton" (click)="gerarRecibo(matricula.id)">
+                 <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">Recibo</span>
+              </button> -->
               <button
                 type="submit"
                 [routerLink]="['/matricula', matricula.id, 'view']"
