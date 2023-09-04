@@ -1,0 +1,64 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002247",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "processo_selectivo_matricula",
+  "fields": [
+    {
+      "fieldName": "localTeste",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dataTeste",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "notaTeste",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "isAdmitido",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "ProcessoSelectivoMatricula",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "anoLectivo",
+      "otherEntityRelationshipName": "processoSelectivoMatricula",
+      "relationshipName": "anoLectivo",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "utilizador",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "turma",
+      "otherEntityRelationshipName": "processoSelectivoMatricula",
+      "relationshipName": "turma",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "discente",
+      "otherEntityRelationshipName": "processosSelectivo",
+      "relationshipName": "discente",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceImpl"
+}

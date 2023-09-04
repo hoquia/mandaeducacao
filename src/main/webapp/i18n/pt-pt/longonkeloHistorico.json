@@ -1,0 +1,31 @@
+{
+  "longonkeloApp": {
+    "longonkeloHistorico": {
+      "home": {
+        "title": "Longonkelo Historicos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Longonkelo Historico",
+        "createOrEditLabel": "Criar ou editar Longonkelo Historico",
+        "notFound": "Nenhum Longonkelo Historicos encontrado"
+      },
+      "created": "Um novo Longonkelo Historico foi criado com o identificador {{ param }}",
+      "updated": "Longonkelo Historico com identificador {{ param }} foi actualizado",
+      "deleted": "Longonkelo Historico com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Longonkelo Historico {{ id }}?"
+      },
+      "detail": {
+        "title": "Longonkelo Historico"
+      },
+      "id": "ID",
+      "operacao": "Operacao",
+      "entidadeNome": "Entidade Nome",
+      "entidadeCodigo": "Entidade Codigo",
+      "payload": "Payload",
+      "host": "Host",
+      "hash": "Hash",
+      "timestamp": "Timestamp",
+      "utilizador": "Utilizador"
+    }
+  }
+}

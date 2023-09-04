@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity AplicacaoRecibo.
+    -->
+    <changeSet id="20230904002317-1" author="jhipster">
+        <createTable tableName="aplicacao_recibo">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="total_factura" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="total_pago" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="total_diferenca" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="timestamp" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="item_factura_id" type="bigint">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_aplicacao_recibo__item_factura_id" />
+            </column>
+            <column name="factura_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="recibo_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+        <dropDefaultValue tableName="aplicacao_recibo" columnName="timestamp" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

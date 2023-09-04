@@ -1,0 +1,35 @@
+{
+  "longonkeloApp": {
+    "precoEmolumento": {
+      "home": {
+        "title": "Preco Emolumentos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Preco Emolumento",
+        "createOrEditLabel": "Criar ou editar Preco Emolumento",
+        "notFound": "Nenhum Preco Emolumentos encontrado"
+      },
+      "created": "Um novo Preco Emolumento foi criado com o identificador {{ param }}",
+      "updated": "Preco Emolumento com identificador {{ param }} foi actualizado",
+      "deleted": "Preco Emolumento com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Preco Emolumento {{ id }}?"
+      },
+      "detail": {
+        "title": "Preco Emolumento"
+      },
+      "id": "ID",
+      "preco": "Preco",
+      "isEspecificoCurso": "Is Especifico Curso",
+      "isEspecificoAreaFormacao": "Is Especifico Area Formacao",
+      "isEspecificoClasse": "Is Especifico Classe",
+      "isEspecificoTurno": "Is Especifico Turno",
+      "utilizador": "Utilizador",
+      "emolumento": "Emolumento",
+      "areaFormacao": "Area Formacao",
+      "curso": "Curso",
+      "classe": "Classe",
+      "turno": "Turno",
+      "planoMulta": "Plano Multa"
+    }
+  }
+}

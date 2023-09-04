@@ -1,0 +1,31 @@
+{
+  "longonkeloApp": {
+    "responsavelTurno": {
+      "home": {
+        "title": "Responsavel Turnos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Responsavel Turno",
+        "createOrEditLabel": "Criar ou editar Responsavel Turno",
+        "notFound": "Nenhum Responsavel Turnos encontrado"
+      },
+      "created": "Um novo Responsavel Turno foi criado com o identificador {{ param }}",
+      "updated": "Responsavel Turno com identificador {{ param }} foi actualizado",
+      "deleted": "Responsavel Turno com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Responsavel Turno {{ id }}?"
+      },
+      "detail": {
+        "title": "Responsavel Turno"
+      },
+      "id": "ID",
+      "de": "De",
+      "ate": "Ate",
+      "descricao": "Descricao",
+      "timestamp": "Timestamp",
+      "responsavel": "Responsavel",
+      "anoLectivo": "Ano Lectivo",
+      "utilizador": "Utilizador",
+      "turno": "Turno"
+    }
+  }
+}

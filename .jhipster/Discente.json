@@ -1,0 +1,251 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002233",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "discente",
+  "fields": [
+    {
+      "fieldName": "fotografia",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nascimento",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "documentoNumero",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "documentoEmissao",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "documentoValidade",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nif",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "sexo",
+      "fieldType": "Sexo",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "MASCULINO,FEMENINO"
+    },
+    {
+      "fieldName": "pai",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "mae",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "telefonePrincipal",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "telefoneParente",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "isEncarregadoEducacao",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isTrabalhador",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isFilhoAntigoConbatente",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isAtestadoPobreza",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "nomeMedico",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "telefoneMedico",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "9"
+    },
+    {
+      "fieldName": "instituicaoParticularSaude",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "altura",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "peso",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "isAsmatico",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isAlergico",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isPraticaEducacaoFisica",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isAutorizadoMedicacao",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "cuidadosEspeciaisSaude",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "numeroProcesso",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "dataIngresso",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "hash",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "observacao",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Discente",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "enderecoDiscente",
+      "otherEntityRelationshipName": "discente",
+      "relationshipName": "enderecos",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "processoSelectivoMatricula",
+      "otherEntityRelationshipName": "discente",
+      "relationshipName": "processosSelectivo",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "anexoDiscente",
+      "otherEntityRelationshipName": "discente",
+      "relationshipName": "anexoDiscente",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "matricula",
+      "otherEntityRelationshipName": "discente",
+      "relationshipName": "matriculas",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "resumoAcademico",
+      "otherEntityRelationshipName": "discente",
+      "relationshipName": "resumoAcademico",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "historicoSaude",
+      "otherEntityRelationshipName": "discente",
+      "relationshipName": "historicosSaude",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "dissertacaoFinalCurso",
+      "otherEntityRelationshipName": "discente",
+      "relationshipName": "dissertacaoFinalCurso",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "nacionalidade",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "naturalidade",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "tipoDocumento",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "profissao",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "grupoSanguinio",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "necessidadeEspecial",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "encarregadoEducacao",
+      "otherEntityRelationshipName": "discentes",
+      "relationshipName": "encarregadoEducacao",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

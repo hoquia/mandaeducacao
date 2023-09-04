@@ -1,0 +1,64 @@
+{
+  "longonkeloApp": {
+    "docente": {
+      "home": {
+        "title": "Docentes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Docente",
+        "createOrEditLabel": "Criar ou editar Docente",
+        "notFound": "Nenhum Docentes encontrado"
+      },
+      "created": "Um novo Docente foi criado com o identificador {{ param }}",
+      "updated": "Docente com identificador {{ param }} foi actualizado",
+      "deleted": "Docente com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Docente {{ id }}?"
+      },
+      "detail": {
+        "title": "Docente"
+      },
+      "id": "ID",
+      "fotografia": "Fotografia",
+      "nome": "Nome",
+      "nascimento": "Nascimento",
+      "nif": "Nif",
+      "inss": "Inss",
+      "sexo": "Sexo",
+      "pai": "Pai",
+      "mae": "Mae",
+      "documentoNumero": "Documento Numero",
+      "documentoEmissao": "Documento Emissao",
+      "documentoValidade": "Documento Validade",
+      "residencia": "Residencia",
+      "dataInicioFuncoes": "Data Inicio Funcoes",
+      "telefonePrincipal": "Telefone Principal",
+      "telefoneParente": "Telefone Parente",
+      "email": "Email",
+      "numeroAgente": "Numero Agente",
+      "temAgregacaoPedagogica": "Tem Agregacao Pedagogica",
+      "observacao": "Observacao",
+      "hash": "Hash",
+      "timestamp": "Timestamp",
+      "ocorrencia": "Ocorrencia",
+      "horarios": "Horarios",
+      "planoAula": "Plano Aula",
+      "notasPeriodicaDisciplina": "Notas Periodica Disciplina",
+      "notasGeralDisciplina": "Notas Geral Disciplina",
+      "dissertacaoFinalCurso": "Dissertacao Final Curso",
+      "categoriaOcorrencia": "Categoria Ocorrencia",
+      "formacoes": "Formacoes",
+      "nacionalidade": "Nacionalidade",
+      "naturalidade": "Naturalidade",
+      "tipoDocumento": "Tipo Documento",
+      "grauAcademico": "Grau Academico",
+      "categoriaProfissional": "Categoria Profissional",
+      "unidadeOrganica": "Unidade Organica",
+      "estadoCivil": "Estado Civil",
+      "responsavelTurno": "Responsavel Turno",
+      "responsavelAreaFormacao": "Responsavel Area Formacao",
+      "responsavelCurso": "Responsavel Curso",
+      "responsavelDisciplina": "Responsavel Disciplina",
+      "responsavelTurma": "Responsavel Turma"
+    }
+  }
+}

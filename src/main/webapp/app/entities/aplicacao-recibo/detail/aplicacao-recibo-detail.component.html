@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="aplicacaoRecibo">
+      <h2 data-cy="aplicacaoReciboDetailsHeading">
+        <span appTranslate="longonkeloApp.aplicacaoRecibo.detail.title">Aplicacao Recibo</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ aplicacaoRecibo.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.aplicacaoRecibo.totalFactura">Total Factura</span></dt>
+        <dd>
+          <span>{{ aplicacaoRecibo.totalFactura }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.aplicacaoRecibo.totalPago">Total Pago</span></dt>
+        <dd>
+          <span>{{ aplicacaoRecibo.totalPago }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.aplicacaoRecibo.totalDiferenca">Total Diferenca</span></dt>
+        <dd>
+          <span>{{ aplicacaoRecibo.totalDiferenca }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.aplicacaoRecibo.timestamp">Timestamp</span></dt>
+        <dd>
+          <span>{{ aplicacaoRecibo.timestamp | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.aplicacaoRecibo.itemFactura">Item Factura</span></dt>
+        <dd>
+          <div *ngIf="aplicacaoRecibo.itemFactura">
+            <a [routerLink]="['/item-factura', aplicacaoRecibo.itemFactura.id, 'view']">{{ aplicacaoRecibo.itemFactura.id }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.aplicacaoRecibo.factura">Factura</span></dt>
+        <dd>
+          <div *ngIf="aplicacaoRecibo.factura">
+            <a [routerLink]="['/factura', aplicacaoRecibo.factura.id, 'view']">{{ aplicacaoRecibo.factura.numero }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.aplicacaoRecibo.recibo">Recibo</span></dt>
+        <dd>
+          <div *ngIf="aplicacaoRecibo.recibo">
+            <a [routerLink]="['/recibo', aplicacaoRecibo.recibo.id, 'view']">{{ aplicacaoRecibo.recibo.numero }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/aplicacao-recibo', aplicacaoRecibo.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

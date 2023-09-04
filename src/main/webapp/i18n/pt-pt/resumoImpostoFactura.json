@@ -1,0 +1,30 @@
+{
+  "longonkeloApp": {
+    "resumoImpostoFactura": {
+      "home": {
+        "title": "Resumo Imposto Facturas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Resumo Imposto Factura",
+        "createOrEditLabel": "Criar ou editar Resumo Imposto Factura",
+        "notFound": "Nenhum Resumo Imposto Facturas encontrado"
+      },
+      "created": "Um novo Resumo Imposto Factura foi criado com o identificador {{ param }}",
+      "updated": "Resumo Imposto Factura com identificador {{ param }} foi actualizado",
+      "deleted": "Resumo Imposto Factura com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Resumo Imposto Factura {{ id }}?"
+      },
+      "detail": {
+        "title": "Resumo Imposto Factura"
+      },
+      "id": "ID",
+      "isRetencao": "Is Retencao",
+      "descricao": "Descricao",
+      "tipo": "Tipo",
+      "taxa": "Taxa",
+      "incidencia": "Incidencia",
+      "montante": "Montante",
+      "factura": "Factura"
+    }
+  }
+}

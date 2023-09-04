@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="processoSelectivoMatricula">
+      <h2 data-cy="processoSelectivoMatriculaDetailsHeading">
+        <span appTranslate="longonkeloApp.processoSelectivoMatricula.detail.title">Processo Selectivo Matricula</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ processoSelectivoMatricula.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.processoSelectivoMatricula.localTeste">Local Teste</span></dt>
+        <dd>
+          <span>{{ processoSelectivoMatricula.localTeste }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.processoSelectivoMatricula.dataTeste">Data Teste</span></dt>
+        <dd>
+          <span>{{ processoSelectivoMatricula.dataTeste | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.processoSelectivoMatricula.notaTeste">Nota Teste</span></dt>
+        <dd>
+          <span>{{ processoSelectivoMatricula.notaTeste }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.processoSelectivoMatricula.isAdmitido">Is Admitido</span></dt>
+        <dd>
+          <span>{{ processoSelectivoMatricula.isAdmitido }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.processoSelectivoMatricula.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ processoSelectivoMatricula.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.processoSelectivoMatricula.turma">Turma</span></dt>
+        <dd>
+          <div *ngIf="processoSelectivoMatricula.turma">
+            <a [routerLink]="['/turma', processoSelectivoMatricula.turma.id, 'view']">{{ processoSelectivoMatricula.turma.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.processoSelectivoMatricula.discente">Discente</span></dt>
+        <dd>
+          <div *ngIf="processoSelectivoMatricula.discente">
+            <a [routerLink]="['/discente', processoSelectivoMatricula.discente.id, 'view']">{{
+              processoSelectivoMatricula.discente.nome
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/processo-selectivo-matricula', processoSelectivoMatricula.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

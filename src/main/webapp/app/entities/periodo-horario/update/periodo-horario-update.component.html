@@ -1,0 +1,106 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-periodo-horario-heading"
+        data-cy="PeriodoHorarioCreateUpdateHeading"
+        appTranslate="longonkeloApp.periodoHorario.home.createOrEditLabel"
+      >
+        Criar ou editar Periodo Horario
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.periodoHorario.descricao" for="field_descricao">Descricao</label>
+          <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
+          <div *ngIf="editForm.get('descricao')!.invalid && (editForm.get('descricao')!.dirty || editForm.get('descricao')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('descricao')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.periodoHorario.tempo" for="field_tempo">Tempo</label>
+          <input type="number" class="form-control" name="tempo" id="field_tempo" data-cy="tempo" formControlName="tempo" />
+          <div *ngIf="editForm.get('tempo')!.invalid && (editForm.get('tempo')!.dirty || editForm.get('tempo')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('tempo')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('tempo')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 1 }"
+            >
+              Este campo deve ser maior que 1.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('tempo')?.errors?.number" appTranslate="entity.validation.number">
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.periodoHorario.inicio" for="field_inicio">Inicio</label>
+          <input type="text" class="form-control" name="inicio" id="field_inicio" data-cy="inicio" formControlName="inicio" />
+          <div *ngIf="editForm.get('inicio')!.invalid && (editForm.get('inicio')!.dirty || editForm.get('inicio')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('inicio')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.periodoHorario.fim" for="field_fim">Fim</label>
+          <input type="text" class="form-control" name="fim" id="field_fim" data-cy="fim" formControlName="fim" />
+          <div *ngIf="editForm.get('fim')!.invalid && (editForm.get('fim')!.dirty || editForm.get('fim')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('fim')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.periodoHorario.turno" for="field_turno">Turno</label>
+          <select class="form-control" id="field_turno" data-cy="turno" name="turno" formControlName="turno" [compareWith]="compareTurno">
+            <option *ngIf="editForm.get(['turno'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="turnoOption" *ngFor="let turnoOption of turnosSharedCollection">{{ turnoOption.nome }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['turno'])!.invalid && (editForm.get(['turno'])!.dirty || editForm.get(['turno'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['turno'])?.errors?.required" appTranslate="entity.validation.required">
+            O campo é obrigatório.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

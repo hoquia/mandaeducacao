@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity TransferenciaSaldo.
+    -->
+    <changeSet id="20230904002318-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="de_id"
+                                 baseTableName="transferencia_saldo"
+                                 constraintName="fk_transferencia_saldo__de_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="discente"/>
+
+        <addForeignKeyConstraint baseColumnNames="para_id"
+                                 baseTableName="transferencia_saldo"
+                                 constraintName="fk_transferencia_saldo__para_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="discente"/>
+
+        <addForeignKeyConstraint baseColumnNames="utilizador_id"
+                                 baseTableName="transferencia_saldo"
+                                 constraintName="fk_transferencia_saldo__utilizador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="app_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="motivo_transferencia_id"
+                                 baseTableName="transferencia_saldo"
+                                 constraintName="fk_transferencia_saldo__motivo_transferencia_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="transferencia_saldo_id"
+                                 baseTableName="rel_transferencia_saldo__transacoes"
+                                 constraintName="fk_rel_transferencia_saldo__transacoes__transferencia_saldo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="transferencia_saldo"/>
+
+        <addForeignKeyConstraint baseColumnNames="transacoes_id"
+                                 baseTableName="rel_transferencia_saldo__transacoes"
+                                 constraintName="fk_rel_transferencia_saldo__transacoes__transacoes_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="transacao"/>
+    </changeSet>
+</databaseChangeLog>

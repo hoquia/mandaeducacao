@@ -1,0 +1,29 @@
+{
+  "longonkeloApp": {
+    "periodoHorario": {
+      "home": {
+        "title": "Periodo Horarios",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Periodo Horario",
+        "createOrEditLabel": "Criar ou editar Periodo Horario",
+        "notFound": "Nenhum Periodo Horarios encontrado"
+      },
+      "created": "Um novo Periodo Horario foi criado com o identificador {{ param }}",
+      "updated": "Periodo Horario com identificador {{ param }} foi actualizado",
+      "deleted": "Periodo Horario com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Periodo Horario {{ id }}?"
+      },
+      "detail": {
+        "title": "Periodo Horario"
+      },
+      "id": "ID",
+      "descricao": "Descricao",
+      "tempo": "Tempo",
+      "inicio": "Inicio",
+      "fim": "Fim",
+      "horario": "Horario",
+      "turno": "Turno"
+    }
+  }
+}

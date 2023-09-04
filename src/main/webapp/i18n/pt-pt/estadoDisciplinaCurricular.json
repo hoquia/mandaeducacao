@@ -1,0 +1,35 @@
+{
+  "longonkeloApp": {
+    "estadoDisciplinaCurricular": {
+      "home": {
+        "title": "Estado Disciplina Curriculars",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Estado Disciplina Curricular",
+        "createOrEditLabel": "Criar ou editar Estado Disciplina Curricular",
+        "notFound": "Nenhum Estado Disciplina Curriculars encontrado"
+      },
+      "created": "Um novo Estado Disciplina Curricular foi criado com o identificador {{ param }}",
+      "updated": "Estado Disciplina Curricular com identificador {{ param }} foi actualizado",
+      "deleted": "Estado Disciplina Curricular com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Estado Disciplina Curricular {{ id }}?"
+      },
+      "detail": {
+        "title": "Estado Disciplina Curricular"
+      },
+      "id": "ID",
+      "uniqueSituacaoDisciplina": "Unique Situacao Disciplina",
+      "classificacao": "Classificacao",
+      "codigo": "Codigo",
+      "descricao": "Descricao",
+      "cor": "Cor",
+      "valor": "Valor",
+      "estadoDisciplinaCurricular": "Estado Disciplina Curricular",
+      "notasPeriodicaDisciplina": "Notas Periodica Disciplina",
+      "notasGeralDisciplina": "Notas Geral Disciplina",
+      "resumoAcademico": "Resumo Academico",
+      "disciplinasCurriculars": "Disciplinas Curriculars",
+      "referencia": "Referencia"
+    }
+  }
+}

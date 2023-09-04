@@ -1,0 +1,29 @@
+{
+  "longonkeloApp": {
+    "transferenciaTurma": {
+      "home": {
+        "title": "Transferencia Turmas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Transferencia Turma",
+        "createOrEditLabel": "Criar ou editar Transferencia Turma",
+        "notFound": "Nenhum Transferencia Turmas encontrado"
+      },
+      "created": "Um novo Transferencia Turma foi criado com o identificador {{ param }}",
+      "updated": "Transferencia Turma com identificador {{ param }} foi actualizado",
+      "deleted": "Transferencia Turma com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Transferencia Turma {{ id }}?"
+      },
+      "detail": {
+        "title": "Transferencia Turma"
+      },
+      "id": "ID",
+      "timestamp": "Timestamp",
+      "de": "De",
+      "para": "Para",
+      "utilizador": "Utilizador",
+      "motivoTransferencia": "Motivo Transferencia",
+      "matricula": "Matricula"
+    }
+  }
+}

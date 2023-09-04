@@ -1,0 +1,290 @@
+<div>
+  <h2 id="page-heading" data-cy="ResumoAcademicoHeading">
+    <span appTranslate="longonkeloApp.resumoAcademico.home.title">Resumo Academicos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.resumoAcademico.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-resumo-academico"
+        [routerLink]="['/resumo-academico/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.resumoAcademico.home.createLabel"> Criar novo(a) Resumo Academico </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="resumoAcademicos?.length === 0">
+    <span appTranslate="longonkeloApp.resumoAcademico.home.notFound">Nenhum Resumo Academicos encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="resumoAcademicos && resumoAcademicos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="temaProjecto">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.temaProjecto">Tema Projecto</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="notaProjecto">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.notaProjecto">Nota Projecto</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="observacao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.observacao">Observacao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="localEstagio">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.localEstagio">Local Estagio</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="notaEstagio">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.notaEstagio">Nota Estagio</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="mediaFinalDisciplina">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.mediaFinalDisciplina">Media Final Disciplina</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="classificacaoFinal">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.classificacaoFinal">Classificacao Final</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="numeroGrupo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.numeroGrupo">Numero Grupo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="mesaDefesa">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.mesaDefesa">Mesa Defesa</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="livroRegistro">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.livroRegistro">Livro Registro</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="numeroFolha">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.numeroFolha">Numero Folha</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="chefeSecretariaPedagogica">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.chefeSecretariaPedagogica">Chefe Secretaria Pedagogica</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="subDirectorPedagogico">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.subDirectorPedagogico">Sub Director Pedagogico</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="directorGeral">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.directorGeral">Director Geral</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="tutorProjecto">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.tutorProjecto">Tutor Projecto</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="juriMesa">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.juriMesa">Juri Mesa</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="empresaEstagio">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.empresaEstagio">Empresa Estagio</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="assinaturaDigital">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.assinaturaDigital">Assinatura Digital</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="hash">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.hash">Hash</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="utilizador.login">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.utilizador">Utilizador</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="ultimaTurmaMatriculada.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.ultimaTurmaMatriculada">Ultima Turma Matriculada</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="discente.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.discente">Discente</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="situacao.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.resumoAcademico.situacao">Situacao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let resumoAcademico of resumoAcademicos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/resumo-academico', resumoAcademico.id, 'view']">{{ resumoAcademico.id }}</a>
+          </td>
+          <td>{{ resumoAcademico.temaProjecto }}</td>
+          <td>{{ resumoAcademico.notaProjecto }}</td>
+          <td>{{ resumoAcademico.observacao }}</td>
+          <td>{{ resumoAcademico.localEstagio }}</td>
+          <td>{{ resumoAcademico.notaEstagio }}</td>
+          <td>{{ resumoAcademico.mediaFinalDisciplina }}</td>
+          <td>{{ resumoAcademico.classificacaoFinal }}</td>
+          <td>{{ resumoAcademico.numeroGrupo }}</td>
+          <td>{{ resumoAcademico.mesaDefesa }}</td>
+          <td>{{ resumoAcademico.livroRegistro }}</td>
+          <td>{{ resumoAcademico.numeroFolha }}</td>
+          <td>{{ resumoAcademico.chefeSecretariaPedagogica }}</td>
+          <td>{{ resumoAcademico.subDirectorPedagogico }}</td>
+          <td>{{ resumoAcademico.directorGeral }}</td>
+          <td>{{ resumoAcademico.tutorProjecto }}</td>
+          <td>{{ resumoAcademico.juriMesa }}</td>
+          <td>{{ resumoAcademico.empresaEstagio }}</td>
+          <td>
+            <a
+              *ngIf="resumoAcademico.assinaturaDigital"
+              (click)="openFile(resumoAcademico.assinaturaDigital, resumoAcademico.assinaturaDigitalContentType)"
+              appTranslate="entity.action.open"
+              >Abrir</a
+            >
+            <span *ngIf="resumoAcademico.assinaturaDigital"
+              >{{ resumoAcademico.assinaturaDigitalContentType }}, {{ byteSize(resumoAcademico.assinaturaDigital) }}</span
+            >
+          </td>
+          <td>{{ resumoAcademico.hash }}</td>
+          <td>
+            {{ resumoAcademico.utilizador?.login }}
+          </td>
+          <td>
+            <div *ngIf="resumoAcademico.ultimaTurmaMatriculada">
+              <a [routerLink]="['/turma', resumoAcademico.ultimaTurmaMatriculada.id, 'view']">{{
+                resumoAcademico.ultimaTurmaMatriculada.descricao
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="resumoAcademico.discente">
+              <a [routerLink]="['/discente', resumoAcademico.discente.id, 'view']">{{ resumoAcademico.discente.nome }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="resumoAcademico.situacao">
+              <a [routerLink]="['/estado-disciplina-curricular', resumoAcademico.situacao.id, 'view']">{{
+                resumoAcademico.situacao.descricao
+              }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/resumo-academico', resumoAcademico.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/resumo-academico', resumoAcademico.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(resumoAcademico)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="resumoAcademicos && resumoAcademicos.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

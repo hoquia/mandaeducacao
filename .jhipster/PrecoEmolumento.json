@@ -1,0 +1,88 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002309",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "preco_emolumento",
+  "fields": [
+    {
+      "fieldName": "preco",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "isEspecificoCurso",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isEspecificoAreaFormacao",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isEspecificoClasse",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isEspecificoTurno",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "PrecoEmolumento",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "utilizador",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "emolumento",
+      "otherEntityRelationshipName": "precosEmolumento",
+      "relationshipName": "emolumento",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "areaFormacao",
+      "otherEntityRelationshipName": "precoEmolumento",
+      "relationshipName": "areaFormacao",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "curso",
+      "otherEntityRelationshipName": "precoEmolumento",
+      "relationshipName": "curso",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "classe",
+      "otherEntityRelationshipName": "precoEmolumento",
+      "relationshipName": "classe",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "turno",
+      "otherEntityRelationshipName": "precoEmolumento",
+      "relationshipName": "turno",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "planoMulta",
+      "otherEntityRelationshipName": "precoEmolumento",
+      "relationshipName": "planoMulta",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

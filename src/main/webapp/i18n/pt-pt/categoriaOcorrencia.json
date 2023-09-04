@@ -1,0 +1,36 @@
+{
+  "longonkeloApp": {
+    "categoriaOcorrencia": {
+      "home": {
+        "title": "Categoria Ocorrencias",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Categoria Ocorrencia",
+        "createOrEditLabel": "Criar ou editar Categoria Ocorrencia",
+        "notFound": "Nenhum Categoria Ocorrencias encontrado"
+      },
+      "created": "Um novo Categoria Ocorrencia foi criado com o identificador {{ param }}",
+      "updated": "Categoria Ocorrencia com identificador {{ param }} foi actualizado",
+      "deleted": "Categoria Ocorrencia com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Categoria Ocorrencia {{ id }}?"
+      },
+      "detail": {
+        "title": "Categoria Ocorrencia"
+      },
+      "id": "ID",
+      "codigo": "Codigo",
+      "sansaoDisicplinar": "Sansao Disicplinar",
+      "isNotificaEncaregado": "Is Notifica Encaregado",
+      "isSendEmail": "Is Send Email",
+      "isSendSms": "Is Send Sms",
+      "isSendPush": "Is Send Push",
+      "descricao": "Descricao",
+      "observacao": "Observacao",
+      "categoriaOcorrencia": "Categoria Ocorrencia",
+      "ocorrencia": "Ocorrencia",
+      "encaminhar": "Encaminhar",
+      "referencia": "Referencia",
+      "medidaDisciplinar": "Medida Disciplinar"
+    }
+  }
+}

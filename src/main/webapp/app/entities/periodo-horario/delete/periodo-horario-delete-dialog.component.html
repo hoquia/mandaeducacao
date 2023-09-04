@@ -1,0 +1,28 @@
+<form *ngIf="periodoHorario" name="deleteForm" (ngSubmit)="confirmDelete(periodoHorario.id!)">
+  <div class="modal-header">
+    <h4 class="modal-title" data-cy="periodoHorarioDeleteDialogHeading" appTranslate="entity.delete.title">Confirme a eliminação</h4>
+
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <app-alert-error></app-alert-error>
+    <p
+      id="app-delete-periodoHorario-heading"
+      appTranslate="longonkeloApp.periodoHorario.delete.question"
+      [translateValues]="{ id: periodoHorario.id }"
+    >
+      Tem a certeza que pretende eliminar o(a) Periodo Horario {{ periodoHorario.id }}?
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+      <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+    </button>
+
+    <button id="app-confirm-delete-periodoHorario" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+      <fa-icon icon="times"></fa-icon>&nbsp;<span appTranslate="entity.action.delete">Eliminar</span>
+    </button>
+  </div>
+</form>

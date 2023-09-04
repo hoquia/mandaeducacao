@@ -1,0 +1,38 @@
+{
+  "longonkeloApp": {
+    "itemFactura": {
+      "home": {
+        "title": "Item Facturas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Item Factura",
+        "createOrEditLabel": "Criar ou editar Item Factura",
+        "notFound": "Nenhum Item Facturas encontrado"
+      },
+      "created": "Um novo Item Factura foi criado com o identificador {{ param }}",
+      "updated": "Item Factura com identificador {{ param }} foi actualizado",
+      "deleted": "Item Factura com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Item Factura {{ id }}?"
+      },
+      "detail": {
+        "title": "Item Factura"
+      },
+      "id": "ID",
+      "quantidade": "Quantidade",
+      "precoUnitario": "Preco Unitario",
+      "desconto": "Desconto",
+      "multa": "Multa",
+      "juro": "Juro",
+      "precoTotal": "Preco Total",
+      "estado": "Estado",
+      "taxType": "Tax Type",
+      "taxCountryRegion": "Tax Country Region",
+      "taxCode": "Tax Code",
+      "taxPercentage": "Tax Percentage",
+      "taxExemptionReason": "Tax Exemption Reason",
+      "taxExemptionCode": "Tax Exemption Code",
+      "factura": "Factura",
+      "emolumento": "Emolumento"
+    }
+  }
+}

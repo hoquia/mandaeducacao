@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity DocumentoComercial.
+    -->
+    <changeSet id="20230904002301-1" author="jhipster">
+        <createTable tableName="documento_comercial">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="modulo" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="origem" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="sigla_interna" type="varchar(6)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_documento_comercial__sigla_interna" />
+            </column>
+            <column name="descricao" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_documento_comercial__descricao" />
+            </column>
+            <column name="sigla_fiscal" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="is_movimenta_estoque" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_movimenta_caixa" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_notifica_entidade" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_notifica_gerente" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_envia_sms" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_envia_email" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_envia_push" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="valida_credito_disponivel" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="transforma_em_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

@@ -1,0 +1,28 @@
+<form *ngIf="responsavelTurma" name="deleteForm" (ngSubmit)="confirmDelete(responsavelTurma.id!)">
+  <div class="modal-header">
+    <h4 class="modal-title" data-cy="responsavelTurmaDeleteDialogHeading" appTranslate="entity.delete.title">Confirme a eliminação</h4>
+
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <app-alert-error></app-alert-error>
+    <p
+      id="app-delete-responsavelTurma-heading"
+      appTranslate="longonkeloApp.responsavelTurma.delete.question"
+      [translateValues]="{ id: responsavelTurma.id }"
+    >
+      Tem a certeza que pretende eliminar o(a) Responsavel Turma {{ responsavelTurma.id }}?
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+      <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+    </button>
+
+    <button id="app-confirm-delete-responsavelTurma" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+      <fa-icon icon="times"></fa-icon>&nbsp;<span appTranslate="entity.action.delete">Eliminar</span>
+    </button>
+  </div>
+</form>

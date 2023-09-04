@@ -1,0 +1,100 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="turma">
+      <h2 data-cy="turmaDetailsHeading"><span appTranslate="longonkeloApp.turma.detail.title">Turma</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ turma.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.turma.chaveComposta">Chave Composta</span></dt>
+        <dd>
+          <span>{{ turma.chaveComposta }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.turma.tipoTurma">Tipo Turma</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.TipoTurma.' + turma.tipoTurma }}">{{ turma.tipoTurma }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.turma.sala">Sala</span></dt>
+        <dd>
+          <span>{{ turma.sala }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.turma.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ turma.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.turma.lotacao">Lotacao</span></dt>
+        <dd>
+          <span>{{ turma.lotacao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.turma.confirmado">Confirmado</span></dt>
+        <dd>
+          <span>{{ turma.confirmado }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.turma.abertura">Abertura</span></dt>
+        <dd>
+          <span>{{ turma.abertura | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.turma.encerramento">Encerramento</span></dt>
+        <dd>
+          <span>{{ turma.encerramento | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.turma.criterioDescricao">Criterio Descricao</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.CriterioDescricaoTurma.' + turma.criterioDescricao }}">{{ turma.criterioDescricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.turma.criterioOrdenacaoNumero">Criterio Ordenacao Numero</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.CriterioNumeroChamada.' + turma.criterioOrdenacaoNumero }}">{{
+            turma.criterioOrdenacaoNumero
+          }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.turma.fazInscricaoDepoisMatricula">Faz Inscricao Depois Matricula</span></dt>
+        <dd>
+          <span>{{ turma.fazInscricaoDepoisMatricula }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.turma.isDisponivel">Is Disponivel</span></dt>
+        <dd>
+          <span>{{ turma.isDisponivel }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.turma.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ turma.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.turma.referencia">Referencia</span></dt>
+        <dd>
+          <div *ngIf="turma.referencia">
+            <a [routerLink]="['/turma', turma.referencia.id, 'view']">{{ turma.referencia.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.turma.planoCurricular">Plano Curricular</span></dt>
+        <dd>
+          <div *ngIf="turma.planoCurricular">
+            <a [routerLink]="['/plano-curricular', turma.planoCurricular.id, 'view']">{{ turma.planoCurricular.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.turma.turno">Turno</span></dt>
+        <dd>
+          <div *ngIf="turma.turno">
+            <a [routerLink]="['/turno', turma.turno.id, 'view']">{{ turma.turno.nome }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/turma', turma.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

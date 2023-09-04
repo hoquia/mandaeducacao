@@ -1,0 +1,92 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="itemFactura">
+      <h2 data-cy="itemFacturaDetailsHeading"><span appTranslate="longonkeloApp.itemFactura.detail.title">Item Factura</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ itemFactura.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.itemFactura.quantidade">Quantidade</span></dt>
+        <dd>
+          <span>{{ itemFactura.quantidade }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.itemFactura.precoUnitario">Preco Unitario</span></dt>
+        <dd>
+          <span>{{ itemFactura.precoUnitario }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.itemFactura.desconto">Desconto</span></dt>
+        <dd>
+          <span>{{ itemFactura.desconto }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.itemFactura.multa">Multa</span></dt>
+        <dd>
+          <span>{{ itemFactura.multa }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.itemFactura.juro">Juro</span></dt>
+        <dd>
+          <span>{{ itemFactura.juro }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.itemFactura.precoTotal">Preco Total</span></dt>
+        <dd>
+          <span>{{ itemFactura.precoTotal }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.itemFactura.estado">Estado</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.EstadoItemFactura.' + itemFactura.estado }}">{{ itemFactura.estado }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.itemFactura.taxType">Tax Type</span></dt>
+        <dd>
+          <span>{{ itemFactura.taxType }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.itemFactura.taxCountryRegion">Tax Country Region</span></dt>
+        <dd>
+          <span>{{ itemFactura.taxCountryRegion }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.itemFactura.taxCode">Tax Code</span></dt>
+        <dd>
+          <span>{{ itemFactura.taxCode }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.itemFactura.taxPercentage">Tax Percentage</span></dt>
+        <dd>
+          <span>{{ itemFactura.taxPercentage }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.itemFactura.taxExemptionReason">Tax Exemption Reason</span></dt>
+        <dd>
+          <span>{{ itemFactura.taxExemptionReason }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.itemFactura.taxExemptionCode">Tax Exemption Code</span></dt>
+        <dd>
+          <span>{{ itemFactura.taxExemptionCode }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.itemFactura.factura">Factura</span></dt>
+        <dd>
+          <div *ngIf="itemFactura.factura">
+            <a [routerLink]="['/factura', itemFactura.factura.id, 'view']">{{ itemFactura.factura.numero }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.itemFactura.emolumento">Emolumento</span></dt>
+        <dd>
+          <div *ngIf="itemFactura.emolumento">
+            <a [routerLink]="['/emolumento', itemFactura.emolumento.id, 'view']">{{ itemFactura.emolumento.nome }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/item-factura', itemFactura.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

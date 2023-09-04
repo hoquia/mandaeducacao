@@ -1,0 +1,167 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-endereco-discente-heading"
+        data-cy="EnderecoDiscenteCreateUpdateHeading"
+        appTranslate="longonkeloApp.enderecoDiscente.home.createOrEditLabel"
+      >
+        Criar ou editar Endereco Discente
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.enderecoDiscente.tipo" for="field_tipo">Tipo</label>
+          <select class="form-control" name="tipo" formControlName="tipo" id="field_tipo" data-cy="tipo">
+            <option [ngValue]="null">{{ 'longonkeloApp.TipoEndereco.null' | translate }}</option>
+            <option *ngFor="let tipoEndereco of tipoEnderecoValues" [value]="tipoEndereco">
+              {{ 'longonkeloApp.TipoEndereco.' + tipoEndereco | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('tipo')!.invalid && (editForm.get('tipo')!.dirty || editForm.get('tipo')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('tipo')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.enderecoDiscente.bairro" for="field_bairro">Bairro</label>
+          <input type="text" class="form-control" name="bairro" id="field_bairro" data-cy="bairro" formControlName="bairro" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.enderecoDiscente.rua" for="field_rua">Rua</label>
+          <input type="text" class="form-control" name="rua" id="field_rua" data-cy="rua" formControlName="rua" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.enderecoDiscente.numeroCasa" for="field_numeroCasa">Numero Casa</label>
+          <input
+            type="text"
+            class="form-control"
+            name="numeroCasa"
+            id="field_numeroCasa"
+            data-cy="numeroCasa"
+            formControlName="numeroCasa"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.enderecoDiscente.codigoPostal" for="field_codigoPostal"
+            >Codigo Postal</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="codigoPostal"
+            id="field_codigoPostal"
+            data-cy="codigoPostal"
+            formControlName="codigoPostal"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.enderecoDiscente.latitude" for="field_latitude">Latitude</label>
+          <input type="number" class="form-control" name="latitude" id="field_latitude" data-cy="latitude" formControlName="latitude" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.enderecoDiscente.longitude" for="field_longitude">Longitude</label>
+          <input type="number" class="form-control" name="longitude" id="field_longitude" data-cy="longitude" formControlName="longitude" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.enderecoDiscente.pais" for="field_pais">Pais</label>
+          <select class="form-control" id="field_pais" data-cy="pais" name="pais" formControlName="pais" [compareWith]="compareLookupItem">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              {{ lookupItemOption.descricao }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.enderecoDiscente.provincia" for="field_provincia">Provincia</label>
+          <select
+            class="form-control"
+            id="field_provincia"
+            data-cy="provincia"
+            name="provincia"
+            formControlName="provincia"
+            [compareWith]="compareLookupItem"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              {{ lookupItemOption.descricao }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.enderecoDiscente.municipio" for="field_municipio">Municipio</label>
+          <select
+            class="form-control"
+            id="field_municipio"
+            data-cy="municipio"
+            name="municipio"
+            formControlName="municipio"
+            [compareWith]="compareLookupItem"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              {{ lookupItemOption.descricao }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.enderecoDiscente.discente" for="field_discente">Discente</label>
+          <select
+            class="form-control"
+            id="field_discente"
+            data-cy="discente"
+            name="discente"
+            formControlName="discente"
+            [compareWith]="compareDiscente"
+          >
+            <option *ngIf="editForm.get(['discente'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="discenteOption" *ngFor="let discenteOption of discentesSharedCollection">{{ discenteOption.nome }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['discente'])!.invalid && (editForm.get(['discente'])!.dirty || editForm.get(['discente'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['discente'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

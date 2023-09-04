@@ -1,0 +1,49 @@
+{
+  "longonkeloApp": {
+    "turma": {
+      "home": {
+        "title": "Turmas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Turma",
+        "createOrEditLabel": "Criar ou editar Turma",
+        "notFound": "Nenhum Turmas encontrado"
+      },
+      "created": "Um novo Turma foi criado com o identificador {{ param }}",
+      "updated": "Turma com identificador {{ param }} foi actualizado",
+      "deleted": "Turma com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Turma {{ id }}?"
+      },
+      "detail": {
+        "title": "Turma"
+      },
+      "id": "ID",
+      "chaveComposta": "Chave Composta",
+      "tipoTurma": "Tipo Turma",
+      "sala": "Sala",
+      "descricao": "Descricao",
+      "lotacao": "Lotacao",
+      "confirmado": "Confirmado",
+      "abertura": "Abertura",
+      "encerramento": "Encerramento",
+      "criterioDescricao": "Criterio Descricao",
+      "criterioOrdenacaoNumero": "Criterio Ordenacao Numero",
+      "fazInscricaoDepoisMatricula": "Faz Inscricao Depois Matricula",
+      "isDisponivel": "Is Disponivel",
+      "turma": "Turma",
+      "horarios": "Horarios",
+      "notasPeriodicaDisciplina": "Notas Periodica Disciplina",
+      "processoSelectivoMatricula": "Processo Selectivo Matricula",
+      "planoAula": "Plano Aula",
+      "matriculas": "Matriculas",
+      "resumoAcademico": "Resumo Academico",
+      "responsaveis": "Responsaveis",
+      "dissertacaoFinalCurso": "Dissertacao Final Curso",
+      "anoLectivo": "Ano Lectivo",
+      "utilizador": "Utilizador",
+      "referencia": "Referencia",
+      "planoCurricular": "Plano Curricular",
+      "turno": "Turno"
+    }
+  }
+}

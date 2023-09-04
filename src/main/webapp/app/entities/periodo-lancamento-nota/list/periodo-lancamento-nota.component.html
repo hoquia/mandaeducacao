@@ -1,0 +1,140 @@
+<div>
+  <h2 id="page-heading" data-cy="PeriodoLancamentoNotaHeading">
+    <span appTranslate="longonkeloApp.periodoLancamentoNota.home.title">Periodo Lancamento Notas</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.periodoLancamentoNota.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-periodo-lancamento-nota"
+        [routerLink]="['/periodo-lancamento-nota/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.periodoLancamentoNota.home.createLabel"> Criar novo(a) Periodo Lancamento Nota </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="periodoLancamentoNotas?.length === 0">
+    <span appTranslate="longonkeloApp.periodoLancamentoNota.home.notFound">Nenhum Periodo Lancamento Notas encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="periodoLancamentoNotas && periodoLancamentoNotas.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="tipoAvaliacao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.periodoLancamentoNota.tipoAvaliacao">Tipo Avaliacao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="de">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.periodoLancamentoNota.de">De</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="ate">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.periodoLancamentoNota.ate">Ate</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="timestamp">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.periodoLancamentoNota.timestamp">Timestamp</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="utilizador.login">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.periodoLancamentoNota.utilizador">Utilizador</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let periodoLancamentoNota of periodoLancamentoNotas; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/periodo-lancamento-nota', periodoLancamentoNota.id, 'view']">{{ periodoLancamentoNota.id }}</a>
+          </td>
+          <td appTranslate="{{ 'longonkeloApp.TipoAvaliacao.' + periodoLancamentoNota.tipoAvaliacao }}">
+            {{ periodoLancamentoNota.tipoAvaliacao }}
+          </td>
+          <td>{{ periodoLancamentoNota.de | formatMediumDatetime }}</td>
+          <td>{{ periodoLancamentoNota.ate | formatMediumDatetime }}</td>
+          <td>{{ periodoLancamentoNota.timestamp | formatMediumDatetime }}</td>
+          <td>
+            {{ periodoLancamentoNota.utilizador?.login }}
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/periodo-lancamento-nota', periodoLancamentoNota.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/periodo-lancamento-nota', periodoLancamentoNota.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(periodoLancamentoNota)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="periodoLancamentoNotas && periodoLancamentoNotas.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

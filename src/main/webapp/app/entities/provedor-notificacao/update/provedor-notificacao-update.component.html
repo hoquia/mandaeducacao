@@ -1,0 +1,153 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-provedor-notificacao-heading"
+        data-cy="ProvedorNotificacaoCreateUpdateHeading"
+        appTranslate="longonkeloApp.provedorNotificacao.home.createOrEditLabel"
+      >
+        Criar ou editar Provedor Notificacao
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.provedorNotificacao.telefone" for="field_telefone">Telefone</label>
+          <input type="text" class="form-control" name="telefone" id="field_telefone" data-cy="telefone" formControlName="telefone" />
+          <div *ngIf="editForm.get('telefone')!.invalid && (editForm.get('telefone')!.dirty || editForm.get('telefone')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('telefone')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.provedorNotificacao.email" for="field_email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+          <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('email')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.provedorNotificacao.link" for="field_link">Link</label>
+          <input type="text" class="form-control" name="link" id="field_link" data-cy="link" formControlName="link" />
+          <div *ngIf="editForm.get('link')!.invalid && (editForm.get('link')!.dirty || editForm.get('link')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('link')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.provedorNotificacao.token" for="field_token">Token</label>
+          <input type="text" class="form-control" name="token" id="field_token" data-cy="token" formControlName="token" />
+          <div *ngIf="editForm.get('token')!.invalid && (editForm.get('token')!.dirty || editForm.get('token')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('token')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.provedorNotificacao.username" for="field_username">Username</label>
+          <input type="text" class="form-control" name="username" id="field_username" data-cy="username" formControlName="username" />
+          <div *ngIf="editForm.get('username')!.invalid && (editForm.get('username')!.dirty || editForm.get('username')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('username')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.provedorNotificacao.password" for="field_password">Password</label>
+          <input type="text" class="form-control" name="password" id="field_password" data-cy="password" formControlName="password" />
+          <div *ngIf="editForm.get('password')!.invalid && (editForm.get('password')!.dirty || editForm.get('password')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('password')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.provedorNotificacao.hash" for="field_hash">Hash</label>
+          <input type="text" class="form-control" name="hash" id="field_hash" data-cy="hash" formControlName="hash" />
+          <div *ngIf="editForm.get('hash')!.invalid && (editForm.get('hash')!.dirty || editForm.get('hash')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('hash')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.provedorNotificacao.isPadrao" for="field_isPadrao">Is Padrao</label>
+          <input type="checkbox" class="form-check" name="isPadrao" id="field_isPadrao" data-cy="isPadrao" formControlName="isPadrao" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.provedorNotificacao.instituicao" for="field_instituicao">Instituicao</label>
+          <select
+            class="form-control"
+            id="field_instituicao"
+            data-cy="instituicao"
+            name="instituicao"
+            formControlName="instituicao"
+            [compareWith]="compareInstituicaoEnsino"
+          >
+            <option *ngIf="editForm.get(['instituicao'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="instituicaoEnsinoOption" *ngFor="let instituicaoEnsinoOption of instituicaoEnsinosSharedCollection">
+              {{ instituicaoEnsinoOption.unidadeOrganica }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="editForm.get(['instituicao'])!.invalid && (editForm.get(['instituicao'])!.dirty || editForm.get(['instituicao'])!.touched)"
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['instituicao'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002253",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "periodo_lancamento_nota",
+  "fields": [
+    {
+      "fieldName": "tipoAvaliacao",
+      "fieldType": "TipoAvaliacao",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "NOTA1,NOTA2,NOTA3,EXAME,RECURSO,EXAME_ESPECIAL,NOTA_CONSELHO"
+    },
+    {
+      "fieldName": "de",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "ate",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "timestamp",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "PeriodoLancamentoNota",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "utilizador",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "classe",
+      "otherEntityRelationshipName": "periodosLancamentoNota",
+      "ownerSide": true,
+      "relationshipName": "classe",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,34 @@
+{
+  "longonkeloApp": {
+    "enderecoDiscente": {
+      "home": {
+        "title": "Endereco Discentes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Endereco Discente",
+        "createOrEditLabel": "Criar ou editar Endereco Discente",
+        "notFound": "Nenhum Endereco Discentes encontrado"
+      },
+      "created": "Um novo Endereco Discente foi criado com o identificador {{ param }}",
+      "updated": "Endereco Discente com identificador {{ param }} foi actualizado",
+      "deleted": "Endereco Discente com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Endereco Discente {{ id }}?"
+      },
+      "detail": {
+        "title": "Endereco Discente"
+      },
+      "id": "ID",
+      "tipo": "Tipo",
+      "bairro": "Bairro",
+      "rua": "Rua",
+      "numeroCasa": "Numero Casa",
+      "codigoPostal": "Codigo Postal",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "pais": "Pais",
+      "provincia": "Provincia",
+      "municipio": "Municipio",
+      "discente": "Discente"
+    }
+  }
+}

@@ -1,0 +1,97 @@
+import { IResumoAcademico, NewResumoAcademico } from './resumo-academico.model';
+
+export const sampleWithRequiredData: IResumoAcademico = {
+  id: 86367,
+  temaProjecto: 'Betão info-mediaries efficient',
+  notaProjecto: 12,
+  notaEstagio: 9,
+  mediaFinalDisciplina: 1,
+  classificacaoFinal: 20,
+  numeroGrupo: 'Frango',
+  mesaDefesa: 'Exclusive Bebé Bacon',
+  livroRegistro: 'generating',
+  numeroFolha: 'infrastructures incentivize schemas',
+  chefeSecretariaPedagogica: 'intuitive',
+  subDirectorPedagogico: 'methodologies',
+  directorGeral: 'Technician action-items',
+  tutorProjecto: 'magenta',
+  juriMesa: 'installation Future Response',
+  empresaEstagio: 'Web granular Cambridgeshire',
+  assinaturaDigital: '../fake-data/blob/hipster.png',
+  assinaturaDigitalContentType: 'unknown',
+  hash: 'auxiliary',
+};
+
+export const sampleWithPartialData: IResumoAcademico = {
+  id: 33058,
+  temaProjecto: 'e-commerce innovate',
+  notaProjecto: 4,
+  localEstagio: 'strategic',
+  notaEstagio: 2,
+  mediaFinalDisciplina: 20,
+  classificacaoFinal: 18,
+  numeroGrupo: 'Peixe Congelado Algodão',
+  mesaDefesa: 'Dynamic Líbano',
+  livroRegistro: 'Lithuanian Computador',
+  numeroFolha: 'ADP',
+  chefeSecretariaPedagogica: 'Linda up Executive',
+  subDirectorPedagogico: 'Belize Rústico User-friendly',
+  directorGeral: 'success 24/7',
+  tutorProjecto: 'matrix Assistant navigate',
+  juriMesa: 'Pizza proactive Saboroso',
+  empresaEstagio: 'withdrawal synergistic',
+  assinaturaDigital: '../fake-data/blob/hipster.png',
+  assinaturaDigitalContentType: 'unknown',
+  hash: 'invoice transmitting',
+};
+
+export const sampleWithFullData: IResumoAcademico = {
+  id: 82695,
+  temaProjecto: 'neural ouro',
+  notaProjecto: 0,
+  observacao: '../fake-data/blob/hipster.txt',
+  localEstagio: 'Algodão',
+  notaEstagio: 4,
+  mediaFinalDisciplina: 4,
+  classificacaoFinal: 2,
+  numeroGrupo: 'Refinado',
+  mesaDefesa: 'Fresco Orchestrator',
+  livroRegistro: 'Credit',
+  numeroFolha: 'Moroccan connect',
+  chefeSecretariaPedagogica: 'portals',
+  subDirectorPedagogico: 'Mobility Avon Kong',
+  directorGeral: 'Saboroso',
+  tutorProjecto: 'UIC-Franc',
+  juriMesa: 'matrix Legacy reinvent',
+  empresaEstagio: 'Alabama Bacon Bicicleta',
+  assinaturaDigital: '../fake-data/blob/hipster.png',
+  assinaturaDigitalContentType: 'unknown',
+  hash: 'Ohio web-readiness Prático',
+};
+
+export const sampleWithNewData: NewResumoAcademico = {
+  temaProjecto: 'Stream bus',
+  notaProjecto: 17,
+  notaEstagio: 9,
+  mediaFinalDisciplina: 2,
+  classificacaoFinal: 19,
+  numeroGrupo: 'attitude Feito ameixa',
+  mesaDefesa: 'SMTP Artesanal Algodão',
+  livroRegistro: 'invoice',
+  numeroFolha: 'Investment',
+  chefeSecretariaPedagogica: 'Cambridgeshire transform Russian',
+  subDirectorPedagogico: 'Queijo National',
+  directorGeral: 'Macedónia',
+  tutorProjecto: 'executive Identity',
+  juriMesa: 'Salada Investor CSS',
+  empresaEstagio: 'Global purposes partnerships',
+  assinaturaDigital: '../fake-data/blob/hipster.png',
+  assinaturaDigitalContentType: 'unknown',
+  hash: 'Security Bicicleta salmão',
+  id: null,
+};
+
+Object.freeze(sampleWithNewData);
+Object.freeze(sampleWithRequiredData);
+Object.freeze(sampleWithPartialData);
+Object.freeze(sampleWithFullData);

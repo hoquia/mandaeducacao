@@ -1,0 +1,164 @@
+<div>
+  <h2 id="page-heading" data-cy="ProcessoSelectivoMatriculaHeading">
+    <span appTranslate="longonkeloApp.processoSelectivoMatricula.home.title">Processo Selectivo Matriculas</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.processoSelectivoMatricula.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-processo-selectivo-matricula"
+        [routerLink]="['/processo-selectivo-matricula/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.processoSelectivoMatricula.home.createLabel"> Criar novo(a) Processo Selectivo Matricula </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="processoSelectivoMatriculas?.length === 0">
+    <span appTranslate="longonkeloApp.processoSelectivoMatricula.home.notFound">Nenhum Processo Selectivo Matriculas encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="processoSelectivoMatriculas && processoSelectivoMatriculas.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="localTeste">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.processoSelectivoMatricula.localTeste">Local Teste</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="dataTeste">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.processoSelectivoMatricula.dataTeste">Data Teste</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="notaTeste">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.processoSelectivoMatricula.notaTeste">Nota Teste</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isAdmitido">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.processoSelectivoMatricula.isAdmitido">Is Admitido</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="utilizador.login">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.processoSelectivoMatricula.utilizador">Utilizador</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="turma.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.processoSelectivoMatricula.turma">Turma</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="discente.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.processoSelectivoMatricula.discente">Discente</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let processoSelectivoMatricula of processoSelectivoMatriculas; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/processo-selectivo-matricula', processoSelectivoMatricula.id, 'view']">{{
+              processoSelectivoMatricula.id
+            }}</a>
+          </td>
+          <td>{{ processoSelectivoMatricula.localTeste }}</td>
+          <td>{{ processoSelectivoMatricula.dataTeste | formatMediumDatetime }}</td>
+          <td>{{ processoSelectivoMatricula.notaTeste }}</td>
+          <td>{{ processoSelectivoMatricula.isAdmitido }}</td>
+          <td>
+            {{ processoSelectivoMatricula.utilizador?.login }}
+          </td>
+          <td>
+            <div *ngIf="processoSelectivoMatricula.turma">
+              <a [routerLink]="['/turma', processoSelectivoMatricula.turma.id, 'view']">{{ processoSelectivoMatricula.turma.descricao }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="processoSelectivoMatricula.discente">
+              <a [routerLink]="['/discente', processoSelectivoMatricula.discente.id, 'view']">{{
+                processoSelectivoMatricula.discente.nome
+              }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/processo-selectivo-matricula', processoSelectivoMatricula.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/processo-selectivo-matricula', processoSelectivoMatricula.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(processoSelectivoMatricula)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="processoSelectivoMatriculas && processoSelectivoMatriculas.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

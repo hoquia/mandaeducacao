@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity AplicacaoRecibo.
+    -->
+    <changeSet id="20230904002317-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="item_factura_id"
+                                 baseTableName="aplicacao_recibo"
+                                 constraintName="fk_aplicacao_recibo__item_factura_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="item_factura"/>
+
+        <addForeignKeyConstraint baseColumnNames="factura_id"
+                                 baseTableName="aplicacao_recibo"
+                                 constraintName="fk_aplicacao_recibo__factura_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="factura"/>
+
+        <addForeignKeyConstraint baseColumnNames="recibo_id"
+                                 baseTableName="aplicacao_recibo"
+                                 constraintName="fk_aplicacao_recibo__recibo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="recibo"/>
+    </changeSet>
+</databaseChangeLog>

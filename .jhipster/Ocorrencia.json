@@ -1,0 +1,99 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002252",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "ocorrencia",
+  "fields": [
+    {
+      "fieldName": "uniqueOcorrencia",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "evidencia",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    },
+    {
+      "fieldName": "hash",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "timestamp",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Ocorrencia",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "ocorrencia",
+      "otherEntityRelationshipName": "referencia",
+      "relationshipName": "ocorrencia",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "anoLectivo",
+      "otherEntityRelationshipName": "ocorrencia",
+      "relationshipName": "anoLectivo",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "utilizador",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "ocorrencia",
+      "otherEntityRelationshipName": "ocorrencia",
+      "relationshipName": "referencia",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "docente",
+      "otherEntityRelationshipName": "ocorrencia",
+      "relationshipName": "docente",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "numeroMatricula",
+      "otherEntityName": "matricula",
+      "otherEntityRelationshipName": "ocorrencia",
+      "relationshipName": "matricula",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "categoriaOcorrencia",
+      "otherEntityRelationshipName": "ocorrencia",
+      "relationshipName": "estado",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "numero",
+      "otherEntityName": "licao",
+      "otherEntityRelationshipName": "ocorrencias",
+      "relationshipName": "licao",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,120 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="notasGeralDisciplina">
+      <h2 data-cy="notasGeralDisciplinaDetailsHeading">
+        <span appTranslate="longonkeloApp.notasGeralDisciplina.detail.title">Notas Geral Disciplina</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ notasGeralDisciplina.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.notasGeralDisciplina.chaveComposta">Chave Composta</span></dt>
+        <dd>
+          <span>{{ notasGeralDisciplina.chaveComposta }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.notasGeralDisciplina.periodoLancamento">Periodo Lancamento</span></dt>
+        <dd>
+          <span>{{ notasGeralDisciplina.periodoLancamento }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.notasGeralDisciplina.media1">Media 1</span></dt>
+        <dd>
+          <span>{{ notasGeralDisciplina.media1 }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.notasGeralDisciplina.media2">Media 2</span></dt>
+        <dd>
+          <span>{{ notasGeralDisciplina.media2 }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.notasGeralDisciplina.media3">Media 3</span></dt>
+        <dd>
+          <span>{{ notasGeralDisciplina.media3 }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.notasGeralDisciplina.exame">Exame</span></dt>
+        <dd>
+          <span>{{ notasGeralDisciplina.exame }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.notasGeralDisciplina.recurso">Recurso</span></dt>
+        <dd>
+          <span>{{ notasGeralDisciplina.recurso }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.notasGeralDisciplina.exameEspecial">Exame Especial</span></dt>
+        <dd>
+          <span>{{ notasGeralDisciplina.exameEspecial }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.notasGeralDisciplina.notaConselho">Nota Conselho</span></dt>
+        <dd>
+          <span>{{ notasGeralDisciplina.notaConselho }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.notasGeralDisciplina.mediaFinalDisciplina">Media Final Disciplina</span></dt>
+        <dd>
+          <span>{{ notasGeralDisciplina.mediaFinalDisciplina }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.notasGeralDisciplina.timestamp">Timestamp</span></dt>
+        <dd>
+          <span>{{ notasGeralDisciplina.timestamp | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.notasGeralDisciplina.hash">Hash</span></dt>
+        <dd>
+          <span>{{ notasGeralDisciplina.hash }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.notasGeralDisciplina.faltaJusticada">Falta Justicada</span></dt>
+        <dd>
+          <span>{{ notasGeralDisciplina.faltaJusticada }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.notasGeralDisciplina.faltaInjustificada">Falta Injustificada</span></dt>
+        <dd>
+          <span>{{ notasGeralDisciplina.faltaInjustificada }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.notasGeralDisciplina.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ notasGeralDisciplina.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.notasGeralDisciplina.docente">Docente</span></dt>
+        <dd>
+          <div *ngIf="notasGeralDisciplina.docente">
+            <a [routerLink]="['/docente', notasGeralDisciplina.docente.id, 'view']">{{ notasGeralDisciplina.docente.nome }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.notasGeralDisciplina.disciplinaCurricular">Disciplina Curricular</span></dt>
+        <dd>
+          <div *ngIf="notasGeralDisciplina.disciplinaCurricular">
+            <a [routerLink]="['/disciplina-curricular', notasGeralDisciplina.disciplinaCurricular.id, 'view']">{{
+              notasGeralDisciplina.disciplinaCurricular.descricao
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.notasGeralDisciplina.matricula">Matricula</span></dt>
+        <dd>
+          <div *ngIf="notasGeralDisciplina.matricula">
+            <a [routerLink]="['/matricula', notasGeralDisciplina.matricula.id, 'view']">{{
+              notasGeralDisciplina.matricula.numeroMatricula
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.notasGeralDisciplina.estado">Estado</span></dt>
+        <dd>
+          <div *ngIf="notasGeralDisciplina.estado">
+            <a [routerLink]="['/estado-disciplina-curricular', notasGeralDisciplina.estado.id, 'view']">{{
+              notasGeralDisciplina.estado.descricao
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/notas-geral-disciplina', notasGeralDisciplina.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+{
+  "longonkeloApp": {
+    "formacaoDocente": {
+      "home": {
+        "title": "Formacao Docentes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Formacao Docente",
+        "createOrEditLabel": "Criar ou editar Formacao Docente",
+        "notFound": "Nenhum Formacao Docentes encontrado"
+      },
+      "created": "Um novo Formacao Docente foi criado com o identificador {{ param }}",
+      "updated": "Formacao Docente com identificador {{ param }} foi actualizado",
+      "deleted": "Formacao Docente com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Formacao Docente {{ id }}?"
+      },
+      "detail": {
+        "title": "Formacao Docente"
+      },
+      "id": "ID",
+      "instituicaoEnsino": "Instituicao Ensino",
+      "areaFormacao": "Area Formacao",
+      "curso": "Curso",
+      "especialidade": "Especialidade",
+      "grau": "Grau",
+      "inicio": "Inicio",
+      "fim": "Fim",
+      "anexo": "Anexo",
+      "grauAcademico": "Grau Academico",
+      "docente": "Docente"
+    }
+  }
+}

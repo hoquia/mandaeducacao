@@ -1,0 +1,470 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-instituicao-ensino-heading"
+        data-cy="InstituicaoEnsinoCreateUpdateHeading"
+        appTranslate="longonkeloApp.instituicaoEnsino.home.createOrEditLabel"
+      >
+        Criar ou editar Instituicao Ensino
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.logotipo" for="field_logotipo">Logotipo</label>
+          <div>
+            <img
+              [src]="'data:' + editForm.get('logotipoContentType')!.value + ';base64,' + editForm.get('logotipo')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('logotipo')!.value"
+              alt="instituicaoEnsino image"
+            />
+            <div *ngIf="editForm.get('logotipo')!.value" class="form-text text-danger clearfix">
+              <span class="pull-start"
+                >{{ editForm.get('logotipoContentType')!.value }}, {{ byteSize(editForm.get('logotipo')!.value!) }}</span
+              >
+              <button
+                type="button"
+                (click)="clearInputImage('logotipo', 'logotipoContentType', 'file_logotipo')"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_logotipo"
+              data-cy="logotipo"
+              (change)="setFileData($event, 'logotipo', true)"
+              accept="image/*"
+              appTranslate="entity.action.addimage"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="logotipo" id="field_logotipo" data-cy="logotipo" formControlName="logotipo" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="logotipoContentType"
+            id="field_logotipoContentType"
+            formControlName="logotipoContentType"
+          />
+          <div *ngIf="editForm.get('logotipo')!.invalid && (editForm.get('logotipo')!.dirty || editForm.get('logotipo')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('logotipo')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.unidadeOrganica" for="field_unidadeOrganica"
+            >Unidade Organica</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="unidadeOrganica"
+            id="field_unidadeOrganica"
+            data-cy="unidadeOrganica"
+            formControlName="unidadeOrganica"
+          />
+          <div
+            *ngIf="
+              editForm.get('unidadeOrganica')!.invalid &&
+              (editForm.get('unidadeOrganica')!.dirty || editForm.get('unidadeOrganica')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('unidadeOrganica')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('unidadeOrganica')?.errors?.minlength"
+              appTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 5 }"
+            >
+              Este campo deve ter pelo menos 5 caracteres.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('unidadeOrganica')?.errors?.maxlength"
+              appTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 100 }"
+            >
+              Este campo não pode ter mais que 100 caracteres.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.nomeFiscal" for="field_nomeFiscal">Nome Fiscal</label>
+          <input
+            type="text"
+            class="form-control"
+            name="nomeFiscal"
+            id="field_nomeFiscal"
+            data-cy="nomeFiscal"
+            formControlName="nomeFiscal"
+          />
+          <div *ngIf="editForm.get('nomeFiscal')!.invalid && (editForm.get('nomeFiscal')!.dirty || editForm.get('nomeFiscal')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('nomeFiscal')?.errors?.minlength"
+              appTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 5 }"
+            >
+              Este campo deve ter pelo menos 5 caracteres.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('nomeFiscal')?.errors?.maxlength"
+              appTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 100 }"
+            >
+              Este campo não pode ter mais que 100 caracteres.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.numero" for="field_numero">Numero</label>
+          <input type="text" class="form-control" name="numero" id="field_numero" data-cy="numero" formControlName="numero" />
+          <div *ngIf="editForm.get('numero')!.invalid && (editForm.get('numero')!.dirty || editForm.get('numero')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('numero')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.nif" for="field_nif">Nif</label>
+          <input type="text" class="form-control" name="nif" id="field_nif" data-cy="nif" formControlName="nif" />
+          <div *ngIf="editForm.get('nif')!.invalid && (editForm.get('nif')!.dirty || editForm.get('nif')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('nif')?.errors?.maxlength"
+              appTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 15 }"
+            >
+              Este campo não pode ter mais que 15 caracteres.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.cae" for="field_cae">Cae</label>
+          <input type="text" class="form-control" name="cae" id="field_cae" data-cy="cae" formControlName="cae" />
+          <div *ngIf="editForm.get('cae')!.invalid && (editForm.get('cae')!.dirty || editForm.get('cae')!.touched)"></div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.niss" for="field_niss">Niss</label>
+          <input type="text" class="form-control" name="niss" id="field_niss" data-cy="niss" formControlName="niss" />
+          <div *ngIf="editForm.get('niss')!.invalid && (editForm.get('niss')!.dirty || editForm.get('niss')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('niss')?.errors?.maxlength"
+              appTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 15 }"
+            >
+              Este campo não pode ter mais que 15 caracteres.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.fundador" for="field_fundador">Fundador</label>
+          <input type="text" class="form-control" name="fundador" id="field_fundador" data-cy="fundador" formControlName="fundador" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.fundacao" for="field_fundacao">Fundacao</label>
+          <div class="input-group">
+            <input
+              id="field_fundacao"
+              data-cy="fundacao"
+              type="text"
+              class="form-control"
+              name="fundacao"
+              ngbDatepicker
+              #fundacaoDp="ngbDatepicker"
+              formControlName="fundacao"
+            />
+            <button type="button" class="btn btn-secondary" (click)="fundacaoDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.dimensao" for="field_dimensao">Dimensao</label>
+          <input type="text" class="form-control" name="dimensao" id="field_dimensao" data-cy="dimensao" formControlName="dimensao" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.slogam" for="field_slogam">Slogam</label>
+          <input type="text" class="form-control" name="slogam" id="field_slogam" data-cy="slogam" formControlName="slogam" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.telefone" for="field_telefone">Telefone</label>
+          <input type="text" class="form-control" name="telefone" id="field_telefone" data-cy="telefone" formControlName="telefone" />
+          <div *ngIf="editForm.get('telefone')!.invalid && (editForm.get('telefone')!.dirty || editForm.get('telefone')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('telefone')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.telemovel" for="field_telemovel">Telemovel</label>
+          <input type="text" class="form-control" name="telemovel" id="field_telemovel" data-cy="telemovel" formControlName="telemovel" />
+          <div *ngIf="editForm.get('telemovel')!.invalid && (editForm.get('telemovel')!.dirty || editForm.get('telemovel')!.touched)"></div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.email" for="field_email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+          <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('email')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.website" for="field_website">Website</label>
+          <input type="text" class="form-control" name="website" id="field_website" data-cy="website" formControlName="website" />
+          <div *ngIf="editForm.get('website')!.invalid && (editForm.get('website')!.dirty || editForm.get('website')!.touched)"></div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.codigoPostal" for="field_codigoPostal"
+            >Codigo Postal</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="codigoPostal"
+            id="field_codigoPostal"
+            data-cy="codigoPostal"
+            formControlName="codigoPostal"
+          />
+          <div
+            *ngIf="editForm.get('codigoPostal')!.invalid && (editForm.get('codigoPostal')!.dirty || editForm.get('codigoPostal')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('codigoPostal')?.errors?.maxlength"
+              appTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 10 }"
+            >
+              Este campo não pode ter mais que 10 caracteres.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.enderecoDetalhado" for="field_enderecoDetalhado"
+            >Endereco Detalhado</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="enderecoDetalhado"
+            id="field_enderecoDetalhado"
+            data-cy="enderecoDetalhado"
+            formControlName="enderecoDetalhado"
+          />
+          <div
+            *ngIf="
+              editForm.get('enderecoDetalhado')!.invalid &&
+              (editForm.get('enderecoDetalhado')!.dirty || editForm.get('enderecoDetalhado')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('enderecoDetalhado')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('enderecoDetalhado')?.errors?.minlength"
+              appTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 5 }"
+            >
+              Este campo deve ter pelo menos 5 caracteres.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.latitude" for="field_latitude">Latitude</label>
+          <input type="number" class="form-control" name="latitude" id="field_latitude" data-cy="latitude" formControlName="latitude" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.longitude" for="field_longitude">Longitude</label>
+          <input type="number" class="form-control" name="longitude" id="field_longitude" data-cy="longitude" formControlName="longitude" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.descricao" for="field_descricao">Descricao</label>
+          <textarea class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao"></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.isComparticipada" for="field_isComparticipada"
+            >Is Comparticipada</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isComparticipada"
+            id="field_isComparticipada"
+            data-cy="isComparticipada"
+            formControlName="isComparticipada"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.termosCompromissos" for="field_termosCompromissos"
+            >Termos Compromissos</label
+          >
+          <textarea
+            class="form-control"
+            name="termosCompromissos"
+            id="field_termosCompromissos"
+            data-cy="termosCompromissos"
+            formControlName="termosCompromissos"
+          ></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.categoriaInstituicao" for="field_categoriaInstituicao"
+            >Categoria Instituicao</label
+          >
+          <select
+            class="form-control"
+            id="field_categoriaInstituicao"
+            data-cy="categoriaInstituicao"
+            name="categoriaInstituicao"
+            formControlName="categoriaInstituicao"
+            [compareWith]="compareLookupItem"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              {{ lookupItemOption.descricao }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.unidadePagadora" for="field_unidadePagadora"
+            >Unidade Pagadora</label
+          >
+          <select
+            class="form-control"
+            id="field_unidadePagadora"
+            data-cy="unidadePagadora"
+            name="unidadePagadora"
+            formControlName="unidadePagadora"
+            [compareWith]="compareLookupItem"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              {{ lookupItemOption.descricao }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.tipoVinculo" for="field_tipoVinculo">Tipo Vinculo</label>
+          <select
+            class="form-control"
+            id="field_tipoVinculo"
+            data-cy="tipoVinculo"
+            name="tipoVinculo"
+            formControlName="tipoVinculo"
+            [compareWith]="compareLookupItem"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              {{ lookupItemOption.descricao }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.tipoInstalacao" for="field_tipoInstalacao"
+            >Tipo Instalacao</label
+          >
+          <select
+            class="form-control"
+            id="field_tipoInstalacao"
+            data-cy="tipoInstalacao"
+            name="tipoInstalacao"
+            formControlName="tipoInstalacao"
+            [compareWith]="compareLookupItem"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              {{ lookupItemOption.descricao }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.instituicaoEnsino.sede" for="field_sede">Sede</label>
+          <select
+            class="form-control"
+            id="field_sede"
+            data-cy="sede"
+            name="sede"
+            formControlName="sede"
+            [compareWith]="compareInstituicaoEnsino"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="instituicaoEnsinoOption" *ngFor="let instituicaoEnsinoOption of instituicaoEnsinosSharedCollection">
+              {{ instituicaoEnsinoOption.unidadeOrganica }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

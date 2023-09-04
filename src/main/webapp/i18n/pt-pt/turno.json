@@ -1,0 +1,29 @@
+{
+  "longonkeloApp": {
+    "turno": {
+      "home": {
+        "title": "Turnos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Turno",
+        "createOrEditLabel": "Criar ou editar Turno",
+        "notFound": "Nenhum Turnos encontrado"
+      },
+      "created": "Um novo Turno foi criado com o identificador {{ param }}",
+      "updated": "Turno com identificador {{ param }} foi actualizado",
+      "deleted": "Turno com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Turno {{ id }}?"
+      },
+      "detail": {
+        "title": "Turno"
+      },
+      "id": "ID",
+      "codigo": "Codigo",
+      "nome": "Nome",
+      "responsavelTurno": "Responsavel Turno",
+      "precoEmolumento": "Preco Emolumento",
+      "periodoHorario": "Periodo Horario",
+      "turma": "Turma"
+    }
+  }
+}

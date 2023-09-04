@@ -1,0 +1,155 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-anexo-discente-heading"
+        data-cy="AnexoDiscenteCreateUpdateHeading"
+        appTranslate="longonkeloApp.anexoDiscente.home.createOrEditLabel"
+      >
+        Criar ou editar Anexo Discente
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anexoDiscente.categoria" for="field_categoria">Categoria</label>
+          <select class="form-control" name="categoria" formControlName="categoria" id="field_categoria" data-cy="categoria">
+            <option [ngValue]="null">{{ 'longonkeloApp.CategoriaAnexo.null' | translate }}</option>
+            <option *ngFor="let categoriaAnexo of categoriaAnexoValues" [value]="categoriaAnexo">
+              {{ 'longonkeloApp.CategoriaAnexo.' + categoriaAnexo | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('categoria')!.invalid && (editForm.get('categoria')!.dirty || editForm.get('categoria')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('categoria')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anexoDiscente.anexo" for="field_anexo">Anexo</label>
+          <div>
+            <div *ngIf="editForm.get('anexo')!.value" class="form-text text-danger clearfix">
+              <a
+                class="pull-start"
+                (click)="openFile(editForm.get('anexo')!.value!, editForm.get('anexoContentType')!.value!)"
+                appTranslate="entity.action.open"
+                >Abrir</a
+              ><br />
+              <span class="pull-start">{{ editForm.get('anexoContentType')!.value }}, {{ byteSize(editForm.get('anexo')!.value!) }}</span>
+              <button
+                type="button"
+                (click)="editForm.patchValue({ anexo: undefined, anexoContentType: undefined })"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_anexo"
+              data-cy="anexo"
+              (change)="setFileData($event, 'anexo', false)"
+              appTranslate="entity.action.addblob"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="anexo" id="field_anexo" data-cy="anexo" formControlName="anexo" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="anexoContentType"
+            id="field_anexoContentType"
+            formControlName="anexoContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anexoDiscente.descricao" for="field_descricao">Descricao</label>
+          <textarea class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao"></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anexoDiscente.validade" for="field_validade">Validade</label>
+          <div class="input-group">
+            <input
+              id="field_validade"
+              data-cy="validade"
+              type="text"
+              class="form-control"
+              name="validade"
+              ngbDatepicker
+              #validadeDp="ngbDatepicker"
+              formControlName="validade"
+            />
+            <button type="button" class="btn btn-secondary" (click)="validadeDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anexoDiscente.timestamp" for="field_timestamp">Timestamp</label>
+          <div class="d-flex">
+            <input
+              id="field_timestamp"
+              data-cy="timestamp"
+              type="datetime-local"
+              class="form-control"
+              name="timestamp"
+              formControlName="timestamp"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anexoDiscente.discente" for="field_discente">Discente</label>
+          <select
+            class="form-control"
+            id="field_discente"
+            data-cy="discente"
+            name="discente"
+            formControlName="discente"
+            [compareWith]="compareDiscente"
+          >
+            <option *ngIf="editForm.get(['discente'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="discenteOption" *ngFor="let discenteOption of discentesSharedCollection">{{ discenteOption.nome }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['discente'])!.invalid && (editForm.get(['discente'])!.dirty || editForm.get(['discente'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['discente'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

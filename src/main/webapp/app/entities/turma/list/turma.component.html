@@ -1,0 +1,354 @@
+<div>
+  <h2 id="page-heading" data-cy="TurmaHeading">
+    <span appTranslate="longonkeloApp.turma.home.title">Turmas</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.turma.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-turma"
+        [routerLink]="['/turma/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.turma.home.createLabel"> Criar novo(a) Turma </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="turmas?.length === 0">
+    <span appTranslate="longonkeloApp.turma.home.notFound">Nenhum Turmas encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="turmas && turmas.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="chaveComposta">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.turma.chaveComposta">Chave Composta</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="tipoTurma">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.turma.tipoTurma">Tipo Turma</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="sala">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.turma.sala">Sala</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.turma.descricao">Descricao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="lotacao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.turma.lotacao">Lotacao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="confirmado">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.turma.confirmado">Confirmado</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="abertura">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.turma.abertura">Abertura</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="encerramento">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.turma.encerramento">Encerramento</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="criterioDescricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.turma.criterioDescricao">Criterio Descricao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="criterioOrdenacaoNumero">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.turma.criterioOrdenacaoNumero">Criterio Ordenacao Numero</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="fazInscricaoDepoisMatricula">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.turma.fazInscricaoDepoisMatricula">Faz Inscricao Depois Matricula</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isDisponivel">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.turma.isDisponivel">Is Disponivel</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="utilizador.login">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.turma.utilizador">Utilizador</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="referencia.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.turma.referencia">Referencia</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="planoCurricular.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.turma.planoCurricular">Plano Curricular</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="turno.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.turma.turno">Turno</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let turma of turmas; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/turma', turma.id, 'view']">{{ turma.id }}</a>
+          </td>
+          <td>{{ turma.chaveComposta }}</td>
+          <td appTranslate="{{ 'longonkeloApp.TipoTurma.' + turma.tipoTurma }}">{{ turma.tipoTurma }}</td>
+          <td>{{ turma.sala }}</td>
+          <td>{{ turma.descricao }}</td>
+          <td>{{ turma.lotacao }}</td>
+          <td>{{ turma.confirmado }}</td>
+          <td>{{ turma.abertura | formatMediumDate }}</td>
+          <td>{{ turma.encerramento | formatMediumDate }}</td>
+          <td appTranslate="{{ 'longonkeloApp.CriterioDescricaoTurma.' + turma.criterioDescricao }}">{{ turma.criterioDescricao }}</td>
+          <td appTranslate="{{ 'longonkeloApp.CriterioNumeroChamada.' + turma.criterioOrdenacaoNumero }}">
+            {{ turma.criterioOrdenacaoNumero }}
+          </td>
+          <td>{{ turma.fazInscricaoDepoisMatricula }}</td>
+          <td>{{ turma.isDisponivel }}</td>
+          <td>
+            {{ turma.utilizador?.login }}
+          </td>
+          <td>
+            <div *ngIf="turma.referencia">
+              <a [routerLink]="['/turma', turma.referencia.id, 'view']">{{ turma.referencia.descricao }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="turma.planoCurricular">
+              <a [routerLink]="['/plano-curricular', turma.planoCurricular.id, 'view']">{{ turma.planoCurricular.descricao }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="turma.turno">
+              <a [routerLink]="['/turno', turma.turno.id, 'view']">{{ turma.turno.nome }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/turma']"
+                [queryParams]="{ 'filter[referenciaId.in]': turma.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.turma.turma' | translate) }"
+                  >Show Turma</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/horario']"
+                [queryParams]="{ 'filter[turmaId.in]': turma.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.turma.horarios' | translate) }"
+                  >Show Horario</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/notas-periodica-disciplina']"
+                [queryParams]="{ 'filter[turmaId.in]': turma.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.turma.notasPeriodicaDisciplina' | translate) }"
+                  >Show Notas Periodica Disciplina</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/processo-selectivo-matricula']"
+                [queryParams]="{ 'filter[turmaId.in]': turma.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.turma.processoSelectivoMatricula' | translate) }"
+                  >Show Processo Selectivo Matricula</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/plano-aula']"
+                [queryParams]="{ 'filter[turmaId.in]': turma.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.turma.planoAula' | translate) }"
+                  >Show Plano Aula</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/matricula']"
+                [queryParams]="{ 'filter[turmaId.in]': turma.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.turma.matriculas' | translate) }"
+                  >Show Matricula</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/resumo-academico']"
+                [queryParams]="{ 'filter[ultimaTurmaMatriculadaId.in]': turma.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.turma.resumoAcademico' | translate) }"
+                  >Show Resumo Academico</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/responsavel-turma']"
+                [queryParams]="{ 'filter[turmaId.in]': turma.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.turma.responsaveis' | translate) }"
+                  >Show Responsavel Turma</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/dissertacao-final-curso']"
+                [queryParams]="{ 'filter[turmaId.in]': turma.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.turma.dissertacaoFinalCurso' | translate) }"
+                  >Show Dissertacao Final Curso</span
+                >
+              </button>
+              <button type="submit" [routerLink]="['/turma', turma.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/turma', turma.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(turma)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="turmas && turmas.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

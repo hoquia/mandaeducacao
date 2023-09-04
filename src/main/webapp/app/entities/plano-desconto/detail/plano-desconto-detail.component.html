@@ -1,0 +1,55 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="planoDesconto">
+      <h2 data-cy="planoDescontoDetailsHeading"><span appTranslate="longonkeloApp.planoDesconto.detail.title">Plano Desconto</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ planoDesconto.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoDesconto.codigo">Codigo</span></dt>
+        <dd>
+          <span>{{ planoDesconto.codigo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoDesconto.nome">Nome</span></dt>
+        <dd>
+          <span>{{ planoDesconto.nome }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoDesconto.isIsentoMulta">Is Isento Multa</span></dt>
+        <dd>
+          <span>{{ planoDesconto.isIsentoMulta }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoDesconto.isIsentoJuro">Is Isento Juro</span></dt>
+        <dd>
+          <span>{{ planoDesconto.isIsentoJuro }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoDesconto.desconto">Desconto</span></dt>
+        <dd>
+          <span>{{ planoDesconto.desconto }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoDesconto.categoriasEmolumento">Categorias Emolumento</span></dt>
+        <dd>
+          <span *ngFor="let categoriasEmolumento of planoDesconto.categoriasEmolumentos; let last = last">
+            <a [routerLink]="['/categoria-emolumento', categoriasEmolumento.id, 'view']">{{ categoriasEmolumento.nome }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/plano-desconto', planoDesconto.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

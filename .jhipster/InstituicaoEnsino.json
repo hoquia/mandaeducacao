@@ -1,0 +1,172 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002215",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "instituicao_ensino",
+  "fields": [
+    {
+      "fieldName": "logotipo",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "unidadeOrganica",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique", "minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "100",
+      "fieldValidateRulesMinlength": "5"
+    },
+    {
+      "fieldName": "nomeFiscal",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique", "maxlength", "minlength"],
+      "fieldValidateRulesMaxlength": "100",
+      "fieldValidateRulesMinlength": "5"
+    },
+    {
+      "fieldName": "numero",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique", "required"]
+    },
+    {
+      "fieldName": "nif",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique", "maxlength"],
+      "fieldValidateRulesMaxlength": "15"
+    },
+    {
+      "fieldName": "cae",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "niss",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique", "maxlength"],
+      "fieldValidateRulesMaxlength": "15"
+    },
+    {
+      "fieldName": "fundador",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "fundacao",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dimensao",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "slogam",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "telefone",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "telemovel",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique", "required"]
+    },
+    {
+      "fieldName": "website",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "codigoPostal",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "10"
+    },
+    {
+      "fieldName": "enderecoDetalhado",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "minlength"],
+      "fieldValidateRulesMinlength": "5"
+    },
+    {
+      "fieldName": "latitude",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "longitude",
+      "fieldType": "Double"
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "isComparticipada",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "termosCompromissos",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "InstituicaoEnsino",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "instituicaoEnsino",
+      "otherEntityRelationshipName": "sede",
+      "relationshipName": "instituicaoEnsino",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "provedorNotificacao",
+      "otherEntityRelationshipName": "instituicao",
+      "relationshipName": "provedorNotificacao",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "categoriaInstituicao",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "unidadePagadora",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "tipoVinculo",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "tipoInstalacao",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "unidadeOrganica",
+      "otherEntityName": "instituicaoEnsino",
+      "otherEntityRelationshipName": "instituicaoEnsino",
+      "relationshipName": "sede",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,41 @@
+{
+  "longonkeloApp": {
+    "planoAula": {
+      "home": {
+        "title": "Plano Aulas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Plano Aula",
+        "createOrEditLabel": "Criar ou editar Plano Aula",
+        "notFound": "Nenhum Plano Aulas encontrado"
+      },
+      "created": "Um novo Plano Aula foi criado com o identificador {{ param }}",
+      "updated": "Plano Aula com identificador {{ param }} foi actualizado",
+      "deleted": "Plano Aula com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Plano Aula {{ id }}?"
+      },
+      "detail": {
+        "title": "Plano Aula"
+      },
+      "id": "ID",
+      "tipoAula": "Tipo Aula",
+      "semanaLectiva": "Semana Lectiva",
+      "perfilEntrada": "Perfil Entrada",
+      "perfilSaida": "Perfil Saida",
+      "assunto": "Assunto",
+      "objectivoGeral": "Objectivo Geral",
+      "objectivosEspecificos": "Objectivos Especificos",
+      "tempoTotalLicao": "Tempo Total Licao",
+      "estado": "Estado",
+      "detalhes": "Detalhes",
+      "licao": "Licao",
+      "anoLectivo": "Ano Lectivo",
+      "utilizador": "Utilizador",
+      "unidadeTematica": "Unidade Tematica",
+      "subUnidadeTematica": "Sub Unidade Tematica",
+      "turma": "Turma",
+      "docente": "Docente",
+      "disciplinaCurricular": "Disciplina Curricular"
+    }
+  }
+}

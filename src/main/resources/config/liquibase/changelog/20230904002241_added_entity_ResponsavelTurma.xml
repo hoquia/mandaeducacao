@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity ResponsavelTurma.
+    -->
+    <changeSet id="20230904002241-1" author="jhipster">
+        <createTable tableName="responsavel_turma">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="de" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="ate" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="descricao" type="${clobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="timestamp" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="utilizador_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="turma_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+        <dropDefaultValue tableName="responsavel_turma" columnName="timestamp" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

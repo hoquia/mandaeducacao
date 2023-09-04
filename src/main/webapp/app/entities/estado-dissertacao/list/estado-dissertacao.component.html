@@ -1,0 +1,144 @@
+<div>
+  <h2 id="page-heading" data-cy="EstadoDissertacaoHeading">
+    <span appTranslate="longonkeloApp.estadoDissertacao.home.title">Estado Dissertacaos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.estadoDissertacao.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-estado-dissertacao"
+        [routerLink]="['/estado-dissertacao/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.estadoDissertacao.home.createLabel"> Criar novo(a) Estado Dissertacao </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="estadoDissertacaos?.length === 0">
+    <span appTranslate="longonkeloApp.estadoDissertacao.home.notFound">Nenhum Estado Dissertacaos encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="estadoDissertacaos && estadoDissertacaos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="codigo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.estadoDissertacao.codigo">Codigo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.estadoDissertacao.nome">Nome</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="etapa">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.estadoDissertacao.etapa">Etapa</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.estadoDissertacao.descricao">Descricao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let estadoDissertacao of estadoDissertacaos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/estado-dissertacao', estadoDissertacao.id, 'view']">{{ estadoDissertacao.id }}</a>
+          </td>
+          <td>{{ estadoDissertacao.codigo }}</td>
+          <td>{{ estadoDissertacao.nome }}</td>
+          <td>{{ estadoDissertacao.etapa }}</td>
+          <td>{{ estadoDissertacao.descricao }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/dissertacao-final-curso']"
+                [queryParams]="{ 'filter[estadoId.in]': estadoDissertacao.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.estadoDissertacao.dissertacaoFinalCurso' | translate) }"
+                  >Show Dissertacao Final Curso</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/estado-dissertacao', estadoDissertacao.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/estado-dissertacao', estadoDissertacao.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(estadoDissertacao)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="estadoDissertacaos && estadoDissertacaos.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

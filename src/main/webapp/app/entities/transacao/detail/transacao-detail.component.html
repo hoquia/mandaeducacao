@@ -1,0 +1,87 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="transacao">
+      <h2 data-cy="transacaoDetailsHeading"><span appTranslate="longonkeloApp.transacao.detail.title">Transacao</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ transacao.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.transacao.montante">Montante</span></dt>
+        <dd>
+          <span>{{ transacao.montante }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.transacao.data">Data</span></dt>
+        <dd>
+          <span>{{ transacao.data | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.transacao.referencia">Referencia</span></dt>
+        <dd>
+          <span>{{ transacao.referencia }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.transacao.estado">Estado</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.EstadoPagamento.' + transacao.estado }}">{{ transacao.estado }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.transacao.saldo">Saldo</span></dt>
+        <dd>
+          <span>{{ transacao.saldo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.transacao.anexo">Anexo</span></dt>
+        <dd>
+          <div *ngIf="transacao.anexo">
+            <a (click)="openFile(transacao.anexo, transacao.anexoContentType)" appTranslate="entity.action.open">Abrir</a>
+            {{ transacao.anexoContentType }}, {{ byteSize(transacao.anexo) }}
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.transacao.timestamp">Timestamp</span></dt>
+        <dd>
+          <span>{{ transacao.timestamp | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.transacao.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ transacao.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.transacao.moeda">Moeda</span></dt>
+        <dd>
+          <div *ngIf="transacao.moeda">
+            <a [routerLink]="['/lookup-item', transacao.moeda.id, 'view']">{{ transacao.moeda.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.transacao.matricula">Matricula</span></dt>
+        <dd>
+          <div *ngIf="transacao.matricula">
+            <a [routerLink]="['/matricula', transacao.matricula.id, 'view']">{{ transacao.matricula.numeroMatricula }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.transacao.meioPagamento">Meio Pagamento</span></dt>
+        <dd>
+          <div *ngIf="transacao.meioPagamento">
+            <a [routerLink]="['/meio-pagamento', transacao.meioPagamento.id, 'view']">{{ transacao.meioPagamento.nome }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.transacao.conta">Conta</span></dt>
+        <dd>
+          <div *ngIf="transacao.conta">
+            <a [routerLink]="['/conta', transacao.conta.id, 'view']">{{ transacao.conta.titulo }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/transacao', transacao.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

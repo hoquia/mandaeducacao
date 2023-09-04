@@ -1,0 +1,32 @@
+{
+  "longonkeloApp": {
+    "historicoSaude": {
+      "home": {
+        "title": "Historico Saudes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Historico Saude",
+        "createOrEditLabel": "Criar ou editar Historico Saude",
+        "notFound": "Nenhum Historico Saudes encontrado"
+      },
+      "created": "Um novo Historico Saude foi criado com o identificador {{ param }}",
+      "updated": "Historico Saude com identificador {{ param }} foi actualizado",
+      "deleted": "Historico Saude com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Historico Saude {{ id }}?"
+      },
+      "detail": {
+        "title": "Historico Saude"
+      },
+      "id": "ID",
+      "nome": "Nome",
+      "descricao": "Descricao",
+      "inicio": "Inicio",
+      "fim": "Fim",
+      "situacaoPrescricao": "Situacao Prescricao",
+      "timestamp": "Timestamp",
+      "hash": "Hash",
+      "utilizador": "Utilizador",
+      "discente": "Discente"
+    }
+  }
+}

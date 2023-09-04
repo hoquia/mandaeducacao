@@ -1,0 +1,46 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002303",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "sequencia_documento",
+  "fields": [
+    {
+      "fieldName": "sequencia",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "data",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "hash",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "timestamp",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "SequenciaDocumento",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "serie",
+      "otherEntityName": "serieDocumento",
+      "otherEntityRelationshipName": "sequenciaDocumento",
+      "relationshipName": "serie",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceImpl"
+}

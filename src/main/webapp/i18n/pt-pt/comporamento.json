@@ -1,0 +1,12 @@
+{
+  "longonkeloApp": {
+    "Comporamento": {
+      "null": "",
+      "BOM": "BOM",
+      "MEDIO": "MEDIO",
+      "RAZOAVEL": "RAZOAVEL",
+      "MAU": "MAU",
+      "NORMAL": "NORMAL"
+    }
+  }
+}

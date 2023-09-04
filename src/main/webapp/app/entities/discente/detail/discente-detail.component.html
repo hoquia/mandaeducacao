@@ -1,0 +1,203 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="discente">
+      <h2 data-cy="discenteDetailsHeading"><span appTranslate="longonkeloApp.discente.detail.title">Discente</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ discente.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.fotografia">Fotografia</span></dt>
+        <dd>
+          <div *ngIf="discente.fotografia">
+            <a (click)="openFile(discente.fotografia, discente.fotografiaContentType)">
+              <img
+                [src]="'data:' + discente.fotografiaContentType + ';base64,' + discente.fotografia"
+                style="max-width: 100%"
+                alt="discente image"
+              />
+            </a>
+            {{ discente.fotografiaContentType }}, {{ byteSize(discente.fotografia) }}
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.nome">Nome</span></dt>
+        <dd>
+          <span>{{ discente.nome }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.nascimento">Nascimento</span></dt>
+        <dd>
+          <span>{{ discente.nascimento | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.documentoNumero">Documento Numero</span></dt>
+        <dd>
+          <span>{{ discente.documentoNumero }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.documentoEmissao">Documento Emissao</span></dt>
+        <dd>
+          <span>{{ discente.documentoEmissao | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.documentoValidade">Documento Validade</span></dt>
+        <dd>
+          <span>{{ discente.documentoValidade | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.nif">Nif</span></dt>
+        <dd>
+          <span>{{ discente.nif }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.sexo">Sexo</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.Sexo.' + discente.sexo }}">{{ discente.sexo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.pai">Pai</span></dt>
+        <dd>
+          <span>{{ discente.pai }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.mae">Mae</span></dt>
+        <dd>
+          <span>{{ discente.mae }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.telefonePrincipal">Telefone Principal</span></dt>
+        <dd>
+          <span>{{ discente.telefonePrincipal }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.telefoneParente">Telefone Parente</span></dt>
+        <dd>
+          <span>{{ discente.telefoneParente }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.email">Email</span></dt>
+        <dd>
+          <span>{{ discente.email }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.isEncarregadoEducacao">Is Encarregado Educacao</span></dt>
+        <dd>
+          <span>{{ discente.isEncarregadoEducacao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.isTrabalhador">Is Trabalhador</span></dt>
+        <dd>
+          <span>{{ discente.isTrabalhador }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.isFilhoAntigoConbatente">Is Filho Antigo Conbatente</span></dt>
+        <dd>
+          <span>{{ discente.isFilhoAntigoConbatente }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.isAtestadoPobreza">Is Atestado Pobreza</span></dt>
+        <dd>
+          <span>{{ discente.isAtestadoPobreza }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.nomeMedico">Nome Medico</span></dt>
+        <dd>
+          <span>{{ discente.nomeMedico }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.telefoneMedico">Telefone Medico</span></dt>
+        <dd>
+          <span>{{ discente.telefoneMedico }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.instituicaoParticularSaude">Instituicao Particular Saude</span></dt>
+        <dd>
+          <span>{{ discente.instituicaoParticularSaude }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.altura">Altura</span></dt>
+        <dd>
+          <span>{{ discente.altura }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.peso">Peso</span></dt>
+        <dd>
+          <span>{{ discente.peso }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.isAsmatico">Is Asmatico</span></dt>
+        <dd>
+          <span>{{ discente.isAsmatico }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.isAlergico">Is Alergico</span></dt>
+        <dd>
+          <span>{{ discente.isAlergico }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.isPraticaEducacaoFisica">Is Pratica Educacao Fisica</span></dt>
+        <dd>
+          <span>{{ discente.isPraticaEducacaoFisica }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.isAutorizadoMedicacao">Is Autorizado Medicacao</span></dt>
+        <dd>
+          <span>{{ discente.isAutorizadoMedicacao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.cuidadosEspeciaisSaude">Cuidados Especiais Saude</span></dt>
+        <dd>
+          <span>{{ discente.cuidadosEspeciaisSaude }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.numeroProcesso">Numero Processo</span></dt>
+        <dd>
+          <span>{{ discente.numeroProcesso }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.dataIngresso">Data Ingresso</span></dt>
+        <dd>
+          <span>{{ discente.dataIngresso | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.hash">Hash</span></dt>
+        <dd>
+          <span>{{ discente.hash }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.observacao">Observacao</span></dt>
+        <dd>
+          <span>{{ discente.observacao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.nacionalidade">Nacionalidade</span></dt>
+        <dd>
+          <div *ngIf="discente.nacionalidade">
+            <a [routerLink]="['/lookup-item', discente.nacionalidade.id, 'view']">{{ discente.nacionalidade.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.naturalidade">Naturalidade</span></dt>
+        <dd>
+          <div *ngIf="discente.naturalidade">
+            <a [routerLink]="['/lookup-item', discente.naturalidade.id, 'view']">{{ discente.naturalidade.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.tipoDocumento">Tipo Documento</span></dt>
+        <dd>
+          <div *ngIf="discente.tipoDocumento">
+            <a [routerLink]="['/lookup-item', discente.tipoDocumento.id, 'view']">{{ discente.tipoDocumento.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.profissao">Profissao</span></dt>
+        <dd>
+          <div *ngIf="discente.profissao">
+            <a [routerLink]="['/lookup-item', discente.profissao.id, 'view']">{{ discente.profissao.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.grupoSanguinio">Grupo Sanguinio</span></dt>
+        <dd>
+          <div *ngIf="discente.grupoSanguinio">
+            <a [routerLink]="['/lookup-item', discente.grupoSanguinio.id, 'view']">{{ discente.grupoSanguinio.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.necessidadeEspecial">Necessidade Especial</span></dt>
+        <dd>
+          <div *ngIf="discente.necessidadeEspecial">
+            <a [routerLink]="['/lookup-item', discente.necessidadeEspecial.id, 'view']">{{ discente.necessidadeEspecial.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.encarregadoEducacao">Encarregado Educacao</span></dt>
+        <dd>
+          <div *ngIf="discente.encarregadoEducacao">
+            <a [routerLink]="['/encarregado-educacao', discente.encarregadoEducacao.id, 'view']">{{ discente.encarregadoEducacao.nome }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/discente', discente.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

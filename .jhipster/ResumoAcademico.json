@@ -1,0 +1,150 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002300",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "resumo_academico",
+  "fields": [
+    {
+      "fieldName": "temaProjecto",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "notaProjecto",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max", "required"],
+      "fieldValidateRulesMax": "20",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "observacao",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "localEstagio",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "notaEstagio",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max", "required"],
+      "fieldValidateRulesMax": "20",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "mediaFinalDisciplina",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max", "required"],
+      "fieldValidateRulesMax": "20",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "classificacaoFinal",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max", "required"],
+      "fieldValidateRulesMax": "20",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "numeroGrupo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "mesaDefesa",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "livroRegistro",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "numeroFolha",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "chefeSecretariaPedagogica",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "subDirectorPedagogico",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "directorGeral",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "tutorProjecto",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "juriMesa",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "empresaEstagio",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "assinaturaDigital",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "hash",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "ResumoAcademico",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "utilizador",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "turma",
+      "otherEntityRelationshipName": "resumoAcademico",
+      "relationshipName": "ultimaTurmaMatriculada",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "discente",
+      "otherEntityRelationshipName": "resumoAcademico",
+      "relationshipName": "discente",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "estadoDisciplinaCurricular",
+      "otherEntityRelationshipName": "resumoAcademico",
+      "relationshipName": "situacao",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceImpl"
+}

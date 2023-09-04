@@ -1,0 +1,42 @@
+{
+  "longonkeloApp": {
+    "disciplinaCurricular": {
+      "home": {
+        "title": "Disciplina Curriculars",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Disciplina Curricular",
+        "createOrEditLabel": "Criar ou editar Disciplina Curricular",
+        "notFound": "Nenhum Disciplina Curriculars encontrado"
+      },
+      "created": "Um novo Disciplina Curricular foi criado com o identificador {{ param }}",
+      "updated": "Disciplina Curricular com identificador {{ param }} foi actualizado",
+      "deleted": "Disciplina Curricular com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Disciplina Curricular {{ id }}?"
+      },
+      "detail": {
+        "title": "Disciplina Curricular"
+      },
+      "id": "ID",
+      "uniqueDisciplinaCurricular": "Unique Disciplina Curricular",
+      "descricao": "Descricao",
+      "cargaSemanal": "Carga Semanal",
+      "isTerminal": "Is Terminal",
+      "mediaParaExame": "Media Para Exame",
+      "mediaParaRecurso": "Media Para Recurso",
+      "mediaParaExameEspecial": "Media Para Exame Especial",
+      "mediaParaDespensar": "Media Para Despensar",
+      "disciplinaCurricular": "Disciplina Curricular",
+      "horario": "Horario",
+      "planoAula": "Plano Aula",
+      "notasGeralDisciplina": "Notas Geral Disciplina",
+      "notasPeriodicaDisciplina": "Notas Periodica Disciplina",
+      "componente": "Componente",
+      "regime": "Regime",
+      "planosCurricular": "Planos Curricular",
+      "disciplina": "Disciplina",
+      "referencia": "Referencia",
+      "estados": "Estados"
+    }
+  }
+}

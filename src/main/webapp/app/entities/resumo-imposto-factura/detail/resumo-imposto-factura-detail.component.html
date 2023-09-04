@@ -1,0 +1,60 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="resumoImpostoFactura">
+      <h2 data-cy="resumoImpostoFacturaDetailsHeading">
+        <span appTranslate="longonkeloApp.resumoImpostoFactura.detail.title">Resumo Imposto Factura</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ resumoImpostoFactura.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoImpostoFactura.isRetencao">Is Retencao</span></dt>
+        <dd>
+          <span>{{ resumoImpostoFactura.isRetencao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoImpostoFactura.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ resumoImpostoFactura.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoImpostoFactura.tipo">Tipo</span></dt>
+        <dd>
+          <span>{{ resumoImpostoFactura.tipo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoImpostoFactura.taxa">Taxa</span></dt>
+        <dd>
+          <span>{{ resumoImpostoFactura.taxa }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoImpostoFactura.incidencia">Incidencia</span></dt>
+        <dd>
+          <span>{{ resumoImpostoFactura.incidencia }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoImpostoFactura.montante">Montante</span></dt>
+        <dd>
+          <span>{{ resumoImpostoFactura.montante }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoImpostoFactura.factura">Factura</span></dt>
+        <dd>
+          <div *ngIf="resumoImpostoFactura.factura">
+            <a [routerLink]="['/factura', resumoImpostoFactura.factura.id, 'view']">{{ resumoImpostoFactura.factura.numero }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/resumo-imposto-factura', resumoImpostoFactura.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

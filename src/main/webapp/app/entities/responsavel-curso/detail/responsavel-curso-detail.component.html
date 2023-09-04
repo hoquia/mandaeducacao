@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="responsavelCurso">
+      <h2 data-cy="responsavelCursoDetailsHeading">
+        <span appTranslate="longonkeloApp.responsavelCurso.detail.title">Responsavel Curso</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ responsavelCurso.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelCurso.de">De</span></dt>
+        <dd>
+          <span>{{ responsavelCurso.de | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelCurso.ate">Ate</span></dt>
+        <dd>
+          <span>{{ responsavelCurso.ate | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelCurso.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ responsavelCurso.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelCurso.timestamp">Timestamp</span></dt>
+        <dd>
+          <span>{{ responsavelCurso.timestamp | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelCurso.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ responsavelCurso.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelCurso.curso">Curso</span></dt>
+        <dd>
+          <div *ngIf="responsavelCurso.curso">
+            <a [routerLink]="['/curso', responsavelCurso.curso.id, 'view']">{{ responsavelCurso.curso.nome }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/responsavel-curso', responsavelCurso.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

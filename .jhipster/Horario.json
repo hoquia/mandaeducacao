@@ -1,0 +1,96 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002242",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "horario",
+  "fields": [
+    {
+      "fieldName": "chaveComposta1",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "chaveComposta2",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "diaSemana",
+      "fieldType": "DiaSemana",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "SEGUNDA,TERCA,QUARTA,QUINTA,SEXTA,SABADO,DOMINGO"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Horario",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "horario",
+      "otherEntityRelationshipName": "referencia",
+      "relationshipName": "horario",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "licao",
+      "otherEntityRelationshipName": "horario",
+      "relationshipName": "licao",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "anoLectivo",
+      "otherEntityRelationshipName": "horario",
+      "relationshipName": "anoLectivo",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "utilizador",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "turma",
+      "otherEntityRelationshipName": "horarios",
+      "relationshipName": "turma",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "horario",
+      "otherEntityRelationshipName": "horario",
+      "relationshipName": "referencia",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "periodoHorario",
+      "otherEntityRelationshipName": "horario",
+      "relationshipName": "periodo",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "docente",
+      "otherEntityRelationshipName": "horarios",
+      "relationshipName": "docente",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "disciplinaCurricular",
+      "otherEntityRelationshipName": "horario",
+      "relationshipName": "disciplinaCurricular",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceImpl"
+}

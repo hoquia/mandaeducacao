@@ -1,0 +1,70 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002318",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "transferencia_saldo",
+  "fields": [
+    {
+      "fieldName": "montante",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "isMesmaConta",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "timestamp",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "TransferenciaSaldo",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "discente",
+      "relationshipName": "de",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "discente",
+      "relationshipName": "para",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "utilizador",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "motivoTransferencia",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "referencia",
+      "otherEntityName": "transacao",
+      "otherEntityRelationshipName": "transferenciaSaldo",
+      "ownerSide": true,
+      "relationshipName": "transacoes",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

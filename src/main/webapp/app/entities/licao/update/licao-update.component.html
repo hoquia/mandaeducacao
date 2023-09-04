@@ -1,0 +1,157 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="app-licao-heading" data-cy="LicaoCreateUpdateHeading" appTranslate="longonkeloApp.licao.home.createOrEditLabel">
+        Criar ou editar Licao
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.licao.chaveComposta" for="field_chaveComposta">Chave Composta</label>
+          <input
+            type="text"
+            class="form-control"
+            name="chaveComposta"
+            id="field_chaveComposta"
+            data-cy="chaveComposta"
+            formControlName="chaveComposta"
+          />
+          <div
+            *ngIf="
+              editForm.get('chaveComposta')!.invalid && (editForm.get('chaveComposta')!.dirty || editForm.get('chaveComposta')!.touched)
+            "
+          ></div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.licao.numero" for="field_numero">Numero</label>
+          <input type="number" class="form-control" name="numero" id="field_numero" data-cy="numero" formControlName="numero" />
+          <div *ngIf="editForm.get('numero')!.invalid && (editForm.get('numero')!.dirty || editForm.get('numero')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('numero')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('numero')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 1 }"
+            >
+              Este campo deve ser maior que 1.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('numero')?.errors?.number" appTranslate="entity.validation.number">
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.licao.estado" for="field_estado">Estado</label>
+          <select class="form-control" name="estado" formControlName="estado" id="field_estado" data-cy="estado">
+            <option [ngValue]="null">{{ 'longonkeloApp.EstadoLicao.null' | translate }}</option>
+            <option *ngFor="let estadoLicao of estadoLicaoValues" [value]="estadoLicao">
+              {{ 'longonkeloApp.EstadoLicao.' + estadoLicao | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('estado')!.invalid && (editForm.get('estado')!.dirty || editForm.get('estado')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('estado')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.licao.descricao" for="field_descricao">Descricao</label>
+          <textarea class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao"></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.licao.utilizador" for="field_utilizador">Utilizador</label>
+          <select
+            class="form-control"
+            id="field_utilizador"
+            data-cy="utilizador"
+            name="utilizador"
+            formControlName="utilizador"
+            [compareWith]="compareUser"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.licao.planoAula" for="field_planoAula">Plano Aula</label>
+          <select
+            class="form-control"
+            id="field_planoAula"
+            data-cy="planoAula"
+            name="planoAula"
+            formControlName="planoAula"
+            [compareWith]="comparePlanoAula"
+          >
+            <option *ngIf="editForm.get(['planoAula'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="planoAulaOption" *ngFor="let planoAulaOption of planoAulasSharedCollection">
+              {{ planoAulaOption.assunto }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['planoAula'])!.invalid && (editForm.get(['planoAula'])!.dirty || editForm.get(['planoAula'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['planoAula'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.licao.horario" for="field_horario">Horario</label>
+          <select
+            class="form-control"
+            id="field_horario"
+            data-cy="horario"
+            name="horario"
+            formControlName="horario"
+            [compareWith]="compareHorario"
+          >
+            <option *ngIf="editForm.get(['horario'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="horarioOption" *ngFor="let horarioOption of horariosSharedCollection">{{ horarioOption.id }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['horario'])!.invalid && (editForm.get(['horario'])!.dirty || editForm.get(['horario'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['horario'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

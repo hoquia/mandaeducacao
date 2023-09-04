@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Factura.
+    -->
+    <changeSet id="20230904002313-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="utilizador_id"
+                                 baseTableName="factura"
+                                 constraintName="fk_factura__utilizador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="app_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="motivo_anulacao_id"
+                                 baseTableName="factura"
+                                 constraintName="fk_factura__motivo_anulacao_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="matricula_id"
+                                 baseTableName="factura"
+                                 constraintName="fk_factura__matricula_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="matricula"/>
+
+        <addForeignKeyConstraint baseColumnNames="referencia_id"
+                                 baseTableName="factura"
+                                 constraintName="fk_factura__referencia_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="factura"/>
+
+        <addForeignKeyConstraint baseColumnNames="documento_comercial_id"
+                                 baseTableName="factura"
+                                 constraintName="fk_factura__documento_comercial_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="documento_comercial"/>
+    </changeSet>
+</databaseChangeLog>

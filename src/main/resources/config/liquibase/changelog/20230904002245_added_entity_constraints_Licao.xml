@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Licao.
+    -->
+    <changeSet id="20230904002245-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="utilizador_id"
+                                 baseTableName="licao"
+                                 constraintName="fk_licao__utilizador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="app_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="plano_aula_id"
+                                 baseTableName="licao"
+                                 constraintName="fk_licao__plano_aula_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="plano_aula"/>
+
+        <addForeignKeyConstraint baseColumnNames="horario_id"
+                                 baseTableName="licao"
+                                 constraintName="fk_licao__horario_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="horario"/>
+    </changeSet>
+</databaseChangeLog>

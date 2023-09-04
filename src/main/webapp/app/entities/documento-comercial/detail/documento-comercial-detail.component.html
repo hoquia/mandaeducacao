@@ -1,0 +1,92 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="documentoComercial">
+      <h2 data-cy="documentoComercialDetailsHeading">
+        <span appTranslate="longonkeloApp.documentoComercial.detail.title">Documento Comercial</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ documentoComercial.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.documentoComercial.modulo">Modulo</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.ModuloDocumento.' + documentoComercial.modulo }}">{{ documentoComercial.modulo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.documentoComercial.origem">Origem</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.OrigemDocumento.' + documentoComercial.origem }}">{{ documentoComercial.origem }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.documentoComercial.siglaInterna">Sigla Interna</span></dt>
+        <dd>
+          <span>{{ documentoComercial.siglaInterna }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.documentoComercial.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ documentoComercial.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.documentoComercial.siglaFiscal">Sigla Fiscal</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.DocumentoFiscal.' + documentoComercial.siglaFiscal }}">{{
+            documentoComercial.siglaFiscal
+          }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.documentoComercial.isMovimentaEstoque">Is Movimenta Estoque</span></dt>
+        <dd>
+          <span>{{ documentoComercial.isMovimentaEstoque }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.documentoComercial.isMovimentaCaixa">Is Movimenta Caixa</span></dt>
+        <dd>
+          <span>{{ documentoComercial.isMovimentaCaixa }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.documentoComercial.isNotificaEntidade">Is Notifica Entidade</span></dt>
+        <dd>
+          <span>{{ documentoComercial.isNotificaEntidade }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.documentoComercial.isNotificaGerente">Is Notifica Gerente</span></dt>
+        <dd>
+          <span>{{ documentoComercial.isNotificaGerente }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.documentoComercial.isEnviaSMS">Is Envia SMS</span></dt>
+        <dd>
+          <span>{{ documentoComercial.isEnviaSMS }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.documentoComercial.isEnviaEmail">Is Envia Email</span></dt>
+        <dd>
+          <span>{{ documentoComercial.isEnviaEmail }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.documentoComercial.isEnviaPush">Is Envia Push</span></dt>
+        <dd>
+          <span>{{ documentoComercial.isEnviaPush }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.documentoComercial.validaCreditoDisponivel">Valida Credito Disponivel</span></dt>
+        <dd>
+          <span>{{ documentoComercial.validaCreditoDisponivel }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.documentoComercial.transformaEm">Transforma Em</span></dt>
+        <dd>
+          <div *ngIf="documentoComercial.transformaEm">
+            <a [routerLink]="['/documento-comercial', documentoComercial.transformaEm.id, 'view']">{{
+              documentoComercial.transformaEm.descricao
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/documento-comercial', documentoComercial.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

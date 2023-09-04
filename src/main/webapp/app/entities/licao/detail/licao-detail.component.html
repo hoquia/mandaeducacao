@@ -1,0 +1,60 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="licao">
+      <h2 data-cy="licaoDetailsHeading"><span appTranslate="longonkeloApp.licao.detail.title">Licao</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ licao.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.licao.chaveComposta">Chave Composta</span></dt>
+        <dd>
+          <span>{{ licao.chaveComposta }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.licao.numero">Numero</span></dt>
+        <dd>
+          <span>{{ licao.numero }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.licao.estado">Estado</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.EstadoLicao.' + licao.estado }}">{{ licao.estado }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.licao.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ licao.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.licao.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ licao.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.licao.planoAula">Plano Aula</span></dt>
+        <dd>
+          <div *ngIf="licao.planoAula">
+            <a [routerLink]="['/plano-aula', licao.planoAula.id, 'view']">{{ licao.planoAula.assunto }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.licao.horario">Horario</span></dt>
+        <dd>
+          <div *ngIf="licao.horario">
+            <a [routerLink]="['/horario', licao.horario.id, 'view']">{{ licao.horario.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/licao', licao.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

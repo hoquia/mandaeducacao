@@ -1,0 +1,116 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002232",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "encarregado_educacao",
+  "fields": [
+    {
+      "fieldName": "fotografia",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nascimento",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nif",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "sexo",
+      "fieldType": "Sexo",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "MASCULINO,FEMENINO"
+    },
+    {
+      "fieldName": "documentoNumero",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "telefonePrincipal",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "telefoneAlternativo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "residencia",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "enderecoTrabalho",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "rendaMensal",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "empresaTrabalho",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "hash",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "EncarregadoEducacao",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "discente",
+      "otherEntityRelationshipName": "encarregadoEducacao",
+      "relationshipName": "discentes",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "matricula",
+      "otherEntityRelationshipName": "responsavelFinanceiro",
+      "relationshipName": "matricula",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "grauParentesco",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "tipoDocumento",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "profissao",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

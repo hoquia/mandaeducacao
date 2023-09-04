@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity CategoriaOcorrencia.
+    -->
+    <changeSet id="20230904002251-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="encaminhar_id"
+                                 baseTableName="categoria_ocorrencia"
+                                 constraintName="fk_categoria_ocorrencia__encaminhar_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="docente"/>
+
+        <addForeignKeyConstraint baseColumnNames="referencia_id"
+                                 baseTableName="categoria_ocorrencia"
+                                 constraintName="fk_categoria_ocorrencia__referencia_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="categoria_ocorrencia"/>
+
+        <addForeignKeyConstraint baseColumnNames="medida_disciplinar_id"
+                                 baseTableName="categoria_ocorrencia"
+                                 constraintName="fk_categoria_ocorrencia__medida_disciplinar_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="medida_disciplinar"/>
+    </changeSet>
+</databaseChangeLog>

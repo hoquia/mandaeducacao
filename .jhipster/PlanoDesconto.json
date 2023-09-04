@@ -1,0 +1,56 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002310",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "plano_desconto",
+  "fields": [
+    {
+      "fieldName": "codigo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "isIsentoMulta",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isIsentoJuro",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "desconto",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "PlanoDesconto",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "categoriaEmolumento",
+      "otherEntityRelationshipName": "planosDesconto",
+      "ownerSide": true,
+      "relationshipName": "categoriasEmolumento",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "matricula",
+      "otherEntityRelationshipName": "categoriasMatriculas",
+      "ownerSide": false,
+      "relationshipName": "matriculas",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

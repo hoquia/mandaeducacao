@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity PlanoDesconto.
+    -->
+    <changeSet id="20230904002310-1" author="jhipster">
+        <createTable tableName="plano_desconto">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="codigo" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_plano_desconto__codigo" />
+            </column>
+            <column name="nome" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_plano_desconto__nome" />
+            </column>
+            <column name="is_isento_multa" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_isento_juro" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="desconto" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20230904002310-1-relations" author="jhipster">
+
+        <createTable tableName="rel_plano_desconto__categorias_emolumento">
+            <column name="categorias_emolumento_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="plano_desconto_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="plano_desconto_id, categorias_emolumento_id" tableName="rel_plano_desconto__categorias_emolumento"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

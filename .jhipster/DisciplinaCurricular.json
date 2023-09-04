@@ -1,0 +1,133 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002237",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "disciplina_curricular",
+  "fields": [
+    {
+      "fieldName": "uniqueDisciplinaCurricular",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "cargaSemanal",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "isTerminal",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "mediaParaExame",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "mediaParaRecurso",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "mediaParaExameEspecial",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "mediaParaDespensar",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "DisciplinaCurricular",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "disciplinaCurricular",
+      "otherEntityRelationshipName": "referencia",
+      "relationshipName": "disciplinaCurricular",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "horario",
+      "otherEntityRelationshipName": "disciplinaCurricular",
+      "relationshipName": "horario",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "planoAula",
+      "otherEntityRelationshipName": "disciplinaCurricular",
+      "relationshipName": "planoAula",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "notasGeralDisciplina",
+      "otherEntityRelationshipName": "disciplinaCurricular",
+      "relationshipName": "notasGeralDisciplina",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "notasPeriodicaDisciplina",
+      "otherEntityRelationshipName": "disciplinaCurricular",
+      "relationshipName": "notasPeriodicaDisciplina",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "componente",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "regime",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "planoCurricular",
+      "otherEntityRelationshipName": "disciplinasCurricular",
+      "ownerSide": true,
+      "relationshipName": "planosCurricular",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "disciplina",
+      "otherEntityRelationshipName": "disciplinaCurricular",
+      "relationshipName": "disciplina",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "disciplinaCurricular",
+      "otherEntityRelationshipName": "disciplinaCurricular",
+      "relationshipName": "referencia",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "estadoDisciplinaCurricular",
+      "otherEntityRelationshipName": "disciplinasCurriculars",
+      "ownerSide": false,
+      "relationshipName": "estados",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

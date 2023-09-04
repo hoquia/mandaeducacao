@@ -1,0 +1,55 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002249",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "transferencia_turma",
+  "fields": [
+    {
+      "fieldName": "timestamp",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "TransferenciaTurma",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "turma",
+      "relationshipName": "de",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "turma",
+      "relationshipName": "para",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "utilizador",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "motivoTransferencia",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "numeroMatricula",
+      "otherEntityName": "matricula",
+      "otherEntityRelationshipName": "transferenciaTurma",
+      "relationshipName": "matricula",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceImpl"
+}

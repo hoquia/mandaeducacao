@@ -1,0 +1,218 @@
+<div>
+  <h2 id="page-heading" data-cy="HorarioHeading">
+    <span appTranslate="longonkeloApp.horario.home.title">Horarios</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.horario.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-horario"
+        [routerLink]="['/horario/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.horario.home.createLabel"> Criar novo(a) Horario </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="horarios?.length === 0">
+    <span appTranslate="longonkeloApp.horario.home.notFound">Nenhum Horarios encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="horarios && horarios.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="chaveComposta1">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.horario.chaveComposta1">Chave Composta 1</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="chaveComposta2">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.horario.chaveComposta2">Chave Composta 2</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="diaSemana">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.horario.diaSemana">Dia Semana</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="utilizador.login">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.horario.utilizador">Utilizador</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="turma.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.horario.turma">Turma</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="referencia.id">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.horario.referencia">Referencia</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="periodo.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.horario.periodo">Periodo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="docente.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.horario.docente">Docente</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="disciplinaCurricular.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.horario.disciplinaCurricular">Disciplina Curricular</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let horario of horarios; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/horario', horario.id, 'view']">{{ horario.id }}</a>
+          </td>
+          <td>{{ horario.chaveComposta1 }}</td>
+          <td>{{ horario.chaveComposta2 }}</td>
+          <td appTranslate="{{ 'longonkeloApp.DiaSemana.' + horario.diaSemana }}">{{ horario.diaSemana }}</td>
+          <td>
+            {{ horario.utilizador?.login }}
+          </td>
+          <td>
+            <div *ngIf="horario.turma">
+              <a [routerLink]="['/turma', horario.turma.id, 'view']">{{ horario.turma.descricao }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="horario.referencia">
+              <a [routerLink]="['/horario', horario.referencia.id, 'view']">{{ horario.referencia.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="horario.periodo">
+              <a [routerLink]="['/periodo-horario', horario.periodo.id, 'view']">{{ horario.periodo.descricao }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="horario.docente">
+              <a [routerLink]="['/docente', horario.docente.id, 'view']">{{ horario.docente.nome }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="horario.disciplinaCurricular">
+              <a [routerLink]="['/disciplina-curricular', horario.disciplinaCurricular.id, 'view']">{{
+                horario.disciplinaCurricular.descricao
+              }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/horario']"
+                [queryParams]="{ 'filter[referenciaId.in]': horario.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.horario.horario' | translate) }"
+                  >Show Horario</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/licao']"
+                [queryParams]="{ 'filter[horarioId.in]': horario.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.horario.licao' | translate) }"
+                  >Show Licao</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/horario', horario.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/horario', horario.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(horario)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="horarios && horarios.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

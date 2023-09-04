@@ -1,0 +1,70 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="provedorNotificacao">
+      <h2 data-cy="provedorNotificacaoDetailsHeading">
+        <span appTranslate="longonkeloApp.provedorNotificacao.detail.title">Provedor Notificacao</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ provedorNotificacao.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.provedorNotificacao.telefone">Telefone</span></dt>
+        <dd>
+          <span>{{ provedorNotificacao.telefone }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.provedorNotificacao.email">Email</span></dt>
+        <dd>
+          <span>{{ provedorNotificacao.email }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.provedorNotificacao.link">Link</span></dt>
+        <dd>
+          <span>{{ provedorNotificacao.link }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.provedorNotificacao.token">Token</span></dt>
+        <dd>
+          <span>{{ provedorNotificacao.token }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.provedorNotificacao.username">Username</span></dt>
+        <dd>
+          <span>{{ provedorNotificacao.username }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.provedorNotificacao.password">Password</span></dt>
+        <dd>
+          <span>{{ provedorNotificacao.password }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.provedorNotificacao.hash">Hash</span></dt>
+        <dd>
+          <span>{{ provedorNotificacao.hash }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.provedorNotificacao.isPadrao">Is Padrao</span></dt>
+        <dd>
+          <span>{{ provedorNotificacao.isPadrao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.provedorNotificacao.instituicao">Instituicao</span></dt>
+        <dd>
+          <div *ngIf="provedorNotificacao.instituicao">
+            <a [routerLink]="['/instituicao-ensino', provedorNotificacao.instituicao.id, 'view']">{{
+              provedorNotificacao.instituicao.unidadeOrganica
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/provedor-notificacao', provedorNotificacao.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity DissertacaoFinalCurso.
+    -->
+    <changeSet id="20230904002259-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="utilizador_id"
+                                 baseTableName="dissertacao_final_curso"
+                                 constraintName="fk_dissertacao_final_curso__utilizador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="app_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="turma_id"
+                                 baseTableName="dissertacao_final_curso"
+                                 constraintName="fk_dissertacao_final_curso__turma_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="turma"/>
+
+        <addForeignKeyConstraint baseColumnNames="orientador_id"
+                                 baseTableName="dissertacao_final_curso"
+                                 constraintName="fk_dissertacao_final_curso__orientador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="docente"/>
+
+        <addForeignKeyConstraint baseColumnNames="especialidade_id"
+                                 baseTableName="dissertacao_final_curso"
+                                 constraintName="fk_dissertacao_final_curso__especialidade_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="area_formacao"/>
+
+        <addForeignKeyConstraint baseColumnNames="discente_id"
+                                 baseTableName="dissertacao_final_curso"
+                                 constraintName="fk_dissertacao_final_curso__discente_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="discente"/>
+
+        <addForeignKeyConstraint baseColumnNames="estado_id"
+                                 baseTableName="dissertacao_final_curso"
+                                 constraintName="fk_dissertacao_final_curso__estado_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="estado_dissertacao"/>
+
+        <addForeignKeyConstraint baseColumnNames="natureza_id"
+                                 baseTableName="dissertacao_final_curso"
+                                 constraintName="fk_dissertacao_final_curso__natureza_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="natureza_trabalho"/>
+    </changeSet>
+</databaseChangeLog>

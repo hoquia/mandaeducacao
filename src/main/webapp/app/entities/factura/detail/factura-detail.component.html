@@ -1,0 +1,214 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="factura">
+      <h2 data-cy="facturaDetailsHeading"><span appTranslate="longonkeloApp.factura.detail.title">Factura</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ factura.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.numero">Numero</span></dt>
+        <dd>
+          <span>{{ factura.numero }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.codigoEntrega">Codigo Entrega</span></dt>
+        <dd>
+          <span>{{ factura.codigoEntrega }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.dataEmissao">Data Emissao</span></dt>
+        <dd>
+          <span>{{ factura.dataEmissao | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.dataVencimento">Data Vencimento</span></dt>
+        <dd>
+          <span>{{ factura.dataVencimento | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.cae">Cae</span></dt>
+        <dd>
+          <span>{{ factura.cae }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.inicioTransporte">Inicio Transporte</span></dt>
+        <dd>
+          <span>{{ factura.inicioTransporte | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.fimTransporte">Fim Transporte</span></dt>
+        <dd>
+          <span>{{ factura.fimTransporte | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.observacaoGeral">Observacao Geral</span></dt>
+        <dd>
+          <span>{{ factura.observacaoGeral }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.observacaoInterna">Observacao Interna</span></dt>
+        <dd>
+          <span>{{ factura.observacaoInterna }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.estado">Estado</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.EstadoDocumentoComercial.' + factura.estado }}">{{ factura.estado }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.origem">Origem</span></dt>
+        <dd>
+          <span>{{ factura.origem }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.timestamp">Timestamp</span></dt>
+        <dd>
+          <span>{{ factura.timestamp | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.isMoedaEntrangeira">Is Moeda Entrangeira</span></dt>
+        <dd>
+          <span>{{ factura.isMoedaEntrangeira }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.moeda">Moeda</span></dt>
+        <dd>
+          <span>{{ factura.moeda }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.cambio">Cambio</span></dt>
+        <dd>
+          <span>{{ factura.cambio }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.totalMoedaEntrangeira">Total Moeda Entrangeira</span></dt>
+        <dd>
+          <span>{{ factura.totalMoedaEntrangeira }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.totalIliquido">Total Iliquido</span></dt>
+        <dd>
+          <span>{{ factura.totalIliquido }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.totalDescontoComercial">Total Desconto Comercial</span></dt>
+        <dd>
+          <span>{{ factura.totalDescontoComercial }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.totalLiquido">Total Liquido</span></dt>
+        <dd>
+          <span>{{ factura.totalLiquido }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.totalImpostoIVA">Total Imposto IVA</span></dt>
+        <dd>
+          <span>{{ factura.totalImpostoIVA }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.totalImpostoEspecialConsumo">Total Imposto Especial Consumo</span></dt>
+        <dd>
+          <span>{{ factura.totalImpostoEspecialConsumo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.totalDescontoFinanceiro">Total Desconto Financeiro</span></dt>
+        <dd>
+          <span>{{ factura.totalDescontoFinanceiro }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.totalFactura">Total Factura</span></dt>
+        <dd>
+          <span>{{ factura.totalFactura }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.totalImpostoRetencaoFonte">Total Imposto Retencao Fonte</span></dt>
+        <dd>
+          <span>{{ factura.totalImpostoRetencaoFonte }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.totalPagar">Total Pagar</span></dt>
+        <dd>
+          <span>{{ factura.totalPagar }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.debito">Debito</span></dt>
+        <dd>
+          <span>{{ factura.debito }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.credito">Credito</span></dt>
+        <dd>
+          <span>{{ factura.credito }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.totalPago">Total Pago</span></dt>
+        <dd>
+          <span>{{ factura.totalPago }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.totalDiferenca">Total Diferenca</span></dt>
+        <dd>
+          <span>{{ factura.totalDiferenca }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.isAutoFacturacao">Is Auto Facturacao</span></dt>
+        <dd>
+          <span>{{ factura.isAutoFacturacao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.isRegimeCaixa">Is Regime Caixa</span></dt>
+        <dd>
+          <span>{{ factura.isRegimeCaixa }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.isEmitidaNomeEContaTerceiro">Is Emitida Nome E Conta Terceiro</span></dt>
+        <dd>
+          <span>{{ factura.isEmitidaNomeEContaTerceiro }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.isNovo">Is Novo</span></dt>
+        <dd>
+          <span>{{ factura.isNovo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.isFiscalizado">Is Fiscalizado</span></dt>
+        <dd>
+          <span>{{ factura.isFiscalizado }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.signText">Sign Text</span></dt>
+        <dd>
+          <span>{{ factura.signText }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.hash">Hash</span></dt>
+        <dd>
+          <span>{{ factura.hash }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.hashShort">Hash Short</span></dt>
+        <dd>
+          <span>{{ factura.hashShort }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.hashControl">Hash Control</span></dt>
+        <dd>
+          <span>{{ factura.hashControl }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.keyVersion">Key Version</span></dt>
+        <dd>
+          <span>{{ factura.keyVersion }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ factura.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.motivoAnulacao">Motivo Anulacao</span></dt>
+        <dd>
+          <div *ngIf="factura.motivoAnulacao">
+            <a [routerLink]="['/lookup-item', factura.motivoAnulacao.id, 'view']">{{ factura.motivoAnulacao.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.matricula">Matricula</span></dt>
+        <dd>
+          <div *ngIf="factura.matricula">
+            <a [routerLink]="['/matricula', factura.matricula.id, 'view']">{{ factura.matricula.numeroMatricula }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.referencia">Referencia</span></dt>
+        <dd>
+          <div *ngIf="factura.referencia">
+            <a [routerLink]="['/factura', factura.referencia.id, 'view']">{{ factura.referencia.numero }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.factura.documentoComercial">Documento Comercial</span></dt>
+        <dd>
+          <div *ngIf="factura.documentoComercial">
+            <a [routerLink]="['/documento-comercial', factura.documentoComercial.id, 'view']">{{
+              factura.documentoComercial.siglaInterna
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/factura', factura.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002228",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "disciplina",
+  "fields": [
+    {
+      "fieldName": "codigo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Disciplina",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "responsavelDisciplina",
+      "otherEntityRelationshipName": "disciplina",
+      "relationshipName": "responsaveis",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "disciplinaCurricular",
+      "otherEntityRelationshipName": "disciplina",
+      "relationshipName": "disciplinaCurricular",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

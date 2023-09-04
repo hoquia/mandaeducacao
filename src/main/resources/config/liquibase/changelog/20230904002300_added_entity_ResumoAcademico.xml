@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity ResumoAcademico.
+    -->
+    <changeSet id="20230904002300-1" author="jhipster">
+        <createTable tableName="resumo_academico">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="tema_projecto" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_resumo_academico__tema_projecto" />
+            </column>
+            <column name="nota_projecto" type="double">
+                <constraints nullable="false" />
+            </column>
+            <column name="observacao" type="${clobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="local_estagio" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="nota_estagio" type="double">
+                <constraints nullable="false" />
+            </column>
+            <column name="media_final_disciplina" type="double">
+                <constraints nullable="false" />
+            </column>
+            <column name="classificacao_final" type="double">
+                <constraints nullable="false" />
+            </column>
+            <column name="numero_grupo" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="mesa_defesa" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="livro_registro" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="numero_folha" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="chefe_secretaria_pedagogica" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="sub_director_pedagogico" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="director_geral" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="tutor_projecto" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="juri_mesa" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="empresa_estagio" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="assinatura_digital" type="${blobType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="assinatura_digital_content_type" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="hash" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="utilizador_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="ultima_turma_matriculada_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="discente_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="situacao_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

@@ -1,0 +1,43 @@
+{
+  "longonkeloApp": {
+    "notasGeralDisciplina": {
+      "home": {
+        "title": "Notas Geral Disciplinas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Notas Geral Disciplina",
+        "createOrEditLabel": "Criar ou editar Notas Geral Disciplina",
+        "notFound": "Nenhum Notas Geral Disciplinas encontrado"
+      },
+      "created": "Um novo Notas Geral Disciplina foi criado com o identificador {{ param }}",
+      "updated": "Notas Geral Disciplina com identificador {{ param }} foi actualizado",
+      "deleted": "Notas Geral Disciplina com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Notas Geral Disciplina {{ id }}?"
+      },
+      "detail": {
+        "title": "Notas Geral Disciplina"
+      },
+      "id": "ID",
+      "chaveComposta": "Chave Composta",
+      "periodoLancamento": "Periodo Lancamento",
+      "media1": "Media 1",
+      "media2": "Media 2",
+      "media3": "Media 3",
+      "exame": "Exame",
+      "recurso": "Recurso",
+      "exameEspecial": "Exame Especial",
+      "notaConselho": "Nota Conselho",
+      "mediaFinalDisciplina": "Media Final Disciplina",
+      "timestamp": "Timestamp",
+      "hash": "Hash",
+      "faltaJusticada": "Falta Justicada",
+      "faltaInjustificada": "Falta Injustificada",
+      "anoLectivo": "Ano Lectivo",
+      "utilizador": "Utilizador",
+      "docente": "Docente",
+      "disciplinaCurricular": "Disciplina Curricular",
+      "matricula": "Matricula",
+      "estado": "Estado"
+    }
+  }
+}

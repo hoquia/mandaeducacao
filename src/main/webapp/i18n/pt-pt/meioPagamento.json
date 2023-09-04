@@ -1,0 +1,35 @@
+{
+  "longonkeloApp": {
+    "meioPagamento": {
+      "home": {
+        "title": "Meio Pagamentos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Meio Pagamento",
+        "createOrEditLabel": "Criar ou editar Meio Pagamento",
+        "notFound": "Nenhum Meio Pagamentos encontrado"
+      },
+      "created": "Um novo Meio Pagamento foi criado com o identificador {{ param }}",
+      "updated": "Meio Pagamento com identificador {{ param }} foi actualizado",
+      "deleted": "Meio Pagamento com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Meio Pagamento {{ id }}?"
+      },
+      "detail": {
+        "title": "Meio Pagamento"
+      },
+      "id": "ID",
+      "imagem": "Imagem",
+      "codigo": "Codigo",
+      "nome": "Nome",
+      "numeroDigitoReferencia": "Numero Digito Referencia",
+      "isPagamentoInstantanio": "Is Pagamento Instantanio",
+      "hash": "Hash",
+      "link": "Link",
+      "token": "Token",
+      "username": "Username",
+      "password": "Password",
+      "formatoReferencia": "Formato Referencia",
+      "transacao": "Transacao"
+    }
+  }
+}

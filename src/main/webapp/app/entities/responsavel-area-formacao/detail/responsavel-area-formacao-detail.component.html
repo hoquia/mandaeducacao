@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="responsavelAreaFormacao">
+      <h2 data-cy="responsavelAreaFormacaoDetailsHeading">
+        <span appTranslate="longonkeloApp.responsavelAreaFormacao.detail.title">Responsavel Area Formacao</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ responsavelAreaFormacao.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelAreaFormacao.de">De</span></dt>
+        <dd>
+          <span>{{ responsavelAreaFormacao.de | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelAreaFormacao.ate">Ate</span></dt>
+        <dd>
+          <span>{{ responsavelAreaFormacao.ate | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelAreaFormacao.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ responsavelAreaFormacao.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelAreaFormacao.timestamp">Timestamp</span></dt>
+        <dd>
+          <span>{{ responsavelAreaFormacao.timestamp | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelAreaFormacao.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ responsavelAreaFormacao.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelAreaFormacao.areaFormacao">Area Formacao</span></dt>
+        <dd>
+          <div *ngIf="responsavelAreaFormacao.areaFormacao">
+            <a [routerLink]="['/area-formacao', responsavelAreaFormacao.areaFormacao.id, 'view']">{{
+              responsavelAreaFormacao.areaFormacao.nome
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/responsavel-area-formacao', responsavelAreaFormacao.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

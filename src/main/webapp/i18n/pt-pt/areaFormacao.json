@@ -1,0 +1,32 @@
+{
+  "longonkeloApp": {
+    "areaFormacao": {
+      "home": {
+        "title": "Area Formacaos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Area Formacao",
+        "createOrEditLabel": "Criar ou editar Area Formacao",
+        "notFound": "Nenhum Area Formacaos encontrado"
+      },
+      "created": "Um novo Area Formacao foi criado com o identificador {{ param }}",
+      "updated": "Area Formacao com identificador {{ param }} foi actualizado",
+      "deleted": "Area Formacao com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Area Formacao {{ id }}?"
+      },
+      "detail": {
+        "title": "Area Formacao"
+      },
+      "id": "ID",
+      "imagem": "Imagem",
+      "codigo": "Codigo",
+      "nome": "Nome",
+      "descricao": "Descricao",
+      "cursos": "Cursos",
+      "dissertacaoFinalCurso": "Dissertacao Final Curso",
+      "responsaveis": "Responsaveis",
+      "precoEmolumento": "Preco Emolumento",
+      "nivelEnsino": "Nivel Ensino"
+    }
+  }
+}

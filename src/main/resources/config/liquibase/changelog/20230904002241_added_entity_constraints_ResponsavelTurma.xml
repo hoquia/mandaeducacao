@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity ResponsavelTurma.
+    -->
+    <changeSet id="20230904002241-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="utilizador_id"
+                                 baseTableName="responsavel_turma"
+                                 constraintName="fk_responsavel_turma__utilizador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="app_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="turma_id"
+                                 baseTableName="responsavel_turma"
+                                 constraintName="fk_responsavel_turma__turma_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="turma"/>
+    </changeSet>
+</databaseChangeLog>

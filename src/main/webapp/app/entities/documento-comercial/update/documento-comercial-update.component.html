@@ -1,0 +1,266 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-documento-comercial-heading"
+        data-cy="DocumentoComercialCreateUpdateHeading"
+        appTranslate="longonkeloApp.documentoComercial.home.createOrEditLabel"
+      >
+        Criar ou editar Documento Comercial
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.documentoComercial.modulo" for="field_modulo">Modulo</label>
+          <select class="form-control" name="modulo" formControlName="modulo" id="field_modulo" data-cy="modulo">
+            <option [ngValue]="null">{{ 'longonkeloApp.ModuloDocumento.null' | translate }}</option>
+            <option *ngFor="let moduloDocumento of moduloDocumentoValues" [value]="moduloDocumento">
+              {{ 'longonkeloApp.ModuloDocumento.' + moduloDocumento | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('modulo')!.invalid && (editForm.get('modulo')!.dirty || editForm.get('modulo')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('modulo')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.documentoComercial.origem" for="field_origem">Origem</label>
+          <select class="form-control" name="origem" formControlName="origem" id="field_origem" data-cy="origem">
+            <option [ngValue]="null">{{ 'longonkeloApp.OrigemDocumento.null' | translate }}</option>
+            <option *ngFor="let origemDocumento of origemDocumentoValues" [value]="origemDocumento">
+              {{ 'longonkeloApp.OrigemDocumento.' + origemDocumento | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('origem')!.invalid && (editForm.get('origem')!.dirty || editForm.get('origem')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('origem')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.documentoComercial.siglaInterna" for="field_siglaInterna"
+            >Sigla Interna</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="siglaInterna"
+            id="field_siglaInterna"
+            data-cy="siglaInterna"
+            formControlName="siglaInterna"
+          />
+          <div
+            *ngIf="editForm.get('siglaInterna')!.invalid && (editForm.get('siglaInterna')!.dirty || editForm.get('siglaInterna')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('siglaInterna')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('siglaInterna')?.errors?.maxlength"
+              appTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 6 }"
+            >
+              Este campo não pode ter mais que 6 caracteres.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.documentoComercial.descricao" for="field_descricao">Descricao</label>
+          <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
+          <div *ngIf="editForm.get('descricao')!.invalid && (editForm.get('descricao')!.dirty || editForm.get('descricao')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('descricao')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.documentoComercial.siglaFiscal" for="field_siglaFiscal">Sigla Fiscal</label>
+          <select class="form-control" name="siglaFiscal" formControlName="siglaFiscal" id="field_siglaFiscal" data-cy="siglaFiscal">
+            <option [ngValue]="null">{{ 'longonkeloApp.DocumentoFiscal.null' | translate }}</option>
+            <option *ngFor="let documentoFiscal of documentoFiscalValues" [value]="documentoFiscal">
+              {{ 'longonkeloApp.DocumentoFiscal.' + documentoFiscal | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('siglaFiscal')!.invalid && (editForm.get('siglaFiscal')!.dirty || editForm.get('siglaFiscal')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('siglaFiscal')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.documentoComercial.isMovimentaEstoque" for="field_isMovimentaEstoque"
+            >Is Movimenta Estoque</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isMovimentaEstoque"
+            id="field_isMovimentaEstoque"
+            data-cy="isMovimentaEstoque"
+            formControlName="isMovimentaEstoque"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.documentoComercial.isMovimentaCaixa" for="field_isMovimentaCaixa"
+            >Is Movimenta Caixa</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isMovimentaCaixa"
+            id="field_isMovimentaCaixa"
+            data-cy="isMovimentaCaixa"
+            formControlName="isMovimentaCaixa"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.documentoComercial.isNotificaEntidade" for="field_isNotificaEntidade"
+            >Is Notifica Entidade</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isNotificaEntidade"
+            id="field_isNotificaEntidade"
+            data-cy="isNotificaEntidade"
+            formControlName="isNotificaEntidade"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.documentoComercial.isNotificaGerente" for="field_isNotificaGerente"
+            >Is Notifica Gerente</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isNotificaGerente"
+            id="field_isNotificaGerente"
+            data-cy="isNotificaGerente"
+            formControlName="isNotificaGerente"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.documentoComercial.isEnviaSMS" for="field_isEnviaSMS">Is Envia SMS</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isEnviaSMS"
+            id="field_isEnviaSMS"
+            data-cy="isEnviaSMS"
+            formControlName="isEnviaSMS"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.documentoComercial.isEnviaEmail" for="field_isEnviaEmail"
+            >Is Envia Email</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isEnviaEmail"
+            id="field_isEnviaEmail"
+            data-cy="isEnviaEmail"
+            formControlName="isEnviaEmail"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.documentoComercial.isEnviaPush" for="field_isEnviaPush"
+            >Is Envia Push</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isEnviaPush"
+            id="field_isEnviaPush"
+            data-cy="isEnviaPush"
+            formControlName="isEnviaPush"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            appTranslate="longonkeloApp.documentoComercial.validaCreditoDisponivel"
+            for="field_validaCreditoDisponivel"
+            >Valida Credito Disponivel</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="validaCreditoDisponivel"
+            id="field_validaCreditoDisponivel"
+            data-cy="validaCreditoDisponivel"
+            formControlName="validaCreditoDisponivel"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.documentoComercial.transformaEm" for="field_transformaEm"
+            >Transforma Em</label
+          >
+          <select
+            class="form-control"
+            id="field_transformaEm"
+            data-cy="transformaEm"
+            name="transformaEm"
+            formControlName="transformaEm"
+            [compareWith]="compareDocumentoComercial"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="documentoComercialOption" *ngFor="let documentoComercialOption of documentoComercialsSharedCollection">
+              {{ documentoComercialOption.descricao }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

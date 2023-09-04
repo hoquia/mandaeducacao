@@ -1,0 +1,374 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-encarregado-educacao-heading"
+        data-cy="EncarregadoEducacaoCreateUpdateHeading"
+        appTranslate="longonkeloApp.encarregadoEducacao.home.createOrEditLabel"
+      >
+        Criar ou editar Encarregado Educacao
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.fotografia" for="field_fotografia">Fotografia</label>
+          <div>
+            <img
+              [src]="'data:' + editForm.get('fotografiaContentType')!.value + ';base64,' + editForm.get('fotografia')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('fotografia')!.value"
+              alt="encarregadoEducacao image"
+            />
+            <div *ngIf="editForm.get('fotografia')!.value" class="form-text text-danger clearfix">
+              <span class="pull-start"
+                >{{ editForm.get('fotografiaContentType')!.value }}, {{ byteSize(editForm.get('fotografia')!.value!) }}</span
+              >
+              <button
+                type="button"
+                (click)="clearInputImage('fotografia', 'fotografiaContentType', 'file_fotografia')"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_fotografia"
+              data-cy="fotografia"
+              (change)="setFileData($event, 'fotografia', true)"
+              accept="image/*"
+              appTranslate="entity.action.addimage"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="fotografia"
+            id="field_fotografia"
+            data-cy="fotografia"
+            formControlName="fotografia"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="fotografiaContentType"
+            id="field_fotografiaContentType"
+            formControlName="fotografiaContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.nome" for="field_nome">Nome</label>
+          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
+          <div *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('nome')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.nascimento" for="field_nascimento">Nascimento</label>
+          <div class="input-group">
+            <input
+              id="field_nascimento"
+              data-cy="nascimento"
+              type="text"
+              class="form-control"
+              name="nascimento"
+              ngbDatepicker
+              #nascimentoDp="ngbDatepicker"
+              formControlName="nascimento"
+            />
+            <button type="button" class="btn btn-secondary" (click)="nascimentoDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+          <div *ngIf="editForm.get('nascimento')!.invalid && (editForm.get('nascimento')!.dirty || editForm.get('nascimento')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('nascimento')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.nif" for="field_nif">Nif</label>
+          <input type="text" class="form-control" name="nif" id="field_nif" data-cy="nif" formControlName="nif" />
+          <div *ngIf="editForm.get('nif')!.invalid && (editForm.get('nif')!.dirty || editForm.get('nif')!.touched)"></div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.sexo" for="field_sexo">Sexo</label>
+          <select class="form-control" name="sexo" formControlName="sexo" id="field_sexo" data-cy="sexo">
+            <option [ngValue]="null">{{ 'longonkeloApp.Sexo.null' | translate }}</option>
+            <option *ngFor="let sexo of sexoValues" [value]="sexo">{{ 'longonkeloApp.Sexo.' + sexo | translate }}</option>
+          </select>
+          <div *ngIf="editForm.get('sexo')!.invalid && (editForm.get('sexo')!.dirty || editForm.get('sexo')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('sexo')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.documentoNumero" for="field_documentoNumero"
+            >Documento Numero</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="documentoNumero"
+            id="field_documentoNumero"
+            data-cy="documentoNumero"
+            formControlName="documentoNumero"
+          />
+          <div
+            *ngIf="
+              editForm.get('documentoNumero')!.invalid &&
+              (editForm.get('documentoNumero')!.dirty || editForm.get('documentoNumero')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('documentoNumero')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.telefonePrincipal" for="field_telefonePrincipal"
+            >Telefone Principal</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="telefonePrincipal"
+            id="field_telefonePrincipal"
+            data-cy="telefonePrincipal"
+            formControlName="telefonePrincipal"
+          />
+          <div
+            *ngIf="
+              editForm.get('telefonePrincipal')!.invalid &&
+              (editForm.get('telefonePrincipal')!.dirty || editForm.get('telefonePrincipal')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('telefonePrincipal')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.telefoneAlternativo" for="field_telefoneAlternativo"
+            >Telefone Alternativo</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="telefoneAlternativo"
+            id="field_telefoneAlternativo"
+            data-cy="telefoneAlternativo"
+            formControlName="telefoneAlternativo"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.email" for="field_email">Email</label>
+          <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+          <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)"></div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.residencia" for="field_residencia">Residencia</label>
+          <input
+            type="text"
+            class="form-control"
+            name="residencia"
+            id="field_residencia"
+            data-cy="residencia"
+            formControlName="residencia"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.enderecoTrabalho" for="field_enderecoTrabalho"
+            >Endereco Trabalho</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="enderecoTrabalho"
+            id="field_enderecoTrabalho"
+            data-cy="enderecoTrabalho"
+            formControlName="enderecoTrabalho"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.rendaMensal" for="field_rendaMensal"
+            >Renda Mensal</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="rendaMensal"
+            id="field_rendaMensal"
+            data-cy="rendaMensal"
+            formControlName="rendaMensal"
+          />
+          <div *ngIf="editForm.get('rendaMensal')!.invalid && (editForm.get('rendaMensal')!.dirty || editForm.get('rendaMensal')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('rendaMensal')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('rendaMensal')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.empresaTrabalho" for="field_empresaTrabalho"
+            >Empresa Trabalho</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="empresaTrabalho"
+            id="field_empresaTrabalho"
+            data-cy="empresaTrabalho"
+            formControlName="empresaTrabalho"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.hash" for="field_hash">Hash</label>
+          <input type="text" class="form-control" name="hash" id="field_hash" data-cy="hash" formControlName="hash" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.grauParentesco" for="field_grauParentesco"
+            >Grau Parentesco</label
+          >
+          <select
+            class="form-control"
+            id="field_grauParentesco"
+            data-cy="grauParentesco"
+            name="grauParentesco"
+            formControlName="grauParentesco"
+            [compareWith]="compareLookupItem"
+          >
+            <option *ngIf="!editForm.get('grauParentesco')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              {{ lookupItemOption.descricao }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="
+            editForm.get(['grauParentesco'])!.invalid &&
+            (editForm.get(['grauParentesco'])!.dirty || editForm.get(['grauParentesco'])!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['grauParentesco'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.tipoDocumento" for="field_tipoDocumento"
+            >Tipo Documento</label
+          >
+          <select
+            class="form-control"
+            id="field_tipoDocumento"
+            data-cy="tipoDocumento"
+            name="tipoDocumento"
+            formControlName="tipoDocumento"
+            [compareWith]="compareLookupItem"
+          >
+            <option *ngIf="!editForm.get('tipoDocumento')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              {{ lookupItemOption.descricao }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="
+            editForm.get(['tipoDocumento'])!.invalid && (editForm.get(['tipoDocumento'])!.dirty || editForm.get(['tipoDocumento'])!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['tipoDocumento'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.profissao" for="field_profissao">Profissao</label>
+          <select
+            class="form-control"
+            id="field_profissao"
+            data-cy="profissao"
+            name="profissao"
+            formControlName="profissao"
+            [compareWith]="compareLookupItem"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              {{ lookupItemOption.descricao }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="periodoHorario">
+      <h2 data-cy="periodoHorarioDetailsHeading"><span appTranslate="longonkeloApp.periodoHorario.detail.title">Periodo Horario</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ periodoHorario.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.periodoHorario.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ periodoHorario.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.periodoHorario.tempo">Tempo</span></dt>
+        <dd>
+          <span>{{ periodoHorario.tempo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.periodoHorario.inicio">Inicio</span></dt>
+        <dd>
+          <span>{{ periodoHorario.inicio }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.periodoHorario.fim">Fim</span></dt>
+        <dd>
+          <span>{{ periodoHorario.fim }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.periodoHorario.turno">Turno</span></dt>
+        <dd>
+          <div *ngIf="periodoHorario.turno">
+            <a [routerLink]="['/turno', periodoHorario.turno.id, 'view']">{{ periodoHorario.turno.nome }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/periodo-horario', periodoHorario.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

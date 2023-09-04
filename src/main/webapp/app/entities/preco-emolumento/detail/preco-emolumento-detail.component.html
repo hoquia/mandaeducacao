@@ -1,0 +1,90 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="precoEmolumento">
+      <h2 data-cy="precoEmolumentoDetailsHeading">
+        <span appTranslate="longonkeloApp.precoEmolumento.detail.title">Preco Emolumento</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ precoEmolumento.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.precoEmolumento.preco">Preco</span></dt>
+        <dd>
+          <span>{{ precoEmolumento.preco }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.precoEmolumento.isEspecificoCurso">Is Especifico Curso</span></dt>
+        <dd>
+          <span>{{ precoEmolumento.isEspecificoCurso }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.precoEmolumento.isEspecificoAreaFormacao">Is Especifico Area Formacao</span></dt>
+        <dd>
+          <span>{{ precoEmolumento.isEspecificoAreaFormacao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.precoEmolumento.isEspecificoClasse">Is Especifico Classe</span></dt>
+        <dd>
+          <span>{{ precoEmolumento.isEspecificoClasse }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.precoEmolumento.isEspecificoTurno">Is Especifico Turno</span></dt>
+        <dd>
+          <span>{{ precoEmolumento.isEspecificoTurno }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.precoEmolumento.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ precoEmolumento.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.precoEmolumento.emolumento">Emolumento</span></dt>
+        <dd>
+          <div *ngIf="precoEmolumento.emolumento">
+            <a [routerLink]="['/emolumento', precoEmolumento.emolumento.id, 'view']">{{ precoEmolumento.emolumento.nome }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.precoEmolumento.areaFormacao">Area Formacao</span></dt>
+        <dd>
+          <div *ngIf="precoEmolumento.areaFormacao">
+            <a [routerLink]="['/area-formacao', precoEmolumento.areaFormacao.id, 'view']">{{ precoEmolumento.areaFormacao.nome }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.precoEmolumento.curso">Curso</span></dt>
+        <dd>
+          <div *ngIf="precoEmolumento.curso">
+            <a [routerLink]="['/curso', precoEmolumento.curso.id, 'view']">{{ precoEmolumento.curso.nome }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.precoEmolumento.classe">Classe</span></dt>
+        <dd>
+          <div *ngIf="precoEmolumento.classe">
+            <a [routerLink]="['/classe', precoEmolumento.classe.id, 'view']">{{ precoEmolumento.classe.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.precoEmolumento.turno">Turno</span></dt>
+        <dd>
+          <div *ngIf="precoEmolumento.turno">
+            <a [routerLink]="['/turno', precoEmolumento.turno.id, 'view']">{{ precoEmolumento.turno.nome }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.precoEmolumento.planoMulta">Plano Multa</span></dt>
+        <dd>
+          <div *ngIf="precoEmolumento.planoMulta">
+            <a [routerLink]="['/plano-multa', precoEmolumento.planoMulta.id, 'view']">{{ precoEmolumento.planoMulta.descricao }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/preco-emolumento', precoEmolumento.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

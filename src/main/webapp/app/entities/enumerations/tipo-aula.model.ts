@@ -1,0 +1,9 @@
+export enum TipoAula {
+  PRATICA = 'PRATICA',
+
+  TEORICA = 'TEORICA',
+
+  APRESENTACAO = 'APRESENTACAO',
+
+  OUTRO = 'OUTRO',
+}

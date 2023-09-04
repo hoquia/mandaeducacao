@@ -1,0 +1,197 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-categoria-ocorrencia-heading"
+        data-cy="CategoriaOcorrenciaCreateUpdateHeading"
+        appTranslate="longonkeloApp.categoriaOcorrencia.home.createOrEditLabel"
+      >
+        Criar ou editar Categoria Ocorrencia
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.categoriaOcorrencia.codigo" for="field_codigo">Codigo</label>
+          <input type="text" class="form-control" name="codigo" id="field_codigo" data-cy="codigo" formControlName="codigo" />
+          <div *ngIf="editForm.get('codigo')!.invalid && (editForm.get('codigo')!.dirty || editForm.get('codigo')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('codigo')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.categoriaOcorrencia.sansaoDisicplinar" for="field_sansaoDisicplinar"
+            >Sansao Disicplinar</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="sansaoDisicplinar"
+            id="field_sansaoDisicplinar"
+            data-cy="sansaoDisicplinar"
+            formControlName="sansaoDisicplinar"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.categoriaOcorrencia.isNotificaEncaregado" for="field_isNotificaEncaregado"
+            >Is Notifica Encaregado</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isNotificaEncaregado"
+            id="field_isNotificaEncaregado"
+            data-cy="isNotificaEncaregado"
+            formControlName="isNotificaEncaregado"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.categoriaOcorrencia.isSendEmail" for="field_isSendEmail"
+            >Is Send Email</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isSendEmail"
+            id="field_isSendEmail"
+            data-cy="isSendEmail"
+            formControlName="isSendEmail"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.categoriaOcorrencia.isSendSms" for="field_isSendSms">Is Send Sms</label>
+          <input type="checkbox" class="form-check" name="isSendSms" id="field_isSendSms" data-cy="isSendSms" formControlName="isSendSms" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.categoriaOcorrencia.isSendPush" for="field_isSendPush">Is Send Push</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isSendPush"
+            id="field_isSendPush"
+            data-cy="isSendPush"
+            formControlName="isSendPush"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.categoriaOcorrencia.descricao" for="field_descricao">Descricao</label>
+          <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
+          <div *ngIf="editForm.get('descricao')!.invalid && (editForm.get('descricao')!.dirty || editForm.get('descricao')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('descricao')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.categoriaOcorrencia.observacao" for="field_observacao">Observacao</label>
+          <textarea
+            class="form-control"
+            name="observacao"
+            id="field_observacao"
+            data-cy="observacao"
+            formControlName="observacao"
+          ></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.categoriaOcorrencia.encaminhar" for="field_encaminhar">Encaminhar</label>
+          <select
+            class="form-control"
+            id="field_encaminhar"
+            data-cy="encaminhar"
+            name="encaminhar"
+            formControlName="encaminhar"
+            [compareWith]="compareDocente"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="docenteOption" *ngFor="let docenteOption of docentesSharedCollection">{{ docenteOption.nome }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.categoriaOcorrencia.referencia" for="field_referencia">Referencia</label>
+          <select
+            class="form-control"
+            id="field_referencia"
+            data-cy="referencia"
+            name="referencia"
+            formControlName="referencia"
+            [compareWith]="compareCategoriaOcorrencia"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="categoriaOcorrenciaOption" *ngFor="let categoriaOcorrenciaOption of categoriaOcorrenciasSharedCollection">
+              {{ categoriaOcorrenciaOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.categoriaOcorrencia.medidaDisciplinar" for="field_medidaDisciplinar"
+            >Medida Disciplinar</label
+          >
+          <select
+            class="form-control"
+            id="field_medidaDisciplinar"
+            data-cy="medidaDisciplinar"
+            name="medidaDisciplinar"
+            formControlName="medidaDisciplinar"
+            [compareWith]="compareMedidaDisciplinar"
+          >
+            <option *ngIf="editForm.get(['medidaDisciplinar'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="medidaDisciplinarOption" *ngFor="let medidaDisciplinarOption of medidaDisciplinarsSharedCollection">
+              {{ medidaDisciplinarOption.descricao }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="
+            editForm.get(['medidaDisciplinar'])!.invalid &&
+            (editForm.get(['medidaDisciplinar'])!.dirty || editForm.get(['medidaDisciplinar'])!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['medidaDisciplinar'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

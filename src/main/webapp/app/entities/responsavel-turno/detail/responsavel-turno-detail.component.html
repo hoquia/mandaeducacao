@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="responsavelTurno">
+      <h2 data-cy="responsavelTurnoDetailsHeading">
+        <span appTranslate="longonkeloApp.responsavelTurno.detail.title">Responsavel Turno</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ responsavelTurno.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelTurno.de">De</span></dt>
+        <dd>
+          <span>{{ responsavelTurno.de | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelTurno.ate">Ate</span></dt>
+        <dd>
+          <span>{{ responsavelTurno.ate | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelTurno.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ responsavelTurno.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelTurno.timestamp">Timestamp</span></dt>
+        <dd>
+          <span>{{ responsavelTurno.timestamp | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelTurno.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ responsavelTurno.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelTurno.turno">Turno</span></dt>
+        <dd>
+          <div *ngIf="responsavelTurno.turno">
+            <a [routerLink]="['/turno', responsavelTurno.turno.id, 'view']">{{ responsavelTurno.turno.nome }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/responsavel-turno', responsavelTurno.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

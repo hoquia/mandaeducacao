@@ -1,0 +1,82 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="enderecoDiscente">
+      <h2 data-cy="enderecoDiscenteDetailsHeading">
+        <span appTranslate="longonkeloApp.enderecoDiscente.detail.title">Endereco Discente</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ enderecoDiscente.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.enderecoDiscente.tipo">Tipo</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.TipoEndereco.' + enderecoDiscente.tipo }}">{{ enderecoDiscente.tipo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.enderecoDiscente.bairro">Bairro</span></dt>
+        <dd>
+          <span>{{ enderecoDiscente.bairro }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.enderecoDiscente.rua">Rua</span></dt>
+        <dd>
+          <span>{{ enderecoDiscente.rua }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.enderecoDiscente.numeroCasa">Numero Casa</span></dt>
+        <dd>
+          <span>{{ enderecoDiscente.numeroCasa }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.enderecoDiscente.codigoPostal">Codigo Postal</span></dt>
+        <dd>
+          <span>{{ enderecoDiscente.codigoPostal }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.enderecoDiscente.latitude">Latitude</span></dt>
+        <dd>
+          <span>{{ enderecoDiscente.latitude }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.enderecoDiscente.longitude">Longitude</span></dt>
+        <dd>
+          <span>{{ enderecoDiscente.longitude }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.enderecoDiscente.pais">Pais</span></dt>
+        <dd>
+          <div *ngIf="enderecoDiscente.pais">
+            <a [routerLink]="['/lookup-item', enderecoDiscente.pais.id, 'view']">{{ enderecoDiscente.pais.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.enderecoDiscente.provincia">Provincia</span></dt>
+        <dd>
+          <div *ngIf="enderecoDiscente.provincia">
+            <a [routerLink]="['/lookup-item', enderecoDiscente.provincia.id, 'view']">{{ enderecoDiscente.provincia.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.enderecoDiscente.municipio">Municipio</span></dt>
+        <dd>
+          <div *ngIf="enderecoDiscente.municipio">
+            <a [routerLink]="['/lookup-item', enderecoDiscente.municipio.id, 'view']">{{ enderecoDiscente.municipio.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.enderecoDiscente.discente">Discente</span></dt>
+        <dd>
+          <div *ngIf="enderecoDiscente.discente">
+            <a [routerLink]="['/discente', enderecoDiscente.discente.id, 'view']">{{ enderecoDiscente.discente.nome }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/endereco-discente', enderecoDiscente.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

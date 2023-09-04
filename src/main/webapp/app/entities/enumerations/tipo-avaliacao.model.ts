@@ -1,0 +1,15 @@
+export enum TipoAvaliacao {
+  NOTA1 = 'NOTA1',
+
+  NOTA2 = 'NOTA2',
+
+  NOTA3 = 'NOTA3',
+
+  EXAME = 'EXAME',
+
+  RECURSO = 'RECURSO',
+
+  EXAME_ESPECIAL = 'EXAME_ESPECIAL',
+
+  NOTA_CONSELHO = 'NOTA_CONSELHO',
+}

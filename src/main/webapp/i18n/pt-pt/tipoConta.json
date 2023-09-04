@@ -1,0 +1,9 @@
+{
+  "longonkeloApp": {
+    "TipoConta": {
+      "null": "",
+      "CAIXA": "CAIXA",
+      "BANCO": "BANCO"
+    }
+  }
+}

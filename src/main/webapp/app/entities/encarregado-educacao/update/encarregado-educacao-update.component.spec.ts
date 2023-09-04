@@ -1,0 +1,176 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpResponse } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { of, Subject, from } from 'rxjs';
+
+import { EncarregadoEducacaoFormService } from './encarregado-educacao-form.service';
+import { EncarregadoEducacaoService } from '../service/encarregado-educacao.service';
+import { IEncarregadoEducacao } from '../encarregado-educacao.model';
+import { ILookupItem } from 'app/entities/lookup-item/lookup-item.model';
+import { LookupItemService } from 'app/entities/lookup-item/service/lookup-item.service';
+
+import { EncarregadoEducacaoUpdateComponent } from './encarregado-educacao-update.component';
+
+describe('EncarregadoEducacao Management Update Component', () => {
+  let comp: EncarregadoEducacaoUpdateComponent;
+  let fixture: ComponentFixture<EncarregadoEducacaoUpdateComponent>;
+  let activatedRoute: ActivatedRoute;
+  let encarregadoEducacaoFormService: EncarregadoEducacaoFormService;
+  let encarregadoEducacaoService: EncarregadoEducacaoService;
+  let lookupItemService: LookupItemService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule, RouterTestingModule.withRoutes([])],
+      declarations: [EncarregadoEducacaoUpdateComponent],
+      providers: [
+        FormBuilder,
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: from([{}]),
+          },
+        },
+      ],
+    })
+      .overrideTemplate(EncarregadoEducacaoUpdateComponent, '')
+      .compileComponents();
+
+    fixture = TestBed.createComponent(EncarregadoEducacaoUpdateComponent);
+    activatedRoute = TestBed.inject(ActivatedRoute);
+    encarregadoEducacaoFormService = TestBed.inject(EncarregadoEducacaoFormService);
+    encarregadoEducacaoService = TestBed.inject(EncarregadoEducacaoService);
+    lookupItemService = TestBed.inject(LookupItemService);
+
+    comp = fixture.componentInstance;
+  });
+
+  describe('ngOnInit', () => {
+    it('Should call LookupItem query and add missing value', () => {
+      const encarregadoEducacao: IEncarregadoEducacao = { id: 456 };
+      const grauParentesco: ILookupItem = { id: 73251 };
+      encarregadoEducacao.grauParentesco = grauParentesco;
+      const tipoDocumento: ILookupItem = { id: 89129 };
+      encarregadoEducacao.tipoDocumento = tipoDocumento;
+      const profissao: ILookupItem = { id: 56095 };
+      encarregadoEducacao.profissao = profissao;
+
+      const lookupItemCollection: ILookupItem[] = [{ id: 38751 }];
+      jest.spyOn(lookupItemService, 'query').mockReturnValue(of(new HttpResponse({ body: lookupItemCollection })));
+      const additionalLookupItems = [grauParentesco, tipoDocumento, profissao];
+      const expectedCollection: ILookupItem[] = [...additionalLookupItems, ...lookupItemCollection];
+      jest.spyOn(lookupItemService, 'addLookupItemToCollectionIfMissing').mockReturnValue(expectedCollection);
+
+      activatedRoute.data = of({ encarregadoEducacao });
+      comp.ngOnInit();
+
+      expect(lookupItemService.query).toHaveBeenCalled();
+      expect(lookupItemService.addLookupItemToCollectionIfMissing).toHaveBeenCalledWith(
+        lookupItemCollection,
+        ...additionalLookupItems.map(expect.objectContaining)
+      );
+      expect(comp.lookupItemsSharedCollection).toEqual(expectedCollection);
+    });
+
+    it('Should update editForm', () => {
+      const encarregadoEducacao: IEncarregadoEducacao = { id: 456 };
+      const grauParentesco: ILookupItem = { id: 83873 };
+      encarregadoEducacao.grauParentesco = grauParentesco;
+      const tipoDocumento: ILookupItem = { id: 95459 };
+      encarregadoEducacao.tipoDocumento = tipoDocumento;
+      const profissao: ILookupItem = { id: 3448 };
+      encarregadoEducacao.profissao = profissao;
+
+      activatedRoute.data = of({ encarregadoEducacao });
+      comp.ngOnInit();
+
+      expect(comp.lookupItemsSharedCollection).toContain(grauParentesco);
+      expect(comp.lookupItemsSharedCollection).toContain(tipoDocumento);
+      expect(comp.lookupItemsSharedCollection).toContain(profissao);
+      expect(comp.encarregadoEducacao).toEqual(encarregadoEducacao);
+    });
+  });
+
+  describe('save', () => {
+    it('Should call update service on save for existing entity', () => {
+      // GIVEN
+      const saveSubject = new Subject<HttpResponse<IEncarregadoEducacao>>();
+      const encarregadoEducacao = { id: 123 };
+      jest.spyOn(encarregadoEducacaoFormService, 'getEncarregadoEducacao').mockReturnValue(encarregadoEducacao);
+      jest.spyOn(encarregadoEducacaoService, 'update').mockReturnValue(saveSubject);
+      jest.spyOn(comp, 'previousState');
+      activatedRoute.data = of({ encarregadoEducacao });
+      comp.ngOnInit();
+
+      // WHEN
+      comp.save();
+      expect(comp.isSaving).toEqual(true);
+      saveSubject.next(new HttpResponse({ body: encarregadoEducacao }));
+      saveSubject.complete();
+
+      // THEN
+      expect(encarregadoEducacaoFormService.getEncarregadoEducacao).toHaveBeenCalled();
+      expect(comp.previousState).toHaveBeenCalled();
+      expect(encarregadoEducacaoService.update).toHaveBeenCalledWith(expect.objectContaining(encarregadoEducacao));
+      expect(comp.isSaving).toEqual(false);
+    });
+
+    it('Should call create service on save for new entity', () => {
+      // GIVEN
+      const saveSubject = new Subject<HttpResponse<IEncarregadoEducacao>>();
+      const encarregadoEducacao = { id: 123 };
+      jest.spyOn(encarregadoEducacaoFormService, 'getEncarregadoEducacao').mockReturnValue({ id: null });
+      jest.spyOn(encarregadoEducacaoService, 'create').mockReturnValue(saveSubject);
+      jest.spyOn(comp, 'previousState');
+      activatedRoute.data = of({ encarregadoEducacao: null });
+      comp.ngOnInit();
+
+      // WHEN
+      comp.save();
+      expect(comp.isSaving).toEqual(true);
+      saveSubject.next(new HttpResponse({ body: encarregadoEducacao }));
+      saveSubject.complete();
+
+      // THEN
+      expect(encarregadoEducacaoFormService.getEncarregadoEducacao).toHaveBeenCalled();
+      expect(encarregadoEducacaoService.create).toHaveBeenCalled();
+      expect(comp.isSaving).toEqual(false);
+      expect(comp.previousState).toHaveBeenCalled();
+    });
+
+    it('Should set isSaving to false on error', () => {
+      // GIVEN
+      const saveSubject = new Subject<HttpResponse<IEncarregadoEducacao>>();
+      const encarregadoEducacao = { id: 123 };
+      jest.spyOn(encarregadoEducacaoService, 'update').mockReturnValue(saveSubject);
+      jest.spyOn(comp, 'previousState');
+      activatedRoute.data = of({ encarregadoEducacao });
+      comp.ngOnInit();
+
+      // WHEN
+      comp.save();
+      expect(comp.isSaving).toEqual(true);
+      saveSubject.error('This is an error!');
+
+      // THEN
+      expect(encarregadoEducacaoService.update).toHaveBeenCalled();
+      expect(comp.isSaving).toEqual(false);
+      expect(comp.previousState).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Compare relationships', () => {
+    describe('compareLookupItem', () => {
+      it('Should forward to lookupItemService', () => {
+        const entity = { id: 123 };
+        const entity2 = { id: 456 };
+        jest.spyOn(lookupItemService, 'compareLookupItem');
+        comp.compareLookupItem(entity, entity2);
+        expect(lookupItemService.compareLookupItem).toHaveBeenCalledWith(entity, entity2);
+      });
+    });
+  });
+});

@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="transferenciaTurma">
+      <h2 data-cy="transferenciaTurmaDetailsHeading">
+        <span appTranslate="longonkeloApp.transferenciaTurma.detail.title">Transferencia Turma</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ transferenciaTurma.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.transferenciaTurma.timestamp">Timestamp</span></dt>
+        <dd>
+          <span>{{ transferenciaTurma.timestamp | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.transferenciaTurma.de">De</span></dt>
+        <dd>
+          <div *ngIf="transferenciaTurma.de">
+            <a [routerLink]="['/turma', transferenciaTurma.de.id, 'view']">{{ transferenciaTurma.de.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.transferenciaTurma.para">Para</span></dt>
+        <dd>
+          <div *ngIf="transferenciaTurma.para">
+            <a [routerLink]="['/turma', transferenciaTurma.para.id, 'view']">{{ transferenciaTurma.para.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.transferenciaTurma.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ transferenciaTurma.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.transferenciaTurma.motivoTransferencia">Motivo Transferencia</span></dt>
+        <dd>
+          <div *ngIf="transferenciaTurma.motivoTransferencia">
+            <a [routerLink]="['/lookup-item', transferenciaTurma.motivoTransferencia.id, 'view']">{{
+              transferenciaTurma.motivoTransferencia.descricao
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.transferenciaTurma.matricula">Matricula</span></dt>
+        <dd>
+          <div *ngIf="transferenciaTurma.matricula">
+            <a [routerLink]="['/matricula', transferenciaTurma.matricula.id, 'view']">{{ transferenciaTurma.matricula.numeroMatricula }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/transferencia-turma', transferenciaTurma.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

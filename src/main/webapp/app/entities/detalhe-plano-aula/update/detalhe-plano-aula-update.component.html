@@ -1,0 +1,367 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-detalhe-plano-aula-heading"
+        data-cy="DetalhePlanoAulaCreateUpdateHeading"
+        appTranslate="longonkeloApp.detalhePlanoAula.home.createOrEditLabel"
+      >
+        Criar ou editar Detalhe Plano Aula
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.estrategiaAula" for="field_estrategiaAula"
+            >Estrategia Aula</label
+          >
+          <textarea
+            class="form-control"
+            name="estrategiaAula"
+            id="field_estrategiaAula"
+            data-cy="estrategiaAula"
+            formControlName="estrategiaAula"
+          ></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.tempoActividade" for="field_tempoActividade"
+            >Tempo Actividade</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="tempoActividade"
+            id="field_tempoActividade"
+            data-cy="tempoActividade"
+            formControlName="tempoActividade"
+          />
+          <div
+            *ngIf="
+              editForm.get('tempoActividade')!.invalid &&
+              (editForm.get('tempoActividade')!.dirty || editForm.get('tempoActividade')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('tempoActividade')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('tempoActividade')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('tempoActividade')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.recursosEnsino" for="field_recursosEnsino"
+            >Recursos Ensino</label
+          >
+          <textarea
+            class="form-control"
+            name="recursosEnsino"
+            id="field_recursosEnsino"
+            data-cy="recursosEnsino"
+            formControlName="recursosEnsino"
+          ></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.tituloActividade" for="field_tituloActividade"
+            >Titulo Actividade</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="tituloActividade"
+            id="field_tituloActividade"
+            data-cy="tituloActividade"
+            formControlName="tituloActividade"
+          />
+          <div
+            *ngIf="
+              editForm.get('tituloActividade')!.invalid &&
+              (editForm.get('tituloActividade')!.dirty || editForm.get('tituloActividade')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('tituloActividade')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.actividadesDocente" for="field_actividadesDocente"
+            >Actividades Docente</label
+          >
+          <textarea
+            class="form-control"
+            name="actividadesDocente"
+            id="field_actividadesDocente"
+            data-cy="actividadesDocente"
+            formControlName="actividadesDocente"
+          ></textarea>
+          <div
+            *ngIf="
+              editForm.get('actividadesDocente')!.invalid &&
+              (editForm.get('actividadesDocente')!.dirty || editForm.get('actividadesDocente')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('actividadesDocente')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.actividadesDiscentes" for="field_actividadesDiscentes"
+            >Actividades Discentes</label
+          >
+          <textarea
+            class="form-control"
+            name="actividadesDiscentes"
+            id="field_actividadesDiscentes"
+            data-cy="actividadesDiscentes"
+            formControlName="actividadesDiscentes"
+          ></textarea>
+          <div
+            *ngIf="
+              editForm.get('actividadesDiscentes')!.invalid &&
+              (editForm.get('actividadesDiscentes')!.dirty || editForm.get('actividadesDiscentes')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('actividadesDiscentes')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.avaliacao" for="field_avaliacao">Avaliacao</label>
+          <textarea class="form-control" name="avaliacao" id="field_avaliacao" data-cy="avaliacao" formControlName="avaliacao"></textarea>
+          <div *ngIf="editForm.get('avaliacao')!.invalid && (editForm.get('avaliacao')!.dirty || editForm.get('avaliacao')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('avaliacao')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.bibliografia" for="field_bibliografia">Bibliografia</label>
+          <textarea
+            class="form-control"
+            name="bibliografia"
+            id="field_bibliografia"
+            data-cy="bibliografia"
+            formControlName="bibliografia"
+          ></textarea>
+          <div
+            *ngIf="editForm.get('bibliografia')!.invalid && (editForm.get('bibliografia')!.dirty || editForm.get('bibliografia')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('bibliografia')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.observacao" for="field_observacao">Observacao</label>
+          <textarea
+            class="form-control"
+            name="observacao"
+            id="field_observacao"
+            data-cy="observacao"
+            formControlName="observacao"
+          ></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.pdf" for="field_pdf">Pdf</label>
+          <div>
+            <div *ngIf="editForm.get('pdf')!.value" class="form-text text-danger clearfix">
+              <a
+                class="pull-start"
+                (click)="openFile(editForm.get('pdf')!.value!, editForm.get('pdfContentType')!.value!)"
+                appTranslate="entity.action.open"
+                >Abrir</a
+              ><br />
+              <span class="pull-start">{{ editForm.get('pdfContentType')!.value }}, {{ byteSize(editForm.get('pdf')!.value!) }}</span>
+              <button
+                type="button"
+                (click)="editForm.patchValue({ pdf: undefined, pdfContentType: undefined })"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_pdf"
+              data-cy="pdf"
+              (change)="setFileData($event, 'pdf', false)"
+              appTranslate="entity.action.addblob"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="pdf" id="field_pdf" data-cy="pdf" formControlName="pdf" />
+          <input type="hidden" class="form-control" name="pdfContentType" id="field_pdfContentType" formControlName="pdfContentType" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.video" for="field_video">Video</label>
+          <div>
+            <div *ngIf="editForm.get('video')!.value" class="form-text text-danger clearfix">
+              <a
+                class="pull-start"
+                (click)="openFile(editForm.get('video')!.value!, editForm.get('videoContentType')!.value!)"
+                appTranslate="entity.action.open"
+                >Abrir</a
+              ><br />
+              <span class="pull-start">{{ editForm.get('videoContentType')!.value }}, {{ byteSize(editForm.get('video')!.value!) }}</span>
+              <button
+                type="button"
+                (click)="editForm.patchValue({ video: undefined, videoContentType: undefined })"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_video"
+              data-cy="video"
+              (change)="setFileData($event, 'video', false)"
+              appTranslate="entity.action.addblob"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="video" id="field_video" data-cy="video" formControlName="video" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="videoContentType"
+            id="field_videoContentType"
+            formControlName="videoContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.audio" for="field_audio">Audio</label>
+          <div>
+            <div *ngIf="editForm.get('audio')!.value" class="form-text text-danger clearfix">
+              <a
+                class="pull-start"
+                (click)="openFile(editForm.get('audio')!.value!, editForm.get('audioContentType')!.value!)"
+                appTranslate="entity.action.open"
+                >Abrir</a
+              ><br />
+              <span class="pull-start">{{ editForm.get('audioContentType')!.value }}, {{ byteSize(editForm.get('audio')!.value!) }}</span>
+              <button
+                type="button"
+                (click)="editForm.patchValue({ audio: undefined, audioContentType: undefined })"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_audio"
+              data-cy="audio"
+              (change)="setFileData($event, 'audio', false)"
+              appTranslate="entity.action.addblob"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="audio" id="field_audio" data-cy="audio" formControlName="audio" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="audioContentType"
+            id="field_audioContentType"
+            formControlName="audioContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.planoAula" for="field_planoAula">Plano Aula</label>
+          <select
+            class="form-control"
+            id="field_planoAula"
+            data-cy="planoAula"
+            name="planoAula"
+            formControlName="planoAula"
+            [compareWith]="comparePlanoAula"
+          >
+            <option *ngIf="editForm.get(['planoAula'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="planoAulaOption" *ngFor="let planoAulaOption of planoAulasSharedCollection">
+              {{ planoAulaOption.assunto }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['planoAula'])!.invalid && (editForm.get(['planoAula'])!.dirty || editForm.get(['planoAula'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['planoAula'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

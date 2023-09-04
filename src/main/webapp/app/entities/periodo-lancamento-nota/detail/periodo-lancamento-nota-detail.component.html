@@ -1,0 +1,59 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="periodoLancamentoNota">
+      <h2 data-cy="periodoLancamentoNotaDetailsHeading">
+        <span appTranslate="longonkeloApp.periodoLancamentoNota.detail.title">Periodo Lancamento Nota</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ periodoLancamentoNota.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.periodoLancamentoNota.tipoAvaliacao">Tipo Avaliacao</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.TipoAvaliacao.' + periodoLancamentoNota.tipoAvaliacao }}">{{
+            periodoLancamentoNota.tipoAvaliacao
+          }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.periodoLancamentoNota.de">De</span></dt>
+        <dd>
+          <span>{{ periodoLancamentoNota.de | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.periodoLancamentoNota.ate">Ate</span></dt>
+        <dd>
+          <span>{{ periodoLancamentoNota.ate | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.periodoLancamentoNota.timestamp">Timestamp</span></dt>
+        <dd>
+          <span>{{ periodoLancamentoNota.timestamp | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.periodoLancamentoNota.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ periodoLancamentoNota.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.periodoLancamentoNota.classe">Classe</span></dt>
+        <dd>
+          <span *ngFor="let classe of periodoLancamentoNota.classes; let last = last">
+            <a [routerLink]="['/classe', classe.id, 'view']">{{ classe.descricao }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/periodo-lancamento-nota', periodoLancamentoNota.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity DisciplinaCurricular.
+    -->
+    <changeSet id="20230904002237-1" author="jhipster">
+        <createTable tableName="disciplina_curricular">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="unique_disciplina_curricular" type="varchar(255)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_disciplina_curricular__unique_disciplina_curricular" />
+            </column>
+            <column name="descricao" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="carga_semanal" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_terminal" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="media_para_exame" type="double">
+                <constraints nullable="false" />
+            </column>
+            <column name="media_para_recurso" type="double">
+                <constraints nullable="false" />
+            </column>
+            <column name="media_para_exame_especial" type="double">
+                <constraints nullable="false" />
+            </column>
+            <column name="media_para_despensar" type="double">
+                <constraints nullable="false" />
+            </column>
+            <column name="componente_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="regime_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="disciplina_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="referencia_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    <changeSet id="20230904002237-1-relations" author="jhipster">
+
+        <createTable tableName="rel_disciplina_curricular__planos_curricular">
+            <column name="planos_curricular_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="disciplina_curricular_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="disciplina_curricular_id, planos_curricular_id" tableName="rel_disciplina_curricular__planos_curricular"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

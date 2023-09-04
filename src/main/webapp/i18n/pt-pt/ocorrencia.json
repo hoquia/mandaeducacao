@@ -1,0 +1,36 @@
+{
+  "longonkeloApp": {
+    "ocorrencia": {
+      "home": {
+        "title": "Ocorrencias",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Ocorrencia",
+        "createOrEditLabel": "Criar ou editar Ocorrencia",
+        "notFound": "Nenhum Ocorrencias encontrado"
+      },
+      "created": "Um novo Ocorrencia foi criado com o identificador {{ param }}",
+      "updated": "Ocorrencia com identificador {{ param }} foi actualizado",
+      "deleted": "Ocorrencia com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Ocorrencia {{ id }}?"
+      },
+      "detail": {
+        "title": "Ocorrencia"
+      },
+      "id": "ID",
+      "uniqueOcorrencia": "Unique Ocorrencia",
+      "descricao": "Descricao",
+      "evidencia": "Evidencia",
+      "hash": "Hash",
+      "timestamp": "Timestamp",
+      "ocorrencia": "Ocorrencia",
+      "anoLectivo": "Ano Lectivo",
+      "utilizador": "Utilizador",
+      "referencia": "Referencia",
+      "docente": "Docente",
+      "matricula": "Matricula",
+      "estado": "Estado",
+      "licao": "Licao"
+    }
+  }
+}

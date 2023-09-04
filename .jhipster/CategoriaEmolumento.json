@@ -1,0 +1,63 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002306",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "categoria_emolumento",
+  "fields": [
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "isServico",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "cor",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "isIsentoMulta",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isIsentoJuro",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "CategoriaEmolumento",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "emolumento",
+      "otherEntityRelationshipName": "categoria",
+      "relationshipName": "emolumento",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "planoMulta",
+      "otherEntityRelationshipName": "categoriaEmolumento",
+      "relationshipName": "planoMulta",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "planoDesconto",
+      "otherEntityRelationshipName": "categoriasEmolumento",
+      "ownerSide": false,
+      "relationshipName": "planosDesconto",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

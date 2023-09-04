@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity ResumoAcademico.
+    -->
+    <changeSet id="20230904002300-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="utilizador_id"
+                                 baseTableName="resumo_academico"
+                                 constraintName="fk_resumo_academico__utilizador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="app_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="ultima_turma_matriculada_id"
+                                 baseTableName="resumo_academico"
+                                 constraintName="fk_resumo_academico__ultima_turma_matriculada_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="turma"/>
+
+        <addForeignKeyConstraint baseColumnNames="discente_id"
+                                 baseTableName="resumo_academico"
+                                 constraintName="fk_resumo_academico__discente_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="discente"/>
+
+        <addForeignKeyConstraint baseColumnNames="situacao_id"
+                                 baseTableName="resumo_academico"
+                                 constraintName="fk_resumo_academico__situacao_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="estado_disciplina_curricular"/>
+    </changeSet>
+</databaseChangeLog>

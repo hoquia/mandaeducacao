@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity Matricula.
+    -->
+    <changeSet id="20230904002248-1" author="jhipster">
+        <createTable tableName="matricula">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="chave_composta_1" type="varchar(255)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_matricula__chave_composta_1" />
+            </column>
+            <column name="chave_composta_2" type="varchar(255)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_matricula__chave_composta_2" />
+            </column>
+            <column name="numero_matricula" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="numero_chamada" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="estado" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="timestamp" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="descricao" type="${clobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="termos_compromissos" type="${blobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="termos_compromissos_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_aceite_termos_compromisso" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="utilizador_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="turma_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="responsavel_financeiro_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="discente_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="referencia_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+        <dropDefaultValue tableName="matricula" columnName="timestamp" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <changeSet id="20230904002248-1-relations" author="jhipster">
+
+        <createTable tableName="rel_matricula__categorias_matriculas">
+            <column name="categorias_matriculas_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="matricula_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="matricula_id, categorias_matriculas_id" tableName="rel_matricula__categorias_matriculas"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

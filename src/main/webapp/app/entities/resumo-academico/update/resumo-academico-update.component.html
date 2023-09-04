@@ -1,0 +1,691 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-resumo-academico-heading"
+        data-cy="ResumoAcademicoCreateUpdateHeading"
+        appTranslate="longonkeloApp.resumoAcademico.home.createOrEditLabel"
+      >
+        Criar ou editar Resumo Academico
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.temaProjecto" for="field_temaProjecto">Tema Projecto</label>
+          <input
+            type="text"
+            class="form-control"
+            name="temaProjecto"
+            id="field_temaProjecto"
+            data-cy="temaProjecto"
+            formControlName="temaProjecto"
+          />
+          <div
+            *ngIf="editForm.get('temaProjecto')!.invalid && (editForm.get('temaProjecto')!.dirty || editForm.get('temaProjecto')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('temaProjecto')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.notaProjecto" for="field_notaProjecto">Nota Projecto</label>
+          <input
+            type="number"
+            class="form-control"
+            name="notaProjecto"
+            id="field_notaProjecto"
+            data-cy="notaProjecto"
+            formControlName="notaProjecto"
+          />
+          <div
+            *ngIf="editForm.get('notaProjecto')!.invalid && (editForm.get('notaProjecto')!.dirty || editForm.get('notaProjecto')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('notaProjecto')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('notaProjecto')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('notaProjecto')?.errors?.max"
+              appTranslate="entity.validation.max"
+              [translateValues]="{ max: 20 }"
+            >
+              Este campo não pode ser maior que 20.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('notaProjecto')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.observacao" for="field_observacao">Observacao</label>
+          <textarea
+            class="form-control"
+            name="observacao"
+            id="field_observacao"
+            data-cy="observacao"
+            formControlName="observacao"
+          ></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.localEstagio" for="field_localEstagio">Local Estagio</label>
+          <input
+            type="text"
+            class="form-control"
+            name="localEstagio"
+            id="field_localEstagio"
+            data-cy="localEstagio"
+            formControlName="localEstagio"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.notaEstagio" for="field_notaEstagio">Nota Estagio</label>
+          <input
+            type="number"
+            class="form-control"
+            name="notaEstagio"
+            id="field_notaEstagio"
+            data-cy="notaEstagio"
+            formControlName="notaEstagio"
+          />
+          <div *ngIf="editForm.get('notaEstagio')!.invalid && (editForm.get('notaEstagio')!.dirty || editForm.get('notaEstagio')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('notaEstagio')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('notaEstagio')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('notaEstagio')?.errors?.max"
+              appTranslate="entity.validation.max"
+              [translateValues]="{ max: 20 }"
+            >
+              Este campo não pode ser maior que 20.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('notaEstagio')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.mediaFinalDisciplina" for="field_mediaFinalDisciplina"
+            >Media Final Disciplina</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="mediaFinalDisciplina"
+            id="field_mediaFinalDisciplina"
+            data-cy="mediaFinalDisciplina"
+            formControlName="mediaFinalDisciplina"
+          />
+          <div
+            *ngIf="
+              editForm.get('mediaFinalDisciplina')!.invalid &&
+              (editForm.get('mediaFinalDisciplina')!.dirty || editForm.get('mediaFinalDisciplina')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('mediaFinalDisciplina')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('mediaFinalDisciplina')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('mediaFinalDisciplina')?.errors?.max"
+              appTranslate="entity.validation.max"
+              [translateValues]="{ max: 20 }"
+            >
+              Este campo não pode ser maior que 20.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('mediaFinalDisciplina')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.classificacaoFinal" for="field_classificacaoFinal"
+            >Classificacao Final</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="classificacaoFinal"
+            id="field_classificacaoFinal"
+            data-cy="classificacaoFinal"
+            formControlName="classificacaoFinal"
+          />
+          <div
+            *ngIf="
+              editForm.get('classificacaoFinal')!.invalid &&
+              (editForm.get('classificacaoFinal')!.dirty || editForm.get('classificacaoFinal')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('classificacaoFinal')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('classificacaoFinal')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('classificacaoFinal')?.errors?.max"
+              appTranslate="entity.validation.max"
+              [translateValues]="{ max: 20 }"
+            >
+              Este campo não pode ser maior que 20.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('classificacaoFinal')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.numeroGrupo" for="field_numeroGrupo">Numero Grupo</label>
+          <input
+            type="text"
+            class="form-control"
+            name="numeroGrupo"
+            id="field_numeroGrupo"
+            data-cy="numeroGrupo"
+            formControlName="numeroGrupo"
+          />
+          <div *ngIf="editForm.get('numeroGrupo')!.invalid && (editForm.get('numeroGrupo')!.dirty || editForm.get('numeroGrupo')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('numeroGrupo')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.mesaDefesa" for="field_mesaDefesa">Mesa Defesa</label>
+          <input
+            type="text"
+            class="form-control"
+            name="mesaDefesa"
+            id="field_mesaDefesa"
+            data-cy="mesaDefesa"
+            formControlName="mesaDefesa"
+          />
+          <div *ngIf="editForm.get('mesaDefesa')!.invalid && (editForm.get('mesaDefesa')!.dirty || editForm.get('mesaDefesa')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('mesaDefesa')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.livroRegistro" for="field_livroRegistro"
+            >Livro Registro</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="livroRegistro"
+            id="field_livroRegistro"
+            data-cy="livroRegistro"
+            formControlName="livroRegistro"
+          />
+          <div
+            *ngIf="
+              editForm.get('livroRegistro')!.invalid && (editForm.get('livroRegistro')!.dirty || editForm.get('livroRegistro')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('livroRegistro')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.numeroFolha" for="field_numeroFolha">Numero Folha</label>
+          <input
+            type="text"
+            class="form-control"
+            name="numeroFolha"
+            id="field_numeroFolha"
+            data-cy="numeroFolha"
+            formControlName="numeroFolha"
+          />
+          <div *ngIf="editForm.get('numeroFolha')!.invalid && (editForm.get('numeroFolha')!.dirty || editForm.get('numeroFolha')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('numeroFolha')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            appTranslate="longonkeloApp.resumoAcademico.chefeSecretariaPedagogica"
+            for="field_chefeSecretariaPedagogica"
+            >Chefe Secretaria Pedagogica</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="chefeSecretariaPedagogica"
+            id="field_chefeSecretariaPedagogica"
+            data-cy="chefeSecretariaPedagogica"
+            formControlName="chefeSecretariaPedagogica"
+          />
+          <div
+            *ngIf="
+              editForm.get('chefeSecretariaPedagogica')!.invalid &&
+              (editForm.get('chefeSecretariaPedagogica')!.dirty || editForm.get('chefeSecretariaPedagogica')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('chefeSecretariaPedagogica')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.subDirectorPedagogico" for="field_subDirectorPedagogico"
+            >Sub Director Pedagogico</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="subDirectorPedagogico"
+            id="field_subDirectorPedagogico"
+            data-cy="subDirectorPedagogico"
+            formControlName="subDirectorPedagogico"
+          />
+          <div
+            *ngIf="
+              editForm.get('subDirectorPedagogico')!.invalid &&
+              (editForm.get('subDirectorPedagogico')!.dirty || editForm.get('subDirectorPedagogico')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('subDirectorPedagogico')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.directorGeral" for="field_directorGeral"
+            >Director Geral</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="directorGeral"
+            id="field_directorGeral"
+            data-cy="directorGeral"
+            formControlName="directorGeral"
+          />
+          <div
+            *ngIf="
+              editForm.get('directorGeral')!.invalid && (editForm.get('directorGeral')!.dirty || editForm.get('directorGeral')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('directorGeral')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.tutorProjecto" for="field_tutorProjecto"
+            >Tutor Projecto</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="tutorProjecto"
+            id="field_tutorProjecto"
+            data-cy="tutorProjecto"
+            formControlName="tutorProjecto"
+          />
+          <div
+            *ngIf="
+              editForm.get('tutorProjecto')!.invalid && (editForm.get('tutorProjecto')!.dirty || editForm.get('tutorProjecto')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('tutorProjecto')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.juriMesa" for="field_juriMesa">Juri Mesa</label>
+          <input type="text" class="form-control" name="juriMesa" id="field_juriMesa" data-cy="juriMesa" formControlName="juriMesa" />
+          <div *ngIf="editForm.get('juriMesa')!.invalid && (editForm.get('juriMesa')!.dirty || editForm.get('juriMesa')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('juriMesa')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.empresaEstagio" for="field_empresaEstagio"
+            >Empresa Estagio</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="empresaEstagio"
+            id="field_empresaEstagio"
+            data-cy="empresaEstagio"
+            formControlName="empresaEstagio"
+          />
+          <div
+            *ngIf="
+              editForm.get('empresaEstagio')!.invalid && (editForm.get('empresaEstagio')!.dirty || editForm.get('empresaEstagio')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('empresaEstagio')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.assinaturaDigital" for="field_assinaturaDigital"
+            >Assinatura Digital</label
+          >
+          <div>
+            <div *ngIf="editForm.get('assinaturaDigital')!.value" class="form-text text-danger clearfix">
+              <a
+                class="pull-start"
+                (click)="openFile(editForm.get('assinaturaDigital')!.value!, editForm.get('assinaturaDigitalContentType')!.value!)"
+                appTranslate="entity.action.open"
+                >Abrir</a
+              ><br />
+              <span class="pull-start"
+                >{{ editForm.get('assinaturaDigitalContentType')!.value }}, {{ byteSize(editForm.get('assinaturaDigital')!.value!) }}</span
+              >
+              <button
+                type="button"
+                (click)="editForm.patchValue({ assinaturaDigital: undefined, assinaturaDigitalContentType: undefined })"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_assinaturaDigital"
+              data-cy="assinaturaDigital"
+              (change)="setFileData($event, 'assinaturaDigital', false)"
+              appTranslate="entity.action.addblob"
+            />
+          </div>
+          <input
+            type="hidden"
+            class="form-control"
+            name="assinaturaDigital"
+            id="field_assinaturaDigital"
+            data-cy="assinaturaDigital"
+            formControlName="assinaturaDigital"
+          />
+          <input
+            type="hidden"
+            class="form-control"
+            name="assinaturaDigitalContentType"
+            id="field_assinaturaDigitalContentType"
+            formControlName="assinaturaDigitalContentType"
+          />
+          <div
+            *ngIf="
+              editForm.get('assinaturaDigital')!.invalid &&
+              (editForm.get('assinaturaDigital')!.dirty || editForm.get('assinaturaDigital')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('assinaturaDigital')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.hash" for="field_hash">Hash</label>
+          <input type="text" class="form-control" name="hash" id="field_hash" data-cy="hash" formControlName="hash" />
+          <div *ngIf="editForm.get('hash')!.invalid && (editForm.get('hash')!.dirty || editForm.get('hash')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('hash')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.utilizador" for="field_utilizador">Utilizador</label>
+          <select
+            class="form-control"
+            id="field_utilizador"
+            data-cy="utilizador"
+            name="utilizador"
+            formControlName="utilizador"
+            [compareWith]="compareUser"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.ultimaTurmaMatriculada" for="field_ultimaTurmaMatriculada"
+            >Ultima Turma Matriculada</label
+          >
+          <select
+            class="form-control"
+            id="field_ultimaTurmaMatriculada"
+            data-cy="ultimaTurmaMatriculada"
+            name="ultimaTurmaMatriculada"
+            formControlName="ultimaTurmaMatriculada"
+            [compareWith]="compareTurma"
+          >
+            <option *ngIf="editForm.get(['ultimaTurmaMatriculada'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="turmaOption" *ngFor="let turmaOption of turmasSharedCollection">{{ turmaOption.descricao }}</option>
+          </select>
+        </div>
+        <div
+          *ngIf="
+            editForm.get(['ultimaTurmaMatriculada'])!.invalid &&
+            (editForm.get(['ultimaTurmaMatriculada'])!.dirty || editForm.get(['ultimaTurmaMatriculada'])!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['ultimaTurmaMatriculada'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.discente" for="field_discente">Discente</label>
+          <select
+            class="form-control"
+            id="field_discente"
+            data-cy="discente"
+            name="discente"
+            formControlName="discente"
+            [compareWith]="compareDiscente"
+          >
+            <option *ngIf="editForm.get(['discente'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="discenteOption" *ngFor="let discenteOption of discentesSharedCollection">{{ discenteOption.nome }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['discente'])!.invalid && (editForm.get(['discente'])!.dirty || editForm.get(['discente'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['discente'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoAcademico.situacao" for="field_situacao">Situacao</label>
+          <select
+            class="form-control"
+            id="field_situacao"
+            data-cy="situacao"
+            name="situacao"
+            formControlName="situacao"
+            [compareWith]="compareEstadoDisciplinaCurricular"
+          >
+            <option *ngIf="editForm.get(['situacao'])!.value == null" [ngValue]="null" selected></option>
+            <option
+              [ngValue]="estadoDisciplinaCurricularOption"
+              *ngFor="let estadoDisciplinaCurricularOption of estadoDisciplinaCurricularsSharedCollection"
+            >
+              {{ estadoDisciplinaCurricularOption.descricao }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['situacao'])!.invalid && (editForm.get(['situacao'])!.dirty || editForm.get(['situacao'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['situacao'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

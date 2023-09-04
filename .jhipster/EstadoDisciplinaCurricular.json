@@ -1,0 +1,86 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002238",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "estado_disciplina_curricular",
+  "fields": [
+    {
+      "fieldName": "uniqueSituacaoDisciplina",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "classificacao",
+      "fieldType": "CategoriaClassificacao",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "APROVADO,REPROVADO,RECURSO,EXAME,EXAME_ESPECIAL,INDEFINIDO"
+    },
+    {
+      "fieldName": "codigo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "cor",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "valor",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "EstadoDisciplinaCurricular",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "estadoDisciplinaCurricular",
+      "otherEntityRelationshipName": "referencia",
+      "relationshipName": "estadoDisciplinaCurricular",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "notasPeriodicaDisciplina",
+      "otherEntityRelationshipName": "estado",
+      "relationshipName": "notasPeriodicaDisciplina",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "notasGeralDisciplina",
+      "otherEntityRelationshipName": "estado",
+      "relationshipName": "notasGeralDisciplina",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "resumoAcademico",
+      "otherEntityRelationshipName": "situacao",
+      "relationshipName": "resumoAcademico",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "disciplinaCurricular",
+      "otherEntityRelationshipName": "estados",
+      "ownerSide": true,
+      "relationshipName": "disciplinasCurriculars",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "estadoDisciplinaCurricular",
+      "otherEntityRelationshipName": "estadoDisciplinaCurricular",
+      "relationshipName": "referencia",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,40 @@
+{
+  "longonkeloApp": {
+    "documentoComercial": {
+      "home": {
+        "title": "Documento Comercials",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Documento Comercial",
+        "createOrEditLabel": "Criar ou editar Documento Comercial",
+        "notFound": "Nenhum Documento Comercials encontrado"
+      },
+      "created": "Um novo Documento Comercial foi criado com o identificador {{ param }}",
+      "updated": "Documento Comercial com identificador {{ param }} foi actualizado",
+      "deleted": "Documento Comercial com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Documento Comercial {{ id }}?"
+      },
+      "detail": {
+        "title": "Documento Comercial"
+      },
+      "id": "ID",
+      "modulo": "Modulo",
+      "origem": "Origem",
+      "siglaInterna": "Sigla Interna",
+      "descricao": "Descricao",
+      "siglaFiscal": "Sigla Fiscal",
+      "isMovimentaEstoque": "Is Movimenta Estoque",
+      "isMovimentaCaixa": "Is Movimenta Caixa",
+      "isNotificaEntidade": "Is Notifica Entidade",
+      "isNotificaGerente": "Is Notifica Gerente",
+      "isEnviaSMS": "Is Envia SMS",
+      "isEnviaEmail": "Is Envia Email",
+      "isEnviaPush": "Is Envia Push",
+      "validaCreditoDisponivel": "Valida Credito Disponivel",
+      "serieDocumento": "Serie Documento",
+      "factura": "Factura",
+      "recibo": "Recibo",
+      "transformaEm": "Transforma Em"
+    }
+  }
+}

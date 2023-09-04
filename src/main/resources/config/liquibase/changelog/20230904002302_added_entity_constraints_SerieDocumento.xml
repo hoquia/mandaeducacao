@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity SerieDocumento.
+    -->
+    <changeSet id="20230904002302-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="tipo_documento_id"
+                                 baseTableName="serie_documento"
+                                 constraintName="fk_serie_documento__tipo_documento_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="documento_comercial"/>
+    </changeSet>
+</databaseChangeLog>

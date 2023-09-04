@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity PeriodoLancamentoNota.
+    -->
+    <changeSet id="20230904002253-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="utilizador_id"
+                                 baseTableName="periodo_lancamento_nota"
+                                 constraintName="fk_periodo_lancamento_nota__utilizador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="app_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="periodo_lancamento_nota_id"
+                                 baseTableName="rel_periodo_lancamento_nota__classe"
+                                 constraintName="fk_rel_periodo_lancamento_nota___periodo_lancamento_nota_53_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="periodo_lancamento_nota"/>
+
+        <addForeignKeyConstraint baseColumnNames="classe_id"
+                                 baseTableName="rel_periodo_lancamento_nota__classe"
+                                 constraintName="fk_rel_periodo_lancamento_nota__classe__classe_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="classe"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,41 @@
+{
+  "longonkeloApp": {
+    "notasPeriodicaDisciplina": {
+      "home": {
+        "title": "Notas Periodica Disciplinas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Notas Periodica Disciplina",
+        "createOrEditLabel": "Criar ou editar Notas Periodica Disciplina",
+        "notFound": "Nenhum Notas Periodica Disciplinas encontrado"
+      },
+      "created": "Um novo Notas Periodica Disciplina foi criado com o identificador {{ param }}",
+      "updated": "Notas Periodica Disciplina com identificador {{ param }} foi actualizado",
+      "deleted": "Notas Periodica Disciplina com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Notas Periodica Disciplina {{ id }}?"
+      },
+      "detail": {
+        "title": "Notas Periodica Disciplina"
+      },
+      "id": "ID",
+      "chaveComposta": "Chave Composta",
+      "periodoLancamento": "Periodo Lancamento",
+      "nota1": "Nota 1",
+      "nota2": "Nota 2",
+      "nota3": "Nota 3",
+      "media": "Media",
+      "faltaJusticada": "Falta Justicada",
+      "faltaInjustificada": "Falta Injustificada",
+      "comportamento": "Comportamento",
+      "hash": "Hash",
+      "timestamp": "Timestamp",
+      "anoLectivo": "Ano Lectivo",
+      "utilizador": "Utilizador",
+      "turma": "Turma",
+      "docente": "Docente",
+      "disciplinaCurricular": "Disciplina Curricular",
+      "matricula": "Matricula",
+      "estado": "Estado"
+    }
+  }
+}

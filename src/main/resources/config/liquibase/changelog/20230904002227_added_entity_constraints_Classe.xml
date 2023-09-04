@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Classe.
+    -->
+    <changeSet id="20230904002227-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="classe_id"
+                                 baseTableName="rel_classe__nives_ensino"
+                                 constraintName="fk_rel_classe__nives_ensino__classe_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="classe"/>
+
+        <addForeignKeyConstraint baseColumnNames="nives_ensino_id"
+                                 baseTableName="rel_classe__nives_ensino"
+                                 constraintName="fk_rel_classe__nives_ensino__nives_ensino_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="nivel_ensino"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,29 @@
+{
+  "longonkeloApp": {
+    "anexoDiscente": {
+      "home": {
+        "title": "Anexo Discentes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Anexo Discente",
+        "createOrEditLabel": "Criar ou editar Anexo Discente",
+        "notFound": "Nenhum Anexo Discentes encontrado"
+      },
+      "created": "Um novo Anexo Discente foi criado com o identificador {{ param }}",
+      "updated": "Anexo Discente com identificador {{ param }} foi actualizado",
+      "deleted": "Anexo Discente com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Anexo Discente {{ id }}?"
+      },
+      "detail": {
+        "title": "Anexo Discente"
+      },
+      "id": "ID",
+      "categoria": "Categoria",
+      "anexo": "Anexo",
+      "descricao": "Descricao",
+      "validade": "Validade",
+      "timestamp": "Timestamp",
+      "discente": "Discente"
+    }
+  }
+}

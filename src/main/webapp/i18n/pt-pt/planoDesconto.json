@@ -1,0 +1,30 @@
+{
+  "longonkeloApp": {
+    "planoDesconto": {
+      "home": {
+        "title": "Plano Descontos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Plano Desconto",
+        "createOrEditLabel": "Criar ou editar Plano Desconto",
+        "notFound": "Nenhum Plano Descontos encontrado"
+      },
+      "created": "Um novo Plano Desconto foi criado com o identificador {{ param }}",
+      "updated": "Plano Desconto com identificador {{ param }} foi actualizado",
+      "deleted": "Plano Desconto com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Plano Desconto {{ id }}?"
+      },
+      "detail": {
+        "title": "Plano Desconto"
+      },
+      "id": "ID",
+      "codigo": "Codigo",
+      "nome": "Nome",
+      "isIsentoMulta": "Is Isento Multa",
+      "isIsentoJuro": "Is Isento Juro",
+      "desconto": "Desconto",
+      "categoriasEmolumento": "Categorias Emolumento",
+      "matriculas": "Matriculas"
+    }
+  }
+}

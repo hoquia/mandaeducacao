@@ -1,0 +1,14 @@
+{
+  "longonkeloApp": {
+    "TipoTurma": {
+      "null": "",
+      "AULA": "AULA",
+      "LABORATORIO": "LABORATORIO",
+      "TESTE_ADMISSAO": "TESTE_ADMISSAO",
+      "EXAME": "EXAME",
+      "RECURSO": "RECURSO",
+      "EXAME_ESPECIAL": "EXAME_ESPECIAL",
+      "DEFESA_FINAL_CURSO": "DEFESA_FINAL_CURSO"
+    }
+  }
+}

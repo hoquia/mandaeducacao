@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Ocorrencia.
+    -->
+    <changeSet id="20230904002252-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="utilizador_id"
+                                 baseTableName="ocorrencia"
+                                 constraintName="fk_ocorrencia__utilizador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="app_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="referencia_id"
+                                 baseTableName="ocorrencia"
+                                 constraintName="fk_ocorrencia__referencia_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ocorrencia"/>
+
+        <addForeignKeyConstraint baseColumnNames="docente_id"
+                                 baseTableName="ocorrencia"
+                                 constraintName="fk_ocorrencia__docente_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="docente"/>
+
+        <addForeignKeyConstraint baseColumnNames="matricula_id"
+                                 baseTableName="ocorrencia"
+                                 constraintName="fk_ocorrencia__matricula_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="matricula"/>
+
+        <addForeignKeyConstraint baseColumnNames="estado_id"
+                                 baseTableName="ocorrencia"
+                                 constraintName="fk_ocorrencia__estado_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="categoria_ocorrencia"/>
+
+        <addForeignKeyConstraint baseColumnNames="licao_id"
+                                 baseTableName="ocorrencia"
+                                 constraintName="fk_ocorrencia__licao_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="licao"/>
+    </changeSet>
+</databaseChangeLog>

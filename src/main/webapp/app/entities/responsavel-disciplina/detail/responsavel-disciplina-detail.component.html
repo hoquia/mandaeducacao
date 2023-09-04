@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="responsavelDisciplina">
+      <h2 data-cy="responsavelDisciplinaDetailsHeading">
+        <span appTranslate="longonkeloApp.responsavelDisciplina.detail.title">Responsavel Disciplina</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ responsavelDisciplina.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelDisciplina.de">De</span></dt>
+        <dd>
+          <span>{{ responsavelDisciplina.de | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelDisciplina.ate">Ate</span></dt>
+        <dd>
+          <span>{{ responsavelDisciplina.ate | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelDisciplina.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ responsavelDisciplina.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelDisciplina.timestamp">Timestamp</span></dt>
+        <dd>
+          <span>{{ responsavelDisciplina.timestamp | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelDisciplina.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ responsavelDisciplina.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelDisciplina.disciplina">Disciplina</span></dt>
+        <dd>
+          <div *ngIf="responsavelDisciplina.disciplina">
+            <a [routerLink]="['/disciplina', responsavelDisciplina.disciplina.id, 'view']">{{ responsavelDisciplina.disciplina.nome }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/responsavel-disciplina', responsavelDisciplina.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

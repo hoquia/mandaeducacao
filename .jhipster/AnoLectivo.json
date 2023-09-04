@@ -1,0 +1,185 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002222",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "ano_lectivo",
+  "fields": [
+    {
+      "fieldName": "ano",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "inicio",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fim",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "timestam",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "isActual",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "AnoLectivo",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "docente",
+      "relationshipName": "directorGeral",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "docente",
+      "relationshipName": "subDirectorPdagogico",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "docente",
+      "relationshipName": "subDirectorAdministrativo",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "docente",
+      "relationshipName": "responsavelSecretariaGeral",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "docente",
+      "relationshipName": "responsavelSecretariaPedagogico",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "utilizador",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "nivelEnsino",
+      "otherEntityRelationshipName": "anoLectivos",
+      "ownerSide": true,
+      "relationshipName": "nivesEnsino",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "turma",
+      "otherEntityRelationshipName": "anoLectivo",
+      "relationshipName": "turma",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "horario",
+      "otherEntityRelationshipName": "anoLectivo",
+      "relationshipName": "horario",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "planoAula",
+      "otherEntityRelationshipName": "anoLectivo",
+      "relationshipName": "planoAula",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "licao",
+      "otherEntityRelationshipName": "anoLectivo",
+      "relationshipName": "licao",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "processoSelectivoMatricula",
+      "otherEntityRelationshipName": "anoLectivo",
+      "relationshipName": "processoSelectivoMatricula",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "ocorrencia",
+      "otherEntityRelationshipName": "anoLectivo",
+      "relationshipName": "ocorrencia",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "notasPeriodicaDisciplina",
+      "otherEntityRelationshipName": "anoLectivo",
+      "relationshipName": "notasPeriodicaDisciplina",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "notasGeralDisciplina",
+      "otherEntityRelationshipName": "anoLectivo",
+      "relationshipName": "notasGeralDisciplina",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "dissertacaoFinalCurso",
+      "otherEntityRelationshipName": "anoLectivo",
+      "relationshipName": "dissertacaoFinalCurso",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "factura",
+      "otherEntityRelationshipName": "anoLectivo",
+      "relationshipName": "factura",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "recibo",
+      "otherEntityRelationshipName": "anoLectivo",
+      "relationshipName": "recibo",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "responsavelTurno",
+      "otherEntityRelationshipName": "anoLectivo",
+      "relationshipName": "responsavelTurno",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "responsavelAreaFormacao",
+      "otherEntityRelationshipName": "anoLectivo",
+      "relationshipName": "responsavelAreaFormacao",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "responsavelCurso",
+      "otherEntityRelationshipName": "anoLectivo",
+      "relationshipName": "responsavelCurso",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "responsavelDisciplina",
+      "otherEntityRelationshipName": "anoLectivo",
+      "relationshipName": "responsavelDisciplina",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "responsavelTurma",
+      "otherEntityRelationshipName": "anoLectivo",
+      "relationshipName": "responsavelTurma",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

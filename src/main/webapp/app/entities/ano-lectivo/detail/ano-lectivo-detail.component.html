@@ -1,0 +1,207 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="anoLectivo">
+      <h2 data-cy="anoLectivoDetailsHeading"><span appTranslate="longonkeloApp.anoLectivo.detail.title">Ano Lectivo</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ anoLectivo.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.ano">Ano</span></dt>
+        <dd>
+          <span>{{ anoLectivo.ano }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.inicio">Inicio</span></dt>
+        <dd>
+          <span>{{ anoLectivo.inicio | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.fim">Fim</span></dt>
+        <dd>
+          <span>{{ anoLectivo.fim | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ anoLectivo.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.timestam">Timestam</span></dt>
+        <dd>
+          <span>{{ anoLectivo.timestam | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.isActual">Is Actual</span></dt>
+        <dd>
+          <span>{{ anoLectivo.isActual }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.directorGeral">Director Geral</span></dt>
+        <dd>
+          <div *ngIf="anoLectivo.directorGeral">
+            <a [routerLink]="['/docente', anoLectivo.directorGeral.id, 'view']">{{ anoLectivo.directorGeral.nome }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.subDirectorPdagogico">Sub Director Pdagogico</span></dt>
+        <dd>
+          <div *ngIf="anoLectivo.subDirectorPdagogico">
+            <a [routerLink]="['/docente', anoLectivo.subDirectorPdagogico.id, 'view']">{{ anoLectivo.subDirectorPdagogico.nome }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.subDirectorAdministrativo">Sub Director Administrativo</span></dt>
+        <dd>
+          <div *ngIf="anoLectivo.subDirectorAdministrativo">
+            <a [routerLink]="['/docente', anoLectivo.subDirectorAdministrativo.id, 'view']">{{
+              anoLectivo.subDirectorAdministrativo.nome
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.responsavelSecretariaGeral">Responsavel Secretaria Geral</span></dt>
+        <dd>
+          <div *ngIf="anoLectivo.responsavelSecretariaGeral">
+            <a [routerLink]="['/docente', anoLectivo.responsavelSecretariaGeral.id, 'view']">{{
+              anoLectivo.responsavelSecretariaGeral.nome
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.responsavelSecretariaPedagogico">Responsavel Secretaria Pedagogico</span></dt>
+        <dd>
+          <div *ngIf="anoLectivo.responsavelSecretariaPedagogico">
+            <a [routerLink]="['/docente', anoLectivo.responsavelSecretariaPedagogico.id, 'view']">{{
+              anoLectivo.responsavelSecretariaPedagogico.nome
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ anoLectivo.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.nivesEnsino">Nives Ensino</span></dt>
+        <dd>
+          <span *ngFor="let nivesEnsino of anoLectivo.nivesEnsinos; let last = last">
+            <a [routerLink]="['/nivel-ensino', nivesEnsino.id, 'view']">{{ nivesEnsino.nome }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.turma">Turma</span></dt>
+        <dd>
+          <div *ngIf="anoLectivo.turma">
+            <a [routerLink]="['/turma', anoLectivo.turma.id, 'view']">{{ anoLectivo.turma.id }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.horario">Horario</span></dt>
+        <dd>
+          <div *ngIf="anoLectivo.horario">
+            <a [routerLink]="['/horario', anoLectivo.horario.id, 'view']">{{ anoLectivo.horario.id }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.planoAula">Plano Aula</span></dt>
+        <dd>
+          <div *ngIf="anoLectivo.planoAula">
+            <a [routerLink]="['/plano-aula', anoLectivo.planoAula.id, 'view']">{{ anoLectivo.planoAula.id }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.licao">Licao</span></dt>
+        <dd>
+          <div *ngIf="anoLectivo.licao">
+            <a [routerLink]="['/licao', anoLectivo.licao.id, 'view']">{{ anoLectivo.licao.id }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.processoSelectivoMatricula">Processo Selectivo Matricula</span></dt>
+        <dd>
+          <div *ngIf="anoLectivo.processoSelectivoMatricula">
+            <a [routerLink]="['/processo-selectivo-matricula', anoLectivo.processoSelectivoMatricula.id, 'view']">{{
+              anoLectivo.processoSelectivoMatricula.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.ocorrencia">Ocorrencia</span></dt>
+        <dd>
+          <div *ngIf="anoLectivo.ocorrencia">
+            <a [routerLink]="['/ocorrencia', anoLectivo.ocorrencia.id, 'view']">{{ anoLectivo.ocorrencia.id }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.notasPeriodicaDisciplina">Notas Periodica Disciplina</span></dt>
+        <dd>
+          <div *ngIf="anoLectivo.notasPeriodicaDisciplina">
+            <a [routerLink]="['/notas-periodica-disciplina', anoLectivo.notasPeriodicaDisciplina.id, 'view']">{{
+              anoLectivo.notasPeriodicaDisciplina.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.notasGeralDisciplina">Notas Geral Disciplina</span></dt>
+        <dd>
+          <div *ngIf="anoLectivo.notasGeralDisciplina">
+            <a [routerLink]="['/notas-geral-disciplina', anoLectivo.notasGeralDisciplina.id, 'view']">{{
+              anoLectivo.notasGeralDisciplina.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.dissertacaoFinalCurso">Dissertacao Final Curso</span></dt>
+        <dd>
+          <div *ngIf="anoLectivo.dissertacaoFinalCurso">
+            <a [routerLink]="['/dissertacao-final-curso', anoLectivo.dissertacaoFinalCurso.id, 'view']">{{
+              anoLectivo.dissertacaoFinalCurso.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.factura">Factura</span></dt>
+        <dd>
+          <div *ngIf="anoLectivo.factura">
+            <a [routerLink]="['/factura', anoLectivo.factura.id, 'view']">{{ anoLectivo.factura.id }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.recibo">Recibo</span></dt>
+        <dd>
+          <div *ngIf="anoLectivo.recibo">
+            <a [routerLink]="['/recibo', anoLectivo.recibo.id, 'view']">{{ anoLectivo.recibo.id }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.responsavelTurno">Responsavel Turno</span></dt>
+        <dd>
+          <div *ngIf="anoLectivo.responsavelTurno">
+            <a [routerLink]="['/responsavel-turno', anoLectivo.responsavelTurno.id, 'view']">{{ anoLectivo.responsavelTurno.id }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.responsavelAreaFormacao">Responsavel Area Formacao</span></dt>
+        <dd>
+          <div *ngIf="anoLectivo.responsavelAreaFormacao">
+            <a [routerLink]="['/responsavel-area-formacao', anoLectivo.responsavelAreaFormacao.id, 'view']">{{
+              anoLectivo.responsavelAreaFormacao.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.responsavelCurso">Responsavel Curso</span></dt>
+        <dd>
+          <div *ngIf="anoLectivo.responsavelCurso">
+            <a [routerLink]="['/responsavel-curso', anoLectivo.responsavelCurso.id, 'view']">{{ anoLectivo.responsavelCurso.id }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.responsavelDisciplina">Responsavel Disciplina</span></dt>
+        <dd>
+          <div *ngIf="anoLectivo.responsavelDisciplina">
+            <a [routerLink]="['/responsavel-disciplina', anoLectivo.responsavelDisciplina.id, 'view']">{{
+              anoLectivo.responsavelDisciplina.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anoLectivo.responsavelTurma">Responsavel Turma</span></dt>
+        <dd>
+          <div *ngIf="anoLectivo.responsavelTurma">
+            <a [routerLink]="['/responsavel-turma', anoLectivo.responsavelTurma.id, 'view']">{{ anoLectivo.responsavelTurma.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/ano-lectivo', anoLectivo.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

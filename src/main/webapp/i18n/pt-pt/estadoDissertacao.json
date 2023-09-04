@@ -1,0 +1,28 @@
+{
+  "longonkeloApp": {
+    "estadoDissertacao": {
+      "home": {
+        "title": "Estado Dissertacaos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Estado Dissertacao",
+        "createOrEditLabel": "Criar ou editar Estado Dissertacao",
+        "notFound": "Nenhum Estado Dissertacaos encontrado"
+      },
+      "created": "Um novo Estado Dissertacao foi criado com o identificador {{ param }}",
+      "updated": "Estado Dissertacao com identificador {{ param }} foi actualizado",
+      "deleted": "Estado Dissertacao com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Estado Dissertacao {{ id }}?"
+      },
+      "detail": {
+        "title": "Estado Dissertacao"
+      },
+      "id": "ID",
+      "codigo": "Codigo",
+      "nome": "Nome",
+      "etapa": "Etapa",
+      "descricao": "Descricao",
+      "dissertacaoFinalCurso": "Dissertacao Final Curso"
+    }
+  }
+}

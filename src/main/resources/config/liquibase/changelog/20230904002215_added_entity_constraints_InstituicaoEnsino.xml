@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity InstituicaoEnsino.
+    -->
+    <changeSet id="20230904002215-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="categoria_instituicao_id"
+                                 baseTableName="instituicao_ensino"
+                                 constraintName="fk_instituicao_ensino__categoria_instituicao_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="unidade_pagadora_id"
+                                 baseTableName="instituicao_ensino"
+                                 constraintName="fk_instituicao_ensino__unidade_pagadora_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="tipo_vinculo_id"
+                                 baseTableName="instituicao_ensino"
+                                 constraintName="fk_instituicao_ensino__tipo_vinculo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="tipo_instalacao_id"
+                                 baseTableName="instituicao_ensino"
+                                 constraintName="fk_instituicao_ensino__tipo_instalacao_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="sede_id"
+                                 baseTableName="instituicao_ensino"
+                                 constraintName="fk_instituicao_ensino__sede_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="instituicao_ensino"/>
+    </changeSet>
+</databaseChangeLog>

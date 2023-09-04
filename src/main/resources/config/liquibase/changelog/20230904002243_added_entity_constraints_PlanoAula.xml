@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity PlanoAula.
+    -->
+    <changeSet id="20230904002243-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="utilizador_id"
+                                 baseTableName="plano_aula"
+                                 constraintName="fk_plano_aula__utilizador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="app_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="unidade_tematica_id"
+                                 baseTableName="plano_aula"
+                                 constraintName="fk_plano_aula__unidade_tematica_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="sub_unidade_tematica_id"
+                                 baseTableName="plano_aula"
+                                 constraintName="fk_plano_aula__sub_unidade_tematica_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="turma_id"
+                                 baseTableName="plano_aula"
+                                 constraintName="fk_plano_aula__turma_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="turma"/>
+
+        <addForeignKeyConstraint baseColumnNames="docente_id"
+                                 baseTableName="plano_aula"
+                                 constraintName="fk_plano_aula__docente_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="docente"/>
+
+        <addForeignKeyConstraint baseColumnNames="disciplina_curricular_id"
+                                 baseTableName="plano_aula"
+                                 constraintName="fk_plano_aula__disciplina_curricular_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="disciplina_curricular"/>
+    </changeSet>
+</databaseChangeLog>

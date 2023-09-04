@@ -1,0 +1,32 @@
+{
+  "longonkeloApp": {
+    "provedorNotificacao": {
+      "home": {
+        "title": "Provedor Notificacaos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Provedor Notificacao",
+        "createOrEditLabel": "Criar ou editar Provedor Notificacao",
+        "notFound": "Nenhum Provedor Notificacaos encontrado"
+      },
+      "created": "Um novo Provedor Notificacao foi criado com o identificador {{ param }}",
+      "updated": "Provedor Notificacao com identificador {{ param }} foi actualizado",
+      "deleted": "Provedor Notificacao com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Provedor Notificacao {{ id }}?"
+      },
+      "detail": {
+        "title": "Provedor Notificacao"
+      },
+      "id": "ID",
+      "telefone": "Telefone",
+      "email": "Email",
+      "link": "Link",
+      "token": "Token",
+      "username": "Username",
+      "password": "Password",
+      "hash": "Hash",
+      "isPadrao": "Is Padrao",
+      "instituicao": "Instituicao"
+    }
+  }
+}

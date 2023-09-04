@@ -1,0 +1,131 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002254",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "notas_periodica_disciplina",
+  "fields": [
+    {
+      "fieldName": "chaveComposta",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "periodoLancamento",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "3",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "nota1",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "nota2",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "nota3",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "media",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "faltaJusticada",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "faltaInjustificada",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "comportamento",
+      "fieldType": "Comporamento",
+      "fieldValues": "BOM,MEDIO,RAZOAVEL,MAU,NORMAL"
+    },
+    {
+      "fieldName": "hash",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "timestamp",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "NotasPeriodicaDisciplina",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "anoLectivo",
+      "otherEntityRelationshipName": "notasPeriodicaDisciplina",
+      "relationshipName": "anoLectivo",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "utilizador",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "turma",
+      "otherEntityRelationshipName": "notasPeriodicaDisciplina",
+      "relationshipName": "turma",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "docente",
+      "otherEntityRelationshipName": "notasPeriodicaDisciplina",
+      "relationshipName": "docente",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "disciplinaCurricular",
+      "otherEntityRelationshipName": "notasPeriodicaDisciplina",
+      "relationshipName": "disciplinaCurricular",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "numeroMatricula",
+      "otherEntityName": "matricula",
+      "otherEntityRelationshipName": "notasPeriodicaDisciplina",
+      "relationshipName": "matricula",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "estadoDisciplinaCurricular",
+      "otherEntityRelationshipName": "notasPeriodicaDisciplina",
+      "relationshipName": "estado",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

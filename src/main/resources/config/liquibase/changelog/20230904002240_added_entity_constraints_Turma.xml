@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Turma.
+    -->
+    <changeSet id="20230904002240-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="utilizador_id"
+                                 baseTableName="turma"
+                                 constraintName="fk_turma__utilizador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="app_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="referencia_id"
+                                 baseTableName="turma"
+                                 constraintName="fk_turma__referencia_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="turma"/>
+
+        <addForeignKeyConstraint baseColumnNames="plano_curricular_id"
+                                 baseTableName="turma"
+                                 constraintName="fk_turma__plano_curricular_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="plano_curricular"/>
+
+        <addForeignKeyConstraint baseColumnNames="turno_id"
+                                 baseTableName="turma"
+                                 constraintName="fk_turma__turno_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="turno"/>
+    </changeSet>
+</databaseChangeLog>

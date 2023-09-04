@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity NivelEnsino.
+    -->
+    <changeSet id="20230904002221-1" author="jhipster">
+        <createTable tableName="nivel_ensino">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="codigo" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_nivel_ensino__codigo" />
+            </column>
+            <column name="nome" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_nivel_ensino__nome" />
+            </column>
+            <column name="descricao" type="${clobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="idade_minima" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="idade_maxima" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="duracao" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="unidade_duracao" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="classe_inicial" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="classe_final" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="classe_exame" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_disciplina" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsavel_turno" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsavel_area_formacao" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsavel_curso" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsavel_disciplina" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsavel_turma" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsavel_geral" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsavel_pedagogico" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsavel_administrativo" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsavel_secretaria_geral" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsavel_secretaria_pedagogico" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="descricao_docente" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="descricao_discente" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="referencia_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

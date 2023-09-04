@@ -1,0 +1,151 @@
+<div>
+  <h2 id="page-heading" data-cy="PlanoDescontoHeading">
+    <span appTranslate="longonkeloApp.planoDesconto.home.title">Plano Descontos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.planoDesconto.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-plano-desconto"
+        [routerLink]="['/plano-desconto/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.planoDesconto.home.createLabel"> Criar novo(a) Plano Desconto </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="planoDescontos?.length === 0">
+    <span appTranslate="longonkeloApp.planoDesconto.home.notFound">Nenhum Plano Descontos encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="planoDescontos && planoDescontos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="codigo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoDesconto.codigo">Codigo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoDesconto.nome">Nome</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isIsentoMulta">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoDesconto.isIsentoMulta">Is Isento Multa</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isIsentoJuro">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoDesconto.isIsentoJuro">Is Isento Juro</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="desconto">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoDesconto.desconto">Desconto</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let planoDesconto of planoDescontos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/plano-desconto', planoDesconto.id, 'view']">{{ planoDesconto.id }}</a>
+          </td>
+          <td>{{ planoDesconto.codigo }}</td>
+          <td>{{ planoDesconto.nome }}</td>
+          <td>{{ planoDesconto.isIsentoMulta }}</td>
+          <td>{{ planoDesconto.isIsentoJuro }}</td>
+          <td>{{ planoDesconto.desconto }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/matricula']"
+                [queryParams]="{ 'filter[categoriasMatriculasId.in]': planoDesconto.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.planoDesconto.matriculas' | translate) }"
+                  >Show Matricula</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/plano-desconto', planoDesconto.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/plano-desconto', planoDesconto.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(planoDesconto)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="planoDescontos && planoDescontos.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

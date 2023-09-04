@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity CampoActuacaoDissertacao.
+    -->
+    <changeSet id="20230904002257-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="campo_actuacao_dissertacao_id"
+                                 baseTableName="rel_campo_actuacao_dissertacao__cursos"
+                                 constraintName="fk_rel_campo_actuacao_dissertac__campo_actuacao_dissertac_ca_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="campo_actuacao_dissertacao"/>
+
+        <addForeignKeyConstraint baseColumnNames="cursos_id"
+                                 baseTableName="rel_campo_actuacao_dissertacao__cursos"
+                                 constraintName="fk_rel_campo_actuacao_dissertacao__cursos__cursos_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="curso"/>
+    </changeSet>
+</databaseChangeLog>

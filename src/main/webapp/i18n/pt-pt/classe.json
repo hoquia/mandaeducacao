@@ -1,0 +1,28 @@
+{
+  "longonkeloApp": {
+    "classe": {
+      "home": {
+        "title": "Classes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Classe",
+        "createOrEditLabel": "Criar ou editar Classe",
+        "notFound": "Nenhum Classes encontrado"
+      },
+      "created": "Um novo Classe foi criado com o identificador {{ param }}",
+      "updated": "Classe com identificador {{ param }} foi actualizado",
+      "deleted": "Classe com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Classe {{ id }}?"
+      },
+      "detail": {
+        "title": "Classe"
+      },
+      "id": "ID",
+      "descricao": "Descricao",
+      "planoCurricular": "Plano Curricular",
+      "precoEmolumento": "Preco Emolumento",
+      "nivesEnsino": "Nives Ensino",
+      "periodosLancamentoNota": "Periodos Lancamento Nota"
+    }
+  }
+}

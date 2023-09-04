@@ -1,0 +1,145 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-responsavel-disciplina-heading"
+        data-cy="ResponsavelDisciplinaCreateUpdateHeading"
+        appTranslate="longonkeloApp.responsavelDisciplina.home.createOrEditLabel"
+      >
+        Criar ou editar Responsavel Disciplina
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.responsavelDisciplina.de" for="field_de">De</label>
+          <div class="input-group">
+            <input
+              id="field_de"
+              data-cy="de"
+              type="text"
+              class="form-control"
+              name="de"
+              ngbDatepicker
+              #deDp="ngbDatepicker"
+              formControlName="de"
+            />
+            <button type="button" class="btn btn-secondary" (click)="deDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+          <div *ngIf="editForm.get('de')!.invalid && (editForm.get('de')!.dirty || editForm.get('de')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('de')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.responsavelDisciplina.ate" for="field_ate">Ate</label>
+          <div class="input-group">
+            <input
+              id="field_ate"
+              data-cy="ate"
+              type="text"
+              class="form-control"
+              name="ate"
+              ngbDatepicker
+              #ateDp="ngbDatepicker"
+              formControlName="ate"
+            />
+            <button type="button" class="btn btn-secondary" (click)="ateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+          <div *ngIf="editForm.get('ate')!.invalid && (editForm.get('ate')!.dirty || editForm.get('ate')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('ate')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.responsavelDisciplina.descricao" for="field_descricao">Descricao</label>
+          <textarea class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao"></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.responsavelDisciplina.timestamp" for="field_timestamp">Timestamp</label>
+          <div class="d-flex">
+            <input
+              id="field_timestamp"
+              data-cy="timestamp"
+              type="datetime-local"
+              class="form-control"
+              name="timestamp"
+              formControlName="timestamp"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.responsavelDisciplina.utilizador" for="field_utilizador">Utilizador</label>
+          <select
+            class="form-control"
+            id="field_utilizador"
+            data-cy="utilizador"
+            name="utilizador"
+            formControlName="utilizador"
+            [compareWith]="compareUser"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.responsavelDisciplina.disciplina" for="field_disciplina">Disciplina</label>
+          <select
+            class="form-control"
+            id="field_disciplina"
+            data-cy="disciplina"
+            name="disciplina"
+            formControlName="disciplina"
+            [compareWith]="compareDisciplina"
+          >
+            <option *ngIf="editForm.get(['disciplina'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="disciplinaOption" *ngFor="let disciplinaOption of disciplinasSharedCollection">
+              {{ disciplinaOption.nome }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="editForm.get(['disciplina'])!.invalid && (editForm.get(['disciplina'])!.dirty || editForm.get(['disciplina'])!.touched)"
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['disciplina'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

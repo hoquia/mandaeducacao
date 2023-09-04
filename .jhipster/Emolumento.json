@@ -1,0 +1,121 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002308",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "emolumento",
+  "fields": [
+    {
+      "fieldName": "imagem",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "numero",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "preco",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "quantidade",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "periodo",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "12",
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "inicioPeriodo",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "12",
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "fimPeriodo",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "12",
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "isObrigatorioMatricula",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isObrigatorioConfirmacao",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Emolumento",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "itemFactura",
+      "otherEntityRelationshipName": "emolumento",
+      "relationshipName": "itemFactura",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "emolumento",
+      "otherEntityRelationshipName": "referencia",
+      "relationshipName": "emolumento",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "precoEmolumento",
+      "otherEntityRelationshipName": "emolumento",
+      "relationshipName": "precosEmolumento",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "categoriaEmolumento",
+      "otherEntityRelationshipName": "emolumento",
+      "relationshipName": "categoria",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "imposto",
+      "otherEntityRelationshipName": "emolumento",
+      "relationshipName": "imposto",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "emolumento",
+      "otherEntityRelationshipName": "emolumento",
+      "relationshipName": "referencia",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "planoMulta",
+      "otherEntityRelationshipName": "emolumento",
+      "relationshipName": "planoMulta",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

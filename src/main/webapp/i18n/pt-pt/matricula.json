@@ -1,0 +1,46 @@
+{
+  "longonkeloApp": {
+    "matricula": {
+      "home": {
+        "title": "Matriculas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Matricula",
+        "createOrEditLabel": "Criar ou editar Matricula",
+        "notFound": "Nenhum Matriculas encontrado"
+      },
+      "created": "Um novo Matricula foi criado com o identificador {{ param }}",
+      "updated": "Matricula com identificador {{ param }} foi actualizado",
+      "deleted": "Matricula com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Matricula {{ id }}?"
+      },
+      "detail": {
+        "title": "Matricula"
+      },
+      "id": "ID",
+      "chaveComposta1": "Chave Composta 1",
+      "chaveComposta2": "Chave Composta 2",
+      "numeroMatricula": "Numero Matricula",
+      "numeroChamada": "Numero Chamada",
+      "estado": "Estado",
+      "timestamp": "Timestamp",
+      "descricao": "Descricao",
+      "termosCompromissos": "Termos Compromissos",
+      "isAceiteTermosCompromisso": "Is Aceite Termos Compromisso",
+      "matricula": "Matricula",
+      "facturas": "Facturas",
+      "transacoes": "Transacoes",
+      "recibos": "Recibos",
+      "notasPeriodicaDisciplina": "Notas Periodica Disciplina",
+      "notasGeralDisciplina": "Notas Geral Disciplina",
+      "transferenciaTurma": "Transferencia Turma",
+      "ocorrencia": "Ocorrencia",
+      "utilizador": "Utilizador",
+      "categoriasMatriculas": "Categorias Matriculas",
+      "turma": "Turma",
+      "responsavelFinanceiro": "Responsavel Financeiro",
+      "discente": "Discente",
+      "referencia": "Referencia"
+    }
+  }
+}

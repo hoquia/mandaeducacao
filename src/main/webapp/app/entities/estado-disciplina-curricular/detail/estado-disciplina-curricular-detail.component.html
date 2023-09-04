@@ -1,0 +1,71 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="estadoDisciplinaCurricular">
+      <h2 data-cy="estadoDisciplinaCurricularDetailsHeading">
+        <span appTranslate="longonkeloApp.estadoDisciplinaCurricular.detail.title">Estado Disciplina Curricular</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ estadoDisciplinaCurricular.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.estadoDisciplinaCurricular.uniqueSituacaoDisciplina">Unique Situacao Disciplina</span></dt>
+        <dd>
+          <span>{{ estadoDisciplinaCurricular.uniqueSituacaoDisciplina }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.estadoDisciplinaCurricular.classificacao">Classificacao</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.CategoriaClassificacao.' + estadoDisciplinaCurricular.classificacao }}">{{
+            estadoDisciplinaCurricular.classificacao
+          }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.estadoDisciplinaCurricular.codigo">Codigo</span></dt>
+        <dd>
+          <span>{{ estadoDisciplinaCurricular.codigo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.estadoDisciplinaCurricular.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ estadoDisciplinaCurricular.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.estadoDisciplinaCurricular.cor">Cor</span></dt>
+        <dd>
+          <span>{{ estadoDisciplinaCurricular.cor }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.estadoDisciplinaCurricular.valor">Valor</span></dt>
+        <dd>
+          <span>{{ estadoDisciplinaCurricular.valor }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.estadoDisciplinaCurricular.disciplinasCurriculars">Disciplinas Curriculars</span></dt>
+        <dd>
+          <span *ngFor="let disciplinasCurriculars of estadoDisciplinaCurricular.disciplinasCurriculars; let last = last">
+            <a [routerLink]="['/disciplina-curricular', disciplinasCurriculars.id, 'view']">{{ disciplinasCurriculars.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.estadoDisciplinaCurricular.referencia">Referencia</span></dt>
+        <dd>
+          <div *ngIf="estadoDisciplinaCurricular.referencia">
+            <a [routerLink]="['/estado-disciplina-curricular', estadoDisciplinaCurricular.referencia.id, 'view']">{{
+              estadoDisciplinaCurricular.referencia.id
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/estado-disciplina-curricular', estadoDisciplinaCurricular.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

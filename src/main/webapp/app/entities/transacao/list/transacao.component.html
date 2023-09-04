@@ -1,0 +1,238 @@
+<div>
+  <h2 id="page-heading" data-cy="TransacaoHeading">
+    <span appTranslate="longonkeloApp.transacao.home.title">Transacaos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.transacao.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-transacao"
+        [routerLink]="['/transacao/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.transacao.home.createLabel"> Criar novo(a) Transacao </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="transacaos?.length === 0">
+    <span appTranslate="longonkeloApp.transacao.home.notFound">Nenhum Transacaos encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="transacaos && transacaos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="montante">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.transacao.montante">Montante</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="data">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.transacao.data">Data</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="referencia">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.transacao.referencia">Referencia</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="estado">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.transacao.estado">Estado</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="saldo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.transacao.saldo">Saldo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="anexo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.transacao.anexo">Anexo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="timestamp">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.transacao.timestamp">Timestamp</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="utilizador.login">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.transacao.utilizador">Utilizador</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="moeda.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.transacao.moeda">Moeda</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="matricula.numeroMatricula">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.transacao.matricula">Matricula</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="meioPagamento.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.transacao.meioPagamento">Meio Pagamento</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="conta.titulo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.transacao.conta">Conta</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transacao of transacaos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/transacao', transacao.id, 'view']">{{ transacao.id }}</a>
+          </td>
+          <td>{{ transacao.montante }}</td>
+          <td>{{ transacao.data | formatMediumDate }}</td>
+          <td>{{ transacao.referencia }}</td>
+          <td appTranslate="{{ 'longonkeloApp.EstadoPagamento.' + transacao.estado }}">{{ transacao.estado }}</td>
+          <td>{{ transacao.saldo }}</td>
+          <td>
+            <a *ngIf="transacao.anexo" (click)="openFile(transacao.anexo, transacao.anexoContentType)" appTranslate="entity.action.open"
+              >Abrir</a
+            >
+            <span *ngIf="transacao.anexo">{{ transacao.anexoContentType }}, {{ byteSize(transacao.anexo) }}</span>
+          </td>
+          <td>{{ transacao.timestamp | formatMediumDatetime }}</td>
+          <td>
+            {{ transacao.utilizador?.login }}
+          </td>
+          <td>
+            <div *ngIf="transacao.moeda">
+              <a [routerLink]="['/lookup-item', transacao.moeda.id, 'view']">{{ transacao.moeda.descricao }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="transacao.matricula">
+              <a [routerLink]="['/matricula', transacao.matricula.id, 'view']">{{ transacao.matricula.numeroMatricula }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="transacao.meioPagamento">
+              <a [routerLink]="['/meio-pagamento', transacao.meioPagamento.id, 'view']">{{ transacao.meioPagamento.nome }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="transacao.conta">
+              <a [routerLink]="['/conta', transacao.conta.id, 'view']">{{ transacao.conta.titulo }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/recibo']"
+                [queryParams]="{ 'filter[transacaoId.in]': transacao.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.transacao.recibos' | translate) }"
+                  >Show Recibo</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/transferencia-saldo']"
+                [queryParams]="{ 'filter[transacoesId.in]': transacao.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.transacao.transferenciaSaldo' | translate) }"
+                  >Show Transferencia Saldo</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/transacao', transacao.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/transacao', transacao.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(transacao)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="transacaos && transacaos.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

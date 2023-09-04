@@ -1,0 +1,49 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002227",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "classe",
+  "fields": [
+    {
+      "fieldName": "descricao",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Classe",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "planoCurricular",
+      "otherEntityRelationshipName": "classe",
+      "relationshipName": "planoCurricular",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "precoEmolumento",
+      "otherEntityRelationshipName": "classe",
+      "relationshipName": "precoEmolumento",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "nivelEnsino",
+      "otherEntityRelationshipName": "classes",
+      "ownerSide": true,
+      "relationshipName": "nivesEnsino",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "periodoLancamentoNota",
+      "otherEntityRelationshipName": "classe",
+      "ownerSide": false,
+      "relationshipName": "periodosLancamentoNota",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

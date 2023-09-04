@@ -1,0 +1,39 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002257",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "campo_actuacao_dissertacao",
+  "fields": [
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "isActivo",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "CampoActuacaoDissertacao",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "curso",
+      "otherEntityRelationshipName": "camposActuacao",
+      "ownerSide": true,
+      "relationshipName": "cursos",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

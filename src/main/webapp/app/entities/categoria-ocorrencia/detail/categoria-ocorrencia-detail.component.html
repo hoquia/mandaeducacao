@@ -1,0 +1,84 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="categoriaOcorrencia">
+      <h2 data-cy="categoriaOcorrenciaDetailsHeading">
+        <span appTranslate="longonkeloApp.categoriaOcorrencia.detail.title">Categoria Ocorrencia</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ categoriaOcorrencia.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.categoriaOcorrencia.codigo">Codigo</span></dt>
+        <dd>
+          <span>{{ categoriaOcorrencia.codigo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.categoriaOcorrencia.sansaoDisicplinar">Sansao Disicplinar</span></dt>
+        <dd>
+          <span>{{ categoriaOcorrencia.sansaoDisicplinar }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.categoriaOcorrencia.isNotificaEncaregado">Is Notifica Encaregado</span></dt>
+        <dd>
+          <span>{{ categoriaOcorrencia.isNotificaEncaregado }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.categoriaOcorrencia.isSendEmail">Is Send Email</span></dt>
+        <dd>
+          <span>{{ categoriaOcorrencia.isSendEmail }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.categoriaOcorrencia.isSendSms">Is Send Sms</span></dt>
+        <dd>
+          <span>{{ categoriaOcorrencia.isSendSms }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.categoriaOcorrencia.isSendPush">Is Send Push</span></dt>
+        <dd>
+          <span>{{ categoriaOcorrencia.isSendPush }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.categoriaOcorrencia.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ categoriaOcorrencia.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.categoriaOcorrencia.observacao">Observacao</span></dt>
+        <dd>
+          <span>{{ categoriaOcorrencia.observacao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.categoriaOcorrencia.encaminhar">Encaminhar</span></dt>
+        <dd>
+          <div *ngIf="categoriaOcorrencia.encaminhar">
+            <a [routerLink]="['/docente', categoriaOcorrencia.encaminhar.id, 'view']">{{ categoriaOcorrencia.encaminhar.nome }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.categoriaOcorrencia.referencia">Referencia</span></dt>
+        <dd>
+          <div *ngIf="categoriaOcorrencia.referencia">
+            <a [routerLink]="['/categoria-ocorrencia', categoriaOcorrencia.referencia.id, 'view']">{{
+              categoriaOcorrencia.referencia.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.categoriaOcorrencia.medidaDisciplinar">Medida Disciplinar</span></dt>
+        <dd>
+          <div *ngIf="categoriaOcorrencia.medidaDisciplinar">
+            <a [routerLink]="['/medida-disciplinar', categoriaOcorrencia.medidaDisciplinar.id, 'view']">{{
+              categoriaOcorrencia.medidaDisciplinar.descricao
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/categoria-ocorrencia', categoriaOcorrencia.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

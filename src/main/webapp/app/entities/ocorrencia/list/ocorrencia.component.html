@@ -1,0 +1,223 @@
+<div>
+  <h2 id="page-heading" data-cy="OcorrenciaHeading">
+    <span appTranslate="longonkeloApp.ocorrencia.home.title">Ocorrencias</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.ocorrencia.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-ocorrencia"
+        [routerLink]="['/ocorrencia/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.ocorrencia.home.createLabel"> Criar novo(a) Ocorrencia </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="ocorrencias?.length === 0">
+    <span appTranslate="longonkeloApp.ocorrencia.home.notFound">Nenhum Ocorrencias encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="ocorrencias && ocorrencias.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="uniqueOcorrencia">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.ocorrencia.uniqueOcorrencia">Unique Ocorrencia</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.ocorrencia.descricao">Descricao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="evidencia">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.ocorrencia.evidencia">Evidencia</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="hash">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.ocorrencia.hash">Hash</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="timestamp">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.ocorrencia.timestamp">Timestamp</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="utilizador.login">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.ocorrencia.utilizador">Utilizador</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="referencia.id">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.ocorrencia.referencia">Referencia</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="docente.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.ocorrencia.docente">Docente</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="matricula.numeroMatricula">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.ocorrencia.matricula">Matricula</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="estado.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.ocorrencia.estado">Estado</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="licao.numero">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.ocorrencia.licao">Licao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ocorrencia of ocorrencias; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/ocorrencia', ocorrencia.id, 'view']">{{ ocorrencia.id }}</a>
+          </td>
+          <td>{{ ocorrencia.uniqueOcorrencia }}</td>
+          <td>{{ ocorrencia.descricao }}</td>
+          <td>
+            <a
+              *ngIf="ocorrencia.evidencia"
+              (click)="openFile(ocorrencia.evidencia, ocorrencia.evidenciaContentType)"
+              appTranslate="entity.action.open"
+              >Abrir</a
+            >
+            <span *ngIf="ocorrencia.evidencia">{{ ocorrencia.evidenciaContentType }}, {{ byteSize(ocorrencia.evidencia) }}</span>
+          </td>
+          <td>{{ ocorrencia.hash }}</td>
+          <td>{{ ocorrencia.timestamp | formatMediumDatetime }}</td>
+          <td>
+            {{ ocorrencia.utilizador?.login }}
+          </td>
+          <td>
+            <div *ngIf="ocorrencia.referencia">
+              <a [routerLink]="['/ocorrencia', ocorrencia.referencia.id, 'view']">{{ ocorrencia.referencia.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="ocorrencia.docente">
+              <a [routerLink]="['/docente', ocorrencia.docente.id, 'view']">{{ ocorrencia.docente.nome }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="ocorrencia.matricula">
+              <a [routerLink]="['/matricula', ocorrencia.matricula.id, 'view']">{{ ocorrencia.matricula.numeroMatricula }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="ocorrencia.estado">
+              <a [routerLink]="['/categoria-ocorrencia', ocorrencia.estado.id, 'view']">{{ ocorrencia.estado.descricao }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="ocorrencia.licao">
+              <a [routerLink]="['/licao', ocorrencia.licao.id, 'view']">{{ ocorrencia.licao.numero }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/ocorrencia']"
+                [queryParams]="{ 'filter[referenciaId.in]': ocorrencia.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.ocorrencia.ocorrencia' | translate) }"
+                  >Show Ocorrencia</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/ocorrencia', ocorrencia.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/ocorrencia', ocorrencia.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(ocorrencia)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="ocorrencias && ocorrencias.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

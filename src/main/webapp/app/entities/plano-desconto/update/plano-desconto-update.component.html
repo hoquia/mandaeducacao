@@ -1,0 +1,132 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-plano-desconto-heading"
+        data-cy="PlanoDescontoCreateUpdateHeading"
+        appTranslate="longonkeloApp.planoDesconto.home.createOrEditLabel"
+      >
+        Criar ou editar Plano Desconto
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.planoDesconto.codigo" for="field_codigo">Codigo</label>
+          <input type="text" class="form-control" name="codigo" id="field_codigo" data-cy="codigo" formControlName="codigo" />
+          <div *ngIf="editForm.get('codigo')!.invalid && (editForm.get('codigo')!.dirty || editForm.get('codigo')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('codigo')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.planoDesconto.nome" for="field_nome">Nome</label>
+          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
+          <div *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('nome')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.planoDesconto.isIsentoMulta" for="field_isIsentoMulta"
+            >Is Isento Multa</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isIsentoMulta"
+            id="field_isIsentoMulta"
+            data-cy="isIsentoMulta"
+            formControlName="isIsentoMulta"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.planoDesconto.isIsentoJuro" for="field_isIsentoJuro">Is Isento Juro</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isIsentoJuro"
+            id="field_isIsentoJuro"
+            data-cy="isIsentoJuro"
+            formControlName="isIsentoJuro"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.planoDesconto.desconto" for="field_desconto">Desconto</label>
+          <input type="number" class="form-control" name="desconto" id="field_desconto" data-cy="desconto" formControlName="desconto" />
+          <div *ngIf="editForm.get('desconto')!.invalid && (editForm.get('desconto')!.dirty || editForm.get('desconto')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('desconto')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('desconto')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('desconto')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label appTranslate="longonkeloApp.planoDesconto.categoriasEmolumento" for="field_categoriasEmolumentos"
+            >Categorias Emolumento</label
+          >
+          <select
+            class="form-control"
+            id="field_categoriasEmolumentos"
+            data-cy="categoriasEmolumento"
+            multiple
+            name="categoriasEmolumentos"
+            formControlName="categoriasEmolumentos"
+            [compareWith]="compareCategoriaEmolumento"
+          >
+            <option [ngValue]="categoriaEmolumentoOption" *ngFor="let categoriaEmolumentoOption of categoriaEmolumentosSharedCollection">
+              {{ categoriaEmolumentoOption.nome }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

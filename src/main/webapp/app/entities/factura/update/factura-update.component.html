@@ -1,0 +1,1070 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="app-factura-heading" data-cy="FacturaCreateUpdateHeading" appTranslate="longonkeloApp.factura.home.createOrEditLabel">
+        Criar ou editar Factura
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.numero" for="field_numero">Numero</label>
+          <input type="text" class="form-control" name="numero" id="field_numero" data-cy="numero" formControlName="numero" />
+          <div *ngIf="editForm.get('numero')!.invalid && (editForm.get('numero')!.dirty || editForm.get('numero')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('numero')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('numero')?.errors?.maxlength"
+              appTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 60 }"
+            >
+              Este campo não pode ter mais que 60 caracteres.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.codigoEntrega" for="field_codigoEntrega">Codigo Entrega</label>
+          <input
+            type="text"
+            class="form-control"
+            name="codigoEntrega"
+            id="field_codigoEntrega"
+            data-cy="codigoEntrega"
+            formControlName="codigoEntrega"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.dataEmissao" for="field_dataEmissao">Data Emissao</label>
+          <div class="input-group">
+            <input
+              id="field_dataEmissao"
+              data-cy="dataEmissao"
+              type="text"
+              class="form-control"
+              name="dataEmissao"
+              ngbDatepicker
+              #dataEmissaoDp="ngbDatepicker"
+              formControlName="dataEmissao"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dataEmissaoDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+          <div *ngIf="editForm.get('dataEmissao')!.invalid && (editForm.get('dataEmissao')!.dirty || editForm.get('dataEmissao')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('dataEmissao')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.dataVencimento" for="field_dataVencimento">Data Vencimento</label>
+          <div class="input-group">
+            <input
+              id="field_dataVencimento"
+              data-cy="dataVencimento"
+              type="text"
+              class="form-control"
+              name="dataVencimento"
+              ngbDatepicker
+              #dataVencimentoDp="ngbDatepicker"
+              formControlName="dataVencimento"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dataVencimentoDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+          <div
+            *ngIf="
+              editForm.get('dataVencimento')!.invalid && (editForm.get('dataVencimento')!.dirty || editForm.get('dataVencimento')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('dataVencimento')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.cae" for="field_cae">Cae</label>
+          <input type="text" class="form-control" name="cae" id="field_cae" data-cy="cae" formControlName="cae" />
+          <div *ngIf="editForm.get('cae')!.invalid && (editForm.get('cae')!.dirty || editForm.get('cae')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('cae')?.errors?.maxlength"
+              appTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 10 }"
+            >
+              Este campo não pode ter mais que 10 caracteres.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.inicioTransporte" for="field_inicioTransporte"
+            >Inicio Transporte</label
+          >
+          <div class="d-flex">
+            <input
+              id="field_inicioTransporte"
+              data-cy="inicioTransporte"
+              type="datetime-local"
+              class="form-control"
+              name="inicioTransporte"
+              formControlName="inicioTransporte"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div
+            *ngIf="
+              editForm.get('inicioTransporte')!.invalid &&
+              (editForm.get('inicioTransporte')!.dirty || editForm.get('inicioTransporte')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('inicioTransporte')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('inicioTransporte')?.errors?.datetimelocal"
+              appTranslate="entity.validation.datetimelocal"
+            >
+              Este campo é do tipo data/hora.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.fimTransporte" for="field_fimTransporte">Fim Transporte</label>
+          <div class="d-flex">
+            <input
+              id="field_fimTransporte"
+              data-cy="fimTransporte"
+              type="datetime-local"
+              class="form-control"
+              name="fimTransporte"
+              formControlName="fimTransporte"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div
+            *ngIf="
+              editForm.get('fimTransporte')!.invalid && (editForm.get('fimTransporte')!.dirty || editForm.get('fimTransporte')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('fimTransporte')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('fimTransporte')?.errors?.datetimelocal"
+              appTranslate="entity.validation.datetimelocal"
+            >
+              Este campo é do tipo data/hora.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.observacaoGeral" for="field_observacaoGeral"
+            >Observacao Geral</label
+          >
+          <textarea
+            class="form-control"
+            name="observacaoGeral"
+            id="field_observacaoGeral"
+            data-cy="observacaoGeral"
+            formControlName="observacaoGeral"
+          ></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.observacaoInterna" for="field_observacaoInterna"
+            >Observacao Interna</label
+          >
+          <textarea
+            class="form-control"
+            name="observacaoInterna"
+            id="field_observacaoInterna"
+            data-cy="observacaoInterna"
+            formControlName="observacaoInterna"
+          ></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.estado" for="field_estado">Estado</label>
+          <select class="form-control" name="estado" formControlName="estado" id="field_estado" data-cy="estado">
+            <option [ngValue]="null">{{ 'longonkeloApp.EstadoDocumentoComercial.null' | translate }}</option>
+            <option *ngFor="let estadoDocumentoComercial of estadoDocumentoComercialValues" [value]="estadoDocumentoComercial">
+              {{ 'longonkeloApp.EstadoDocumentoComercial.' + estadoDocumentoComercial | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('estado')!.invalid && (editForm.get('estado')!.dirty || editForm.get('estado')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('estado')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.origem" for="field_origem">Origem</label>
+          <input type="text" class="form-control" name="origem" id="field_origem" data-cy="origem" formControlName="origem" />
+          <div *ngIf="editForm.get('origem')!.invalid && (editForm.get('origem')!.dirty || editForm.get('origem')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('origem')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.timestamp" for="field_timestamp">Timestamp</label>
+          <div class="d-flex">
+            <input
+              id="field_timestamp"
+              data-cy="timestamp"
+              type="datetime-local"
+              class="form-control"
+              name="timestamp"
+              formControlName="timestamp"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          <div *ngIf="editForm.get('timestamp')!.invalid && (editForm.get('timestamp')!.dirty || editForm.get('timestamp')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('timestamp')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('timestamp')?.errors?.datetimelocal"
+              appTranslate="entity.validation.datetimelocal"
+            >
+              Este campo é do tipo data/hora.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.isMoedaEntrangeira" for="field_isMoedaEntrangeira"
+            >Is Moeda Entrangeira</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isMoedaEntrangeira"
+            id="field_isMoedaEntrangeira"
+            data-cy="isMoedaEntrangeira"
+            formControlName="isMoedaEntrangeira"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.moeda" for="field_moeda">Moeda</label>
+          <input type="text" class="form-control" name="moeda" id="field_moeda" data-cy="moeda" formControlName="moeda" />
+          <div *ngIf="editForm.get('moeda')!.invalid && (editForm.get('moeda')!.dirty || editForm.get('moeda')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('moeda')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('moeda')?.errors?.maxlength"
+              appTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 12 }"
+            >
+              Este campo não pode ter mais que 12 caracteres.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.cambio" for="field_cambio">Cambio</label>
+          <input type="number" class="form-control" name="cambio" id="field_cambio" data-cy="cambio" formControlName="cambio" />
+          <div *ngIf="editForm.get('cambio')!.invalid && (editForm.get('cambio')!.dirty || editForm.get('cambio')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('cambio')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('cambio')?.errors?.number" appTranslate="entity.validation.number">
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.totalMoedaEntrangeira" for="field_totalMoedaEntrangeira"
+            >Total Moeda Entrangeira</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="totalMoedaEntrangeira"
+            id="field_totalMoedaEntrangeira"
+            data-cy="totalMoedaEntrangeira"
+            formControlName="totalMoedaEntrangeira"
+          />
+          <div
+            *ngIf="
+              editForm.get('totalMoedaEntrangeira')!.invalid &&
+              (editForm.get('totalMoedaEntrangeira')!.dirty || editForm.get('totalMoedaEntrangeira')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalMoedaEntrangeira')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('totalMoedaEntrangeira')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.totalIliquido" for="field_totalIliquido">Total Iliquido</label>
+          <input
+            type="number"
+            class="form-control"
+            name="totalIliquido"
+            id="field_totalIliquido"
+            data-cy="totalIliquido"
+            formControlName="totalIliquido"
+          />
+          <div
+            *ngIf="
+              editForm.get('totalIliquido')!.invalid && (editForm.get('totalIliquido')!.dirty || editForm.get('totalIliquido')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalIliquido')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalIliquido')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('totalIliquido')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.totalDescontoComercial" for="field_totalDescontoComercial"
+            >Total Desconto Comercial</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="totalDescontoComercial"
+            id="field_totalDescontoComercial"
+            data-cy="totalDescontoComercial"
+            formControlName="totalDescontoComercial"
+          />
+          <div
+            *ngIf="
+              editForm.get('totalDescontoComercial')!.invalid &&
+              (editForm.get('totalDescontoComercial')!.dirty || editForm.get('totalDescontoComercial')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalDescontoComercial')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalDescontoComercial')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('totalDescontoComercial')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.totalLiquido" for="field_totalLiquido">Total Liquido</label>
+          <input
+            type="number"
+            class="form-control"
+            name="totalLiquido"
+            id="field_totalLiquido"
+            data-cy="totalLiquido"
+            formControlName="totalLiquido"
+          />
+          <div
+            *ngIf="editForm.get('totalLiquido')!.invalid && (editForm.get('totalLiquido')!.dirty || editForm.get('totalLiquido')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalLiquido')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalLiquido')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('totalLiquido')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.totalImpostoIVA" for="field_totalImpostoIVA"
+            >Total Imposto IVA</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="totalImpostoIVA"
+            id="field_totalImpostoIVA"
+            data-cy="totalImpostoIVA"
+            formControlName="totalImpostoIVA"
+          />
+          <div
+            *ngIf="
+              editForm.get('totalImpostoIVA')!.invalid &&
+              (editForm.get('totalImpostoIVA')!.dirty || editForm.get('totalImpostoIVA')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalImpostoIVA')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalImpostoIVA')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('totalImpostoIVA')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.totalImpostoEspecialConsumo" for="field_totalImpostoEspecialConsumo"
+            >Total Imposto Especial Consumo</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="totalImpostoEspecialConsumo"
+            id="field_totalImpostoEspecialConsumo"
+            data-cy="totalImpostoEspecialConsumo"
+            formControlName="totalImpostoEspecialConsumo"
+          />
+          <div
+            *ngIf="
+              editForm.get('totalImpostoEspecialConsumo')!.invalid &&
+              (editForm.get('totalImpostoEspecialConsumo')!.dirty || editForm.get('totalImpostoEspecialConsumo')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalImpostoEspecialConsumo')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalImpostoEspecialConsumo')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('totalImpostoEspecialConsumo')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.totalDescontoFinanceiro" for="field_totalDescontoFinanceiro"
+            >Total Desconto Financeiro</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="totalDescontoFinanceiro"
+            id="field_totalDescontoFinanceiro"
+            data-cy="totalDescontoFinanceiro"
+            formControlName="totalDescontoFinanceiro"
+          />
+          <div
+            *ngIf="
+              editForm.get('totalDescontoFinanceiro')!.invalid &&
+              (editForm.get('totalDescontoFinanceiro')!.dirty || editForm.get('totalDescontoFinanceiro')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalDescontoFinanceiro')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalDescontoFinanceiro')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('totalDescontoFinanceiro')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.totalFactura" for="field_totalFactura">Total Factura</label>
+          <input
+            type="number"
+            class="form-control"
+            name="totalFactura"
+            id="field_totalFactura"
+            data-cy="totalFactura"
+            formControlName="totalFactura"
+          />
+          <div
+            *ngIf="editForm.get('totalFactura')!.invalid && (editForm.get('totalFactura')!.dirty || editForm.get('totalFactura')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalFactura')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalFactura')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('totalFactura')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.totalImpostoRetencaoFonte" for="field_totalImpostoRetencaoFonte"
+            >Total Imposto Retencao Fonte</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="totalImpostoRetencaoFonte"
+            id="field_totalImpostoRetencaoFonte"
+            data-cy="totalImpostoRetencaoFonte"
+            formControlName="totalImpostoRetencaoFonte"
+          />
+          <div
+            *ngIf="
+              editForm.get('totalImpostoRetencaoFonte')!.invalid &&
+              (editForm.get('totalImpostoRetencaoFonte')!.dirty || editForm.get('totalImpostoRetencaoFonte')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalImpostoRetencaoFonte')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalImpostoRetencaoFonte')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('totalImpostoRetencaoFonte')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.totalPagar" for="field_totalPagar">Total Pagar</label>
+          <input
+            type="number"
+            class="form-control"
+            name="totalPagar"
+            id="field_totalPagar"
+            data-cy="totalPagar"
+            formControlName="totalPagar"
+          />
+          <div *ngIf="editForm.get('totalPagar')!.invalid && (editForm.get('totalPagar')!.dirty || editForm.get('totalPagar')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalPagar')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalPagar')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('totalPagar')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.debito" for="field_debito">Debito</label>
+          <input type="number" class="form-control" name="debito" id="field_debito" data-cy="debito" formControlName="debito" />
+          <div *ngIf="editForm.get('debito')!.invalid && (editForm.get('debito')!.dirty || editForm.get('debito')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('debito')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('debito')?.errors?.number" appTranslate="entity.validation.number">
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.credito" for="field_credito">Credito</label>
+          <input type="number" class="form-control" name="credito" id="field_credito" data-cy="credito" formControlName="credito" />
+          <div *ngIf="editForm.get('credito')!.invalid && (editForm.get('credito')!.dirty || editForm.get('credito')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('credito')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('credito')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.totalPago" for="field_totalPago">Total Pago</label>
+          <input type="number" class="form-control" name="totalPago" id="field_totalPago" data-cy="totalPago" formControlName="totalPago" />
+          <div *ngIf="editForm.get('totalPago')!.invalid && (editForm.get('totalPago')!.dirty || editForm.get('totalPago')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalPago')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalPago')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('totalPago')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.totalDiferenca" for="field_totalDiferenca">Total Diferenca</label>
+          <input
+            type="number"
+            class="form-control"
+            name="totalDiferenca"
+            id="field_totalDiferenca"
+            data-cy="totalDiferenca"
+            formControlName="totalDiferenca"
+          />
+          <div
+            *ngIf="
+              editForm.get('totalDiferenca')!.invalid && (editForm.get('totalDiferenca')!.dirty || editForm.get('totalDiferenca')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('totalDiferenca')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('totalDiferenca')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.isAutoFacturacao" for="field_isAutoFacturacao"
+            >Is Auto Facturacao</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isAutoFacturacao"
+            id="field_isAutoFacturacao"
+            data-cy="isAutoFacturacao"
+            formControlName="isAutoFacturacao"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.isRegimeCaixa" for="field_isRegimeCaixa">Is Regime Caixa</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isRegimeCaixa"
+            id="field_isRegimeCaixa"
+            data-cy="isRegimeCaixa"
+            formControlName="isRegimeCaixa"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.isEmitidaNomeEContaTerceiro" for="field_isEmitidaNomeEContaTerceiro"
+            >Is Emitida Nome E Conta Terceiro</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isEmitidaNomeEContaTerceiro"
+            id="field_isEmitidaNomeEContaTerceiro"
+            data-cy="isEmitidaNomeEContaTerceiro"
+            formControlName="isEmitidaNomeEContaTerceiro"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.isNovo" for="field_isNovo">Is Novo</label>
+          <input type="checkbox" class="form-check" name="isNovo" id="field_isNovo" data-cy="isNovo" formControlName="isNovo" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.isFiscalizado" for="field_isFiscalizado">Is Fiscalizado</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isFiscalizado"
+            id="field_isFiscalizado"
+            data-cy="isFiscalizado"
+            formControlName="isFiscalizado"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.signText" for="field_signText">Sign Text</label>
+          <input type="text" class="form-control" name="signText" id="field_signText" data-cy="signText" formControlName="signText" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.hash" for="field_hash">Hash</label>
+          <input type="text" class="form-control" name="hash" id="field_hash" data-cy="hash" formControlName="hash" />
+          <div *ngIf="editForm.get('hash')!.invalid && (editForm.get('hash')!.dirty || editForm.get('hash')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('hash')?.errors?.maxlength"
+              appTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 172 }"
+            >
+              Este campo não pode ter mais que 172 caracteres.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.hashShort" for="field_hashShort">Hash Short</label>
+          <input type="text" class="form-control" name="hashShort" id="field_hashShort" data-cy="hashShort" formControlName="hashShort" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.hashControl" for="field_hashControl">Hash Control</label>
+          <input
+            type="text"
+            class="form-control"
+            name="hashControl"
+            id="field_hashControl"
+            data-cy="hashControl"
+            formControlName="hashControl"
+          />
+          <div *ngIf="editForm.get('hashControl')!.invalid && (editForm.get('hashControl')!.dirty || editForm.get('hashControl')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('hashControl')?.errors?.maxlength"
+              appTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 70 }"
+            >
+              Este campo não pode ter mais que 70 caracteres.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.keyVersion" for="field_keyVersion">Key Version</label>
+          <input
+            type="number"
+            class="form-control"
+            name="keyVersion"
+            id="field_keyVersion"
+            data-cy="keyVersion"
+            formControlName="keyVersion"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.utilizador" for="field_utilizador">Utilizador</label>
+          <select
+            class="form-control"
+            id="field_utilizador"
+            data-cy="utilizador"
+            name="utilizador"
+            formControlName="utilizador"
+            [compareWith]="compareUser"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.motivoAnulacao" for="field_motivoAnulacao">Motivo Anulacao</label>
+          <select
+            class="form-control"
+            id="field_motivoAnulacao"
+            data-cy="motivoAnulacao"
+            name="motivoAnulacao"
+            formControlName="motivoAnulacao"
+            [compareWith]="compareLookupItem"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              {{ lookupItemOption.descricao }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.matricula" for="field_matricula">Matricula</label>
+          <select
+            class="form-control"
+            id="field_matricula"
+            data-cy="matricula"
+            name="matricula"
+            formControlName="matricula"
+            [compareWith]="compareMatricula"
+          >
+            <option *ngIf="editForm.get(['matricula'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="matriculaOption" *ngFor="let matriculaOption of matriculasSharedCollection">
+              {{ matriculaOption.numeroMatricula }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['matricula'])!.invalid && (editForm.get(['matricula'])!.dirty || editForm.get(['matricula'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['matricula'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.referencia" for="field_referencia">Referencia</label>
+          <select
+            class="form-control"
+            id="field_referencia"
+            data-cy="referencia"
+            name="referencia"
+            formControlName="referencia"
+            [compareWith]="compareFactura"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="facturaOption" *ngFor="let facturaOption of facturasSharedCollection">{{ facturaOption.numero }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.factura.documentoComercial" for="field_documentoComercial"
+            >Documento Comercial</label
+          >
+          <select
+            class="form-control"
+            id="field_documentoComercial"
+            data-cy="documentoComercial"
+            name="documentoComercial"
+            formControlName="documentoComercial"
+            [compareWith]="compareDocumentoComercial"
+          >
+            <option *ngIf="editForm.get(['documentoComercial'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="documentoComercialOption" *ngFor="let documentoComercialOption of documentoComercialsSharedCollection">
+              {{ documentoComercialOption.siglaInterna }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="
+            editForm.get(['documentoComercial'])!.invalid &&
+            (editForm.get(['documentoComercial'])!.dirty || editForm.get(['documentoComercial'])!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['documentoComercial'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

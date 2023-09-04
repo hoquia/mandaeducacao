@@ -1,0 +1,81 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="meioPagamento">
+      <h2 data-cy="meioPagamentoDetailsHeading"><span appTranslate="longonkeloApp.meioPagamento.detail.title">Meio Pagamento</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ meioPagamento.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.meioPagamento.imagem">Imagem</span></dt>
+        <dd>
+          <div *ngIf="meioPagamento.imagem">
+            <a (click)="openFile(meioPagamento.imagem, meioPagamento.imagemContentType)">
+              <img
+                [src]="'data:' + meioPagamento.imagemContentType + ';base64,' + meioPagamento.imagem"
+                style="max-width: 100%"
+                alt="meioPagamento image"
+              />
+            </a>
+            {{ meioPagamento.imagemContentType }}, {{ byteSize(meioPagamento.imagem) }}
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.meioPagamento.codigo">Codigo</span></dt>
+        <dd>
+          <span>{{ meioPagamento.codigo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.meioPagamento.nome">Nome</span></dt>
+        <dd>
+          <span>{{ meioPagamento.nome }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.meioPagamento.numeroDigitoReferencia">Numero Digito Referencia</span></dt>
+        <dd>
+          <span>{{ meioPagamento.numeroDigitoReferencia }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.meioPagamento.isPagamentoInstantanio">Is Pagamento Instantanio</span></dt>
+        <dd>
+          <span>{{ meioPagamento.isPagamentoInstantanio }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.meioPagamento.hash">Hash</span></dt>
+        <dd>
+          <span>{{ meioPagamento.hash }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.meioPagamento.link">Link</span></dt>
+        <dd>
+          <span>{{ meioPagamento.link }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.meioPagamento.token">Token</span></dt>
+        <dd>
+          <span>{{ meioPagamento.token }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.meioPagamento.username">Username</span></dt>
+        <dd>
+          <span>{{ meioPagamento.username }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.meioPagamento.password">Password</span></dt>
+        <dd>
+          <span>{{ meioPagamento.password }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.meioPagamento.formatoReferencia">Formato Referencia</span></dt>
+        <dd>
+          <span>{{ meioPagamento.formatoReferencia }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/meio-pagamento', meioPagamento.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,76 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="imposto">
+      <h2 data-cy="impostoDetailsHeading"><span appTranslate="longonkeloApp.imposto.detail.title">Imposto</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ imposto.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.imposto.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ imposto.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.imposto.pais">Pais</span></dt>
+        <dd>
+          <span>{{ imposto.pais }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.imposto.taxa">Taxa</span></dt>
+        <dd>
+          <span>{{ imposto.taxa }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.imposto.isRetencao">Is Retencao</span></dt>
+        <dd>
+          <span>{{ imposto.isRetencao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.imposto.motivoDescricao">Motivo Descricao</span></dt>
+        <dd>
+          <span>{{ imposto.motivoDescricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.imposto.motivoCodigo">Motivo Codigo</span></dt>
+        <dd>
+          <span>{{ imposto.motivoCodigo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.imposto.tipoImposto">Tipo Imposto</span></dt>
+        <dd>
+          <div *ngIf="imposto.tipoImposto">
+            <a [routerLink]="['/lookup-item', imposto.tipoImposto.id, 'view']">{{ imposto.tipoImposto.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.imposto.codigoImposto">Codigo Imposto</span></dt>
+        <dd>
+          <div *ngIf="imposto.codigoImposto">
+            <a [routerLink]="['/lookup-item', imposto.codigoImposto.id, 'view']">{{ imposto.codigoImposto.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.imposto.motivoIsencaoCodigo">Motivo Isencao Codigo</span></dt>
+        <dd>
+          <div *ngIf="imposto.motivoIsencaoCodigo">
+            <a [routerLink]="['/lookup-item', imposto.motivoIsencaoCodigo.id, 'view']">{{ imposto.motivoIsencaoCodigo.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.imposto.motivoIsencaoDescricao">Motivo Isencao Descricao</span></dt>
+        <dd>
+          <div *ngIf="imposto.motivoIsencaoDescricao">
+            <a [routerLink]="['/lookup-item', imposto.motivoIsencaoDescricao.id, 'view']">{{ imposto.motivoIsencaoDescricao.descricao }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/imposto', imposto.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

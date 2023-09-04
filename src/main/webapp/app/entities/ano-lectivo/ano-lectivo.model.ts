@@ -1,0 +1,55 @@
+import dayjs from 'dayjs/esm';
+import { IDocente } from 'app/entities/docente/docente.model';
+import { IUser } from 'app/entities/user/user.model';
+import { INivelEnsino } from 'app/entities/nivel-ensino/nivel-ensino.model';
+import { ITurma } from 'app/entities/turma/turma.model';
+import { IHorario } from 'app/entities/horario/horario.model';
+import { IPlanoAula } from 'app/entities/plano-aula/plano-aula.model';
+import { ILicao } from 'app/entities/licao/licao.model';
+import { IProcessoSelectivoMatricula } from 'app/entities/processo-selectivo-matricula/processo-selectivo-matricula.model';
+import { IOcorrencia } from 'app/entities/ocorrencia/ocorrencia.model';
+import { INotasPeriodicaDisciplina } from 'app/entities/notas-periodica-disciplina/notas-periodica-disciplina.model';
+import { INotasGeralDisciplina } from 'app/entities/notas-geral-disciplina/notas-geral-disciplina.model';
+import { IDissertacaoFinalCurso } from 'app/entities/dissertacao-final-curso/dissertacao-final-curso.model';
+import { IFactura } from 'app/entities/factura/factura.model';
+import { IRecibo } from 'app/entities/recibo/recibo.model';
+import { IResponsavelTurno } from 'app/entities/responsavel-turno/responsavel-turno.model';
+import { IResponsavelAreaFormacao } from 'app/entities/responsavel-area-formacao/responsavel-area-formacao.model';
+import { IResponsavelCurso } from 'app/entities/responsavel-curso/responsavel-curso.model';
+import { IResponsavelDisciplina } from 'app/entities/responsavel-disciplina/responsavel-disciplina.model';
+import { IResponsavelTurma } from 'app/entities/responsavel-turma/responsavel-turma.model';
+
+export interface IAnoLectivo {
+  id: number;
+  ano?: number | null;
+  inicio?: dayjs.Dayjs | null;
+  fim?: dayjs.Dayjs | null;
+  descricao?: string | null;
+  timestam?: dayjs.Dayjs | null;
+  isActual?: boolean | null;
+  directorGeral?: Pick<IDocente, 'id' | 'nome'> | null;
+  subDirectorPdagogico?: Pick<IDocente, 'id' | 'nome'> | null;
+  subDirectorAdministrativo?: Pick<IDocente, 'id' | 'nome'> | null;
+  responsavelSecretariaGeral?: Pick<IDocente, 'id' | 'nome'> | null;
+  responsavelSecretariaPedagogico?: Pick<IDocente, 'id' | 'nome'> | null;
+  utilizador?: Pick<IUser, 'id' | 'login'> | null;
+  nivesEnsinos?: Pick<INivelEnsino, 'id' | 'nome'>[] | null;
+  turma?: Pick<ITurma, 'id'> | null;
+  horario?: Pick<IHorario, 'id'> | null;
+  planoAula?: Pick<IPlanoAula, 'id'> | null;
+  licao?: Pick<ILicao, 'id'> | null;
+  processoSelectivoMatricula?: Pick<IProcessoSelectivoMatricula, 'id'> | null;
+  ocorrencia?: Pick<IOcorrencia, 'id'> | null;
+  notasPeriodicaDisciplina?: Pick<INotasPeriodicaDisciplina, 'id'> | null;
+  notasGeralDisciplina?: Pick<INotasGeralDisciplina, 'id'> | null;
+  dissertacaoFinalCurso?: Pick<IDissertacaoFinalCurso, 'id'> | null;
+  factura?: Pick<IFactura, 'id'> | null;
+  recibo?: Pick<IRecibo, 'id'> | null;
+  responsavelTurno?: Pick<IResponsavelTurno, 'id'> | null;
+  responsavelAreaFormacao?: Pick<IResponsavelAreaFormacao, 'id'> | null;
+  responsavelCurso?: Pick<IResponsavelCurso, 'id'> | null;
+  responsavelDisciplina?: Pick<IResponsavelDisciplina, 'id'> | null;
+  responsavelTurma?: Pick<IResponsavelTurma, 'id'> | null;
+}
+
+export type NewAnoLectivo = Omit<IAnoLectivo, 'id'> & { id: null };

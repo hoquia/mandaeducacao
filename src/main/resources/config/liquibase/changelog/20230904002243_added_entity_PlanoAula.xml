@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity PlanoAula.
+    -->
+    <changeSet id="20230904002243-1" author="jhipster">
+        <createTable tableName="plano_aula">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="tipo_aula" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="semana_lectiva" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="perfil_entrada" type="${clobType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="perfil_saida" type="${clobType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="assunto" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="objectivo_geral" type="${clobType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="objectivos_especificos" type="${clobType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="tempo_total_licao" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="estado" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="utilizador_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="unidade_tematica_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="sub_unidade_tematica_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="turma_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="docente_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="disciplina_curricular_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

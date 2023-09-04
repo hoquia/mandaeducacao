@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity Factura.
+    -->
+    <changeSet id="20230904002313-1" author="jhipster">
+        <createTable tableName="factura">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="numero" type="varchar(60)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_factura__numero" />
+            </column>
+            <column name="codigo_entrega" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="data_emissao" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="data_vencimento" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="cae" type="varchar(10)">
+                <constraints nullable="true" />
+            </column>
+            <column name="inicio_transporte" type="${datetimeType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="fim_transporte" type="${datetimeType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="observacao_geral" type="${clobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="observacao_interna" type="${clobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="estado" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="origem" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="timestamp" type="${datetimeType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="is_moeda_entrangeira" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="moeda" type="varchar(12)">
+                <constraints nullable="false" />
+            </column>
+            <column name="cambio" type="decimal(21,2)">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_moeda_entrangeira" type="decimal(21,2)">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_iliquido" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="total_desconto_comercial" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="total_liquido" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="total_imposto_iva" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="total_imposto_especial_consumo" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="total_desconto_financeiro" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="total_factura" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="total_imposto_retencao_fonte" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="total_pagar" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="debito" type="decimal(21,2)">
+                <constraints nullable="true" />
+            </column>
+            <column name="credito" type="decimal(21,2)">
+                <constraints nullable="true" />
+            </column>
+            <column name="total_pago" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="total_diferenca" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="is_auto_facturacao" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_regime_caixa" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_emitida_nome_e_conta_terceiro" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_novo" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_fiscalizado" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="sign_text" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="hash" type="varchar(172)">
+                <constraints nullable="true" />
+            </column>
+            <column name="hash_short" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="hash_control" type="varchar(70)">
+                <constraints nullable="true" />
+            </column>
+            <column name="key_version" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="utilizador_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="motivo_anulacao_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="matricula_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="referencia_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="documento_comercial_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+        <dropDefaultValue tableName="factura" columnName="inicio_transporte" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="factura" columnName="fim_transporte" columnDataType="${datetimeType}"/>
+        <dropDefaultValue tableName="factura" columnName="timestamp" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

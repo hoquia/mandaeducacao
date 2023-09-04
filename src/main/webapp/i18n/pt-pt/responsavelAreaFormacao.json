@@ -1,0 +1,31 @@
+{
+  "longonkeloApp": {
+    "responsavelAreaFormacao": {
+      "home": {
+        "title": "Responsavel Area Formacaos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Responsavel Area Formacao",
+        "createOrEditLabel": "Criar ou editar Responsavel Area Formacao",
+        "notFound": "Nenhum Responsavel Area Formacaos encontrado"
+      },
+      "created": "Um novo Responsavel Area Formacao foi criado com o identificador {{ param }}",
+      "updated": "Responsavel Area Formacao com identificador {{ param }} foi actualizado",
+      "deleted": "Responsavel Area Formacao com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Responsavel Area Formacao {{ id }}?"
+      },
+      "detail": {
+        "title": "Responsavel Area Formacao"
+      },
+      "id": "ID",
+      "de": "De",
+      "ate": "Ate",
+      "descricao": "Descricao",
+      "timestamp": "Timestamp",
+      "responsavel": "Responsavel",
+      "anoLectivo": "Ano Lectivo",
+      "utilizador": "Utilizador",
+      "areaFormacao": "Area Formacao"
+    }
+  }
+}

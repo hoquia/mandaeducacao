@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="medidaDisciplinar">
+      <h2 data-cy="medidaDisciplinarDetailsHeading">
+        <span appTranslate="longonkeloApp.medidaDisciplinar.detail.title">Medida Disciplinar</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ medidaDisciplinar.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.medidaDisciplinar.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ medidaDisciplinar.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.medidaDisciplinar.periodo">Periodo</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.UnidadeDuracao.' + medidaDisciplinar.periodo }}">{{ medidaDisciplinar.periodo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.medidaDisciplinar.suspensao">Suspensao</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.Suspensao.' + medidaDisciplinar.suspensao }}">{{ medidaDisciplinar.suspensao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.medidaDisciplinar.tempo">Tempo</span></dt>
+        <dd>
+          <span>{{ medidaDisciplinar.tempo }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/medida-disciplinar', medidaDisciplinar.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

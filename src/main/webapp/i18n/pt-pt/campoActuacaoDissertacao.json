@@ -1,0 +1,27 @@
+{
+  "longonkeloApp": {
+    "campoActuacaoDissertacao": {
+      "home": {
+        "title": "Campo Actuacao Dissertacaos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Campo Actuacao Dissertacao",
+        "createOrEditLabel": "Criar ou editar Campo Actuacao Dissertacao",
+        "notFound": "Nenhum Campo Actuacao Dissertacaos encontrado"
+      },
+      "created": "Um novo Campo Actuacao Dissertacao foi criado com o identificador {{ param }}",
+      "updated": "Campo Actuacao Dissertacao com identificador {{ param }} foi actualizado",
+      "deleted": "Campo Actuacao Dissertacao com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Campo Actuacao Dissertacao {{ id }}?"
+      },
+      "detail": {
+        "title": "Campo Actuacao Dissertacao"
+      },
+      "id": "ID",
+      "nome": "Nome",
+      "descricao": "Descricao",
+      "isActivo": "Is Activo",
+      "cursos": "Cursos"
+    }
+  }
+}

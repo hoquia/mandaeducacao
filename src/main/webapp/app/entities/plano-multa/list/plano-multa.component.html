@@ -1,0 +1,236 @@
+<div>
+  <h2 id="page-heading" data-cy="PlanoMultaHeading">
+    <span appTranslate="longonkeloApp.planoMulta.home.title">Plano Multas</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.planoMulta.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-plano-multa"
+        [routerLink]="['/plano-multa/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.planoMulta.home.createLabel"> Criar novo(a) Plano Multa </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="planoMultas?.length === 0">
+    <span appTranslate="longonkeloApp.planoMulta.home.notFound">Nenhum Plano Multas encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="planoMultas && planoMultas.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoMulta.descricao">Descricao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="diaAplicacaoMulta">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoMulta.diaAplicacaoMulta">Dia Aplicacao Multa</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="metodoAplicacaoMulta">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoMulta.metodoAplicacaoMulta">Metodo Aplicacao Multa</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="taxaMulta">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoMulta.taxaMulta">Taxa Multa</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isTaxaMultaPercentual">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoMulta.isTaxaMultaPercentual">Is Taxa Multa Percentual</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="diaAplicacaoJuro">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoMulta.diaAplicacaoJuro">Dia Aplicacao Juro</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="metodoAplicacaoJuro">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoMulta.metodoAplicacaoJuro">Metodo Aplicacao Juro</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="taxaJuro">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoMulta.taxaJuro">Taxa Juro</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isTaxaJuroPercentual">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoMulta.isTaxaJuroPercentual">Is Taxa Juro Percentual</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="aumentarJuroEmDias">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoMulta.aumentarJuroEmDias">Aumentar Juro Em Dias</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isAtivo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoMulta.isAtivo">Is Ativo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="utilizador.login">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoMulta.utilizador">Utilizador</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let planoMulta of planoMultas; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/plano-multa', planoMulta.id, 'view']">{{ planoMulta.id }}</a>
+          </td>
+          <td>{{ planoMulta.descricao }}</td>
+          <td>{{ planoMulta.diaAplicacaoMulta }}</td>
+          <td appTranslate="{{ 'longonkeloApp.MetodoAplicacaoMulta.' + planoMulta.metodoAplicacaoMulta }}">
+            {{ planoMulta.metodoAplicacaoMulta }}
+          </td>
+          <td>{{ planoMulta.taxaMulta }}</td>
+          <td>{{ planoMulta.isTaxaMultaPercentual }}</td>
+          <td>{{ planoMulta.diaAplicacaoJuro }}</td>
+          <td appTranslate="{{ 'longonkeloApp.MetodoAplicacaoMulta.' + planoMulta.metodoAplicacaoJuro }}">
+            {{ planoMulta.metodoAplicacaoJuro }}
+          </td>
+          <td>{{ planoMulta.taxaJuro }}</td>
+          <td>{{ planoMulta.isTaxaJuroPercentual }}</td>
+          <td>{{ planoMulta.aumentarJuroEmDias }}</td>
+          <td>{{ planoMulta.isAtivo }}</td>
+          <td>
+            {{ planoMulta.utilizador?.login }}
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/categoria-emolumento']"
+                [queryParams]="{ 'filter[planoMultaId.in]': planoMulta.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.planoMulta.categoriaEmolumento' | translate) }"
+                  >Show Categoria Emolumento</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/emolumento']"
+                [queryParams]="{ 'filter[planoMultaId.in]': planoMulta.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.planoMulta.emolumento' | translate) }"
+                  >Show Emolumento</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/preco-emolumento']"
+                [queryParams]="{ 'filter[planoMultaId.in]': planoMulta.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.planoMulta.precoEmolumento' | translate) }"
+                  >Show Preco Emolumento</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/plano-multa', planoMulta.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/plano-multa', planoMulta.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(planoMulta)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="planoMultas && planoMultas.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

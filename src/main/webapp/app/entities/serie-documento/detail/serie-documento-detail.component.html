@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="serieDocumento">
+      <h2 data-cy="serieDocumentoDetailsHeading"><span appTranslate="longonkeloApp.serieDocumento.detail.title">Serie Documento</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ serieDocumento.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.serieDocumento.anoFiscal">Ano Fiscal</span></dt>
+        <dd>
+          <span>{{ serieDocumento.anoFiscal }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.serieDocumento.versao">Versao</span></dt>
+        <dd>
+          <span>{{ serieDocumento.versao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.serieDocumento.serie">Serie</span></dt>
+        <dd>
+          <span>{{ serieDocumento.serie }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.serieDocumento.isAtivo">Is Ativo</span></dt>
+        <dd>
+          <span>{{ serieDocumento.isAtivo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.serieDocumento.isPadrao">Is Padrao</span></dt>
+        <dd>
+          <span>{{ serieDocumento.isPadrao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.serieDocumento.tipoDocumento">Tipo Documento</span></dt>
+        <dd>
+          <div *ngIf="serieDocumento.tipoDocumento">
+            <a [routerLink]="['/documento-comercial', serieDocumento.tipoDocumento.id, 'view']">{{
+              serieDocumento.tipoDocumento.siglaFiscal
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/serie-documento', serieDocumento.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

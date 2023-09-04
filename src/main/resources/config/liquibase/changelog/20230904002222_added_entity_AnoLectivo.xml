@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity AnoLectivo.
+    -->
+    <changeSet id="20230904002222-1" author="jhipster">
+        <createTable tableName="ano_lectivo">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="ano" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="inicio" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="fim" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="descricao" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_ano_lectivo__descricao" />
+            </column>
+            <column name="timestam" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_actual" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="director_geral_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="sub_director_pdagogico_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="sub_director_administrativo_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsavel_secretaria_geral_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsavel_secretaria_pedagogico_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="utilizador_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="turma_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="horario_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="plano_aula_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="licao_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="processo_selectivo_matricula_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="ocorrencia_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="notas_periodica_disciplina_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="notas_geral_disciplina_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="dissertacao_final_curso_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="factura_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="recibo_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsavel_turno_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsavel_area_formacao_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsavel_curso_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsavel_disciplina_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsavel_turma_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+        <dropDefaultValue tableName="ano_lectivo" columnName="timestam" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <changeSet id="20230904002222-1-relations" author="jhipster">
+
+        <createTable tableName="rel_ano_lectivo__nives_ensino">
+            <column name="nives_ensino_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ano_lectivo_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="ano_lectivo_id, nives_ensino_id" tableName="rel_ano_lectivo__nives_ensino"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

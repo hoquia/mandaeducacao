@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="lookupItem">
+      <h2 data-cy="lookupItemDetailsHeading"><span appTranslate="longonkeloApp.lookupItem.detail.title">Lookup Item</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ lookupItem.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.lookupItem.codigo">Codigo</span></dt>
+        <dd>
+          <span>{{ lookupItem.codigo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.lookupItem.ordem">Ordem</span></dt>
+        <dd>
+          <span>{{ lookupItem.ordem }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.lookupItem.isSistema">Is Sistema</span></dt>
+        <dd>
+          <span>{{ lookupItem.isSistema }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.lookupItem.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ lookupItem.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.lookupItem.lookup">Lookup</span></dt>
+        <dd>
+          <div *ngIf="lookupItem.lookup">
+            <a [routerLink]="['/lookup', lookupItem.lookup.id, 'view']">{{ lookupItem.lookup.nome }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/lookup-item', lookupItem.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,126 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="nivelEnsino">
+      <h2 data-cy="nivelEnsinoDetailsHeading"><span appTranslate="longonkeloApp.nivelEnsino.detail.title">Nivel Ensino</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.codigo">Codigo</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.codigo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.nome">Nome</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.nome }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.idadeMinima">Idade Minima</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.idadeMinima }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.idadeMaxima">Idade Maxima</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.idadeMaxima }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.duracao">Duracao</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.duracao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.unidadeDuracao">Unidade Duracao</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.UnidadeDuracao.' + nivelEnsino.unidadeDuracao }}">{{ nivelEnsino.unidadeDuracao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.classeInicial">Classe Inicial</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.classeInicial }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.classeFinal">Classe Final</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.classeFinal }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.classeExame">Classe Exame</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.classeExame }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.totalDisciplina">Total Disciplina</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.totalDisciplina }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.responsavelTurno">Responsavel Turno</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.responsavelTurno }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.responsavelAreaFormacao">Responsavel Area Formacao</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.responsavelAreaFormacao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.responsavelCurso">Responsavel Curso</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.responsavelCurso }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.responsavelDisciplina">Responsavel Disciplina</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.responsavelDisciplina }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.responsavelTurma">Responsavel Turma</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.responsavelTurma }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.responsavelGeral">Responsavel Geral</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.responsavelGeral }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.responsavelPedagogico">Responsavel Pedagogico</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.responsavelPedagogico }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.responsavelAdministrativo">Responsavel Administrativo</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.responsavelAdministrativo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.responsavelSecretariaGeral">Responsavel Secretaria Geral</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.responsavelSecretariaGeral }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.responsavelSecretariaPedagogico">Responsavel Secretaria Pedagogico</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.responsavelSecretariaPedagogico }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.descricaoDocente">Descricao Docente</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.descricaoDocente }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.descricaoDiscente">Descricao Discente</span></dt>
+        <dd>
+          <span>{{ nivelEnsino.descricaoDiscente }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.nivelEnsino.referencia">Referencia</span></dt>
+        <dd>
+          <div *ngIf="nivelEnsino.referencia">
+            <a [routerLink]="['/nivel-ensino', nivelEnsino.referencia.id, 'view']">{{ nivelEnsino.referencia.nome }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/nivel-ensino', nivelEnsino.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

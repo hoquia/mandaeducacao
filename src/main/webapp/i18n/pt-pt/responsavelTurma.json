@@ -1,0 +1,31 @@
+{
+  "longonkeloApp": {
+    "responsavelTurma": {
+      "home": {
+        "title": "Responsavel Turmas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Responsavel Turma",
+        "createOrEditLabel": "Criar ou editar Responsavel Turma",
+        "notFound": "Nenhum Responsavel Turmas encontrado"
+      },
+      "created": "Um novo Responsavel Turma foi criado com o identificador {{ param }}",
+      "updated": "Responsavel Turma com identificador {{ param }} foi actualizado",
+      "deleted": "Responsavel Turma com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Responsavel Turma {{ id }}?"
+      },
+      "detail": {
+        "title": "Responsavel Turma"
+      },
+      "id": "ID",
+      "de": "De",
+      "ate": "Ate",
+      "descricao": "Descricao",
+      "timestamp": "Timestamp",
+      "responsavel": "Responsavel",
+      "anoLectivo": "Ano Lectivo",
+      "utilizador": "Utilizador",
+      "turma": "Turma"
+    }
+  }
+}

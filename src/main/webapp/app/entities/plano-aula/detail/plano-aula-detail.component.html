@@ -1,0 +1,100 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="planoAula">
+      <h2 data-cy="planoAulaDetailsHeading"><span appTranslate="longonkeloApp.planoAula.detail.title">Plano Aula</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ planoAula.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoAula.tipoAula">Tipo Aula</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.TipoAula.' + planoAula.tipoAula }}">{{ planoAula.tipoAula }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoAula.semanaLectiva">Semana Lectiva</span></dt>
+        <dd>
+          <span>{{ planoAula.semanaLectiva }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoAula.perfilEntrada">Perfil Entrada</span></dt>
+        <dd>
+          <span>{{ planoAula.perfilEntrada }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoAula.perfilSaida">Perfil Saida</span></dt>
+        <dd>
+          <span>{{ planoAula.perfilSaida }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoAula.assunto">Assunto</span></dt>
+        <dd>
+          <span>{{ planoAula.assunto }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoAula.objectivoGeral">Objectivo Geral</span></dt>
+        <dd>
+          <span>{{ planoAula.objectivoGeral }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoAula.objectivosEspecificos">Objectivos Especificos</span></dt>
+        <dd>
+          <span>{{ planoAula.objectivosEspecificos }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoAula.tempoTotalLicao">Tempo Total Licao</span></dt>
+        <dd>
+          <span>{{ planoAula.tempoTotalLicao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoAula.estado">Estado</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.EstadoLicao.' + planoAula.estado }}">{{ planoAula.estado }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoAula.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ planoAula.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoAula.unidadeTematica">Unidade Tematica</span></dt>
+        <dd>
+          <div *ngIf="planoAula.unidadeTematica">
+            <a [routerLink]="['/lookup-item', planoAula.unidadeTematica.id, 'view']">{{ planoAula.unidadeTematica.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoAula.subUnidadeTematica">Sub Unidade Tematica</span></dt>
+        <dd>
+          <div *ngIf="planoAula.subUnidadeTematica">
+            <a [routerLink]="['/lookup-item', planoAula.subUnidadeTematica.id, 'view']">{{ planoAula.subUnidadeTematica.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoAula.turma">Turma</span></dt>
+        <dd>
+          <div *ngIf="planoAula.turma">
+            <a [routerLink]="['/turma', planoAula.turma.id, 'view']">{{ planoAula.turma.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoAula.docente">Docente</span></dt>
+        <dd>
+          <div *ngIf="planoAula.docente">
+            <a [routerLink]="['/docente', planoAula.docente.id, 'view']">{{ planoAula.docente.nome }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoAula.disciplinaCurricular">Disciplina Curricular</span></dt>
+        <dd>
+          <div *ngIf="planoAula.disciplinaCurricular">
+            <a [routerLink]="['/disciplina-curricular', planoAula.disciplinaCurricular.id, 'view']">{{
+              planoAula.disciplinaCurricular.descricao
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/plano-aula', planoAula.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

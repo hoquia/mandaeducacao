@@ -1,0 +1,34 @@
+{
+  "longonkeloApp": {
+    "imposto": {
+      "home": {
+        "title": "Impostos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Imposto",
+        "createOrEditLabel": "Criar ou editar Imposto",
+        "notFound": "Nenhum Impostos encontrado"
+      },
+      "created": "Um novo Imposto foi criado com o identificador {{ param }}",
+      "updated": "Imposto com identificador {{ param }} foi actualizado",
+      "deleted": "Imposto com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Imposto {{ id }}?"
+      },
+      "detail": {
+        "title": "Imposto"
+      },
+      "id": "ID",
+      "descricao": "Descricao",
+      "pais": "Pais",
+      "taxa": "Taxa",
+      "isRetencao": "Is Retencao",
+      "motivoDescricao": "Motivo Descricao",
+      "motivoCodigo": "Motivo Codigo",
+      "emolumento": "Emolumento",
+      "tipoImposto": "Tipo Imposto",
+      "codigoImposto": "Codigo Imposto",
+      "motivoIsencaoCodigo": "Motivo Isencao Codigo",
+      "motivoIsencaoDescricao": "Motivo Isencao Descricao"
+    }
+  }
+}

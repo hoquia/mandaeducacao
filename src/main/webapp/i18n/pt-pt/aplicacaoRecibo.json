@@ -1,0 +1,30 @@
+{
+  "longonkeloApp": {
+    "aplicacaoRecibo": {
+      "home": {
+        "title": "Aplicacao Recibos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Aplicacao Recibo",
+        "createOrEditLabel": "Criar ou editar Aplicacao Recibo",
+        "notFound": "Nenhum Aplicacao Recibos encontrado"
+      },
+      "created": "Um novo Aplicacao Recibo foi criado com o identificador {{ param }}",
+      "updated": "Aplicacao Recibo com identificador {{ param }} foi actualizado",
+      "deleted": "Aplicacao Recibo com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Aplicacao Recibo {{ id }}?"
+      },
+      "detail": {
+        "title": "Aplicacao Recibo"
+      },
+      "id": "ID",
+      "totalFactura": "Total Factura",
+      "totalPago": "Total Pago",
+      "totalDiferenca": "Total Diferenca",
+      "timestamp": "Timestamp",
+      "itemFactura": "Item Factura",
+      "factura": "Factura",
+      "recibo": "Recibo"
+    }
+  }
+}

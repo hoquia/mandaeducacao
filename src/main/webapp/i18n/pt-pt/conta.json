@@ -1,0 +1,32 @@
+{
+  "longonkeloApp": {
+    "conta": {
+      "home": {
+        "title": "Contas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Conta",
+        "createOrEditLabel": "Criar ou editar Conta",
+        "notFound": "Nenhum Contas encontrado"
+      },
+      "created": "Um novo Conta foi criado com o identificador {{ param }}",
+      "updated": "Conta com identificador {{ param }} foi actualizado",
+      "deleted": "Conta com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Conta {{ id }}?"
+      },
+      "detail": {
+        "title": "Conta"
+      },
+      "id": "ID",
+      "imagem": "Imagem",
+      "tipo": "Tipo",
+      "titulo": "Titulo",
+      "numero": "Numero",
+      "iban": "Iban",
+      "titular": "Titular",
+      "isPadrao": "Is Padrao",
+      "transacoes": "Transacoes",
+      "moeda": "Moeda"
+    }
+  }
+}

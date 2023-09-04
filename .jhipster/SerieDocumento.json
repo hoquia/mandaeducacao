@@ -1,0 +1,54 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002302",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "serie_documento",
+  "fields": [
+    {
+      "fieldName": "anoFiscal",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "versao",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "serie",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "isAtivo",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isPadrao",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "SerieDocumento",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "sequenciaDocumento",
+      "otherEntityRelationshipName": "serie",
+      "relationshipName": "sequenciaDocumento",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "siglaFiscal",
+      "otherEntityName": "documentoComercial",
+      "otherEntityRelationshipName": "serieDocumento",
+      "relationshipName": "tipoDocumento",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceImpl"
+}

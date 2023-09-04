@@ -1,0 +1,244 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002230",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "docente",
+  "fields": [
+    {
+      "fieldName": "fotografia",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nascimento",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nif",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "inss",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "sexo",
+      "fieldType": "Sexo",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "MASCULINO,FEMENINO"
+    },
+    {
+      "fieldName": "pai",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "mae",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "documentoNumero",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "documentoEmissao",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "documentoValidade",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "residencia",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dataInicioFuncoes",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "telefonePrincipal",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "telefoneParente",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "numeroAgente",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "temAgregacaoPedagogica",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "observacao",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "hash",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "timestamp",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Docente",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "ocorrencia",
+      "otherEntityRelationshipName": "docente",
+      "relationshipName": "ocorrencia",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "horario",
+      "otherEntityRelationshipName": "docente",
+      "relationshipName": "horarios",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "planoAula",
+      "otherEntityRelationshipName": "docente",
+      "relationshipName": "planoAula",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "notasPeriodicaDisciplina",
+      "otherEntityRelationshipName": "docente",
+      "relationshipName": "notasPeriodicaDisciplina",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "notasGeralDisciplina",
+      "otherEntityRelationshipName": "docente",
+      "relationshipName": "notasGeralDisciplina",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "dissertacaoFinalCurso",
+      "otherEntityRelationshipName": "orientador",
+      "relationshipName": "dissertacaoFinalCurso",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "categoriaOcorrencia",
+      "otherEntityRelationshipName": "encaminhar",
+      "relationshipName": "categoriaOcorrencia",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "formacaoDocente",
+      "otherEntityRelationshipName": "docente",
+      "relationshipName": "formacoes",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "nacionalidade",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "naturalidade",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "tipoDocumento",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "grauAcademico",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "categoriaProfissional",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "unidadeOrganica",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "estadoCivil",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "responsavelTurno",
+      "otherEntityRelationshipName": "responsavel",
+      "relationshipName": "responsavelTurno",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "responsavelAreaFormacao",
+      "otherEntityRelationshipName": "responsavel",
+      "relationshipName": "responsavelAreaFormacao",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "responsavelCurso",
+      "otherEntityRelationshipName": "responsavel",
+      "relationshipName": "responsavelCurso",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "responsavelDisciplina",
+      "otherEntityRelationshipName": "responsavel",
+      "relationshipName": "responsavelDisciplina",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "responsavelTurma",
+      "otherEntityRelationshipName": "responsavel",
+      "relationshipName": "responsavelTurma",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

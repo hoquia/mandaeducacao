@@ -1,0 +1,29 @@
+{
+  "longonkeloApp": {
+    "periodoLancamentoNota": {
+      "home": {
+        "title": "Periodo Lancamento Notas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Periodo Lancamento Nota",
+        "createOrEditLabel": "Criar ou editar Periodo Lancamento Nota",
+        "notFound": "Nenhum Periodo Lancamento Notas encontrado"
+      },
+      "created": "Um novo Periodo Lancamento Nota foi criado com o identificador {{ param }}",
+      "updated": "Periodo Lancamento Nota com identificador {{ param }} foi actualizado",
+      "deleted": "Periodo Lancamento Nota com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Periodo Lancamento Nota {{ id }}?"
+      },
+      "detail": {
+        "title": "Periodo Lancamento Nota"
+      },
+      "id": "ID",
+      "tipoAvaliacao": "Tipo Avaliacao",
+      "de": "De",
+      "ate": "Ate",
+      "timestamp": "Timestamp",
+      "utilizador": "Utilizador",
+      "classe": "Classe"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "longonkeloApp": {
+    "resumoAcademico": {
+      "home": {
+        "title": "Resumo Academicos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Resumo Academico",
+        "createOrEditLabel": "Criar ou editar Resumo Academico",
+        "notFound": "Nenhum Resumo Academicos encontrado"
+      },
+      "created": "Um novo Resumo Academico foi criado com o identificador {{ param }}",
+      "updated": "Resumo Academico com identificador {{ param }} foi actualizado",
+      "deleted": "Resumo Academico com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Resumo Academico {{ id }}?"
+      },
+      "detail": {
+        "title": "Resumo Academico"
+      },
+      "id": "ID",
+      "temaProjecto": "Tema Projecto",
+      "notaProjecto": "Nota Projecto",
+      "observacao": "Observacao",
+      "localEstagio": "Local Estagio",
+      "notaEstagio": "Nota Estagio",
+      "mediaFinalDisciplina": "Media Final Disciplina",
+      "classificacaoFinal": "Classificacao Final",
+      "numeroGrupo": "Numero Grupo",
+      "mesaDefesa": "Mesa Defesa",
+      "livroRegistro": "Livro Registro",
+      "numeroFolha": "Numero Folha",
+      "chefeSecretariaPedagogica": "Chefe Secretaria Pedagogica",
+      "subDirectorPedagogico": "Sub Director Pedagogico",
+      "directorGeral": "Director Geral",
+      "tutorProjecto": "Tutor Projecto",
+      "juriMesa": "Juri Mesa",
+      "empresaEstagio": "Empresa Estagio",
+      "assinaturaDigital": "Assinatura Digital",
+      "hash": "Hash",
+      "utilizador": "Utilizador",
+      "ultimaTurmaMatriculada": "Ultima Turma Matriculada",
+      "discente": "Discente",
+      "situacao": "Situacao"
+    }
+  }
+}

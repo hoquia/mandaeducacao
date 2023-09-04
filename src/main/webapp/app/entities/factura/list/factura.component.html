@@ -1,0 +1,459 @@
+<div>
+  <h2 id="page-heading" data-cy="FacturaHeading">
+    <span appTranslate="longonkeloApp.factura.home.title">Facturas</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.factura.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-factura"
+        [routerLink]="['/factura/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.factura.home.createLabel"> Criar novo(a) Factura </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="facturas?.length === 0">
+    <span appTranslate="longonkeloApp.factura.home.notFound">Nenhum Facturas encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="facturas && facturas.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="numero">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.numero">Numero</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="codigoEntrega">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.codigoEntrega">Codigo Entrega</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="dataEmissao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.dataEmissao">Data Emissao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="dataVencimento">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.dataVencimento">Data Vencimento</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="cae">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.cae">Cae</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="inicioTransporte">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.inicioTransporte">Inicio Transporte</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="fimTransporte">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.fimTransporte">Fim Transporte</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="observacaoGeral">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.observacaoGeral">Observacao Geral</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="observacaoInterna">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.observacaoInterna">Observacao Interna</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="estado">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.estado">Estado</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="origem">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.origem">Origem</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="timestamp">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.timestamp">Timestamp</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isMoedaEntrangeira">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.isMoedaEntrangeira">Is Moeda Entrangeira</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="moeda">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.moeda">Moeda</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="cambio">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.cambio">Cambio</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalMoedaEntrangeira">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.totalMoedaEntrangeira">Total Moeda Entrangeira</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalIliquido">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.totalIliquido">Total Iliquido</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalDescontoComercial">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.totalDescontoComercial">Total Desconto Comercial</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalLiquido">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.totalLiquido">Total Liquido</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalImpostoIVA">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.totalImpostoIVA">Total Imposto IVA</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalImpostoEspecialConsumo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.totalImpostoEspecialConsumo">Total Imposto Especial Consumo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalDescontoFinanceiro">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.totalDescontoFinanceiro">Total Desconto Financeiro</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalFactura">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.totalFactura">Total Factura</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalImpostoRetencaoFonte">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.totalImpostoRetencaoFonte">Total Imposto Retencao Fonte</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalPagar">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.totalPagar">Total Pagar</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="debito">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.debito">Debito</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="credito">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.credito">Credito</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalPago">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.totalPago">Total Pago</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalDiferenca">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.totalDiferenca">Total Diferenca</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isAutoFacturacao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.isAutoFacturacao">Is Auto Facturacao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isRegimeCaixa">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.isRegimeCaixa">Is Regime Caixa</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isEmitidaNomeEContaTerceiro">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.isEmitidaNomeEContaTerceiro">Is Emitida Nome E Conta Terceiro</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isNovo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.isNovo">Is Novo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isFiscalizado">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.isFiscalizado">Is Fiscalizado</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="signText">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.signText">Sign Text</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="hash">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.hash">Hash</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="hashShort">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.hashShort">Hash Short</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="hashControl">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.hashControl">Hash Control</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="keyVersion">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.keyVersion">Key Version</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="utilizador.login">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.utilizador">Utilizador</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="motivoAnulacao.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.motivoAnulacao">Motivo Anulacao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="matricula.numeroMatricula">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.matricula">Matricula</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="referencia.numero">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.referencia">Referencia</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="documentoComercial.siglaInterna">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.factura.documentoComercial">Documento Comercial</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let factura of facturas; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/factura', factura.id, 'view']">{{ factura.id }}</a>
+          </td>
+          <td>{{ factura.numero }}</td>
+          <td>{{ factura.codigoEntrega }}</td>
+          <td>{{ factura.dataEmissao | formatMediumDate }}</td>
+          <td>{{ factura.dataVencimento | formatMediumDate }}</td>
+          <td>{{ factura.cae }}</td>
+          <td>{{ factura.inicioTransporte | formatMediumDatetime }}</td>
+          <td>{{ factura.fimTransporte | formatMediumDatetime }}</td>
+          <td>{{ factura.observacaoGeral }}</td>
+          <td>{{ factura.observacaoInterna }}</td>
+          <td appTranslate="{{ 'longonkeloApp.EstadoDocumentoComercial.' + factura.estado }}">{{ factura.estado }}</td>
+          <td>{{ factura.origem }}</td>
+          <td>{{ factura.timestamp | formatMediumDatetime }}</td>
+          <td>{{ factura.isMoedaEntrangeira }}</td>
+          <td>{{ factura.moeda }}</td>
+          <td>{{ factura.cambio }}</td>
+          <td>{{ factura.totalMoedaEntrangeira }}</td>
+          <td>{{ factura.totalIliquido }}</td>
+          <td>{{ factura.totalDescontoComercial }}</td>
+          <td>{{ factura.totalLiquido }}</td>
+          <td>{{ factura.totalImpostoIVA }}</td>
+          <td>{{ factura.totalImpostoEspecialConsumo }}</td>
+          <td>{{ factura.totalDescontoFinanceiro }}</td>
+          <td>{{ factura.totalFactura }}</td>
+          <td>{{ factura.totalImpostoRetencaoFonte }}</td>
+          <td>{{ factura.totalPagar }}</td>
+          <td>{{ factura.debito }}</td>
+          <td>{{ factura.credito }}</td>
+          <td>{{ factura.totalPago }}</td>
+          <td>{{ factura.totalDiferenca }}</td>
+          <td>{{ factura.isAutoFacturacao }}</td>
+          <td>{{ factura.isRegimeCaixa }}</td>
+          <td>{{ factura.isEmitidaNomeEContaTerceiro }}</td>
+          <td>{{ factura.isNovo }}</td>
+          <td>{{ factura.isFiscalizado }}</td>
+          <td>{{ factura.signText }}</td>
+          <td>{{ factura.hash }}</td>
+          <td>{{ factura.hashShort }}</td>
+          <td>{{ factura.hashControl }}</td>
+          <td>{{ factura.keyVersion }}</td>
+          <td>
+            {{ factura.utilizador?.login }}
+          </td>
+          <td>
+            <div *ngIf="factura.motivoAnulacao">
+              <a [routerLink]="['/lookup-item', factura.motivoAnulacao.id, 'view']">{{ factura.motivoAnulacao.descricao }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="factura.matricula">
+              <a [routerLink]="['/matricula', factura.matricula.id, 'view']">{{ factura.matricula.numeroMatricula }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="factura.referencia">
+              <a [routerLink]="['/factura', factura.referencia.id, 'view']">{{ factura.referencia.numero }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="factura.documentoComercial">
+              <a [routerLink]="['/documento-comercial', factura.documentoComercial.id, 'view']">{{
+                factura.documentoComercial.siglaInterna
+              }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/factura']"
+                [queryParams]="{ 'filter[referenciaId.in]': factura.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.factura.factura' | translate) }"
+                  >Show Factura</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/item-factura']"
+                [queryParams]="{ 'filter[facturaId.in]': factura.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.factura.itemsFactura' | translate) }"
+                  >Show Item Factura</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/factura', factura.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/factura', factura.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(factura)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="facturas && facturas.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

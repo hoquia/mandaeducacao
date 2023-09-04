@@ -1,0 +1,73 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002245",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "licao",
+  "fields": [
+    {
+      "fieldName": "chaveComposta",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "numero",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min"],
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "estado",
+      "fieldType": "EstadoLicao",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "ADIADA,CANCELADA,DADA,PENDENTE,APROVADA"
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Licao",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "ocorrencia",
+      "otherEntityRelationshipName": "licao",
+      "relationshipName": "ocorrencias",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "anoLectivo",
+      "otherEntityRelationshipName": "licao",
+      "relationshipName": "anoLectivo",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "utilizador",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "assunto",
+      "otherEntityName": "planoAula",
+      "otherEntityRelationshipName": "licao",
+      "relationshipName": "planoAula",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "horario",
+      "otherEntityRelationshipName": "licao",
+      "relationshipName": "horario",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceImpl"
+}

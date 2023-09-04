@@ -1,0 +1,52 @@
+{
+  "longonkeloApp": {
+    "instituicaoEnsino": {
+      "home": {
+        "title": "Instituicao Ensinos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Instituicao Ensino",
+        "createOrEditLabel": "Criar ou editar Instituicao Ensino",
+        "notFound": "Nenhum Instituicao Ensinos encontrado"
+      },
+      "created": "Um novo Instituicao Ensino foi criado com o identificador {{ param }}",
+      "updated": "Instituicao Ensino com identificador {{ param }} foi actualizado",
+      "deleted": "Instituicao Ensino com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Instituicao Ensino {{ id }}?"
+      },
+      "detail": {
+        "title": "Instituicao Ensino"
+      },
+      "id": "ID",
+      "logotipo": "Logotipo",
+      "unidadeOrganica": "Unidade Organica",
+      "nomeFiscal": "Nome Fiscal",
+      "numero": "Numero",
+      "nif": "Nif",
+      "cae": "Cae",
+      "niss": "Niss",
+      "fundador": "Fundador",
+      "fundacao": "Fundacao",
+      "dimensao": "Dimensao",
+      "slogam": "Slogam",
+      "telefone": "Telefone",
+      "telemovel": "Telemovel",
+      "email": "Email",
+      "website": "Website",
+      "codigoPostal": "Codigo Postal",
+      "enderecoDetalhado": "Endereco Detalhado",
+      "latitude": "Latitude",
+      "longitude": "Longitude",
+      "descricao": "Descricao",
+      "isComparticipada": "Is Comparticipada",
+      "termosCompromissos": "Termos Compromissos",
+      "instituicaoEnsino": "Instituicao Ensino",
+      "provedorNotificacao": "Provedor Notificacao",
+      "categoriaInstituicao": "Categoria Instituicao",
+      "unidadePagadora": "Unidade Pagadora",
+      "tipoVinculo": "Tipo Vinculo",
+      "tipoInstalacao": "Tipo Instalacao",
+      "sede": "Sede"
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "longonkeloApp": {
+    "transacao": {
+      "home": {
+        "title": "Transacaos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Transacao",
+        "createOrEditLabel": "Criar ou editar Transacao",
+        "notFound": "Nenhum Transacaos encontrado"
+      },
+      "created": "Um novo Transacao foi criado com o identificador {{ param }}",
+      "updated": "Transacao com identificador {{ param }} foi actualizado",
+      "deleted": "Transacao com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Transacao {{ id }}?"
+      },
+      "detail": {
+        "title": "Transacao"
+      },
+      "id": "ID",
+      "montante": "Montante",
+      "data": "Data",
+      "referencia": "Referencia",
+      "estado": "Estado",
+      "saldo": "Saldo",
+      "anexo": "Anexo",
+      "timestamp": "Timestamp",
+      "recibos": "Recibos",
+      "utilizador": "Utilizador",
+      "moeda": "Moeda",
+      "matricula": "Matricula",
+      "meioPagamento": "Meio Pagamento",
+      "conta": "Conta",
+      "transferenciaSaldo": "Transferencia Saldo"
+    }
+  }
+}

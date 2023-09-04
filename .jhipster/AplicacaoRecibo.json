@@ -1,0 +1,60 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002317",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "aplicacao_recibo",
+  "fields": [
+    {
+      "fieldName": "totalFactura",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "totalPago",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "totalDiferenca",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "timestamp",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "AplicacaoRecibo",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "itemFactura",
+      "ownerSide": true,
+      "relationshipName": "itemFactura",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityField": "numero",
+      "otherEntityName": "factura",
+      "otherEntityRelationshipName": "aplicacoesFactura",
+      "relationshipName": "factura",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "numero",
+      "otherEntityName": "recibo",
+      "otherEntityRelationshipName": "aplicacoesRecibo",
+      "relationshipName": "recibo",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,164 @@
+<div>
+  <h2 id="page-heading" data-cy="SerieDocumentoHeading">
+    <span appTranslate="longonkeloApp.serieDocumento.home.title">Serie Documentos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.serieDocumento.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-serie-documento"
+        [routerLink]="['/serie-documento/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.serieDocumento.home.createLabel"> Criar novo(a) Serie Documento </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="serieDocumentos?.length === 0">
+    <span appTranslate="longonkeloApp.serieDocumento.home.notFound">Nenhum Serie Documentos encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="serieDocumentos && serieDocumentos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="anoFiscal">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.serieDocumento.anoFiscal">Ano Fiscal</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="versao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.serieDocumento.versao">Versao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="serie">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.serieDocumento.serie">Serie</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isAtivo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.serieDocumento.isAtivo">Is Ativo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isPadrao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.serieDocumento.isPadrao">Is Padrao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="tipoDocumento.siglaFiscal">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.serieDocumento.tipoDocumento">Tipo Documento</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let serieDocumento of serieDocumentos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/serie-documento', serieDocumento.id, 'view']">{{ serieDocumento.id }}</a>
+          </td>
+          <td>{{ serieDocumento.anoFiscal }}</td>
+          <td>{{ serieDocumento.versao }}</td>
+          <td>{{ serieDocumento.serie }}</td>
+          <td>{{ serieDocumento.isAtivo }}</td>
+          <td>{{ serieDocumento.isPadrao }}</td>
+          <td>
+            <div *ngIf="serieDocumento.tipoDocumento">
+              <a [routerLink]="['/documento-comercial', serieDocumento.tipoDocumento.id, 'view']">{{
+                serieDocumento.tipoDocumento.siglaFiscal
+              }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/sequencia-documento']"
+                [queryParams]="{ 'filter[serieId.in]': serieDocumento.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.serieDocumento.sequenciaDocumento' | translate) }"
+                  >Show Sequencia Documento</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/serie-documento', serieDocumento.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/serie-documento', serieDocumento.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(serieDocumento)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="serieDocumentos && serieDocumentos.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

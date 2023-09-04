@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity InstituicaoEnsino.
+    -->
+    <changeSet id="20230904002215-1" author="jhipster">
+        <createTable tableName="instituicao_ensino">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="logotipo" type="${blobType}">
+                <constraints nullable="false" />
+            </column>
+            <column name="logotipo_content_type" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="unidade_organica" type="varchar(100)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_instituicao_ensino__unidade_organica" />
+            </column>
+            <column name="nome_fiscal" type="varchar(100)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_instituicao_ensino__nome_fiscal" />
+            </column>
+            <column name="numero" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_instituicao_ensino__numero" />
+            </column>
+            <column name="nif" type="varchar(15)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_instituicao_ensino__nif" />
+            </column>
+            <column name="cae" type="varchar(255)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_instituicao_ensino__cae" />
+            </column>
+            <column name="niss" type="varchar(15)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_instituicao_ensino__niss" />
+            </column>
+            <column name="fundador" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="fundacao" type="date">
+                <constraints nullable="true" />
+            </column>
+            <column name="dimensao" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="slogam" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="telefone" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_instituicao_ensino__telefone" />
+            </column>
+            <column name="telemovel" type="varchar(255)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_instituicao_ensino__telemovel" />
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_instituicao_ensino__email" />
+            </column>
+            <column name="website" type="varchar(255)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_instituicao_ensino__website" />
+            </column>
+            <column name="codigo_postal" type="varchar(10)">
+                <constraints nullable="true" />
+            </column>
+            <column name="endereco_detalhado" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="latitude" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="longitude" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="descricao" type="${clobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_comparticipada" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="termos_compromissos" type="${clobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="categoria_instituicao_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="unidade_pagadora_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="tipo_vinculo_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="tipo_instalacao_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="sede_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

@@ -1,0 +1,349 @@
+<div>
+  <h2 id="page-heading" data-cy="MatriculaHeading">
+    <span appTranslate="longonkeloApp.matricula.home.title">Matriculas</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.matricula.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-matricula"
+        [routerLink]="['/matricula/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.matricula.home.createLabel"> Criar novo(a) Matricula </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="matriculas?.length === 0">
+    <span appTranslate="longonkeloApp.matricula.home.notFound">Nenhum Matriculas encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="matriculas && matriculas.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="chaveComposta1">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.chaveComposta1">Chave Composta 1</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="chaveComposta2">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.chaveComposta2">Chave Composta 2</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="numeroMatricula">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.numeroMatricula">Numero Matricula</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="numeroChamada">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.numeroChamada">Numero Chamada</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="estado">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.estado">Estado</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="timestamp">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.timestamp">Timestamp</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.descricao">Descricao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="termosCompromissos">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.termosCompromissos">Termos Compromissos</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isAceiteTermosCompromisso">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.isAceiteTermosCompromisso">Is Aceite Termos Compromisso</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="utilizador.login">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.utilizador">Utilizador</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="turma.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.turma">Turma</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="responsavelFinanceiro.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.responsavelFinanceiro">Responsavel Financeiro</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="discente.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.discente">Discente</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="referencia.id">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.matricula.referencia">Referencia</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let matricula of matriculas; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/matricula', matricula.id, 'view']">{{ matricula.id }}</a>
+          </td>
+          <td>{{ matricula.chaveComposta1 }}</td>
+          <td>{{ matricula.chaveComposta2 }}</td>
+          <td>{{ matricula.numeroMatricula }}</td>
+          <td>{{ matricula.numeroChamada }}</td>
+          <td appTranslate="{{ 'longonkeloApp.EstadoAcademico.' + matricula.estado }}">{{ matricula.estado }}</td>
+          <td>{{ matricula.timestamp | formatMediumDatetime }}</td>
+          <td>{{ matricula.descricao }}</td>
+          <td>
+            <a
+              *ngIf="matricula.termosCompromissos"
+              (click)="openFile(matricula.termosCompromissos, matricula.termosCompromissosContentType)"
+              appTranslate="entity.action.open"
+              >Abrir</a
+            >
+            <span *ngIf="matricula.termosCompromissos"
+              >{{ matricula.termosCompromissosContentType }}, {{ byteSize(matricula.termosCompromissos) }}</span
+            >
+          </td>
+          <td>{{ matricula.isAceiteTermosCompromisso }}</td>
+          <td>
+            {{ matricula.utilizador?.login }}
+          </td>
+          <td>
+            <div *ngIf="matricula.turma">
+              <a [routerLink]="['/turma', matricula.turma.id, 'view']">{{ matricula.turma.descricao }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="matricula.responsavelFinanceiro">
+              <a [routerLink]="['/encarregado-educacao', matricula.responsavelFinanceiro.id, 'view']">{{
+                matricula.responsavelFinanceiro.nome
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="matricula.discente">
+              <a [routerLink]="['/discente', matricula.discente.id, 'view']">{{ matricula.discente.nome }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="matricula.referencia">
+              <a [routerLink]="['/matricula', matricula.referencia.id, 'view']">{{ matricula.referencia.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/matricula']"
+                [queryParams]="{ 'filter[referenciaId.in]': matricula.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.matricula.matricula' | translate) }"
+                  >Show Matricula</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/factura']"
+                [queryParams]="{ 'filter[matriculaId.in]': matricula.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.matricula.facturas' | translate) }"
+                  >Show Factura</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/transacao']"
+                [queryParams]="{ 'filter[matriculaId.in]': matricula.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.matricula.transacoes' | translate) }"
+                  >Show Transacao</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/recibo']"
+                [queryParams]="{ 'filter[matriculaId.in]': matricula.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.matricula.recibos' | translate) }"
+                  >Show Recibo</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/notas-periodica-disciplina']"
+                [queryParams]="{ 'filter[matriculaId.in]': matricula.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.matricula.notasPeriodicaDisciplina' | translate) }"
+                  >Show Notas Periodica Disciplina</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/notas-geral-disciplina']"
+                [queryParams]="{ 'filter[matriculaId.in]': matricula.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.matricula.notasGeralDisciplina' | translate) }"
+                  >Show Notas Geral Disciplina</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/transferencia-turma']"
+                [queryParams]="{ 'filter[matriculaId.in]': matricula.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.matricula.transferenciaTurma' | translate) }"
+                  >Show Transferencia Turma</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/ocorrencia']"
+                [queryParams]="{ 'filter[matriculaId.in]': matricula.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.matricula.ocorrencia' | translate) }"
+                  >Show Ocorrencia</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/matricula', matricula.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/matricula', matricula.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(matricula)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="matriculas && matriculas.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Discente.
+    -->
+    <changeSet id="20230904002233-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="nacionalidade_id"
+                                 baseTableName="discente"
+                                 constraintName="fk_discente__nacionalidade_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="naturalidade_id"
+                                 baseTableName="discente"
+                                 constraintName="fk_discente__naturalidade_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="tipo_documento_id"
+                                 baseTableName="discente"
+                                 constraintName="fk_discente__tipo_documento_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="profissao_id"
+                                 baseTableName="discente"
+                                 constraintName="fk_discente__profissao_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="grupo_sanguinio_id"
+                                 baseTableName="discente"
+                                 constraintName="fk_discente__grupo_sanguinio_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="necessidade_especial_id"
+                                 baseTableName="discente"
+                                 constraintName="fk_discente__necessidade_especial_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="encarregado_educacao_id"
+                                 baseTableName="discente"
+                                 constraintName="fk_discente__encarregado_educacao_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="encarregado_educacao"/>
+    </changeSet>
+</databaseChangeLog>

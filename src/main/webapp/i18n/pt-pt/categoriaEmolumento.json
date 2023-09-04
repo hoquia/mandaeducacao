@@ -1,0 +1,32 @@
+{
+  "longonkeloApp": {
+    "categoriaEmolumento": {
+      "home": {
+        "title": "Categoria Emolumentos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Categoria Emolumento",
+        "createOrEditLabel": "Criar ou editar Categoria Emolumento",
+        "notFound": "Nenhum Categoria Emolumentos encontrado"
+      },
+      "created": "Um novo Categoria Emolumento foi criado com o identificador {{ param }}",
+      "updated": "Categoria Emolumento com identificador {{ param }} foi actualizado",
+      "deleted": "Categoria Emolumento com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Categoria Emolumento {{ id }}?"
+      },
+      "detail": {
+        "title": "Categoria Emolumento"
+      },
+      "id": "ID",
+      "nome": "Nome",
+      "isServico": "Is Servico",
+      "cor": "Cor",
+      "descricao": "Descricao",
+      "isIsentoMulta": "Is Isento Multa",
+      "isIsentoJuro": "Is Isento Juro",
+      "emolumento": "Emolumento",
+      "planoMulta": "Plano Multa",
+      "planosDesconto": "Planos Desconto"
+    }
+  }
+}

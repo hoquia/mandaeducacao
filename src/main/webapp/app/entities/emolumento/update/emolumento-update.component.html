@@ -1,0 +1,373 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-emolumento-heading"
+        data-cy="EmolumentoCreateUpdateHeading"
+        appTranslate="longonkeloApp.emolumento.home.createOrEditLabel"
+      >
+        Criar ou editar Emolumento
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.emolumento.imagem" for="field_imagem">Imagem</label>
+          <div>
+            <img
+              [src]="'data:' + editForm.get('imagemContentType')!.value + ';base64,' + editForm.get('imagem')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('imagem')!.value"
+              alt="emolumento image"
+            />
+            <div *ngIf="editForm.get('imagem')!.value" class="form-text text-danger clearfix">
+              <span class="pull-start">{{ editForm.get('imagemContentType')!.value }}, {{ byteSize(editForm.get('imagem')!.value!) }}</span>
+              <button
+                type="button"
+                (click)="clearInputImage('imagem', 'imagemContentType', 'file_imagem')"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_imagem"
+              data-cy="imagem"
+              (change)="setFileData($event, 'imagem', true)"
+              accept="image/*"
+              appTranslate="entity.action.addimage"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="imagem" id="field_imagem" data-cy="imagem" formControlName="imagem" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="imagemContentType"
+            id="field_imagemContentType"
+            formControlName="imagemContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.emolumento.numero" for="field_numero">Numero</label>
+          <input type="text" class="form-control" name="numero" id="field_numero" data-cy="numero" formControlName="numero" />
+          <div *ngIf="editForm.get('numero')!.invalid && (editForm.get('numero')!.dirty || editForm.get('numero')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('numero')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.emolumento.nome" for="field_nome">Nome</label>
+          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
+          <div *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('nome')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.emolumento.preco" for="field_preco">Preco</label>
+          <input type="number" class="form-control" name="preco" id="field_preco" data-cy="preco" formControlName="preco" />
+          <div *ngIf="editForm.get('preco')!.invalid && (editForm.get('preco')!.dirty || editForm.get('preco')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('preco')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('preco')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('preco')?.errors?.number" appTranslate="entity.validation.number">
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.emolumento.quantidade" for="field_quantidade">Quantidade</label>
+          <input
+            type="number"
+            class="form-control"
+            name="quantidade"
+            id="field_quantidade"
+            data-cy="quantidade"
+            formControlName="quantidade"
+          />
+          <div *ngIf="editForm.get('quantidade')!.invalid && (editForm.get('quantidade')!.dirty || editForm.get('quantidade')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('quantidade')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('quantidade')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('quantidade')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.emolumento.periodo" for="field_periodo">Periodo</label>
+          <input type="number" class="form-control" name="periodo" id="field_periodo" data-cy="periodo" formControlName="periodo" />
+          <div *ngIf="editForm.get('periodo')!.invalid && (editForm.get('periodo')!.dirty || editForm.get('periodo')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('periodo')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 1 }"
+            >
+              Este campo deve ser maior que 1.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('periodo')?.errors?.max"
+              appTranslate="entity.validation.max"
+              [translateValues]="{ max: 12 }"
+            >
+              Este campo não pode ser maior que 12.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('periodo')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.emolumento.inicioPeriodo" for="field_inicioPeriodo">Inicio Periodo</label>
+          <input
+            type="number"
+            class="form-control"
+            name="inicioPeriodo"
+            id="field_inicioPeriodo"
+            data-cy="inicioPeriodo"
+            formControlName="inicioPeriodo"
+          />
+          <div
+            *ngIf="
+              editForm.get('inicioPeriodo')!.invalid && (editForm.get('inicioPeriodo')!.dirty || editForm.get('inicioPeriodo')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('inicioPeriodo')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 1 }"
+            >
+              Este campo deve ser maior que 1.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('inicioPeriodo')?.errors?.max"
+              appTranslate="entity.validation.max"
+              [translateValues]="{ max: 12 }"
+            >
+              Este campo não pode ser maior que 12.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('inicioPeriodo')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.emolumento.fimPeriodo" for="field_fimPeriodo">Fim Periodo</label>
+          <input
+            type="number"
+            class="form-control"
+            name="fimPeriodo"
+            id="field_fimPeriodo"
+            data-cy="fimPeriodo"
+            formControlName="fimPeriodo"
+          />
+          <div *ngIf="editForm.get('fimPeriodo')!.invalid && (editForm.get('fimPeriodo')!.dirty || editForm.get('fimPeriodo')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('fimPeriodo')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 1 }"
+            >
+              Este campo deve ser maior que 1.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('fimPeriodo')?.errors?.max"
+              appTranslate="entity.validation.max"
+              [translateValues]="{ max: 12 }"
+            >
+              Este campo não pode ser maior que 12.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('fimPeriodo')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.emolumento.isObrigatorioMatricula" for="field_isObrigatorioMatricula"
+            >Is Obrigatorio Matricula</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isObrigatorioMatricula"
+            id="field_isObrigatorioMatricula"
+            data-cy="isObrigatorioMatricula"
+            formControlName="isObrigatorioMatricula"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.emolumento.isObrigatorioConfirmacao" for="field_isObrigatorioConfirmacao"
+            >Is Obrigatorio Confirmacao</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isObrigatorioConfirmacao"
+            id="field_isObrigatorioConfirmacao"
+            data-cy="isObrigatorioConfirmacao"
+            formControlName="isObrigatorioConfirmacao"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.emolumento.categoria" for="field_categoria">Categoria</label>
+          <select
+            class="form-control"
+            id="field_categoria"
+            data-cy="categoria"
+            name="categoria"
+            formControlName="categoria"
+            [compareWith]="compareCategoriaEmolumento"
+          >
+            <option *ngIf="editForm.get(['categoria'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="categoriaEmolumentoOption" *ngFor="let categoriaEmolumentoOption of categoriaEmolumentosSharedCollection">
+              {{ categoriaEmolumentoOption.nome }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['categoria'])!.invalid && (editForm.get(['categoria'])!.dirty || editForm.get(['categoria'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['categoria'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.emolumento.imposto" for="field_imposto">Imposto</label>
+          <select
+            class="form-control"
+            id="field_imposto"
+            data-cy="imposto"
+            name="imposto"
+            formControlName="imposto"
+            [compareWith]="compareImposto"
+          >
+            <option *ngIf="editForm.get(['imposto'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="impostoOption" *ngFor="let impostoOption of impostosSharedCollection">{{ impostoOption.descricao }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['imposto'])!.invalid && (editForm.get(['imposto'])!.dirty || editForm.get(['imposto'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['imposto'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.emolumento.referencia" for="field_referencia">Referencia</label>
+          <select
+            class="form-control"
+            id="field_referencia"
+            data-cy="referencia"
+            name="referencia"
+            formControlName="referencia"
+            [compareWith]="compareEmolumento"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="emolumentoOption" *ngFor="let emolumentoOption of emolumentosSharedCollection">
+              {{ emolumentoOption.nome }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.emolumento.planoMulta" for="field_planoMulta">Plano Multa</label>
+          <select
+            class="form-control"
+            id="field_planoMulta"
+            data-cy="planoMulta"
+            name="planoMulta"
+            formControlName="planoMulta"
+            [compareWith]="comparePlanoMulta"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="planoMultaOption" *ngFor="let planoMultaOption of planoMultasSharedCollection">
+              {{ planoMultaOption.descricao }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

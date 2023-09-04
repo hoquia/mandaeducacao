@@ -1,0 +1,58 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002315",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "vnd_resumo_imposto_venda",
+  "fields": [
+    {
+      "fieldName": "isRetencao",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "tipo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "taxa",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min", "max", "required"],
+      "fieldValidateRulesMax": "100",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "incidencia",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "montante",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "ResumoImpostoFactura",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "numero",
+      "otherEntityName": "factura",
+      "otherEntityRelationshipName": "resumosImposto",
+      "relationshipName": "factura",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity DisciplinaCurricular.
+    -->
+    <changeSet id="20230904002237-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="componente_id"
+                                 baseTableName="disciplina_curricular"
+                                 constraintName="fk_disciplina_curricular__componente_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="regime_id"
+                                 baseTableName="disciplina_curricular"
+                                 constraintName="fk_disciplina_curricular__regime_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="disciplina_curricular_id"
+                                 baseTableName="rel_disciplina_curricular__planos_curricular"
+                                 constraintName="fk_rel_disciplina_curricular__p__disciplina_curricular_56_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="disciplina_curricular"/>
+
+        <addForeignKeyConstraint baseColumnNames="planos_curricular_id"
+                                 baseTableName="rel_disciplina_curricular__planos_curricular"
+                                 constraintName="fk_rel_disciplina_curricular__p__planos_curricular_f4_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="plano_curricular"/>
+
+        <addForeignKeyConstraint baseColumnNames="disciplina_id"
+                                 baseTableName="disciplina_curricular"
+                                 constraintName="fk_disciplina_curricular__disciplina_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="disciplina"/>
+
+        <addForeignKeyConstraint baseColumnNames="referencia_id"
+                                 baseTableName="disciplina_curricular"
+                                 constraintName="fk_disciplina_curricular__referencia_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="disciplina_curricular"/>
+    </changeSet>
+</databaseChangeLog>

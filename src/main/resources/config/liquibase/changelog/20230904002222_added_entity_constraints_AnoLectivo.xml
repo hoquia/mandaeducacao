@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity AnoLectivo.
+    -->
+    <changeSet id="20230904002222-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="director_geral_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__director_geral_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="docente"/>
+
+        <addForeignKeyConstraint baseColumnNames="sub_director_pdagogico_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__sub_director_pdagogico_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="docente"/>
+
+        <addForeignKeyConstraint baseColumnNames="sub_director_administrativo_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__sub_director_administrativo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="docente"/>
+
+        <addForeignKeyConstraint baseColumnNames="responsavel_secretaria_geral_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__responsavel_secretaria_geral_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="docente"/>
+
+        <addForeignKeyConstraint baseColumnNames="responsavel_secretaria_pedagogico_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__responsavel_secretaria_pedagogico_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="docente"/>
+
+        <addForeignKeyConstraint baseColumnNames="utilizador_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__utilizador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="app_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="ano_lectivo_id"
+                                 baseTableName="rel_ano_lectivo__nives_ensino"
+                                 constraintName="fk_rel_ano_lectivo__nives_ensino__ano_lectivo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ano_lectivo"/>
+
+        <addForeignKeyConstraint baseColumnNames="nives_ensino_id"
+                                 baseTableName="rel_ano_lectivo__nives_ensino"
+                                 constraintName="fk_rel_ano_lectivo__nives_ensino__nives_ensino_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="nivel_ensino"/>
+
+        <addForeignKeyConstraint baseColumnNames="turma_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__turma_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="turma"/>
+
+        <addForeignKeyConstraint baseColumnNames="horario_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__horario_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="horario"/>
+
+        <addForeignKeyConstraint baseColumnNames="plano_aula_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__plano_aula_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="plano_aula"/>
+
+        <addForeignKeyConstraint baseColumnNames="licao_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__licao_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="licao"/>
+
+        <addForeignKeyConstraint baseColumnNames="processo_selectivo_matricula_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__processo_selectivo_matricula_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="processo_selectivo_matricula"/>
+
+        <addForeignKeyConstraint baseColumnNames="ocorrencia_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__ocorrencia_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="ocorrencia"/>
+
+        <addForeignKeyConstraint baseColumnNames="notas_periodica_disciplina_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__notas_periodica_disciplina_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="notas_periodica_disciplina"/>
+
+        <addForeignKeyConstraint baseColumnNames="notas_geral_disciplina_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__notas_geral_disciplina_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="notas_geral_disciplina"/>
+
+        <addForeignKeyConstraint baseColumnNames="dissertacao_final_curso_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__dissertacao_final_curso_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="dissertacao_final_curso"/>
+
+        <addForeignKeyConstraint baseColumnNames="factura_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__factura_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="factura"/>
+
+        <addForeignKeyConstraint baseColumnNames="recibo_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__recibo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="recibo"/>
+
+        <addForeignKeyConstraint baseColumnNames="responsavel_turno_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__responsavel_turno_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="responsavel_turno"/>
+
+        <addForeignKeyConstraint baseColumnNames="responsavel_area_formacao_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__responsavel_area_formacao_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="responsavel_area_formacao"/>
+
+        <addForeignKeyConstraint baseColumnNames="responsavel_curso_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__responsavel_curso_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="responsavel_curso"/>
+
+        <addForeignKeyConstraint baseColumnNames="responsavel_disciplina_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__responsavel_disciplina_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="responsavel_disciplina"/>
+
+        <addForeignKeyConstraint baseColumnNames="responsavel_turma_id"
+                                 baseTableName="ano_lectivo"
+                                 constraintName="fk_ano_lectivo__responsavel_turma_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="responsavel_turma"/>
+    </changeSet>
+</databaseChangeLog>

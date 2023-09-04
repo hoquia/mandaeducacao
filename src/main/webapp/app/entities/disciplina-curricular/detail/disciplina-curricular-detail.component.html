@@ -1,0 +1,97 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="disciplinaCurricular">
+      <h2 data-cy="disciplinaCurricularDetailsHeading">
+        <span appTranslate="longonkeloApp.disciplinaCurricular.detail.title">Disciplina Curricular</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ disciplinaCurricular.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.disciplinaCurricular.uniqueDisciplinaCurricular">Unique Disciplina Curricular</span></dt>
+        <dd>
+          <span>{{ disciplinaCurricular.uniqueDisciplinaCurricular }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.disciplinaCurricular.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ disciplinaCurricular.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.disciplinaCurricular.cargaSemanal">Carga Semanal</span></dt>
+        <dd>
+          <span>{{ disciplinaCurricular.cargaSemanal }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.disciplinaCurricular.isTerminal">Is Terminal</span></dt>
+        <dd>
+          <span>{{ disciplinaCurricular.isTerminal }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.disciplinaCurricular.mediaParaExame">Media Para Exame</span></dt>
+        <dd>
+          <span>{{ disciplinaCurricular.mediaParaExame }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.disciplinaCurricular.mediaParaRecurso">Media Para Recurso</span></dt>
+        <dd>
+          <span>{{ disciplinaCurricular.mediaParaRecurso }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.disciplinaCurricular.mediaParaExameEspecial">Media Para Exame Especial</span></dt>
+        <dd>
+          <span>{{ disciplinaCurricular.mediaParaExameEspecial }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.disciplinaCurricular.mediaParaDespensar">Media Para Despensar</span></dt>
+        <dd>
+          <span>{{ disciplinaCurricular.mediaParaDespensar }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.disciplinaCurricular.componente">Componente</span></dt>
+        <dd>
+          <div *ngIf="disciplinaCurricular.componente">
+            <a [routerLink]="['/lookup-item', disciplinaCurricular.componente.id, 'view']">{{
+              disciplinaCurricular.componente.descricao
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.disciplinaCurricular.regime">Regime</span></dt>
+        <dd>
+          <div *ngIf="disciplinaCurricular.regime">
+            <a [routerLink]="['/lookup-item', disciplinaCurricular.regime.id, 'view']">{{ disciplinaCurricular.regime.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.disciplinaCurricular.planosCurricular">Planos Curricular</span></dt>
+        <dd>
+          <span *ngFor="let planosCurricular of disciplinaCurricular.planosCurriculars; let last = last">
+            <a [routerLink]="['/plano-curricular', planosCurricular.id, 'view']">{{ planosCurricular.descricao }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.disciplinaCurricular.disciplina">Disciplina</span></dt>
+        <dd>
+          <div *ngIf="disciplinaCurricular.disciplina">
+            <a [routerLink]="['/disciplina', disciplinaCurricular.disciplina.id, 'view']">{{ disciplinaCurricular.disciplina.nome }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.disciplinaCurricular.referencia">Referencia</span></dt>
+        <dd>
+          <div *ngIf="disciplinaCurricular.referencia">
+            <a [routerLink]="['/disciplina-curricular', disciplinaCurricular.referencia.id, 'view']">{{
+              disciplinaCurricular.referencia.descricao
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/disciplina-curricular', disciplinaCurricular.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

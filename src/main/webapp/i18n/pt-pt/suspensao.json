@@ -1,0 +1,11 @@
+{
+  "longonkeloApp": {
+    "Suspensao": {
+      "null": "",
+      "NENHUMA": "NENHUMA",
+      "AULA": "AULA",
+      "ESCOLA": "ESCOLA",
+      "EXPULSO": "EXPULSO"
+    }
+  }
+}

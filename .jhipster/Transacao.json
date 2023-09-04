@@ -1,0 +1,103 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002312",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "transacao",
+  "fields": [
+    {
+      "fieldName": "montante",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "data",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "referencia",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "estado",
+      "fieldType": "EstadoPagamento",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "VALIDO,REJEITADO,PENDENTE,CANCELADO,USADO"
+    },
+    {
+      "fieldName": "saldo",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "anexo",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    },
+    {
+      "fieldName": "timestamp",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Transacao",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "recibo",
+      "otherEntityRelationshipName": "transacao",
+      "relationshipName": "recibos",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "utilizador",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "moeda",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "numeroMatricula",
+      "otherEntityName": "matricula",
+      "otherEntityRelationshipName": "transacoes",
+      "relationshipName": "matricula",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "meioPagamento",
+      "otherEntityRelationshipName": "transacao",
+      "relationshipName": "meioPagamento",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "titulo",
+      "otherEntityName": "conta",
+      "otherEntityRelationshipName": "transacoes",
+      "relationshipName": "conta",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "transferenciaSaldo",
+      "otherEntityRelationshipName": "transacoes",
+      "ownerSide": false,
+      "relationshipName": "transferenciaSaldo",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

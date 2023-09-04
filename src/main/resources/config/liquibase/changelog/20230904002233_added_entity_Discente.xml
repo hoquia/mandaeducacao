@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity Discente.
+    -->
+    <changeSet id="20230904002233-1" author="jhipster">
+        <createTable tableName="discente">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="fotografia" type="${blobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="fotografia_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="nome" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="nascimento" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="documento_numero" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_discente__documento_numero" />
+            </column>
+            <column name="documento_emissao" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="documento_validade" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="nif" type="varchar(255)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_discente__nif" />
+            </column>
+            <column name="sexo" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="pai" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="mae" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="telefone_principal" type="varchar(255)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_discente__telefone_principal" />
+            </column>
+            <column name="telefone_parente" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_discente__email" />
+            </column>
+            <column name="is_encarregado_educacao" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_trabalhador" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_filho_antigo_conbatente" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_atestado_pobreza" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="nome_medico" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="telefone_medico" type="varchar(9)">
+                <constraints nullable="true" />
+            </column>
+            <column name="instituicao_particular_saude" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="altura" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="peso" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_asmatico" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_alergico" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_pratica_educacao_fisica" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_autorizado_medicacao" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="cuidados_especiais_saude" type="${clobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="numero_processo" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_discente__numero_processo" />
+            </column>
+            <column name="data_ingresso" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="hash" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="observacao" type="${clobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="nacionalidade_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="naturalidade_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="tipo_documento_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="profissao_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="grupo_sanguinio_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="necessidade_especial_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="encarregado_educacao_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+        <dropDefaultValue tableName="discente" columnName="data_ingresso" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

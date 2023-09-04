@@ -1,0 +1,12 @@
+{
+  "longonkeloApp": {
+    "UnidadeDuracao": {
+      "null": "",
+      "HORA": "HORA",
+      "DIA": "DIA",
+      "MES": "MES",
+      "ANO": "ANO",
+      "AULA": "AULA"
+    }
+  }
+}

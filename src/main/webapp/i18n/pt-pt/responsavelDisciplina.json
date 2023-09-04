@@ -1,0 +1,31 @@
+{
+  "longonkeloApp": {
+    "responsavelDisciplina": {
+      "home": {
+        "title": "Responsavel Disciplinas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Responsavel Disciplina",
+        "createOrEditLabel": "Criar ou editar Responsavel Disciplina",
+        "notFound": "Nenhum Responsavel Disciplinas encontrado"
+      },
+      "created": "Um novo Responsavel Disciplina foi criado com o identificador {{ param }}",
+      "updated": "Responsavel Disciplina com identificador {{ param }} foi actualizado",
+      "deleted": "Responsavel Disciplina com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Responsavel Disciplina {{ id }}?"
+      },
+      "detail": {
+        "title": "Responsavel Disciplina"
+      },
+      "id": "ID",
+      "de": "De",
+      "ate": "Ate",
+      "descricao": "Descricao",
+      "timestamp": "Timestamp",
+      "responsavel": "Responsavel",
+      "anoLectivo": "Ano Lectivo",
+      "utilizador": "Utilizador",
+      "disciplina": "Disciplina"
+    }
+  }
+}

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity PrecoEmolumento.
+    -->
+    <changeSet id="20230904002309-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="utilizador_id"
+                                 baseTableName="preco_emolumento"
+                                 constraintName="fk_preco_emolumento__utilizador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="app_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="emolumento_id"
+                                 baseTableName="preco_emolumento"
+                                 constraintName="fk_preco_emolumento__emolumento_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="emolumento"/>
+
+        <addForeignKeyConstraint baseColumnNames="area_formacao_id"
+                                 baseTableName="preco_emolumento"
+                                 constraintName="fk_preco_emolumento__area_formacao_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="area_formacao"/>
+
+        <addForeignKeyConstraint baseColumnNames="curso_id"
+                                 baseTableName="preco_emolumento"
+                                 constraintName="fk_preco_emolumento__curso_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="curso"/>
+
+        <addForeignKeyConstraint baseColumnNames="classe_id"
+                                 baseTableName="preco_emolumento"
+                                 constraintName="fk_preco_emolumento__classe_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="classe"/>
+
+        <addForeignKeyConstraint baseColumnNames="turno_id"
+                                 baseTableName="preco_emolumento"
+                                 constraintName="fk_preco_emolumento__turno_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="turno"/>
+
+        <addForeignKeyConstraint baseColumnNames="plano_multa_id"
+                                 baseTableName="preco_emolumento"
+                                 constraintName="fk_preco_emolumento__plano_multa_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="plano_multa"/>
+    </changeSet>
+</databaseChangeLog>

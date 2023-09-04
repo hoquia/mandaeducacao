@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity EncarregadoEducacao.
+    -->
+    <changeSet id="20230904002232-1" author="jhipster">
+        <createTable tableName="encarregado_educacao">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="fotografia" type="${blobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="fotografia_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="nome" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="nascimento" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="nif" type="varchar(255)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_encarregado_educacao__nif" />
+            </column>
+            <column name="sexo" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="documento_numero" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_encarregado_educacao__documento_numero" />
+            </column>
+            <column name="telefone_principal" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_encarregado_educacao__telefone_principal" />
+            </column>
+            <column name="telefone_alternativo" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_encarregado_educacao__email" />
+            </column>
+            <column name="residencia" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="endereco_trabalho" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="renda_mensal" type="decimal(21,2)">
+                <constraints nullable="true" />
+            </column>
+            <column name="empresa_trabalho" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="hash" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="grau_parentesco_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="tipo_documento_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="profissao_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

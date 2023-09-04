@@ -1,0 +1,9 @@
+{
+  "longonkeloApp": {
+    "TipoEndereco": {
+      "null": "",
+      "RESIDECIAL": "RESIDECIAL",
+      "FACTURACAO": "FACTURACAO"
+    }
+  }
+}

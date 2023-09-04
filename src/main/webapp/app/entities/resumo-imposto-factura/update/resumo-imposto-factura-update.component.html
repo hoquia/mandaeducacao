@@ -1,0 +1,192 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-resumo-imposto-factura-heading"
+        data-cy="ResumoImpostoFacturaCreateUpdateHeading"
+        appTranslate="longonkeloApp.resumoImpostoFactura.home.createOrEditLabel"
+      >
+        Criar ou editar Resumo Imposto Factura
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoImpostoFactura.isRetencao" for="field_isRetencao">Is Retencao</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isRetencao"
+            id="field_isRetencao"
+            data-cy="isRetencao"
+            formControlName="isRetencao"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoImpostoFactura.descricao" for="field_descricao">Descricao</label>
+          <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
+          <div *ngIf="editForm.get('descricao')!.invalid && (editForm.get('descricao')!.dirty || editForm.get('descricao')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('descricao')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoImpostoFactura.tipo" for="field_tipo">Tipo</label>
+          <input type="text" class="form-control" name="tipo" id="field_tipo" data-cy="tipo" formControlName="tipo" />
+          <div *ngIf="editForm.get('tipo')!.invalid && (editForm.get('tipo')!.dirty || editForm.get('tipo')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('tipo')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoImpostoFactura.taxa" for="field_taxa">Taxa</label>
+          <input type="number" class="form-control" name="taxa" id="field_taxa" data-cy="taxa" formControlName="taxa" />
+          <div *ngIf="editForm.get('taxa')!.invalid && (editForm.get('taxa')!.dirty || editForm.get('taxa')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('taxa')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('taxa')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('taxa')?.errors?.max"
+              appTranslate="entity.validation.max"
+              [translateValues]="{ max: 100 }"
+            >
+              Este campo não pode ser maior que 100.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('taxa')?.errors?.number" appTranslate="entity.validation.number">
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoImpostoFactura.incidencia" for="field_incidencia">Incidencia</label>
+          <input
+            type="number"
+            class="form-control"
+            name="incidencia"
+            id="field_incidencia"
+            data-cy="incidencia"
+            formControlName="incidencia"
+          />
+          <div *ngIf="editForm.get('incidencia')!.invalid && (editForm.get('incidencia')!.dirty || editForm.get('incidencia')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('incidencia')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('incidencia')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('incidencia')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoImpostoFactura.montante" for="field_montante">Montante</label>
+          <input type="number" class="form-control" name="montante" id="field_montante" data-cy="montante" formControlName="montante" />
+          <div *ngIf="editForm.get('montante')!.invalid && (editForm.get('montante')!.dirty || editForm.get('montante')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('montante')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('montante')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('montante')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.resumoImpostoFactura.factura" for="field_factura">Factura</label>
+          <select
+            class="form-control"
+            id="field_factura"
+            data-cy="factura"
+            name="factura"
+            formControlName="factura"
+            [compareWith]="compareFactura"
+          >
+            <option *ngIf="editForm.get(['factura'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="facturaOption" *ngFor="let facturaOption of facturasSharedCollection">{{ facturaOption.numero }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['factura'])!.invalid && (editForm.get(['factura'])!.dirty || editForm.get(['factura'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['factura'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,342 @@
+<div>
+  <h2 id="page-heading" data-cy="InstituicaoEnsinoHeading">
+    <span appTranslate="longonkeloApp.instituicaoEnsino.home.title">Instituicao Ensinos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.instituicaoEnsino.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-instituicao-ensino"
+        [routerLink]="['/instituicao-ensino/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.instituicaoEnsino.home.createLabel"> Criar novo(a) Instituicao Ensino </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="instituicaoEnsinos?.length === 0">
+    <span appTranslate="longonkeloApp.instituicaoEnsino.home.notFound">Nenhum Instituicao Ensinos encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="instituicaoEnsinos && instituicaoEnsinos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="logotipo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.logotipo">Logotipo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="unidadeOrganica">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.unidadeOrganica">Unidade Organica</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="nomeFiscal">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.nomeFiscal">Nome Fiscal</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="numero">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.numero">Numero</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="nif">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.nif">Nif</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="cae">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.cae">Cae</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="niss">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.niss">Niss</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="fundador">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.fundador">Fundador</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="fundacao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.fundacao">Fundacao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="dimensao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.dimensao">Dimensao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="slogam">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.slogam">Slogam</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="telefone">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.telefone">Telefone</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="telemovel">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.telemovel">Telemovel</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="email">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.email">Email</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="website">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.website">Website</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="codigoPostal">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.codigoPostal">Codigo Postal</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="enderecoDetalhado">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.enderecoDetalhado">Endereco Detalhado</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="latitude">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.latitude">Latitude</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="longitude">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.longitude">Longitude</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.descricao">Descricao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isComparticipada">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.isComparticipada">Is Comparticipada</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="termosCompromissos">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.termosCompromissos">Termos Compromissos</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="categoriaInstituicao.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.categoriaInstituicao">Categoria Instituicao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="unidadePagadora.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.unidadePagadora">Unidade Pagadora</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="tipoVinculo.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.tipoVinculo">Tipo Vinculo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="tipoInstalacao.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.tipoInstalacao">Tipo Instalacao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="sede.unidadeOrganica">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.instituicaoEnsino.sede">Sede</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let instituicaoEnsino of instituicaoEnsinos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/instituicao-ensino', instituicaoEnsino.id, 'view']">{{ instituicaoEnsino.id }}</a>
+          </td>
+          <td>
+            <a *ngIf="instituicaoEnsino.logotipo" (click)="openFile(instituicaoEnsino.logotipo, instituicaoEnsino.logotipoContentType)">
+              <img
+                [src]="'data:' + instituicaoEnsino.logotipoContentType + ';base64,' + instituicaoEnsino.logotipo"
+                style="max-height: 30px"
+                alt="instituicaoEnsino image"
+              />
+            </a>
+            <span *ngIf="instituicaoEnsino.logotipo"
+              >{{ instituicaoEnsino.logotipoContentType }}, {{ byteSize(instituicaoEnsino.logotipo) }}</span
+            >
+          </td>
+          <td>{{ instituicaoEnsino.unidadeOrganica }}</td>
+          <td>{{ instituicaoEnsino.nomeFiscal }}</td>
+          <td>{{ instituicaoEnsino.numero }}</td>
+          <td>{{ instituicaoEnsino.nif }}</td>
+          <td>{{ instituicaoEnsino.cae }}</td>
+          <td>{{ instituicaoEnsino.niss }}</td>
+          <td>{{ instituicaoEnsino.fundador }}</td>
+          <td>{{ instituicaoEnsino.fundacao | formatMediumDate }}</td>
+          <td>{{ instituicaoEnsino.dimensao }}</td>
+          <td>{{ instituicaoEnsino.slogam }}</td>
+          <td>{{ instituicaoEnsino.telefone }}</td>
+          <td>{{ instituicaoEnsino.telemovel }}</td>
+          <td>{{ instituicaoEnsino.email }}</td>
+          <td>{{ instituicaoEnsino.website }}</td>
+          <td>{{ instituicaoEnsino.codigoPostal }}</td>
+          <td>{{ instituicaoEnsino.enderecoDetalhado }}</td>
+          <td>{{ instituicaoEnsino.latitude }}</td>
+          <td>{{ instituicaoEnsino.longitude }}</td>
+          <td>{{ instituicaoEnsino.descricao }}</td>
+          <td>{{ instituicaoEnsino.isComparticipada }}</td>
+          <td>{{ instituicaoEnsino.termosCompromissos }}</td>
+          <td>
+            <div *ngIf="instituicaoEnsino.categoriaInstituicao">
+              <a [routerLink]="['/lookup-item', instituicaoEnsino.categoriaInstituicao.id, 'view']">{{
+                instituicaoEnsino.categoriaInstituicao.descricao
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="instituicaoEnsino.unidadePagadora">
+              <a [routerLink]="['/lookup-item', instituicaoEnsino.unidadePagadora.id, 'view']">{{
+                instituicaoEnsino.unidadePagadora.descricao
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="instituicaoEnsino.tipoVinculo">
+              <a [routerLink]="['/lookup-item', instituicaoEnsino.tipoVinculo.id, 'view']">{{ instituicaoEnsino.tipoVinculo.descricao }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="instituicaoEnsino.tipoInstalacao">
+              <a [routerLink]="['/lookup-item', instituicaoEnsino.tipoInstalacao.id, 'view']">{{
+                instituicaoEnsino.tipoInstalacao.descricao
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="instituicaoEnsino.sede">
+              <a [routerLink]="['/instituicao-ensino', instituicaoEnsino.sede.id, 'view']">{{ instituicaoEnsino.sede.unidadeOrganica }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/instituicao-ensino']"
+                [queryParams]="{ 'filter[sedeId.in]': instituicaoEnsino.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.instituicaoEnsino.instituicaoEnsino' | translate) }"
+                  >Show Instituicao Ensino</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/instituicao-ensino', instituicaoEnsino.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/instituicao-ensino', instituicaoEnsino.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(instituicaoEnsino)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="instituicaoEnsinos && instituicaoEnsinos.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

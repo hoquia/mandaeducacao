@@ -1,0 +1,132 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002243",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "plano_aula",
+  "fields": [
+    {
+      "fieldName": "tipoAula",
+      "fieldType": "TipoAula",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "PRATICA,TEORICA,APRESENTACAO,OUTRO"
+    },
+    {
+      "fieldName": "semanaLectiva",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "perfilEntrada",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "perfilSaida",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "assunto",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "objectivoGeral",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "objectivosEspecificos",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "tempoTotalLicao",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "estado",
+      "fieldType": "EstadoLicao",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "ADIADA,CANCELADA,DADA,PENDENTE,APROVADA"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "PlanoAula",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "detalhePlanoAula",
+      "otherEntityRelationshipName": "planoAula",
+      "relationshipName": "detalhes",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "licao",
+      "otherEntityRelationshipName": "planoAula",
+      "relationshipName": "licao",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "anoLectivo",
+      "otherEntityRelationshipName": "planoAula",
+      "relationshipName": "anoLectivo",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "utilizador",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "unidadeTematica",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "subUnidadeTematica",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "turma",
+      "otherEntityRelationshipName": "planoAula",
+      "relationshipName": "turma",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "docente",
+      "otherEntityRelationshipName": "planoAula",
+      "relationshipName": "docente",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "disciplinaCurricular",
+      "otherEntityRelationshipName": "planoAula",
+      "relationshipName": "disciplinaCurricular",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceImpl"
+}

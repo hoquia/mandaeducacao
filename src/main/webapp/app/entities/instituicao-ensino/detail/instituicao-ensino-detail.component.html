@@ -1,0 +1,163 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="instituicaoEnsino">
+      <h2 data-cy="instituicaoEnsinoDetailsHeading">
+        <span appTranslate="longonkeloApp.instituicaoEnsino.detail.title">Instituicao Ensino</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.logotipo">Logotipo</span></dt>
+        <dd>
+          <div *ngIf="instituicaoEnsino.logotipo">
+            <a (click)="openFile(instituicaoEnsino.logotipo, instituicaoEnsino.logotipoContentType)">
+              <img
+                [src]="'data:' + instituicaoEnsino.logotipoContentType + ';base64,' + instituicaoEnsino.logotipo"
+                style="max-width: 100%"
+                alt="instituicaoEnsino image"
+              />
+            </a>
+            {{ instituicaoEnsino.logotipoContentType }}, {{ byteSize(instituicaoEnsino.logotipo) }}
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.unidadeOrganica">Unidade Organica</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.unidadeOrganica }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.nomeFiscal">Nome Fiscal</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.nomeFiscal }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.numero">Numero</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.numero }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.nif">Nif</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.nif }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.cae">Cae</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.cae }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.niss">Niss</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.niss }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.fundador">Fundador</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.fundador }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.fundacao">Fundacao</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.fundacao | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.dimensao">Dimensao</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.dimensao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.slogam">Slogam</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.slogam }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.telefone">Telefone</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.telefone }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.telemovel">Telemovel</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.telemovel }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.email">Email</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.email }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.website">Website</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.website }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.codigoPostal">Codigo Postal</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.codigoPostal }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.enderecoDetalhado">Endereco Detalhado</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.enderecoDetalhado }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.latitude">Latitude</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.latitude }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.longitude">Longitude</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.longitude }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.isComparticipada">Is Comparticipada</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.isComparticipada }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.termosCompromissos">Termos Compromissos</span></dt>
+        <dd>
+          <span>{{ instituicaoEnsino.termosCompromissos }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.categoriaInstituicao">Categoria Instituicao</span></dt>
+        <dd>
+          <div *ngIf="instituicaoEnsino.categoriaInstituicao">
+            <a [routerLink]="['/lookup-item', instituicaoEnsino.categoriaInstituicao.id, 'view']">{{
+              instituicaoEnsino.categoriaInstituicao.descricao
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.unidadePagadora">Unidade Pagadora</span></dt>
+        <dd>
+          <div *ngIf="instituicaoEnsino.unidadePagadora">
+            <a [routerLink]="['/lookup-item', instituicaoEnsino.unidadePagadora.id, 'view']">{{
+              instituicaoEnsino.unidadePagadora.descricao
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.tipoVinculo">Tipo Vinculo</span></dt>
+        <dd>
+          <div *ngIf="instituicaoEnsino.tipoVinculo">
+            <a [routerLink]="['/lookup-item', instituicaoEnsino.tipoVinculo.id, 'view']">{{ instituicaoEnsino.tipoVinculo.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.tipoInstalacao">Tipo Instalacao</span></dt>
+        <dd>
+          <div *ngIf="instituicaoEnsino.tipoInstalacao">
+            <a [routerLink]="['/lookup-item', instituicaoEnsino.tipoInstalacao.id, 'view']">{{
+              instituicaoEnsino.tipoInstalacao.descricao
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.instituicaoEnsino.sede">Sede</span></dt>
+        <dd>
+          <div *ngIf="instituicaoEnsino.sede">
+            <a [routerLink]="['/instituicao-ensino', instituicaoEnsino.sede.id, 'view']">{{ instituicaoEnsino.sede.unidadeOrganica }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/instituicao-ensino', instituicaoEnsino.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

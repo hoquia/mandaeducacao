@@ -1,0 +1,32 @@
+{
+  "longonkeloApp": {
+    "transferenciaSaldo": {
+      "home": {
+        "title": "Transferencia Saldos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Transferencia Saldo",
+        "createOrEditLabel": "Criar ou editar Transferencia Saldo",
+        "notFound": "Nenhum Transferencia Saldos encontrado"
+      },
+      "created": "Um novo Transferencia Saldo foi criado com o identificador {{ param }}",
+      "updated": "Transferencia Saldo com identificador {{ param }} foi actualizado",
+      "deleted": "Transferencia Saldo com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Transferencia Saldo {{ id }}?"
+      },
+      "detail": {
+        "title": "Transferencia Saldo"
+      },
+      "id": "ID",
+      "montante": "Montante",
+      "isMesmaConta": "Is Mesma Conta",
+      "descricao": "Descricao",
+      "timestamp": "Timestamp",
+      "de": "De",
+      "para": "Para",
+      "utilizador": "Utilizador",
+      "motivoTransferencia": "Motivo Transferencia",
+      "transacoes": "Transacoes"
+    }
+  }
+}

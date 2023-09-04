@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity PlanoDesconto.
+    -->
+    <changeSet id="20230904002310-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="plano_desconto_id"
+                                 baseTableName="rel_plano_desconto__categorias_emolumento"
+                                 constraintName="fk_rel_plano_desconto__categori__plano_desconto_df_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="plano_desconto"/>
+
+        <addForeignKeyConstraint baseColumnNames="categorias_emolumento_id"
+                                 baseTableName="rel_plano_desconto__categorias_emolumento"
+                                 constraintName="fk_rel_plano_desconto__categori__categorias_emolumento_5d_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="categoria_emolumento"/>
+    </changeSet>
+</databaseChangeLog>

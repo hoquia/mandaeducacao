@@ -1,0 +1,69 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002231",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "formacao_docente",
+  "fields": [
+    {
+      "fieldName": "instituicaoEnsino",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "areaFormacao",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "curso",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "especialidade",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "grau",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "inicio",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fim",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "anexo",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "FormacaoDocente",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "grauAcademico",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "docente",
+      "otherEntityRelationshipName": "formacoes",
+      "relationshipName": "docente",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceImpl"
+}

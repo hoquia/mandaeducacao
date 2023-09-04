@@ -1,0 +1,93 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="detalhePlanoAula">
+      <h2 data-cy="detalhePlanoAulaDetailsHeading">
+        <span appTranslate="longonkeloApp.detalhePlanoAula.detail.title">Detalhe Plano Aula</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ detalhePlanoAula.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.detalhePlanoAula.estrategiaAula">Estrategia Aula</span></dt>
+        <dd>
+          <span>{{ detalhePlanoAula.estrategiaAula }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.detalhePlanoAula.tempoActividade">Tempo Actividade</span></dt>
+        <dd>
+          <span>{{ detalhePlanoAula.tempoActividade }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.detalhePlanoAula.recursosEnsino">Recursos Ensino</span></dt>
+        <dd>
+          <span>{{ detalhePlanoAula.recursosEnsino }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.detalhePlanoAula.tituloActividade">Titulo Actividade</span></dt>
+        <dd>
+          <span>{{ detalhePlanoAula.tituloActividade }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.detalhePlanoAula.actividadesDocente">Actividades Docente</span></dt>
+        <dd>
+          <span>{{ detalhePlanoAula.actividadesDocente }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.detalhePlanoAula.actividadesDiscentes">Actividades Discentes</span></dt>
+        <dd>
+          <span>{{ detalhePlanoAula.actividadesDiscentes }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.detalhePlanoAula.avaliacao">Avaliacao</span></dt>
+        <dd>
+          <span>{{ detalhePlanoAula.avaliacao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.detalhePlanoAula.bibliografia">Bibliografia</span></dt>
+        <dd>
+          <span>{{ detalhePlanoAula.bibliografia }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.detalhePlanoAula.observacao">Observacao</span></dt>
+        <dd>
+          <span>{{ detalhePlanoAula.observacao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.detalhePlanoAula.pdf">Pdf</span></dt>
+        <dd>
+          <div *ngIf="detalhePlanoAula.pdf">
+            <a (click)="openFile(detalhePlanoAula.pdf, detalhePlanoAula.pdfContentType)" appTranslate="entity.action.open">Abrir</a>
+            {{ detalhePlanoAula.pdfContentType }}, {{ byteSize(detalhePlanoAula.pdf) }}
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.detalhePlanoAula.video">Video</span></dt>
+        <dd>
+          <div *ngIf="detalhePlanoAula.video">
+            <a (click)="openFile(detalhePlanoAula.video, detalhePlanoAula.videoContentType)" appTranslate="entity.action.open">Abrir</a>
+            {{ detalhePlanoAula.videoContentType }}, {{ byteSize(detalhePlanoAula.video) }}
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.detalhePlanoAula.audio">Audio</span></dt>
+        <dd>
+          <div *ngIf="detalhePlanoAula.audio">
+            <a (click)="openFile(detalhePlanoAula.audio, detalhePlanoAula.audioContentType)" appTranslate="entity.action.open">Abrir</a>
+            {{ detalhePlanoAula.audioContentType }}, {{ byteSize(detalhePlanoAula.audio) }}
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.detalhePlanoAula.planoAula">Plano Aula</span></dt>
+        <dd>
+          <div *ngIf="detalhePlanoAula.planoAula">
+            <a [routerLink]="['/plano-aula', detalhePlanoAula.planoAula.id, 'view']">{{ detalhePlanoAula.planoAula.assunto }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/detalhe-plano-aula', detalhePlanoAula.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

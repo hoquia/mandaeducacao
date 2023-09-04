@@ -1,0 +1,213 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="app-horario-heading" data-cy="HorarioCreateUpdateHeading" appTranslate="longonkeloApp.horario.home.createOrEditLabel">
+        Criar ou editar Horario
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.horario.chaveComposta1" for="field_chaveComposta1">Chave Composta 1</label>
+          <input
+            type="text"
+            class="form-control"
+            name="chaveComposta1"
+            id="field_chaveComposta1"
+            data-cy="chaveComposta1"
+            formControlName="chaveComposta1"
+          />
+          <div
+            *ngIf="
+              editForm.get('chaveComposta1')!.invalid && (editForm.get('chaveComposta1')!.dirty || editForm.get('chaveComposta1')!.touched)
+            "
+          ></div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.horario.chaveComposta2" for="field_chaveComposta2">Chave Composta 2</label>
+          <input
+            type="text"
+            class="form-control"
+            name="chaveComposta2"
+            id="field_chaveComposta2"
+            data-cy="chaveComposta2"
+            formControlName="chaveComposta2"
+          />
+          <div
+            *ngIf="
+              editForm.get('chaveComposta2')!.invalid && (editForm.get('chaveComposta2')!.dirty || editForm.get('chaveComposta2')!.touched)
+            "
+          ></div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.horario.diaSemana" for="field_diaSemana">Dia Semana</label>
+          <select class="form-control" name="diaSemana" formControlName="diaSemana" id="field_diaSemana" data-cy="diaSemana">
+            <option [ngValue]="null">{{ 'longonkeloApp.DiaSemana.null' | translate }}</option>
+            <option *ngFor="let diaSemana of diaSemanaValues" [value]="diaSemana">
+              {{ 'longonkeloApp.DiaSemana.' + diaSemana | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('diaSemana')!.invalid && (editForm.get('diaSemana')!.dirty || editForm.get('diaSemana')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('diaSemana')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.horario.utilizador" for="field_utilizador">Utilizador</label>
+          <select
+            class="form-control"
+            id="field_utilizador"
+            data-cy="utilizador"
+            name="utilizador"
+            formControlName="utilizador"
+            [compareWith]="compareUser"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.horario.turma" for="field_turma">Turma</label>
+          <select class="form-control" id="field_turma" data-cy="turma" name="turma" formControlName="turma" [compareWith]="compareTurma">
+            <option *ngIf="editForm.get(['turma'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="turmaOption" *ngFor="let turmaOption of turmasSharedCollection">{{ turmaOption.descricao }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['turma'])!.invalid && (editForm.get(['turma'])!.dirty || editForm.get(['turma'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['turma'])?.errors?.required" appTranslate="entity.validation.required">
+            O campo é obrigatório.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.horario.referencia" for="field_referencia">Referencia</label>
+          <select
+            class="form-control"
+            id="field_referencia"
+            data-cy="referencia"
+            name="referencia"
+            formControlName="referencia"
+            [compareWith]="compareHorario"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="horarioOption" *ngFor="let horarioOption of horariosSharedCollection">{{ horarioOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.horario.periodo" for="field_periodo">Periodo</label>
+          <select
+            class="form-control"
+            id="field_periodo"
+            data-cy="periodo"
+            name="periodo"
+            formControlName="periodo"
+            [compareWith]="comparePeriodoHorario"
+          >
+            <option *ngIf="editForm.get(['periodo'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="periodoHorarioOption" *ngFor="let periodoHorarioOption of periodoHorariosSharedCollection">
+              {{ periodoHorarioOption.descricao }}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['periodo'])!.invalid && (editForm.get(['periodo'])!.dirty || editForm.get(['periodo'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['periodo'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.horario.docente" for="field_docente">Docente</label>
+          <select
+            class="form-control"
+            id="field_docente"
+            data-cy="docente"
+            name="docente"
+            formControlName="docente"
+            [compareWith]="compareDocente"
+          >
+            <option *ngIf="editForm.get(['docente'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="docenteOption" *ngFor="let docenteOption of docentesSharedCollection">{{ docenteOption.nome }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['docente'])!.invalid && (editForm.get(['docente'])!.dirty || editForm.get(['docente'])!.touched)">
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['docente'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.horario.disciplinaCurricular" for="field_disciplinaCurricular"
+            >Disciplina Curricular</label
+          >
+          <select
+            class="form-control"
+            id="field_disciplinaCurricular"
+            data-cy="disciplinaCurricular"
+            name="disciplinaCurricular"
+            formControlName="disciplinaCurricular"
+            [compareWith]="compareDisciplinaCurricular"
+          >
+            <option *ngIf="editForm.get(['disciplinaCurricular'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="disciplinaCurricularOption" *ngFor="let disciplinaCurricularOption of disciplinaCurricularsSharedCollection">
+              {{ disciplinaCurricularOption.descricao }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="
+            editForm.get(['disciplinaCurricular'])!.invalid &&
+            (editForm.get(['disciplinaCurricular'])!.dirty || editForm.get(['disciplinaCurricular'])!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['disciplinaCurricular'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

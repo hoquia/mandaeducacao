@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity DetalhePlanoAula.
+    -->
+    <changeSet id="20230904002244-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="plano_aula_id"
+                                 baseTableName="detalhe_plano_aula"
+                                 constraintName="fk_detalhe_plano_aula__plano_aula_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="plano_aula"/>
+    </changeSet>
+</databaseChangeLog>

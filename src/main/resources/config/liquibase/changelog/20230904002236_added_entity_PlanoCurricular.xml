@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity PlanoCurricular.
+    -->
+    <changeSet id="20230904002236-1" author="jhipster">
+        <createTable tableName="plano_curricular">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="descricao" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="formula_classificacao_final" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="numero_disciplina_aprova" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="numero_disciplina_reprova" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="numero_disciplina_recurso" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="numero_disciplina_exame" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="numero_disciplina_exame_especial" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="numero_falta_reprova" type="integer">
+                <constraints nullable="false" />
+            </column>
+            <column name="peso_media_1" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="peso_media_2" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="peso_media_3" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="peso_recurso" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="peso_exame" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="peso_exame_especial" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="peso_nota_coselho" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="sigla_prova_1" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="sigla_prova_2" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="sigla_prova_3" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="sigla_media_1" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="sigla_media_2" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="sigla_media_3" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="formula_media" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="formula_dispensa" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="formula_exame" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="formula_recurso" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="formula_exame_especial" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="utilizador_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="classe_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="curso_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

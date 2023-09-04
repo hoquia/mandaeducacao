@@ -1,0 +1,139 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="resumoAcademico">
+      <h2 data-cy="resumoAcademicoDetailsHeading">
+        <span appTranslate="longonkeloApp.resumoAcademico.detail.title">Resumo Academico</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ resumoAcademico.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.temaProjecto">Tema Projecto</span></dt>
+        <dd>
+          <span>{{ resumoAcademico.temaProjecto }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.notaProjecto">Nota Projecto</span></dt>
+        <dd>
+          <span>{{ resumoAcademico.notaProjecto }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.observacao">Observacao</span></dt>
+        <dd>
+          <span>{{ resumoAcademico.observacao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.localEstagio">Local Estagio</span></dt>
+        <dd>
+          <span>{{ resumoAcademico.localEstagio }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.notaEstagio">Nota Estagio</span></dt>
+        <dd>
+          <span>{{ resumoAcademico.notaEstagio }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.mediaFinalDisciplina">Media Final Disciplina</span></dt>
+        <dd>
+          <span>{{ resumoAcademico.mediaFinalDisciplina }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.classificacaoFinal">Classificacao Final</span></dt>
+        <dd>
+          <span>{{ resumoAcademico.classificacaoFinal }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.numeroGrupo">Numero Grupo</span></dt>
+        <dd>
+          <span>{{ resumoAcademico.numeroGrupo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.mesaDefesa">Mesa Defesa</span></dt>
+        <dd>
+          <span>{{ resumoAcademico.mesaDefesa }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.livroRegistro">Livro Registro</span></dt>
+        <dd>
+          <span>{{ resumoAcademico.livroRegistro }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.numeroFolha">Numero Folha</span></dt>
+        <dd>
+          <span>{{ resumoAcademico.numeroFolha }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.chefeSecretariaPedagogica">Chefe Secretaria Pedagogica</span></dt>
+        <dd>
+          <span>{{ resumoAcademico.chefeSecretariaPedagogica }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.subDirectorPedagogico">Sub Director Pedagogico</span></dt>
+        <dd>
+          <span>{{ resumoAcademico.subDirectorPedagogico }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.directorGeral">Director Geral</span></dt>
+        <dd>
+          <span>{{ resumoAcademico.directorGeral }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.tutorProjecto">Tutor Projecto</span></dt>
+        <dd>
+          <span>{{ resumoAcademico.tutorProjecto }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.juriMesa">Juri Mesa</span></dt>
+        <dd>
+          <span>{{ resumoAcademico.juriMesa }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.empresaEstagio">Empresa Estagio</span></dt>
+        <dd>
+          <span>{{ resumoAcademico.empresaEstagio }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.assinaturaDigital">Assinatura Digital</span></dt>
+        <dd>
+          <div *ngIf="resumoAcademico.assinaturaDigital">
+            <a
+              (click)="openFile(resumoAcademico.assinaturaDigital, resumoAcademico.assinaturaDigitalContentType)"
+              appTranslate="entity.action.open"
+              >Abrir</a
+            >
+            {{ resumoAcademico.assinaturaDigitalContentType }}, {{ byteSize(resumoAcademico.assinaturaDigital) }}
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.hash">Hash</span></dt>
+        <dd>
+          <span>{{ resumoAcademico.hash }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ resumoAcademico.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.ultimaTurmaMatriculada">Ultima Turma Matriculada</span></dt>
+        <dd>
+          <div *ngIf="resumoAcademico.ultimaTurmaMatriculada">
+            <a [routerLink]="['/turma', resumoAcademico.ultimaTurmaMatriculada.id, 'view']">{{
+              resumoAcademico.ultimaTurmaMatriculada.descricao
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.discente">Discente</span></dt>
+        <dd>
+          <div *ngIf="resumoAcademico.discente">
+            <a [routerLink]="['/discente', resumoAcademico.discente.id, 'view']">{{ resumoAcademico.discente.nome }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.resumoAcademico.situacao">Situacao</span></dt>
+        <dd>
+          <div *ngIf="resumoAcademico.situacao">
+            <a [routerLink]="['/estado-disciplina-curricular', resumoAcademico.situacao.id, 'view']">{{
+              resumoAcademico.situacao.descricao
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/resumo-academico', resumoAcademico.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

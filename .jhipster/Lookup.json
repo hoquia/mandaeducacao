@@ -1,0 +1,47 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002217",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "lookup",
+  "fields": [
+    {
+      "fieldName": "codigo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "isSistema",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isModificavel",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Lookup",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "otherEntityRelationshipName": "lookup",
+      "relationshipName": "lookupItems",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

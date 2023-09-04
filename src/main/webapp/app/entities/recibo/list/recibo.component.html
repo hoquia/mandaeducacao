@@ -1,0 +1,338 @@
+<div>
+  <h2 id="page-heading" data-cy="ReciboHeading">
+    <span appTranslate="longonkeloApp.recibo.home.title">Recibos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.recibo.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-recibo"
+        [routerLink]="['/recibo/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.recibo.home.createLabel"> Criar novo(a) Recibo </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="recibos?.length === 0">
+    <span appTranslate="longonkeloApp.recibo.home.notFound">Nenhum Recibos encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="recibos && recibos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="data">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.data">Data</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="vencimento">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.vencimento">Vencimento</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="numero">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.numero">Numero</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalSemImposto">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.totalSemImposto">Total Sem Imposto</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalComImposto">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.totalComImposto">Total Com Imposto</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalDescontoComercial">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.totalDescontoComercial">Total Desconto Comercial</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalDescontoFinanceiro">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.totalDescontoFinanceiro">Total Desconto Financeiro</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalIVA">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.totalIVA">Total IVA</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalRetencao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.totalRetencao">Total Retencao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalJuro">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.totalJuro">Total Juro</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="cambio">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.cambio">Cambio</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalMoedaEstrangeira">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.totalMoedaEstrangeira">Total Moeda Estrangeira</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalPagar">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.totalPagar">Total Pagar</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalPago">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.totalPago">Total Pago</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalFalta">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.totalFalta">Total Falta</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalTroco">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.totalTroco">Total Troco</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isNovo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.isNovo">Is Novo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="timestamp">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.timestamp">Timestamp</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.descricao">Descricao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="debito">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.debito">Debito</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="credito">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.credito">Credito</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isFiscalizado">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.isFiscalizado">Is Fiscalizado</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="signText">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.signText">Sign Text</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="hash">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.hash">Hash</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="hashShort">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.hashShort">Hash Short</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="hashControl">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.hashControl">Hash Control</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="keyVersion">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.keyVersion">Key Version</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="estado">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.estado">Estado</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="origem">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.origem">Origem</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="utilizador.login">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.utilizador">Utilizador</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="matricula.numeroMatricula">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.matricula">Matricula</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="documentoComercial.siglaInterna">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.documentoComercial">Documento Comercial</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="transacao.referencia">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.recibo.transacao">Transacao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let recibo of recibos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/recibo', recibo.id, 'view']">{{ recibo.id }}</a>
+          </td>
+          <td>{{ recibo.data | formatMediumDate }}</td>
+          <td>{{ recibo.vencimento | formatMediumDate }}</td>
+          <td>{{ recibo.numero }}</td>
+          <td>{{ recibo.totalSemImposto }}</td>
+          <td>{{ recibo.totalComImposto }}</td>
+          <td>{{ recibo.totalDescontoComercial }}</td>
+          <td>{{ recibo.totalDescontoFinanceiro }}</td>
+          <td>{{ recibo.totalIVA }}</td>
+          <td>{{ recibo.totalRetencao }}</td>
+          <td>{{ recibo.totalJuro }}</td>
+          <td>{{ recibo.cambio }}</td>
+          <td>{{ recibo.totalMoedaEstrangeira }}</td>
+          <td>{{ recibo.totalPagar }}</td>
+          <td>{{ recibo.totalPago }}</td>
+          <td>{{ recibo.totalFalta }}</td>
+          <td>{{ recibo.totalTroco }}</td>
+          <td>{{ recibo.isNovo }}</td>
+          <td>{{ recibo.timestamp | formatMediumDatetime }}</td>
+          <td>{{ recibo.descricao }}</td>
+          <td>{{ recibo.debito }}</td>
+          <td>{{ recibo.credito }}</td>
+          <td>{{ recibo.isFiscalizado }}</td>
+          <td>{{ recibo.signText }}</td>
+          <td>{{ recibo.hash }}</td>
+          <td>{{ recibo.hashShort }}</td>
+          <td>{{ recibo.hashControl }}</td>
+          <td>{{ recibo.keyVersion }}</td>
+          <td appTranslate="{{ 'longonkeloApp.EstadoDocumentoComercial.' + recibo.estado }}">{{ recibo.estado }}</td>
+          <td>{{ recibo.origem }}</td>
+          <td>
+            {{ recibo.utilizador?.login }}
+          </td>
+          <td>
+            <div *ngIf="recibo.matricula">
+              <a [routerLink]="['/matricula', recibo.matricula.id, 'view']">{{ recibo.matricula.numeroMatricula }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="recibo.documentoComercial">
+              <a [routerLink]="['/documento-comercial', recibo.documentoComercial.id, 'view']">{{
+                recibo.documentoComercial.siglaInterna
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="recibo.transacao">
+              <a [routerLink]="['/transacao', recibo.transacao.id, 'view']">{{ recibo.transacao.referencia }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/recibo', recibo.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/recibo', recibo.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(recibo)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="recibos && recibos.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,207 @@
+<div>
+  <h2 id="page-heading" data-cy="AreaFormacaoHeading">
+    <span appTranslate="longonkeloApp.areaFormacao.home.title">Area Formacaos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.areaFormacao.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-area-formacao"
+        [routerLink]="['/area-formacao/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.areaFormacao.home.createLabel"> Criar novo(a) Area Formacao </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="areaFormacaos?.length === 0">
+    <span appTranslate="longonkeloApp.areaFormacao.home.notFound">Nenhum Area Formacaos encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="areaFormacaos && areaFormacaos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="imagem">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.areaFormacao.imagem">Imagem</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="codigo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.areaFormacao.codigo">Codigo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.areaFormacao.nome">Nome</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.areaFormacao.descricao">Descricao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="nivelEnsino.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.areaFormacao.nivelEnsino">Nivel Ensino</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let areaFormacao of areaFormacaos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/area-formacao', areaFormacao.id, 'view']">{{ areaFormacao.id }}</a>
+          </td>
+          <td>
+            <a *ngIf="areaFormacao.imagem" (click)="openFile(areaFormacao.imagem, areaFormacao.imagemContentType)">
+              <img
+                [src]="'data:' + areaFormacao.imagemContentType + ';base64,' + areaFormacao.imagem"
+                style="max-height: 30px"
+                alt="areaFormacao image"
+              />
+            </a>
+            <span *ngIf="areaFormacao.imagem">{{ areaFormacao.imagemContentType }}, {{ byteSize(areaFormacao.imagem) }}</span>
+          </td>
+          <td>{{ areaFormacao.codigo }}</td>
+          <td>{{ areaFormacao.nome }}</td>
+          <td>{{ areaFormacao.descricao }}</td>
+          <td>
+            <div *ngIf="areaFormacao.nivelEnsino">
+              <a [routerLink]="['/nivel-ensino', areaFormacao.nivelEnsino.id, 'view']">{{ areaFormacao.nivelEnsino.nome }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/curso']"
+                [queryParams]="{ 'filter[areaFormacaoId.in]': areaFormacao.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.areaFormacao.cursos' | translate) }"
+                  >Show Curso</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/dissertacao-final-curso']"
+                [queryParams]="{ 'filter[especialidadeId.in]': areaFormacao.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.areaFormacao.dissertacaoFinalCurso' | translate) }"
+                  >Show Dissertacao Final Curso</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/responsavel-area-formacao']"
+                [queryParams]="{ 'filter[areaFormacaoId.in]': areaFormacao.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.areaFormacao.responsaveis' | translate) }"
+                  >Show Responsavel Area Formacao</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/preco-emolumento']"
+                [queryParams]="{ 'filter[areaFormacaoId.in]': areaFormacao.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.areaFormacao.precoEmolumento' | translate) }"
+                  >Show Preco Emolumento</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/area-formacao', areaFormacao.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/area-formacao', areaFormacao.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(areaFormacao)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="areaFormacaos && areaFormacaos.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

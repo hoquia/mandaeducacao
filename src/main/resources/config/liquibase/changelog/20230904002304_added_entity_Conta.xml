@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity Conta.
+    -->
+    <changeSet id="20230904002304-1" author="jhipster">
+        <createTable tableName="conta">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="imagem" type="${blobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="imagem_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="tipo" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="titulo" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_conta__titulo" />
+            </column>
+            <column name="numero" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_conta__numero" />
+            </column>
+            <column name="iban" type="varchar(255)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_conta__iban" />
+            </column>
+            <column name="titular" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="is_padrao" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="moeda_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

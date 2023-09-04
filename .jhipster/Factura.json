@@ -1,0 +1,288 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002313",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "factura",
+  "fields": [
+    {
+      "fieldName": "numero",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength", "unique"],
+      "fieldValidateRulesMaxlength": "60"
+    },
+    {
+      "fieldName": "codigoEntrega",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dataEmissao",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dataVencimento",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "cae",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "10"
+    },
+    {
+      "fieldName": "inicioTransporte",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fimTransporte",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "observacaoGeral",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "observacaoInterna",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "estado",
+      "fieldType": "EstadoDocumentoComercial",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "P,N,A"
+    },
+    {
+      "fieldName": "origem",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "timestamp",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isMoedaEntrangeira",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "moeda",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength"],
+      "fieldValidateRulesMaxlength": "12"
+    },
+    {
+      "fieldName": "cambio",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "totalMoedaEntrangeira",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "totalIliquido",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "totalDescontoComercial",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "totalLiquido",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "totalImpostoIVA",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "totalImpostoEspecialConsumo",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "totalDescontoFinanceiro",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "totalFactura",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "totalImpostoRetencaoFonte",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "totalPagar",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "debito",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "credito",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "totalPago",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "totalDiferenca",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "isAutoFacturacao",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isRegimeCaixa",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isEmitidaNomeEContaTerceiro",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isNovo",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isFiscalizado",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "signText",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "hash",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "172"
+    },
+    {
+      "fieldName": "hashShort",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "hashControl",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "70"
+    },
+    {
+      "fieldName": "keyVersion",
+      "fieldType": "Integer"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Factura",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "factura",
+      "otherEntityRelationshipName": "referencia",
+      "relationshipName": "factura",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "itemFactura",
+      "otherEntityRelationshipName": "factura",
+      "relationshipName": "itemsFactura",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "aplicacaoRecibo",
+      "otherEntityRelationshipName": "factura",
+      "relationshipName": "aplicacoesFactura",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "resumoImpostoFactura",
+      "otherEntityRelationshipName": "factura",
+      "relationshipName": "resumosImposto",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "anoLectivo",
+      "otherEntityRelationshipName": "factura",
+      "relationshipName": "anoLectivo",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "utilizador",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "motivoAnulacao",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "numeroMatricula",
+      "otherEntityName": "matricula",
+      "otherEntityRelationshipName": "facturas",
+      "relationshipName": "matricula",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "numero",
+      "otherEntityName": "factura",
+      "otherEntityRelationshipName": "factura",
+      "relationshipName": "referencia",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "siglaInterna",
+      "otherEntityName": "documentoComercial",
+      "otherEntityRelationshipName": "factura",
+      "relationshipName": "documentoComercial",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceImpl"
+}

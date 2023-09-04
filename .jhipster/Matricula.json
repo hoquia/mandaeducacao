@@ -1,0 +1,153 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002248",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "matricula",
+  "fields": [
+    {
+      "fieldName": "chaveComposta1",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "chaveComposta2",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "numeroMatricula",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "numeroChamada",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "estado",
+      "fieldType": "EstadoAcademico",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "INSCRITO,MATRICULADO,CONFIRMADO,TRANSFERIDO,VIGENTE,BLOQUEADO,SUSPENSPO,EXPULSO,DESISTENTE,APROVADO,REPROVADO,PENDENTE,RECURSO,EXAME,EXAME_ESPECIAL,FINALISTA"
+    },
+    {
+      "fieldName": "timestamp",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "termosCompromissos",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    },
+    {
+      "fieldName": "isAceiteTermosCompromisso",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Matricula",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "matricula",
+      "otherEntityRelationshipName": "referencia",
+      "relationshipName": "matricula",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "factura",
+      "otherEntityRelationshipName": "matricula",
+      "relationshipName": "facturas",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "transacao",
+      "otherEntityRelationshipName": "matricula",
+      "relationshipName": "transacoes",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "recibo",
+      "otherEntityRelationshipName": "matricula",
+      "relationshipName": "recibos",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "notasPeriodicaDisciplina",
+      "otherEntityRelationshipName": "matricula",
+      "relationshipName": "notasPeriodicaDisciplina",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "notasGeralDisciplina",
+      "otherEntityRelationshipName": "matricula",
+      "relationshipName": "notasGeralDisciplina",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "transferenciaTurma",
+      "otherEntityRelationshipName": "matricula",
+      "relationshipName": "transferenciaTurma",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "ocorrencia",
+      "otherEntityRelationshipName": "matricula",
+      "relationshipName": "ocorrencia",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "utilizador",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "planoDesconto",
+      "otherEntityRelationshipName": "matriculas",
+      "ownerSide": true,
+      "relationshipName": "categoriasMatriculas",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "turma",
+      "otherEntityRelationshipName": "matriculas",
+      "relationshipName": "turma",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "encarregadoEducacao",
+      "otherEntityRelationshipName": "matricula",
+      "relationshipName": "responsavelFinanceiro",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "discente",
+      "otherEntityRelationshipName": "matriculas",
+      "relationshipName": "discente",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "matricula",
+      "otherEntityRelationshipName": "matricula",
+      "relationshipName": "referencia",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,220 @@
+<div>
+  <h2 id="page-heading" data-cy="EstadoDisciplinaCurricularHeading">
+    <span appTranslate="longonkeloApp.estadoDisciplinaCurricular.home.title">Estado Disciplina Curriculars</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.estadoDisciplinaCurricular.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-estado-disciplina-curricular"
+        [routerLink]="['/estado-disciplina-curricular/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.estadoDisciplinaCurricular.home.createLabel"> Criar novo(a) Estado Disciplina Curricular </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="estadoDisciplinaCurriculars?.length === 0">
+    <span appTranslate="longonkeloApp.estadoDisciplinaCurricular.home.notFound">Nenhum Estado Disciplina Curriculars encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="estadoDisciplinaCurriculars && estadoDisciplinaCurriculars.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="uniqueSituacaoDisciplina">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.estadoDisciplinaCurricular.uniqueSituacaoDisciplina">Unique Situacao Disciplina</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="classificacao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.estadoDisciplinaCurricular.classificacao">Classificacao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="codigo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.estadoDisciplinaCurricular.codigo">Codigo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.estadoDisciplinaCurricular.descricao">Descricao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="cor">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.estadoDisciplinaCurricular.cor">Cor</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="valor">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.estadoDisciplinaCurricular.valor">Valor</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="referencia.id">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.estadoDisciplinaCurricular.referencia">Referencia</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let estadoDisciplinaCurricular of estadoDisciplinaCurriculars; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/estado-disciplina-curricular', estadoDisciplinaCurricular.id, 'view']">{{
+              estadoDisciplinaCurricular.id
+            }}</a>
+          </td>
+          <td>{{ estadoDisciplinaCurricular.uniqueSituacaoDisciplina }}</td>
+          <td appTranslate="{{ 'longonkeloApp.CategoriaClassificacao.' + estadoDisciplinaCurricular.classificacao }}">
+            {{ estadoDisciplinaCurricular.classificacao }}
+          </td>
+          <td>{{ estadoDisciplinaCurricular.codigo }}</td>
+          <td>{{ estadoDisciplinaCurricular.descricao }}</td>
+          <td>{{ estadoDisciplinaCurricular.cor }}</td>
+          <td>{{ estadoDisciplinaCurricular.valor }}</td>
+          <td>
+            <div *ngIf="estadoDisciplinaCurricular.referencia">
+              <a [routerLink]="['/estado-disciplina-curricular', estadoDisciplinaCurricular.referencia.id, 'view']">{{
+                estadoDisciplinaCurricular.referencia.id
+              }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/estado-disciplina-curricular']"
+                [queryParams]="{ 'filter[referenciaId.in]': estadoDisciplinaCurricular.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.estadoDisciplinaCurricular.estadoDisciplinaCurricular' | translate) }"
+                  >Show Estado Disciplina Curricular</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/notas-periodica-disciplina']"
+                [queryParams]="{ 'filter[estadoId.in]': estadoDisciplinaCurricular.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.estadoDisciplinaCurricular.notasPeriodicaDisciplina' | translate) }"
+                  >Show Notas Periodica Disciplina</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/notas-geral-disciplina']"
+                [queryParams]="{ 'filter[estadoId.in]': estadoDisciplinaCurricular.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.estadoDisciplinaCurricular.notasGeralDisciplina' | translate) }"
+                  >Show Notas Geral Disciplina</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/resumo-academico']"
+                [queryParams]="{ 'filter[situacaoId.in]': estadoDisciplinaCurricular.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.estadoDisciplinaCurricular.resumoAcademico' | translate) }"
+                  >Show Resumo Academico</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/estado-disciplina-curricular', estadoDisciplinaCurricular.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/estado-disciplina-curricular', estadoDisciplinaCurricular.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(estadoDisciplinaCurricular)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="estadoDisciplinaCurriculars && estadoDisciplinaCurriculars.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

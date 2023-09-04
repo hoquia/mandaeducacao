@@ -1,0 +1,295 @@
+<div>
+  <h2 id="page-heading" data-cy="DisciplinaCurricularHeading">
+    <span appTranslate="longonkeloApp.disciplinaCurricular.home.title">Disciplina Curriculars</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.disciplinaCurricular.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-disciplina-curricular"
+        [routerLink]="['/disciplina-curricular/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.disciplinaCurricular.home.createLabel"> Criar novo(a) Disciplina Curricular </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="disciplinaCurriculars?.length === 0">
+    <span appTranslate="longonkeloApp.disciplinaCurricular.home.notFound">Nenhum Disciplina Curriculars encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="disciplinaCurriculars && disciplinaCurriculars.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="uniqueDisciplinaCurricular">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.disciplinaCurricular.uniqueDisciplinaCurricular">Unique Disciplina Curricular</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.disciplinaCurricular.descricao">Descricao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="cargaSemanal">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.disciplinaCurricular.cargaSemanal">Carga Semanal</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isTerminal">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.disciplinaCurricular.isTerminal">Is Terminal</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="mediaParaExame">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.disciplinaCurricular.mediaParaExame">Media Para Exame</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="mediaParaRecurso">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.disciplinaCurricular.mediaParaRecurso">Media Para Recurso</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="mediaParaExameEspecial">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.disciplinaCurricular.mediaParaExameEspecial">Media Para Exame Especial</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="mediaParaDespensar">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.disciplinaCurricular.mediaParaDespensar">Media Para Despensar</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="componente.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.disciplinaCurricular.componente">Componente</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="regime.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.disciplinaCurricular.regime">Regime</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="disciplina.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.disciplinaCurricular.disciplina">Disciplina</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="referencia.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.disciplinaCurricular.referencia">Referencia</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let disciplinaCurricular of disciplinaCurriculars; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/disciplina-curricular', disciplinaCurricular.id, 'view']">{{ disciplinaCurricular.id }}</a>
+          </td>
+          <td>{{ disciplinaCurricular.uniqueDisciplinaCurricular }}</td>
+          <td>{{ disciplinaCurricular.descricao }}</td>
+          <td>{{ disciplinaCurricular.cargaSemanal }}</td>
+          <td>{{ disciplinaCurricular.isTerminal }}</td>
+          <td>{{ disciplinaCurricular.mediaParaExame }}</td>
+          <td>{{ disciplinaCurricular.mediaParaRecurso }}</td>
+          <td>{{ disciplinaCurricular.mediaParaExameEspecial }}</td>
+          <td>{{ disciplinaCurricular.mediaParaDespensar }}</td>
+          <td>
+            <div *ngIf="disciplinaCurricular.componente">
+              <a [routerLink]="['/lookup-item', disciplinaCurricular.componente.id, 'view']">{{
+                disciplinaCurricular.componente.descricao
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="disciplinaCurricular.regime">
+              <a [routerLink]="['/lookup-item', disciplinaCurricular.regime.id, 'view']">{{ disciplinaCurricular.regime.descricao }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="disciplinaCurricular.disciplina">
+              <a [routerLink]="['/disciplina', disciplinaCurricular.disciplina.id, 'view']">{{ disciplinaCurricular.disciplina.nome }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="disciplinaCurricular.referencia">
+              <a [routerLink]="['/disciplina-curricular', disciplinaCurricular.referencia.id, 'view']">{{
+                disciplinaCurricular.referencia.descricao
+              }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/disciplina-curricular']"
+                [queryParams]="{ 'filter[referenciaId.in]': disciplinaCurricular.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.disciplinaCurricular.disciplinaCurricular' | translate) }"
+                  >Show Disciplina Curricular</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/horario']"
+                [queryParams]="{ 'filter[disciplinaCurricularId.in]': disciplinaCurricular.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.disciplinaCurricular.horario' | translate) }"
+                  >Show Horario</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/plano-aula']"
+                [queryParams]="{ 'filter[disciplinaCurricularId.in]': disciplinaCurricular.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.disciplinaCurricular.planoAula' | translate) }"
+                  >Show Plano Aula</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/notas-geral-disciplina']"
+                [queryParams]="{ 'filter[disciplinaCurricularId.in]': disciplinaCurricular.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.disciplinaCurricular.notasGeralDisciplina' | translate) }"
+                  >Show Notas Geral Disciplina</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/notas-periodica-disciplina']"
+                [queryParams]="{ 'filter[disciplinaCurricularId.in]': disciplinaCurricular.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.disciplinaCurricular.notasPeriodicaDisciplina' | translate) }"
+                  >Show Notas Periodica Disciplina</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/estado-disciplina-curricular']"
+                [queryParams]="{ 'filter[disciplinasCurricularsId.in]': disciplinaCurricular.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.disciplinaCurricular.estados' | translate) }"
+                  >Show Estado Disciplina Curricular</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/disciplina-curricular', disciplinaCurricular.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/disciplina-curricular', disciplinaCurricular.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(disciplinaCurricular)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="disciplinaCurriculars && disciplinaCurriculars.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

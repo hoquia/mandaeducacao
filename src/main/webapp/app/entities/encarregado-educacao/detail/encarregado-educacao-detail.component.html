@@ -1,0 +1,117 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="encarregadoEducacao">
+      <h2 data-cy="encarregadoEducacaoDetailsHeading">
+        <span appTranslate="longonkeloApp.encarregadoEducacao.detail.title">Encarregado Educacao</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ encarregadoEducacao.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.fotografia">Fotografia</span></dt>
+        <dd>
+          <div *ngIf="encarregadoEducacao.fotografia">
+            <a (click)="openFile(encarregadoEducacao.fotografia, encarregadoEducacao.fotografiaContentType)">
+              <img
+                [src]="'data:' + encarregadoEducacao.fotografiaContentType + ';base64,' + encarregadoEducacao.fotografia"
+                style="max-width: 100%"
+                alt="encarregadoEducacao image"
+              />
+            </a>
+            {{ encarregadoEducacao.fotografiaContentType }}, {{ byteSize(encarregadoEducacao.fotografia) }}
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.nome">Nome</span></dt>
+        <dd>
+          <span>{{ encarregadoEducacao.nome }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.nascimento">Nascimento</span></dt>
+        <dd>
+          <span>{{ encarregadoEducacao.nascimento | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.nif">Nif</span></dt>
+        <dd>
+          <span>{{ encarregadoEducacao.nif }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.sexo">Sexo</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.Sexo.' + encarregadoEducacao.sexo }}">{{ encarregadoEducacao.sexo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.documentoNumero">Documento Numero</span></dt>
+        <dd>
+          <span>{{ encarregadoEducacao.documentoNumero }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.telefonePrincipal">Telefone Principal</span></dt>
+        <dd>
+          <span>{{ encarregadoEducacao.telefonePrincipal }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.telefoneAlternativo">Telefone Alternativo</span></dt>
+        <dd>
+          <span>{{ encarregadoEducacao.telefoneAlternativo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.email">Email</span></dt>
+        <dd>
+          <span>{{ encarregadoEducacao.email }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.residencia">Residencia</span></dt>
+        <dd>
+          <span>{{ encarregadoEducacao.residencia }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.enderecoTrabalho">Endereco Trabalho</span></dt>
+        <dd>
+          <span>{{ encarregadoEducacao.enderecoTrabalho }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.rendaMensal">Renda Mensal</span></dt>
+        <dd>
+          <span>{{ encarregadoEducacao.rendaMensal }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.empresaTrabalho">Empresa Trabalho</span></dt>
+        <dd>
+          <span>{{ encarregadoEducacao.empresaTrabalho }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.hash">Hash</span></dt>
+        <dd>
+          <span>{{ encarregadoEducacao.hash }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.grauParentesco">Grau Parentesco</span></dt>
+        <dd>
+          <div *ngIf="encarregadoEducacao.grauParentesco">
+            <a [routerLink]="['/lookup-item', encarregadoEducacao.grauParentesco.id, 'view']">{{
+              encarregadoEducacao.grauParentesco.descricao
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.tipoDocumento">Tipo Documento</span></dt>
+        <dd>
+          <div *ngIf="encarregadoEducacao.tipoDocumento">
+            <a [routerLink]="['/lookup-item', encarregadoEducacao.tipoDocumento.id, 'view']">{{
+              encarregadoEducacao.tipoDocumento.descricao
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.encarregadoEducacao.profissao">Profissao</span></dt>
+        <dd>
+          <div *ngIf="encarregadoEducacao.profissao">
+            <a [routerLink]="['/lookup-item', encarregadoEducacao.profissao.id, 'view']">{{ encarregadoEducacao.profissao.descricao }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/encarregado-educacao', encarregadoEducacao.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

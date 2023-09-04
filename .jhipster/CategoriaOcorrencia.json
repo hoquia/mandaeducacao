@@ -1,0 +1,85 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002251",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "categoria_ocorrencia",
+  "fields": [
+    {
+      "fieldName": "codigo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "sansaoDisicplinar",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "isNotificaEncaregado",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isSendEmail",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isSendSms",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isSendPush",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "observacao",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "CategoriaOcorrencia",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "categoriaOcorrencia",
+      "otherEntityRelationshipName": "referencia",
+      "relationshipName": "categoriaOcorrencia",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "ocorrencia",
+      "otherEntityRelationshipName": "estado",
+      "relationshipName": "ocorrencia",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "docente",
+      "otherEntityRelationshipName": "categoriaOcorrencia",
+      "relationshipName": "encaminhar",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "categoriaOcorrencia",
+      "otherEntityRelationshipName": "categoriaOcorrencia",
+      "relationshipName": "referencia",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "medidaDisciplinar",
+      "otherEntityRelationshipName": "categoriaOcorrencia",
+      "relationshipName": "medidaDisciplinar",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceImpl"
+}

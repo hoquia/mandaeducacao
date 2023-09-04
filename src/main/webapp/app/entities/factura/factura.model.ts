@@ -1,0 +1,56 @@
+import dayjs from 'dayjs/esm';
+import { IUser } from 'app/entities/user/user.model';
+import { ILookupItem } from 'app/entities/lookup-item/lookup-item.model';
+import { IMatricula } from 'app/entities/matricula/matricula.model';
+import { IDocumentoComercial } from 'app/entities/documento-comercial/documento-comercial.model';
+import { EstadoDocumentoComercial } from 'app/entities/enumerations/estado-documento-comercial.model';
+
+export interface IFactura {
+  id: number;
+  numero?: string | null;
+  codigoEntrega?: string | null;
+  dataEmissao?: dayjs.Dayjs | null;
+  dataVencimento?: dayjs.Dayjs | null;
+  cae?: string | null;
+  inicioTransporte?: dayjs.Dayjs | null;
+  fimTransporte?: dayjs.Dayjs | null;
+  observacaoGeral?: string | null;
+  observacaoInterna?: string | null;
+  estado?: EstadoDocumentoComercial | null;
+  origem?: string | null;
+  timestamp?: dayjs.Dayjs | null;
+  isMoedaEntrangeira?: boolean | null;
+  moeda?: string | null;
+  cambio?: number | null;
+  totalMoedaEntrangeira?: number | null;
+  totalIliquido?: number | null;
+  totalDescontoComercial?: number | null;
+  totalLiquido?: number | null;
+  totalImpostoIVA?: number | null;
+  totalImpostoEspecialConsumo?: number | null;
+  totalDescontoFinanceiro?: number | null;
+  totalFactura?: number | null;
+  totalImpostoRetencaoFonte?: number | null;
+  totalPagar?: number | null;
+  debito?: number | null;
+  credito?: number | null;
+  totalPago?: number | null;
+  totalDiferenca?: number | null;
+  isAutoFacturacao?: boolean | null;
+  isRegimeCaixa?: boolean | null;
+  isEmitidaNomeEContaTerceiro?: boolean | null;
+  isNovo?: boolean | null;
+  isFiscalizado?: boolean | null;
+  signText?: string | null;
+  hash?: string | null;
+  hashShort?: string | null;
+  hashControl?: string | null;
+  keyVersion?: number | null;
+  utilizador?: Pick<IUser, 'id' | 'login'> | null;
+  motivoAnulacao?: Pick<ILookupItem, 'id' | 'descricao'> | null;
+  matricula?: Pick<IMatricula, 'id' | 'numeroMatricula'> | null;
+  referencia?: Pick<IFactura, 'id' | 'numero'> | null;
+  documentoComercial?: Pick<IDocumentoComercial, 'id' | 'siglaInterna'> | null;
+}
+
+export type NewFactura = Omit<IFactura, 'id'> & { id: null };

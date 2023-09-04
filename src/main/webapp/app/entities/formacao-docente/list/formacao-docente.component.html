@@ -1,0 +1,187 @@
+<div>
+  <h2 id="page-heading" data-cy="FormacaoDocenteHeading">
+    <span appTranslate="longonkeloApp.formacaoDocente.home.title">Formacao Docentes</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.formacaoDocente.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-formacao-docente"
+        [routerLink]="['/formacao-docente/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.formacaoDocente.home.createLabel"> Criar novo(a) Formacao Docente </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="formacaoDocentes?.length === 0">
+    <span appTranslate="longonkeloApp.formacaoDocente.home.notFound">Nenhum Formacao Docentes encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="formacaoDocentes && formacaoDocentes.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="instituicaoEnsino">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.formacaoDocente.instituicaoEnsino">Instituicao Ensino</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="areaFormacao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.formacaoDocente.areaFormacao">Area Formacao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="curso">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.formacaoDocente.curso">Curso</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="especialidade">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.formacaoDocente.especialidade">Especialidade</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="grau">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.formacaoDocente.grau">Grau</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="inicio">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.formacaoDocente.inicio">Inicio</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="fim">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.formacaoDocente.fim">Fim</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="anexo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.formacaoDocente.anexo">Anexo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="grauAcademico.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.formacaoDocente.grauAcademico">Grau Academico</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="docente.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.formacaoDocente.docente">Docente</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let formacaoDocente of formacaoDocentes; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/formacao-docente', formacaoDocente.id, 'view']">{{ formacaoDocente.id }}</a>
+          </td>
+          <td>{{ formacaoDocente.instituicaoEnsino }}</td>
+          <td>{{ formacaoDocente.areaFormacao }}</td>
+          <td>{{ formacaoDocente.curso }}</td>
+          <td>{{ formacaoDocente.especialidade }}</td>
+          <td>{{ formacaoDocente.grau }}</td>
+          <td>{{ formacaoDocente.inicio | formatMediumDate }}</td>
+          <td>{{ formacaoDocente.fim | formatMediumDate }}</td>
+          <td>
+            <a
+              *ngIf="formacaoDocente.anexo"
+              (click)="openFile(formacaoDocente.anexo, formacaoDocente.anexoContentType)"
+              appTranslate="entity.action.open"
+              >Abrir</a
+            >
+            <span *ngIf="formacaoDocente.anexo">{{ formacaoDocente.anexoContentType }}, {{ byteSize(formacaoDocente.anexo) }}</span>
+          </td>
+          <td>
+            <div *ngIf="formacaoDocente.grauAcademico">
+              <a [routerLink]="['/lookup-item', formacaoDocente.grauAcademico.id, 'view']">{{ formacaoDocente.grauAcademico.descricao }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="formacaoDocente.docente">
+              <a [routerLink]="['/docente', formacaoDocente.docente.id, 'view']">{{ formacaoDocente.docente.nome }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/formacao-docente', formacaoDocente.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/formacao-docente', formacaoDocente.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(formacaoDocente)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="formacaoDocentes && formacaoDocentes.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

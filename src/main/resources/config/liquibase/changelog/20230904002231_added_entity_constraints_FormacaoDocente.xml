@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity FormacaoDocente.
+    -->
+    <changeSet id="20230904002231-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="grau_academico_id"
+                                 baseTableName="formacao_docente"
+                                 constraintName="fk_formacao_docente__grau_academico_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="docente_id"
+                                 baseTableName="formacao_docente"
+                                 constraintName="fk_formacao_docente__docente_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="docente"/>
+    </changeSet>
+</databaseChangeLog>

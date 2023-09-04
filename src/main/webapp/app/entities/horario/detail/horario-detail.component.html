@@ -1,0 +1,76 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="horario">
+      <h2 data-cy="horarioDetailsHeading"><span appTranslate="longonkeloApp.horario.detail.title">Horario</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ horario.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.horario.chaveComposta1">Chave Composta 1</span></dt>
+        <dd>
+          <span>{{ horario.chaveComposta1 }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.horario.chaveComposta2">Chave Composta 2</span></dt>
+        <dd>
+          <span>{{ horario.chaveComposta2 }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.horario.diaSemana">Dia Semana</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.DiaSemana.' + horario.diaSemana }}">{{ horario.diaSemana }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.horario.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ horario.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.horario.turma">Turma</span></dt>
+        <dd>
+          <div *ngIf="horario.turma">
+            <a [routerLink]="['/turma', horario.turma.id, 'view']">{{ horario.turma.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.horario.referencia">Referencia</span></dt>
+        <dd>
+          <div *ngIf="horario.referencia">
+            <a [routerLink]="['/horario', horario.referencia.id, 'view']">{{ horario.referencia.id }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.horario.periodo">Periodo</span></dt>
+        <dd>
+          <div *ngIf="horario.periodo">
+            <a [routerLink]="['/periodo-horario', horario.periodo.id, 'view']">{{ horario.periodo.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.horario.docente">Docente</span></dt>
+        <dd>
+          <div *ngIf="horario.docente">
+            <a [routerLink]="['/docente', horario.docente.id, 'view']">{{ horario.docente.nome }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.horario.disciplinaCurricular">Disciplina Curricular</span></dt>
+        <dd>
+          <div *ngIf="horario.disciplinaCurricular">
+            <a [routerLink]="['/disciplina-curricular', horario.disciplinaCurricular.id, 'view']">{{
+              horario.disciplinaCurricular.descricao
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/horario', horario.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

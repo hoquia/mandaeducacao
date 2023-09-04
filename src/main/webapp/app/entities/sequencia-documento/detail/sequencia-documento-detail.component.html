@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="sequenciaDocumento">
+      <h2 data-cy="sequenciaDocumentoDetailsHeading">
+        <span appTranslate="longonkeloApp.sequenciaDocumento.detail.title">Sequencia Documento</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ sequenciaDocumento.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.sequenciaDocumento.sequencia">Sequencia</span></dt>
+        <dd>
+          <span>{{ sequenciaDocumento.sequencia }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.sequenciaDocumento.data">Data</span></dt>
+        <dd>
+          <span>{{ sequenciaDocumento.data | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.sequenciaDocumento.hash">Hash</span></dt>
+        <dd>
+          <span>{{ sequenciaDocumento.hash }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.sequenciaDocumento.timestamp">Timestamp</span></dt>
+        <dd>
+          <span>{{ sequenciaDocumento.timestamp | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.sequenciaDocumento.serie">Serie</span></dt>
+        <dd>
+          <div *ngIf="sequenciaDocumento.serie">
+            <a [routerLink]="['/serie-documento', sequenciaDocumento.serie.id, 'view']">{{ sequenciaDocumento.serie.serie }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/sequencia-documento', sequenciaDocumento.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

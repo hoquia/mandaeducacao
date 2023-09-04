@@ -1,0 +1,77 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="formacaoDocente">
+      <h2 data-cy="formacaoDocenteDetailsHeading">
+        <span appTranslate="longonkeloApp.formacaoDocente.detail.title">Formacao Docente</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ formacaoDocente.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.formacaoDocente.instituicaoEnsino">Instituicao Ensino</span></dt>
+        <dd>
+          <span>{{ formacaoDocente.instituicaoEnsino }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.formacaoDocente.areaFormacao">Area Formacao</span></dt>
+        <dd>
+          <span>{{ formacaoDocente.areaFormacao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.formacaoDocente.curso">Curso</span></dt>
+        <dd>
+          <span>{{ formacaoDocente.curso }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.formacaoDocente.especialidade">Especialidade</span></dt>
+        <dd>
+          <span>{{ formacaoDocente.especialidade }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.formacaoDocente.grau">Grau</span></dt>
+        <dd>
+          <span>{{ formacaoDocente.grau }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.formacaoDocente.inicio">Inicio</span></dt>
+        <dd>
+          <span>{{ formacaoDocente.inicio | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.formacaoDocente.fim">Fim</span></dt>
+        <dd>
+          <span>{{ formacaoDocente.fim | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.formacaoDocente.anexo">Anexo</span></dt>
+        <dd>
+          <div *ngIf="formacaoDocente.anexo">
+            <a (click)="openFile(formacaoDocente.anexo, formacaoDocente.anexoContentType)" appTranslate="entity.action.open">Abrir</a>
+            {{ formacaoDocente.anexoContentType }}, {{ byteSize(formacaoDocente.anexo) }}
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.formacaoDocente.grauAcademico">Grau Academico</span></dt>
+        <dd>
+          <div *ngIf="formacaoDocente.grauAcademico">
+            <a [routerLink]="['/lookup-item', formacaoDocente.grauAcademico.id, 'view']">{{ formacaoDocente.grauAcademico.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.formacaoDocente.docente">Docente</span></dt>
+        <dd>
+          <div *ngIf="formacaoDocente.docente">
+            <a [routerLink]="['/docente', formacaoDocente.docente.id, 'view']">{{ formacaoDocente.docente.nome }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/formacao-docente', formacaoDocente.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

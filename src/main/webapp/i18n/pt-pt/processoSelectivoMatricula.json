@@ -1,0 +1,31 @@
+{
+  "longonkeloApp": {
+    "processoSelectivoMatricula": {
+      "home": {
+        "title": "Processo Selectivo Matriculas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Processo Selectivo Matricula",
+        "createOrEditLabel": "Criar ou editar Processo Selectivo Matricula",
+        "notFound": "Nenhum Processo Selectivo Matriculas encontrado"
+      },
+      "created": "Um novo Processo Selectivo Matricula foi criado com o identificador {{ param }}",
+      "updated": "Processo Selectivo Matricula com identificador {{ param }} foi actualizado",
+      "deleted": "Processo Selectivo Matricula com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Processo Selectivo Matricula {{ id }}?"
+      },
+      "detail": {
+        "title": "Processo Selectivo Matricula"
+      },
+      "id": "ID",
+      "localTeste": "Local Teste",
+      "dataTeste": "Data Teste",
+      "notaTeste": "Nota Teste",
+      "isAdmitido": "Is Admitido",
+      "anoLectivo": "Ano Lectivo",
+      "utilizador": "Utilizador",
+      "turma": "Turma",
+      "discente": "Discente"
+    }
+  }
+}

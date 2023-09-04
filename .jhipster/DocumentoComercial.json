@@ -1,0 +1,102 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002301",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "documento_comercial",
+  "fields": [
+    {
+      "fieldName": "modulo",
+      "fieldType": "ModuloDocumento",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "VENDA,COMPRA,FINANCA"
+    },
+    {
+      "fieldName": "origem",
+      "fieldType": "OrigemDocumento",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "P,I,M"
+    },
+    {
+      "fieldName": "siglaInterna",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength", "required", "unique"],
+      "fieldValidateRulesMaxlength": "6"
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "siglaFiscal",
+      "fieldType": "DocumentoFiscal",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "FT,FR,GF,FG,AC,AR,ND,NC,AF,TV,GR,GT,GA,GD,CM,GC,NR,FO,NE,OU,OR,PP,RC,RG"
+    },
+    {
+      "fieldName": "isMovimentaEstoque",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isMovimentaCaixa",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isNotificaEntidade",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isNotificaGerente",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isEnviaSMS",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isEnviaEmail",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "isEnviaPush",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "validaCreditoDisponivel",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "DocumentoComercial",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "serieDocumento",
+      "otherEntityRelationshipName": "tipoDocumento",
+      "relationshipName": "serieDocumento",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "factura",
+      "otherEntityRelationshipName": "documentoComercial",
+      "relationshipName": "factura",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "recibo",
+      "otherEntityRelationshipName": "documentoComercial",
+      "relationshipName": "recibo",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "documentoComercial",
+      "relationshipName": "transformaEm",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,0 +1,164 @@
+<div>
+  <h2 id="page-heading" data-cy="ResponsavelTurmaHeading">
+    <span appTranslate="longonkeloApp.responsavelTurma.home.title">Responsavel Turmas</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.responsavelTurma.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-responsavel-turma"
+        [routerLink]="['/responsavel-turma/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.responsavelTurma.home.createLabel"> Criar novo(a) Responsavel Turma </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="responsavelTurmas?.length === 0">
+    <span appTranslate="longonkeloApp.responsavelTurma.home.notFound">Nenhum Responsavel Turmas encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="responsavelTurmas && responsavelTurmas.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="de">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.responsavelTurma.de">De</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="ate">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.responsavelTurma.ate">Ate</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.responsavelTurma.descricao">Descricao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="timestamp">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.responsavelTurma.timestamp">Timestamp</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="utilizador.login">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.responsavelTurma.utilizador">Utilizador</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="turma.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.responsavelTurma.turma">Turma</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let responsavelTurma of responsavelTurmas; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/responsavel-turma', responsavelTurma.id, 'view']">{{ responsavelTurma.id }}</a>
+          </td>
+          <td>{{ responsavelTurma.de | formatMediumDate }}</td>
+          <td>{{ responsavelTurma.ate | formatMediumDate }}</td>
+          <td>{{ responsavelTurma.descricao }}</td>
+          <td>{{ responsavelTurma.timestamp | formatMediumDatetime }}</td>
+          <td>
+            {{ responsavelTurma.utilizador?.login }}
+          </td>
+          <td>
+            <div *ngIf="responsavelTurma.turma">
+              <a [routerLink]="['/turma', responsavelTurma.turma.id, 'view']">{{ responsavelTurma.turma.descricao }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/docente']"
+                [queryParams]="{ 'filter[responsavelTurmaId.in]': responsavelTurma.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.responsavelTurma.responsavel' | translate) }"
+                  >Show Docente</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/responsavel-turma', responsavelTurma.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/responsavel-turma', responsavelTurma.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(responsavelTurma)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="responsavelTurmas && responsavelTurmas.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

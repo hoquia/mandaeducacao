@@ -1,0 +1,66 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="historicoSaude">
+      <h2 data-cy="historicoSaudeDetailsHeading"><span appTranslate="longonkeloApp.historicoSaude.detail.title">Historico Saude</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ historicoSaude.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.historicoSaude.nome">Nome</span></dt>
+        <dd>
+          <span>{{ historicoSaude.nome }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.historicoSaude.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ historicoSaude.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.historicoSaude.inicio">Inicio</span></dt>
+        <dd>
+          <span>{{ historicoSaude.inicio | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.historicoSaude.fim">Fim</span></dt>
+        <dd>
+          <span>{{ historicoSaude.fim | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.historicoSaude.situacaoPrescricao">Situacao Prescricao</span></dt>
+        <dd>
+          <span>{{ historicoSaude.situacaoPrescricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.historicoSaude.timestamp">Timestamp</span></dt>
+        <dd>
+          <span>{{ historicoSaude.timestamp | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.historicoSaude.hash">Hash</span></dt>
+        <dd>
+          <span>{{ historicoSaude.hash }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.historicoSaude.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ historicoSaude.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.historicoSaude.discente">Discente</span></dt>
+        <dd>
+          <div *ngIf="historicoSaude.discente">
+            <a [routerLink]="['/discente', historicoSaude.discente.id, 'view']">{{ historicoSaude.discente.nome }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/historico-saude', historicoSaude.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

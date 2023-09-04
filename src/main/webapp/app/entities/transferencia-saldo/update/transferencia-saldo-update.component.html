@@ -1,0 +1,171 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-transferencia-saldo-heading"
+        data-cy="TransferenciaSaldoCreateUpdateHeading"
+        appTranslate="longonkeloApp.transferenciaSaldo.home.createOrEditLabel"
+      >
+        Criar ou editar Transferencia Saldo
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.transferenciaSaldo.montante" for="field_montante">Montante</label>
+          <input type="number" class="form-control" name="montante" id="field_montante" data-cy="montante" formControlName="montante" />
+          <div *ngIf="editForm.get('montante')!.invalid && (editForm.get('montante')!.dirty || editForm.get('montante')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('montante')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('montante')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.transferenciaSaldo.isMesmaConta" for="field_isMesmaConta"
+            >Is Mesma Conta</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isMesmaConta"
+            id="field_isMesmaConta"
+            data-cy="isMesmaConta"
+            formControlName="isMesmaConta"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.transferenciaSaldo.descricao" for="field_descricao">Descricao</label>
+          <textarea class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao"></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.transferenciaSaldo.timestamp" for="field_timestamp">Timestamp</label>
+          <div class="d-flex">
+            <input
+              id="field_timestamp"
+              data-cy="timestamp"
+              type="datetime-local"
+              class="form-control"
+              name="timestamp"
+              formControlName="timestamp"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.transferenciaSaldo.de" for="field_de">De</label>
+          <select class="form-control" id="field_de" data-cy="de" name="de" formControlName="de" [compareWith]="compareDiscente">
+            <option *ngIf="!editForm.get('de')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="discenteOption" *ngFor="let discenteOption of discentesSharedCollection">{{ discenteOption.nome }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['de'])!.invalid && (editForm.get(['de'])!.dirty || editForm.get(['de'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['de'])?.errors?.required" appTranslate="entity.validation.required">
+            O campo é obrigatório.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.transferenciaSaldo.para" for="field_para">Para</label>
+          <select class="form-control" id="field_para" data-cy="para" name="para" formControlName="para" [compareWith]="compareDiscente">
+            <option *ngIf="!editForm.get('para')!.value" [ngValue]="null" selected></option>
+            <option [ngValue]="discenteOption" *ngFor="let discenteOption of discentesSharedCollection">{{ discenteOption.nome }}</option>
+          </select>
+        </div>
+        <div *ngIf="editForm.get(['para'])!.invalid && (editForm.get(['para'])!.dirty || editForm.get(['para'])!.touched)">
+          <small class="form-text text-danger" *ngIf="editForm.get(['para'])?.errors?.required" appTranslate="entity.validation.required">
+            O campo é obrigatório.
+          </small>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.transferenciaSaldo.utilizador" for="field_utilizador">Utilizador</label>
+          <select
+            class="form-control"
+            id="field_utilizador"
+            data-cy="utilizador"
+            name="utilizador"
+            formControlName="utilizador"
+            [compareWith]="compareUser"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.transferenciaSaldo.motivoTransferencia" for="field_motivoTransferencia"
+            >Motivo Transferencia</label
+          >
+          <select
+            class="form-control"
+            id="field_motivoTransferencia"
+            data-cy="motivoTransferencia"
+            name="motivoTransferencia"
+            formControlName="motivoTransferencia"
+            [compareWith]="compareLookupItem"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              {{ lookupItemOption.descricao }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label appTranslate="longonkeloApp.transferenciaSaldo.transacoes" for="field_transacoes">Transacoes</label>
+          <select
+            class="form-control"
+            id="field_transacoes"
+            data-cy="transacoes"
+            multiple
+            name="transacoes"
+            formControlName="transacoes"
+            [compareWith]="compareTransacao"
+          >
+            <option [ngValue]="transacaoOption" *ngFor="let transacaoOption of transacaosSharedCollection">
+              {{ transacaoOption.referencia }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

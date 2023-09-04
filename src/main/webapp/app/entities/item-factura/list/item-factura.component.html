@@ -1,0 +1,214 @@
+<div>
+  <h2 id="page-heading" data-cy="ItemFacturaHeading">
+    <span appTranslate="longonkeloApp.itemFactura.home.title">Item Facturas</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.itemFactura.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-item-factura"
+        [routerLink]="['/item-factura/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.itemFactura.home.createLabel"> Criar novo(a) Item Factura </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="itemFacturas?.length === 0">
+    <span appTranslate="longonkeloApp.itemFactura.home.notFound">Nenhum Item Facturas encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="itemFacturas && itemFacturas.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="quantidade">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.itemFactura.quantidade">Quantidade</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="precoUnitario">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.itemFactura.precoUnitario">Preco Unitario</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="desconto">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.itemFactura.desconto">Desconto</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="multa">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.itemFactura.multa">Multa</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="juro">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.itemFactura.juro">Juro</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="precoTotal">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.itemFactura.precoTotal">Preco Total</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="estado">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.itemFactura.estado">Estado</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="taxType">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.itemFactura.taxType">Tax Type</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="taxCountryRegion">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.itemFactura.taxCountryRegion">Tax Country Region</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="taxCode">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.itemFactura.taxCode">Tax Code</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="taxPercentage">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.itemFactura.taxPercentage">Tax Percentage</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="taxExemptionReason">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.itemFactura.taxExemptionReason">Tax Exemption Reason</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="taxExemptionCode">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.itemFactura.taxExemptionCode">Tax Exemption Code</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="factura.numero">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.itemFactura.factura">Factura</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="emolumento.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.itemFactura.emolumento">Emolumento</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let itemFactura of itemFacturas; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/item-factura', itemFactura.id, 'view']">{{ itemFactura.id }}</a>
+          </td>
+          <td>{{ itemFactura.quantidade }}</td>
+          <td>{{ itemFactura.precoUnitario }}</td>
+          <td>{{ itemFactura.desconto }}</td>
+          <td>{{ itemFactura.multa }}</td>
+          <td>{{ itemFactura.juro }}</td>
+          <td>{{ itemFactura.precoTotal }}</td>
+          <td appTranslate="{{ 'longonkeloApp.EstadoItemFactura.' + itemFactura.estado }}">{{ itemFactura.estado }}</td>
+          <td>{{ itemFactura.taxType }}</td>
+          <td>{{ itemFactura.taxCountryRegion }}</td>
+          <td>{{ itemFactura.taxCode }}</td>
+          <td>{{ itemFactura.taxPercentage }}</td>
+          <td>{{ itemFactura.taxExemptionReason }}</td>
+          <td>{{ itemFactura.taxExemptionCode }}</td>
+          <td>
+            <div *ngIf="itemFactura.factura">
+              <a [routerLink]="['/factura', itemFactura.factura.id, 'view']">{{ itemFactura.factura.numero }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="itemFactura.emolumento">
+              <a [routerLink]="['/emolumento', itemFactura.emolumento.id, 'view']">{{ itemFactura.emolumento.nome }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/item-factura', itemFactura.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/item-factura', itemFactura.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(itemFactura)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="itemFacturas && itemFacturas.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

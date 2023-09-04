@@ -1,0 +1,303 @@
+<div>
+  <h2 id="page-heading" data-cy="NivelEnsinoHeading">
+    <span appTranslate="longonkeloApp.nivelEnsino.home.title">Nivel Ensinos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.nivelEnsino.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-nivel-ensino"
+        [routerLink]="['/nivel-ensino/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.nivelEnsino.home.createLabel"> Criar novo(a) Nivel Ensino </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="nivelEnsinos?.length === 0">
+    <span appTranslate="longonkeloApp.nivelEnsino.home.notFound">Nenhum Nivel Ensinos encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="nivelEnsinos && nivelEnsinos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="codigo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.codigo">Codigo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.nome">Nome</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.descricao">Descricao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="idadeMinima">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.idadeMinima">Idade Minima</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="idadeMaxima">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.idadeMaxima">Idade Maxima</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="duracao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.duracao">Duracao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="unidadeDuracao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.unidadeDuracao">Unidade Duracao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="classeInicial">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.classeInicial">Classe Inicial</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="classeFinal">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.classeFinal">Classe Final</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="classeExame">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.classeExame">Classe Exame</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="totalDisciplina">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.totalDisciplina">Total Disciplina</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="responsavelTurno">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.responsavelTurno">Responsavel Turno</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="responsavelAreaFormacao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.responsavelAreaFormacao">Responsavel Area Formacao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="responsavelCurso">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.responsavelCurso">Responsavel Curso</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="responsavelDisciplina">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.responsavelDisciplina">Responsavel Disciplina</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="responsavelTurma">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.responsavelTurma">Responsavel Turma</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="responsavelGeral">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.responsavelGeral">Responsavel Geral</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="responsavelPedagogico">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.responsavelPedagogico">Responsavel Pedagogico</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="responsavelAdministrativo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.responsavelAdministrativo">Responsavel Administrativo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="responsavelSecretariaGeral">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.responsavelSecretariaGeral">Responsavel Secretaria Geral</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="responsavelSecretariaPedagogico">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.responsavelSecretariaPedagogico">Responsavel Secretaria Pedagogico</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="descricaoDocente">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.descricaoDocente">Descricao Docente</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="descricaoDiscente">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.descricaoDiscente">Descricao Discente</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="referencia.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.nivelEnsino.referencia">Referencia</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let nivelEnsino of nivelEnsinos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/nivel-ensino', nivelEnsino.id, 'view']">{{ nivelEnsino.id }}</a>
+          </td>
+          <td>{{ nivelEnsino.codigo }}</td>
+          <td>{{ nivelEnsino.nome }}</td>
+          <td>{{ nivelEnsino.descricao }}</td>
+          <td>{{ nivelEnsino.idadeMinima }}</td>
+          <td>{{ nivelEnsino.idadeMaxima }}</td>
+          <td>{{ nivelEnsino.duracao }}</td>
+          <td appTranslate="{{ 'longonkeloApp.UnidadeDuracao.' + nivelEnsino.unidadeDuracao }}">{{ nivelEnsino.unidadeDuracao }}</td>
+          <td>{{ nivelEnsino.classeInicial }}</td>
+          <td>{{ nivelEnsino.classeFinal }}</td>
+          <td>{{ nivelEnsino.classeExame }}</td>
+          <td>{{ nivelEnsino.totalDisciplina }}</td>
+          <td>{{ nivelEnsino.responsavelTurno }}</td>
+          <td>{{ nivelEnsino.responsavelAreaFormacao }}</td>
+          <td>{{ nivelEnsino.responsavelCurso }}</td>
+          <td>{{ nivelEnsino.responsavelDisciplina }}</td>
+          <td>{{ nivelEnsino.responsavelTurma }}</td>
+          <td>{{ nivelEnsino.responsavelGeral }}</td>
+          <td>{{ nivelEnsino.responsavelPedagogico }}</td>
+          <td>{{ nivelEnsino.responsavelAdministrativo }}</td>
+          <td>{{ nivelEnsino.responsavelSecretariaGeral }}</td>
+          <td>{{ nivelEnsino.responsavelSecretariaPedagogico }}</td>
+          <td>{{ nivelEnsino.descricaoDocente }}</td>
+          <td>{{ nivelEnsino.descricaoDiscente }}</td>
+          <td>
+            <div *ngIf="nivelEnsino.referencia">
+              <a [routerLink]="['/nivel-ensino', nivelEnsino.referencia.id, 'view']">{{ nivelEnsino.referencia.nome }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/nivel-ensino']"
+                [queryParams]="{ 'filter[referenciaId.in]': nivelEnsino.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.nivelEnsino.nivelEnsino' | translate) }"
+                  >Show Nivel Ensino</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/classe']"
+                [queryParams]="{ 'filter[nivesEnsinoId.in]': nivelEnsino.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.nivelEnsino.classes' | translate) }"
+                  >Show Classe</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/nivel-ensino', nivelEnsino.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/nivel-ensino', nivelEnsino.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(nivelEnsino)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="nivelEnsinos && nivelEnsinos.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

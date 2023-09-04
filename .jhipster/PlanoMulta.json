@@ -1,0 +1,101 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002305",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "plano_multa",
+  "fields": [
+    {
+      "fieldName": "descricao",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "diaAplicacaoMulta",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max", "required"],
+      "fieldValidateRulesMax": "31",
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "metodoAplicacaoMulta",
+      "fieldType": "MetodoAplicacaoMulta",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "DEPOIS_MES_EMOLUMENTO,EXACTO_MES_EMOLUMENTO"
+    },
+    {
+      "fieldName": "taxaMulta",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "isTaxaMultaPercentual",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "diaAplicacaoJuro",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "31",
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "metodoAplicacaoJuro",
+      "fieldType": "MetodoAplicacaoMulta",
+      "fieldValues": "DEPOIS_MES_EMOLUMENTO,EXACTO_MES_EMOLUMENTO"
+    },
+    {
+      "fieldName": "taxaJuro",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "isTaxaJuroPercentual",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "aumentarJuroEmDias",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "isAtivo",
+      "fieldType": "Boolean"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "PlanoMulta",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "categoriaEmolumento",
+      "otherEntityRelationshipName": "planoMulta",
+      "relationshipName": "categoriaEmolumento",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "emolumento",
+      "otherEntityRelationshipName": "planoMulta",
+      "relationshipName": "emolumento",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "precoEmolumento",
+      "otherEntityRelationshipName": "planoMulta",
+      "relationshipName": "precoEmolumento",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "relationshipName": "utilizador",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

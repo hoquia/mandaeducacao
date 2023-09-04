@@ -1,0 +1,280 @@
+<div>
+  <h2 id="page-heading" data-cy="EncarregadoEducacaoHeading">
+    <span appTranslate="longonkeloApp.encarregadoEducacao.home.title">Encarregado Educacaos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.encarregadoEducacao.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-encarregado-educacao"
+        [routerLink]="['/encarregado-educacao/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.encarregadoEducacao.home.createLabel"> Criar novo(a) Encarregado Educacao </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="encarregadoEducacaos?.length === 0">
+    <span appTranslate="longonkeloApp.encarregadoEducacao.home.notFound">Nenhum Encarregado Educacaos encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="encarregadoEducacaos && encarregadoEducacaos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="fotografia">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.encarregadoEducacao.fotografia">Fotografia</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.encarregadoEducacao.nome">Nome</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="nascimento">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.encarregadoEducacao.nascimento">Nascimento</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="nif">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.encarregadoEducacao.nif">Nif</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="sexo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.encarregadoEducacao.sexo">Sexo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="documentoNumero">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.encarregadoEducacao.documentoNumero">Documento Numero</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="telefonePrincipal">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.encarregadoEducacao.telefonePrincipal">Telefone Principal</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="telefoneAlternativo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.encarregadoEducacao.telefoneAlternativo">Telefone Alternativo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="email">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.encarregadoEducacao.email">Email</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="residencia">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.encarregadoEducacao.residencia">Residencia</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="enderecoTrabalho">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.encarregadoEducacao.enderecoTrabalho">Endereco Trabalho</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="rendaMensal">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.encarregadoEducacao.rendaMensal">Renda Mensal</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="empresaTrabalho">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.encarregadoEducacao.empresaTrabalho">Empresa Trabalho</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="hash">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.encarregadoEducacao.hash">Hash</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="grauParentesco.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.encarregadoEducacao.grauParentesco">Grau Parentesco</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="tipoDocumento.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.encarregadoEducacao.tipoDocumento">Tipo Documento</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="profissao.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.encarregadoEducacao.profissao">Profissao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let encarregadoEducacao of encarregadoEducacaos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/encarregado-educacao', encarregadoEducacao.id, 'view']">{{ encarregadoEducacao.id }}</a>
+          </td>
+          <td>
+            <a
+              *ngIf="encarregadoEducacao.fotografia"
+              (click)="openFile(encarregadoEducacao.fotografia, encarregadoEducacao.fotografiaContentType)"
+            >
+              <img
+                [src]="'data:' + encarregadoEducacao.fotografiaContentType + ';base64,' + encarregadoEducacao.fotografia"
+                style="max-height: 30px"
+                alt="encarregadoEducacao image"
+              />
+            </a>
+            <span *ngIf="encarregadoEducacao.fotografia"
+              >{{ encarregadoEducacao.fotografiaContentType }}, {{ byteSize(encarregadoEducacao.fotografia) }}</span
+            >
+          </td>
+          <td>{{ encarregadoEducacao.nome }}</td>
+          <td>{{ encarregadoEducacao.nascimento | formatMediumDate }}</td>
+          <td>{{ encarregadoEducacao.nif }}</td>
+          <td appTranslate="{{ 'longonkeloApp.Sexo.' + encarregadoEducacao.sexo }}">{{ encarregadoEducacao.sexo }}</td>
+          <td>{{ encarregadoEducacao.documentoNumero }}</td>
+          <td>{{ encarregadoEducacao.telefonePrincipal }}</td>
+          <td>{{ encarregadoEducacao.telefoneAlternativo }}</td>
+          <td>{{ encarregadoEducacao.email }}</td>
+          <td>{{ encarregadoEducacao.residencia }}</td>
+          <td>{{ encarregadoEducacao.enderecoTrabalho }}</td>
+          <td>{{ encarregadoEducacao.rendaMensal }}</td>
+          <td>{{ encarregadoEducacao.empresaTrabalho }}</td>
+          <td>{{ encarregadoEducacao.hash }}</td>
+          <td>
+            <div *ngIf="encarregadoEducacao.grauParentesco">
+              <a [routerLink]="['/lookup-item', encarregadoEducacao.grauParentesco.id, 'view']">{{
+                encarregadoEducacao.grauParentesco.descricao
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="encarregadoEducacao.tipoDocumento">
+              <a [routerLink]="['/lookup-item', encarregadoEducacao.tipoDocumento.id, 'view']">{{
+                encarregadoEducacao.tipoDocumento.descricao
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="encarregadoEducacao.profissao">
+              <a [routerLink]="['/lookup-item', encarregadoEducacao.profissao.id, 'view']">{{ encarregadoEducacao.profissao.descricao }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/discente']"
+                [queryParams]="{ 'filter[encarregadoEducacaoId.in]': encarregadoEducacao.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.encarregadoEducacao.discentes' | translate) }"
+                  >Show Discente</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/matricula']"
+                [queryParams]="{ 'filter[responsavelFinanceiroId.in]': encarregadoEducacao.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.encarregadoEducacao.matricula' | translate) }"
+                  >Show Matricula</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/encarregado-educacao', encarregadoEducacao.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/encarregado-educacao', encarregadoEducacao.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(encarregadoEducacao)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="encarregadoEducacaos && encarregadoEducacaos.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

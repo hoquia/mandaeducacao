@@ -1,0 +1,38 @@
+{
+  "longonkeloApp": {
+    "planoMulta": {
+      "home": {
+        "title": "Plano Multas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Plano Multa",
+        "createOrEditLabel": "Criar ou editar Plano Multa",
+        "notFound": "Nenhum Plano Multas encontrado"
+      },
+      "created": "Um novo Plano Multa foi criado com o identificador {{ param }}",
+      "updated": "Plano Multa com identificador {{ param }} foi actualizado",
+      "deleted": "Plano Multa com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Plano Multa {{ id }}?"
+      },
+      "detail": {
+        "title": "Plano Multa"
+      },
+      "id": "ID",
+      "descricao": "Descricao",
+      "diaAplicacaoMulta": "Dia Aplicacao Multa",
+      "metodoAplicacaoMulta": "Metodo Aplicacao Multa",
+      "taxaMulta": "Taxa Multa",
+      "isTaxaMultaPercentual": "Is Taxa Multa Percentual",
+      "diaAplicacaoJuro": "Dia Aplicacao Juro",
+      "metodoAplicacaoJuro": "Metodo Aplicacao Juro",
+      "taxaJuro": "Taxa Juro",
+      "isTaxaJuroPercentual": "Is Taxa Juro Percentual",
+      "aumentarJuroEmDias": "Aumentar Juro Em Dias",
+      "isAtivo": "Is Ativo",
+      "categoriaEmolumento": "Categoria Emolumento",
+      "emolumento": "Emolumento",
+      "precoEmolumento": "Preco Emolumento",
+      "utilizador": "Utilizador"
+    }
+  }
+}

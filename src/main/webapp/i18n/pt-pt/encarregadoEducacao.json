@@ -1,0 +1,42 @@
+{
+  "longonkeloApp": {
+    "encarregadoEducacao": {
+      "home": {
+        "title": "Encarregado Educacaos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Encarregado Educacao",
+        "createOrEditLabel": "Criar ou editar Encarregado Educacao",
+        "notFound": "Nenhum Encarregado Educacaos encontrado"
+      },
+      "created": "Um novo Encarregado Educacao foi criado com o identificador {{ param }}",
+      "updated": "Encarregado Educacao com identificador {{ param }} foi actualizado",
+      "deleted": "Encarregado Educacao com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Encarregado Educacao {{ id }}?"
+      },
+      "detail": {
+        "title": "Encarregado Educacao"
+      },
+      "id": "ID",
+      "fotografia": "Fotografia",
+      "nome": "Nome",
+      "nascimento": "Nascimento",
+      "nif": "Nif",
+      "sexo": "Sexo",
+      "documentoNumero": "Documento Numero",
+      "telefonePrincipal": "Telefone Principal",
+      "telefoneAlternativo": "Telefone Alternativo",
+      "email": "Email",
+      "residencia": "Residencia",
+      "enderecoTrabalho": "Endereco Trabalho",
+      "rendaMensal": "Renda Mensal",
+      "empresaTrabalho": "Empresa Trabalho",
+      "hash": "Hash",
+      "discentes": "Discentes",
+      "matricula": "Matricula",
+      "grauParentesco": "Grau Parentesco",
+      "tipoDocumento": "Tipo Documento",
+      "profissao": "Profissao"
+    }
+  }
+}

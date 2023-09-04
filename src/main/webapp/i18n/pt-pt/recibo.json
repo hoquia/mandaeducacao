@@ -1,0 +1,58 @@
+{
+  "longonkeloApp": {
+    "recibo": {
+      "home": {
+        "title": "Recibos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Recibo",
+        "createOrEditLabel": "Criar ou editar Recibo",
+        "notFound": "Nenhum Recibos encontrado"
+      },
+      "created": "Um novo Recibo foi criado com o identificador {{ param }}",
+      "updated": "Recibo com identificador {{ param }} foi actualizado",
+      "deleted": "Recibo com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Recibo {{ id }}?"
+      },
+      "detail": {
+        "title": "Recibo"
+      },
+      "id": "ID",
+      "data": "Data",
+      "vencimento": "Vencimento",
+      "numero": "Numero",
+      "totalSemImposto": "Total Sem Imposto",
+      "totalComImposto": "Total Com Imposto",
+      "totalDescontoComercial": "Total Desconto Comercial",
+      "totalDescontoFinanceiro": "Total Desconto Financeiro",
+      "totalIVA": "Total IVA",
+      "totalRetencao": "Total Retencao",
+      "totalJuro": "Total Juro",
+      "cambio": "Cambio",
+      "totalMoedaEstrangeira": "Total Moeda Estrangeira",
+      "totalPagar": "Total Pagar",
+      "totalPago": "Total Pago",
+      "totalFalta": "Total Falta",
+      "totalTroco": "Total Troco",
+      "isNovo": "Is Novo",
+      "timestamp": "Timestamp",
+      "descricao": "Descricao",
+      "debito": "Debito",
+      "credito": "Credito",
+      "isFiscalizado": "Is Fiscalizado",
+      "signText": "Sign Text",
+      "hash": "Hash",
+      "hashShort": "Hash Short",
+      "hashControl": "Hash Control",
+      "keyVersion": "Key Version",
+      "estado": "Estado",
+      "origem": "Origem",
+      "aplicacoesRecibo": "Aplicacoes Recibo",
+      "anoLectivo": "Ano Lectivo",
+      "utilizador": "Utilizador",
+      "matricula": "Matricula",
+      "documentoComercial": "Documento Comercial",
+      "transacao": "Transacao"
+    }
+  }
+}

@@ -1,0 +1,168 @@
+<div>
+  <h2 id="page-heading" data-cy="ProvedorNotificacaoHeading">
+    <span appTranslate="longonkeloApp.provedorNotificacao.home.title">Provedor Notificacaos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.provedorNotificacao.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-provedor-notificacao"
+        [routerLink]="['/provedor-notificacao/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.provedorNotificacao.home.createLabel"> Criar novo(a) Provedor Notificacao </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="provedorNotificacaos?.length === 0">
+    <span appTranslate="longonkeloApp.provedorNotificacao.home.notFound">Nenhum Provedor Notificacaos encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="provedorNotificacaos && provedorNotificacaos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="telefone">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.provedorNotificacao.telefone">Telefone</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="email">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.provedorNotificacao.email">Email</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="link">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.provedorNotificacao.link">Link</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="token">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.provedorNotificacao.token">Token</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="username">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.provedorNotificacao.username">Username</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="password">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.provedorNotificacao.password">Password</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="hash">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.provedorNotificacao.hash">Hash</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isPadrao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.provedorNotificacao.isPadrao">Is Padrao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="instituicao.unidadeOrganica">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.provedorNotificacao.instituicao">Instituicao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let provedorNotificacao of provedorNotificacaos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/provedor-notificacao', provedorNotificacao.id, 'view']">{{ provedorNotificacao.id }}</a>
+          </td>
+          <td>{{ provedorNotificacao.telefone }}</td>
+          <td>{{ provedorNotificacao.email }}</td>
+          <td>{{ provedorNotificacao.link }}</td>
+          <td>{{ provedorNotificacao.token }}</td>
+          <td>{{ provedorNotificacao.username }}</td>
+          <td>{{ provedorNotificacao.password }}</td>
+          <td>{{ provedorNotificacao.hash }}</td>
+          <td>{{ provedorNotificacao.isPadrao }}</td>
+          <td>
+            <div *ngIf="provedorNotificacao.instituicao">
+              <a [routerLink]="['/instituicao-ensino', provedorNotificacao.instituicao.id, 'view']">{{
+                provedorNotificacao.instituicao.unidadeOrganica
+              }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/provedor-notificacao', provedorNotificacao.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/provedor-notificacao', provedorNotificacao.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(provedorNotificacao)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="provedorNotificacaos && provedorNotificacaos.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

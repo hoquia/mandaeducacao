@@ -1,0 +1,31 @@
+{
+  "longonkeloApp": {
+    "responsavelCurso": {
+      "home": {
+        "title": "Responsavel Cursos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Responsavel Curso",
+        "createOrEditLabel": "Criar ou editar Responsavel Curso",
+        "notFound": "Nenhum Responsavel Cursos encontrado"
+      },
+      "created": "Um novo Responsavel Curso foi criado com o identificador {{ param }}",
+      "updated": "Responsavel Curso com identificador {{ param }} foi actualizado",
+      "deleted": "Responsavel Curso com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Responsavel Curso {{ id }}?"
+      },
+      "detail": {
+        "title": "Responsavel Curso"
+      },
+      "id": "ID",
+      "de": "De",
+      "ate": "Ate",
+      "descricao": "Descricao",
+      "timestamp": "Timestamp",
+      "responsavel": "Responsavel",
+      "anoLectivo": "Ano Lectivo",
+      "utilizador": "Utilizador",
+      "curso": "Curso"
+    }
+  }
+}

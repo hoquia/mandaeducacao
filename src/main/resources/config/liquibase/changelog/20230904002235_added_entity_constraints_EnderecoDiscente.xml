@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity EnderecoDiscente.
+    -->
+    <changeSet id="20230904002235-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="pais_id"
+                                 baseTableName="endereco_discente"
+                                 constraintName="fk_endereco_discente__pais_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="provincia_id"
+                                 baseTableName="endereco_discente"
+                                 constraintName="fk_endereco_discente__provincia_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="municipio_id"
+                                 baseTableName="endereco_discente"
+                                 constraintName="fk_endereco_discente__municipio_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="discente_id"
+                                 baseTableName="endereco_discente"
+                                 constraintName="fk_endereco_discente__discente_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="discente"/>
+    </changeSet>
+</databaseChangeLog>

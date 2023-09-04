@@ -1,0 +1,57 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="anexoDiscente">
+      <h2 data-cy="anexoDiscenteDetailsHeading"><span appTranslate="longonkeloApp.anexoDiscente.detail.title">Anexo Discente</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ anexoDiscente.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anexoDiscente.categoria">Categoria</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.CategoriaAnexo.' + anexoDiscente.categoria }}">{{ anexoDiscente.categoria }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anexoDiscente.anexo">Anexo</span></dt>
+        <dd>
+          <div *ngIf="anexoDiscente.anexo">
+            <a (click)="openFile(anexoDiscente.anexo, anexoDiscente.anexoContentType)" appTranslate="entity.action.open">Abrir</a>
+            {{ anexoDiscente.anexoContentType }}, {{ byteSize(anexoDiscente.anexo) }}
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anexoDiscente.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ anexoDiscente.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anexoDiscente.validade">Validade</span></dt>
+        <dd>
+          <span>{{ anexoDiscente.validade | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anexoDiscente.timestamp">Timestamp</span></dt>
+        <dd>
+          <span>{{ anexoDiscente.timestamp | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.anexoDiscente.discente">Discente</span></dt>
+        <dd>
+          <div *ngIf="anexoDiscente.discente">
+            <a [routerLink]="['/discente', anexoDiscente.discente.id, 'view']">{{ anexoDiscente.discente.nome }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/anexo-discente', anexoDiscente.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

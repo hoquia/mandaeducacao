@@ -1,0 +1,306 @@
+<div>
+  <h2 id="page-heading" data-cy="DissertacaoFinalCursoHeading">
+    <span appTranslate="longonkeloApp.dissertacaoFinalCurso.home.title">Dissertacao Final Cursos</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.dissertacaoFinalCurso.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-dissertacao-final-curso"
+        [routerLink]="['/dissertacao-final-curso/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.dissertacaoFinalCurso.home.createLabel"> Criar novo(a) Dissertacao Final Curso </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="dissertacaoFinalCursos?.length === 0">
+    <span appTranslate="longonkeloApp.dissertacaoFinalCurso.home.notFound">Nenhum Dissertacao Final Cursos encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="dissertacaoFinalCursos && dissertacaoFinalCursos.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="numero">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.numero">Numero</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="timestamp">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.timestamp">Timestamp</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="data">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.data">Data</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="tema">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.tema">Tema</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="objectivoGeral">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.objectivoGeral">Objectivo Geral</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="objectivosEspecificos">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.objectivosEspecificos">Objectivos Especificos</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="introducao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.introducao">Introducao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="resumo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.resumo">Resumo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="problema">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.problema">Problema</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="resultado">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.resultado">Resultado</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="metodologia">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.metodologia">Metodologia</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="referenciasBibliograficas">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.referenciasBibliograficas">Referencias Bibliograficas</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="observacaoOrientador">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.observacaoOrientador">Observacao Orientador</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="observacaoAreaFormacao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.observacaoAreaFormacao">Observacao Area Formacao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="observacaoInstituicao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.observacaoInstituicao">Observacao Instituicao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="hash">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.hash">Hash</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="termosCompromissos">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.termosCompromissos">Termos Compromissos</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isAceiteTermosCompromisso">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.isAceiteTermosCompromisso">Is Aceite Termos Compromisso</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="utilizador.login">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.utilizador">Utilizador</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="turma.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.turma">Turma</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="orientador.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.orientador">Orientador</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="especialidade.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.especialidade">Especialidade</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="discente.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.discente">Discente</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="estado.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.estado">Estado</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="natureza.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.dissertacaoFinalCurso.natureza">Natureza</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dissertacaoFinalCurso of dissertacaoFinalCursos; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/dissertacao-final-curso', dissertacaoFinalCurso.id, 'view']">{{ dissertacaoFinalCurso.id }}</a>
+          </td>
+          <td>{{ dissertacaoFinalCurso.numero }}</td>
+          <td>{{ dissertacaoFinalCurso.timestamp | formatMediumDatetime }}</td>
+          <td>{{ dissertacaoFinalCurso.data | formatMediumDate }}</td>
+          <td>{{ dissertacaoFinalCurso.tema }}</td>
+          <td>{{ dissertacaoFinalCurso.objectivoGeral }}</td>
+          <td>{{ dissertacaoFinalCurso.objectivosEspecificos }}</td>
+          <td>{{ dissertacaoFinalCurso.introducao }}</td>
+          <td>{{ dissertacaoFinalCurso.resumo }}</td>
+          <td>{{ dissertacaoFinalCurso.problema }}</td>
+          <td>{{ dissertacaoFinalCurso.resultado }}</td>
+          <td>{{ dissertacaoFinalCurso.metodologia }}</td>
+          <td>{{ dissertacaoFinalCurso.referenciasBibliograficas }}</td>
+          <td>{{ dissertacaoFinalCurso.observacaoOrientador }}</td>
+          <td>{{ dissertacaoFinalCurso.observacaoAreaFormacao }}</td>
+          <td>{{ dissertacaoFinalCurso.observacaoInstituicao }}</td>
+          <td>{{ dissertacaoFinalCurso.hash }}</td>
+          <td>{{ dissertacaoFinalCurso.termosCompromissos }}</td>
+          <td>{{ dissertacaoFinalCurso.isAceiteTermosCompromisso }}</td>
+          <td>
+            {{ dissertacaoFinalCurso.utilizador?.login }}
+          </td>
+          <td>
+            <div *ngIf="dissertacaoFinalCurso.turma">
+              <a [routerLink]="['/turma', dissertacaoFinalCurso.turma.id, 'view']">{{ dissertacaoFinalCurso.turma.descricao }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="dissertacaoFinalCurso.orientador">
+              <a [routerLink]="['/docente', dissertacaoFinalCurso.orientador.id, 'view']">{{ dissertacaoFinalCurso.orientador.nome }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="dissertacaoFinalCurso.especialidade">
+              <a [routerLink]="['/area-formacao', dissertacaoFinalCurso.especialidade.id, 'view']">{{
+                dissertacaoFinalCurso.especialidade.nome
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="dissertacaoFinalCurso.discente">
+              <a [routerLink]="['/discente', dissertacaoFinalCurso.discente.id, 'view']">{{ dissertacaoFinalCurso.discente.nome }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="dissertacaoFinalCurso.estado">
+              <a [routerLink]="['/estado-dissertacao', dissertacaoFinalCurso.estado.id, 'view']">{{ dissertacaoFinalCurso.estado.nome }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="dissertacaoFinalCurso.natureza">
+              <a [routerLink]="['/natureza-trabalho', dissertacaoFinalCurso.natureza.id, 'view']">{{
+                dissertacaoFinalCurso.natureza.nome
+              }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/dissertacao-final-curso', dissertacaoFinalCurso.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/dissertacao-final-curso', dissertacaoFinalCurso.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(dissertacaoFinalCurso)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="dissertacaoFinalCursos && dissertacaoFinalCursos.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

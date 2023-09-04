@@ -1,0 +1,56 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="responsavelTurma">
+      <h2 data-cy="responsavelTurmaDetailsHeading">
+        <span appTranslate="longonkeloApp.responsavelTurma.detail.title">Responsavel Turma</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ responsavelTurma.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelTurma.de">De</span></dt>
+        <dd>
+          <span>{{ responsavelTurma.de | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelTurma.ate">Ate</span></dt>
+        <dd>
+          <span>{{ responsavelTurma.ate | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelTurma.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ responsavelTurma.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelTurma.timestamp">Timestamp</span></dt>
+        <dd>
+          <span>{{ responsavelTurma.timestamp | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelTurma.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ responsavelTurma.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.responsavelTurma.turma">Turma</span></dt>
+        <dd>
+          <div *ngIf="responsavelTurma.turma">
+            <a [routerLink]="['/turma', responsavelTurma.turma.id, 'view']">{{ responsavelTurma.turma.descricao }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/responsavel-turma', responsavelTurma.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

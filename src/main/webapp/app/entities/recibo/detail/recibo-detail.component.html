@@ -1,0 +1,168 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="recibo">
+      <h2 data-cy="reciboDetailsHeading"><span appTranslate="longonkeloApp.recibo.detail.title">Recibo</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ recibo.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.data">Data</span></dt>
+        <dd>
+          <span>{{ recibo.data | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.vencimento">Vencimento</span></dt>
+        <dd>
+          <span>{{ recibo.vencimento | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.numero">Numero</span></dt>
+        <dd>
+          <span>{{ recibo.numero }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.totalSemImposto">Total Sem Imposto</span></dt>
+        <dd>
+          <span>{{ recibo.totalSemImposto }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.totalComImposto">Total Com Imposto</span></dt>
+        <dd>
+          <span>{{ recibo.totalComImposto }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.totalDescontoComercial">Total Desconto Comercial</span></dt>
+        <dd>
+          <span>{{ recibo.totalDescontoComercial }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.totalDescontoFinanceiro">Total Desconto Financeiro</span></dt>
+        <dd>
+          <span>{{ recibo.totalDescontoFinanceiro }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.totalIVA">Total IVA</span></dt>
+        <dd>
+          <span>{{ recibo.totalIVA }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.totalRetencao">Total Retencao</span></dt>
+        <dd>
+          <span>{{ recibo.totalRetencao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.totalJuro">Total Juro</span></dt>
+        <dd>
+          <span>{{ recibo.totalJuro }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.cambio">Cambio</span></dt>
+        <dd>
+          <span>{{ recibo.cambio }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.totalMoedaEstrangeira">Total Moeda Estrangeira</span></dt>
+        <dd>
+          <span>{{ recibo.totalMoedaEstrangeira }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.totalPagar">Total Pagar</span></dt>
+        <dd>
+          <span>{{ recibo.totalPagar }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.totalPago">Total Pago</span></dt>
+        <dd>
+          <span>{{ recibo.totalPago }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.totalFalta">Total Falta</span></dt>
+        <dd>
+          <span>{{ recibo.totalFalta }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.totalTroco">Total Troco</span></dt>
+        <dd>
+          <span>{{ recibo.totalTroco }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.isNovo">Is Novo</span></dt>
+        <dd>
+          <span>{{ recibo.isNovo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.timestamp">Timestamp</span></dt>
+        <dd>
+          <span>{{ recibo.timestamp | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ recibo.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.debito">Debito</span></dt>
+        <dd>
+          <span>{{ recibo.debito }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.credito">Credito</span></dt>
+        <dd>
+          <span>{{ recibo.credito }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.isFiscalizado">Is Fiscalizado</span></dt>
+        <dd>
+          <span>{{ recibo.isFiscalizado }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.signText">Sign Text</span></dt>
+        <dd>
+          <span>{{ recibo.signText }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.hash">Hash</span></dt>
+        <dd>
+          <span>{{ recibo.hash }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.hashShort">Hash Short</span></dt>
+        <dd>
+          <span>{{ recibo.hashShort }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.hashControl">Hash Control</span></dt>
+        <dd>
+          <span>{{ recibo.hashControl }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.keyVersion">Key Version</span></dt>
+        <dd>
+          <span>{{ recibo.keyVersion }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.estado">Estado</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.EstadoDocumentoComercial.' + recibo.estado }}">{{ recibo.estado }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.origem">Origem</span></dt>
+        <dd>
+          <span>{{ recibo.origem }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ recibo.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.matricula">Matricula</span></dt>
+        <dd>
+          <div *ngIf="recibo.matricula">
+            <a [routerLink]="['/matricula', recibo.matricula.id, 'view']">{{ recibo.matricula.numeroMatricula }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.documentoComercial">Documento Comercial</span></dt>
+        <dd>
+          <div *ngIf="recibo.documentoComercial">
+            <a [routerLink]="['/documento-comercial', recibo.documentoComercial.id, 'view']">{{
+              recibo.documentoComercial.siglaInterna
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.recibo.transacao">Transacao</span></dt>
+        <dd>
+          <div *ngIf="recibo.transacao">
+            <a [routerLink]="['/transacao', recibo.transacao.id, 'view']">{{ recibo.transacao.referencia }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/recibo', recibo.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

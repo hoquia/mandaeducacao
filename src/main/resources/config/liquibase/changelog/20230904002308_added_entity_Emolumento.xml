@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity Emolumento.
+    -->
+    <changeSet id="20230904002308-1" author="jhipster">
+        <createTable tableName="emolumento">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="imagem" type="${blobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="imagem_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="numero" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_emolumento__numero" />
+            </column>
+            <column name="nome" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_emolumento__nome" />
+            </column>
+            <column name="preco" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="quantidade" type="double">
+                <constraints nullable="false" />
+            </column>
+            <column name="periodo" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="inicio_periodo" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="fim_periodo" type="integer">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_obrigatorio_matricula" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="is_obrigatorio_confirmacao" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="categoria_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="imposto_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="referencia_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="plano_multa_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

@@ -1,0 +1,532 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-ano-lectivo-heading"
+        data-cy="AnoLectivoCreateUpdateHeading"
+        appTranslate="longonkeloApp.anoLectivo.home.createOrEditLabel"
+      >
+        Criar ou editar Ano Lectivo
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.ano" for="field_ano">Ano</label>
+          <input type="number" class="form-control" name="ano" id="field_ano" data-cy="ano" formControlName="ano" />
+          <div *ngIf="editForm.get('ano')!.invalid && (editForm.get('ano')!.dirty || editForm.get('ano')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('ano')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('ano')?.errors?.number" appTranslate="entity.validation.number">
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.inicio" for="field_inicio">Inicio</label>
+          <div class="input-group">
+            <input
+              id="field_inicio"
+              data-cy="inicio"
+              type="text"
+              class="form-control"
+              name="inicio"
+              ngbDatepicker
+              #inicioDp="ngbDatepicker"
+              formControlName="inicio"
+            />
+            <button type="button" class="btn btn-secondary" (click)="inicioDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+          <div *ngIf="editForm.get('inicio')!.invalid && (editForm.get('inicio')!.dirty || editForm.get('inicio')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('inicio')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.fim" for="field_fim">Fim</label>
+          <div class="input-group">
+            <input
+              id="field_fim"
+              data-cy="fim"
+              type="text"
+              class="form-control"
+              name="fim"
+              ngbDatepicker
+              #fimDp="ngbDatepicker"
+              formControlName="fim"
+            />
+            <button type="button" class="btn btn-secondary" (click)="fimDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+          <div *ngIf="editForm.get('fim')!.invalid && (editForm.get('fim')!.dirty || editForm.get('fim')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('fim')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.descricao" for="field_descricao">Descricao</label>
+          <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
+          <div *ngIf="editForm.get('descricao')!.invalid && (editForm.get('descricao')!.dirty || editForm.get('descricao')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('descricao')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.timestam" for="field_timestam">Timestam</label>
+          <div class="d-flex">
+            <input
+              id="field_timestam"
+              data-cy="timestam"
+              type="datetime-local"
+              class="form-control"
+              name="timestam"
+              formControlName="timestam"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.isActual" for="field_isActual">Is Actual</label>
+          <input type="checkbox" class="form-check" name="isActual" id="field_isActual" data-cy="isActual" formControlName="isActual" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.directorGeral" for="field_directorGeral">Director Geral</label>
+          <select
+            class="form-control"
+            id="field_directorGeral"
+            data-cy="directorGeral"
+            name="directorGeral"
+            formControlName="directorGeral"
+            [compareWith]="compareDocente"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="docenteOption" *ngFor="let docenteOption of docentesSharedCollection">{{ docenteOption.nome }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.subDirectorPdagogico" for="field_subDirectorPdagogico"
+            >Sub Director Pdagogico</label
+          >
+          <select
+            class="form-control"
+            id="field_subDirectorPdagogico"
+            data-cy="subDirectorPdagogico"
+            name="subDirectorPdagogico"
+            formControlName="subDirectorPdagogico"
+            [compareWith]="compareDocente"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="docenteOption" *ngFor="let docenteOption of docentesSharedCollection">{{ docenteOption.nome }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.subDirectorAdministrativo" for="field_subDirectorAdministrativo"
+            >Sub Director Administrativo</label
+          >
+          <select
+            class="form-control"
+            id="field_subDirectorAdministrativo"
+            data-cy="subDirectorAdministrativo"
+            name="subDirectorAdministrativo"
+            formControlName="subDirectorAdministrativo"
+            [compareWith]="compareDocente"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="docenteOption" *ngFor="let docenteOption of docentesSharedCollection">{{ docenteOption.nome }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            appTranslate="longonkeloApp.anoLectivo.responsavelSecretariaGeral"
+            for="field_responsavelSecretariaGeral"
+            >Responsavel Secretaria Geral</label
+          >
+          <select
+            class="form-control"
+            id="field_responsavelSecretariaGeral"
+            data-cy="responsavelSecretariaGeral"
+            name="responsavelSecretariaGeral"
+            formControlName="responsavelSecretariaGeral"
+            [compareWith]="compareDocente"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="docenteOption" *ngFor="let docenteOption of docentesSharedCollection">{{ docenteOption.nome }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            appTranslate="longonkeloApp.anoLectivo.responsavelSecretariaPedagogico"
+            for="field_responsavelSecretariaPedagogico"
+            >Responsavel Secretaria Pedagogico</label
+          >
+          <select
+            class="form-control"
+            id="field_responsavelSecretariaPedagogico"
+            data-cy="responsavelSecretariaPedagogico"
+            name="responsavelSecretariaPedagogico"
+            formControlName="responsavelSecretariaPedagogico"
+            [compareWith]="compareDocente"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="docenteOption" *ngFor="let docenteOption of docentesSharedCollection">{{ docenteOption.nome }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.utilizador" for="field_utilizador">Utilizador</label>
+          <select
+            class="form-control"
+            id="field_utilizador"
+            data-cy="utilizador"
+            name="utilizador"
+            formControlName="utilizador"
+            [compareWith]="compareUser"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label appTranslate="longonkeloApp.anoLectivo.nivesEnsino" for="field_nivesEnsinos">Nives Ensino</label>
+          <select
+            class="form-control"
+            id="field_nivesEnsinos"
+            data-cy="nivesEnsino"
+            multiple
+            name="nivesEnsinos"
+            formControlName="nivesEnsinos"
+            [compareWith]="compareNivelEnsino"
+          >
+            <option [ngValue]="nivelEnsinoOption" *ngFor="let nivelEnsinoOption of nivelEnsinosSharedCollection">
+              {{ nivelEnsinoOption.nome }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.turma" for="field_turma">Turma</label>
+          <select class="form-control" id="field_turma" data-cy="turma" name="turma" formControlName="turma" [compareWith]="compareTurma">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="turmaOption" *ngFor="let turmaOption of turmasSharedCollection">{{ turmaOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.horario" for="field_horario">Horario</label>
+          <select
+            class="form-control"
+            id="field_horario"
+            data-cy="horario"
+            name="horario"
+            formControlName="horario"
+            [compareWith]="compareHorario"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="horarioOption" *ngFor="let horarioOption of horariosSharedCollection">{{ horarioOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.planoAula" for="field_planoAula">Plano Aula</label>
+          <select
+            class="form-control"
+            id="field_planoAula"
+            data-cy="planoAula"
+            name="planoAula"
+            formControlName="planoAula"
+            [compareWith]="comparePlanoAula"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="planoAulaOption" *ngFor="let planoAulaOption of planoAulasSharedCollection">{{ planoAulaOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.licao" for="field_licao">Licao</label>
+          <select class="form-control" id="field_licao" data-cy="licao" name="licao" formControlName="licao" [compareWith]="compareLicao">
+            <option [ngValue]="null"></option>
+            <option [ngValue]="licaoOption" *ngFor="let licaoOption of licaosSharedCollection">{{ licaoOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            appTranslate="longonkeloApp.anoLectivo.processoSelectivoMatricula"
+            for="field_processoSelectivoMatricula"
+            >Processo Selectivo Matricula</label
+          >
+          <select
+            class="form-control"
+            id="field_processoSelectivoMatricula"
+            data-cy="processoSelectivoMatricula"
+            name="processoSelectivoMatricula"
+            formControlName="processoSelectivoMatricula"
+            [compareWith]="compareProcessoSelectivoMatricula"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="processoSelectivoMatriculaOption"
+              *ngFor="let processoSelectivoMatriculaOption of processoSelectivoMatriculasSharedCollection"
+            >
+              {{ processoSelectivoMatriculaOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.ocorrencia" for="field_ocorrencia">Ocorrencia</label>
+          <select
+            class="form-control"
+            id="field_ocorrencia"
+            data-cy="ocorrencia"
+            name="ocorrencia"
+            formControlName="ocorrencia"
+            [compareWith]="compareOcorrencia"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="ocorrenciaOption" *ngFor="let ocorrenciaOption of ocorrenciasSharedCollection">
+              {{ ocorrenciaOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.notasPeriodicaDisciplina" for="field_notasPeriodicaDisciplina"
+            >Notas Periodica Disciplina</label
+          >
+          <select
+            class="form-control"
+            id="field_notasPeriodicaDisciplina"
+            data-cy="notasPeriodicaDisciplina"
+            name="notasPeriodicaDisciplina"
+            formControlName="notasPeriodicaDisciplina"
+            [compareWith]="compareNotasPeriodicaDisciplina"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="notasPeriodicaDisciplinaOption"
+              *ngFor="let notasPeriodicaDisciplinaOption of notasPeriodicaDisciplinasSharedCollection"
+            >
+              {{ notasPeriodicaDisciplinaOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.notasGeralDisciplina" for="field_notasGeralDisciplina"
+            >Notas Geral Disciplina</label
+          >
+          <select
+            class="form-control"
+            id="field_notasGeralDisciplina"
+            data-cy="notasGeralDisciplina"
+            name="notasGeralDisciplina"
+            formControlName="notasGeralDisciplina"
+            [compareWith]="compareNotasGeralDisciplina"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="notasGeralDisciplinaOption" *ngFor="let notasGeralDisciplinaOption of notasGeralDisciplinasSharedCollection">
+              {{ notasGeralDisciplinaOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.dissertacaoFinalCurso" for="field_dissertacaoFinalCurso"
+            >Dissertacao Final Curso</label
+          >
+          <select
+            class="form-control"
+            id="field_dissertacaoFinalCurso"
+            data-cy="dissertacaoFinalCurso"
+            name="dissertacaoFinalCurso"
+            formControlName="dissertacaoFinalCurso"
+            [compareWith]="compareDissertacaoFinalCurso"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="dissertacaoFinalCursoOption"
+              *ngFor="let dissertacaoFinalCursoOption of dissertacaoFinalCursosSharedCollection"
+            >
+              {{ dissertacaoFinalCursoOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.factura" for="field_factura">Factura</label>
+          <select
+            class="form-control"
+            id="field_factura"
+            data-cy="factura"
+            name="factura"
+            formControlName="factura"
+            [compareWith]="compareFactura"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="facturaOption" *ngFor="let facturaOption of facturasSharedCollection">{{ facturaOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.recibo" for="field_recibo">Recibo</label>
+          <select
+            class="form-control"
+            id="field_recibo"
+            data-cy="recibo"
+            name="recibo"
+            formControlName="recibo"
+            [compareWith]="compareRecibo"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="reciboOption" *ngFor="let reciboOption of recibosSharedCollection">{{ reciboOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.responsavelTurno" for="field_responsavelTurno"
+            >Responsavel Turno</label
+          >
+          <select
+            class="form-control"
+            id="field_responsavelTurno"
+            data-cy="responsavelTurno"
+            name="responsavelTurno"
+            formControlName="responsavelTurno"
+            [compareWith]="compareResponsavelTurno"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="responsavelTurnoOption" *ngFor="let responsavelTurnoOption of responsavelTurnosSharedCollection">
+              {{ responsavelTurnoOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.responsavelAreaFormacao" for="field_responsavelAreaFormacao"
+            >Responsavel Area Formacao</label
+          >
+          <select
+            class="form-control"
+            id="field_responsavelAreaFormacao"
+            data-cy="responsavelAreaFormacao"
+            name="responsavelAreaFormacao"
+            formControlName="responsavelAreaFormacao"
+            [compareWith]="compareResponsavelAreaFormacao"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="responsavelAreaFormacaoOption"
+              *ngFor="let responsavelAreaFormacaoOption of responsavelAreaFormacaosSharedCollection"
+            >
+              {{ responsavelAreaFormacaoOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.responsavelCurso" for="field_responsavelCurso"
+            >Responsavel Curso</label
+          >
+          <select
+            class="form-control"
+            id="field_responsavelCurso"
+            data-cy="responsavelCurso"
+            name="responsavelCurso"
+            formControlName="responsavelCurso"
+            [compareWith]="compareResponsavelCurso"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="responsavelCursoOption" *ngFor="let responsavelCursoOption of responsavelCursosSharedCollection">
+              {{ responsavelCursoOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.responsavelDisciplina" for="field_responsavelDisciplina"
+            >Responsavel Disciplina</label
+          >
+          <select
+            class="form-control"
+            id="field_responsavelDisciplina"
+            data-cy="responsavelDisciplina"
+            name="responsavelDisciplina"
+            formControlName="responsavelDisciplina"
+            [compareWith]="compareResponsavelDisciplina"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="responsavelDisciplinaOption"
+              *ngFor="let responsavelDisciplinaOption of responsavelDisciplinasSharedCollection"
+            >
+              {{ responsavelDisciplinaOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.anoLectivo.responsavelTurma" for="field_responsavelTurma"
+            >Responsavel Turma</label
+          >
+          <select
+            class="form-control"
+            id="field_responsavelTurma"
+            data-cy="responsavelTurma"
+            name="responsavelTurma"
+            formControlName="responsavelTurma"
+            [compareWith]="compareResponsavelTurma"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="responsavelTurmaOption" *ngFor="let responsavelTurmaOption of responsavelTurmasSharedCollection">
+              {{ responsavelTurmaOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

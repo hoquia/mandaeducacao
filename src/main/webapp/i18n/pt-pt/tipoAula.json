@@ -1,0 +1,11 @@
+{
+  "longonkeloApp": {
+    "TipoAula": {
+      "null": "",
+      "PRATICA": "PRATICA",
+      "TEORICA": "TEORICA",
+      "APRESENTACAO": "APRESENTACAO",
+      "OUTRO": "OUTRO"
+    }
+  }
+}

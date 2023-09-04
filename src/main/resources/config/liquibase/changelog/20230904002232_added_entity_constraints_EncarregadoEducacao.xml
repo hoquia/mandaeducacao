@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity EncarregadoEducacao.
+    -->
+    <changeSet id="20230904002232-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="grau_parentesco_id"
+                                 baseTableName="encarregado_educacao"
+                                 constraintName="fk_encarregado_educacao__grau_parentesco_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="tipo_documento_id"
+                                 baseTableName="encarregado_educacao"
+                                 constraintName="fk_encarregado_educacao__tipo_documento_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="profissao_id"
+                                 baseTableName="encarregado_educacao"
+                                 constraintName="fk_encarregado_educacao__profissao_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+    </changeSet>
+</databaseChangeLog>

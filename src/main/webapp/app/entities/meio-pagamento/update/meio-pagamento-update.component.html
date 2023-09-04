@@ -1,0 +1,185 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-meio-pagamento-heading"
+        data-cy="MeioPagamentoCreateUpdateHeading"
+        appTranslate="longonkeloApp.meioPagamento.home.createOrEditLabel"
+      >
+        Criar ou editar Meio Pagamento
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.meioPagamento.imagem" for="field_imagem">Imagem</label>
+          <div>
+            <img
+              [src]="'data:' + editForm.get('imagemContentType')!.value + ';base64,' + editForm.get('imagem')!.value"
+              style="max-height: 100px"
+              *ngIf="editForm.get('imagem')!.value"
+              alt="meioPagamento image"
+            />
+            <div *ngIf="editForm.get('imagem')!.value" class="form-text text-danger clearfix">
+              <span class="pull-start">{{ editForm.get('imagemContentType')!.value }}, {{ byteSize(editForm.get('imagem')!.value!) }}</span>
+              <button
+                type="button"
+                (click)="clearInputImage('imagem', 'imagemContentType', 'file_imagem')"
+                class="btn btn-secondary btn-xs pull-end"
+              >
+                <fa-icon icon="times"></fa-icon>
+              </button>
+            </div>
+            <input
+              type="file"
+              id="file_imagem"
+              data-cy="imagem"
+              (change)="setFileData($event, 'imagem', true)"
+              accept="image/*"
+              appTranslate="entity.action.addimage"
+            />
+          </div>
+          <input type="hidden" class="form-control" name="imagem" id="field_imagem" data-cy="imagem" formControlName="imagem" />
+          <input
+            type="hidden"
+            class="form-control"
+            name="imagemContentType"
+            id="field_imagemContentType"
+            formControlName="imagemContentType"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.meioPagamento.codigo" for="field_codigo">Codigo</label>
+          <input type="text" class="form-control" name="codigo" id="field_codigo" data-cy="codigo" formControlName="codigo" />
+          <div *ngIf="editForm.get('codigo')!.invalid && (editForm.get('codigo')!.dirty || editForm.get('codigo')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('codigo')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.meioPagamento.nome" for="field_nome">Nome</label>
+          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
+          <div *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('nome')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.meioPagamento.numeroDigitoReferencia" for="field_numeroDigitoReferencia"
+            >Numero Digito Referencia</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="numeroDigitoReferencia"
+            id="field_numeroDigitoReferencia"
+            data-cy="numeroDigitoReferencia"
+            formControlName="numeroDigitoReferencia"
+          />
+          <div
+            *ngIf="
+              editForm.get('numeroDigitoReferencia')!.invalid &&
+              (editForm.get('numeroDigitoReferencia')!.dirty || editForm.get('numeroDigitoReferencia')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('numeroDigitoReferencia')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('numeroDigitoReferencia')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.meioPagamento.isPagamentoInstantanio" for="field_isPagamentoInstantanio"
+            >Is Pagamento Instantanio</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isPagamentoInstantanio"
+            id="field_isPagamentoInstantanio"
+            data-cy="isPagamentoInstantanio"
+            formControlName="isPagamentoInstantanio"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.meioPagamento.hash" for="field_hash">Hash</label>
+          <input type="text" class="form-control" name="hash" id="field_hash" data-cy="hash" formControlName="hash" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.meioPagamento.link" for="field_link">Link</label>
+          <input type="text" class="form-control" name="link" id="field_link" data-cy="link" formControlName="link" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.meioPagamento.token" for="field_token">Token</label>
+          <input type="text" class="form-control" name="token" id="field_token" data-cy="token" formControlName="token" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.meioPagamento.username" for="field_username">Username</label>
+          <input type="text" class="form-control" name="username" id="field_username" data-cy="username" formControlName="username" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.meioPagamento.password" for="field_password">Password</label>
+          <input type="text" class="form-control" name="password" id="field_password" data-cy="password" formControlName="password" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.meioPagamento.formatoReferencia" for="field_formatoReferencia"
+            >Formato Referencia</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="formatoReferencia"
+            id="field_formatoReferencia"
+            data-cy="formatoReferencia"
+            formControlName="formatoReferencia"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

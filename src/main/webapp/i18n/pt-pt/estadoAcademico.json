@@ -1,0 +1,23 @@
+{
+  "longonkeloApp": {
+    "EstadoAcademico": {
+      "null": "",
+      "INSCRITO": "INSCRITO",
+      "MATRICULADO": "MATRICULADO",
+      "CONFIRMADO": "CONFIRMADO",
+      "TRANSFERIDO": "TRANSFERIDO",
+      "VIGENTE": "VIGENTE",
+      "BLOQUEADO": "BLOQUEADO",
+      "SUSPENSPO": "SUSPENSPO",
+      "EXPULSO": "EXPULSO",
+      "DESISTENTE": "DESISTENTE",
+      "APROVADO": "APROVADO",
+      "REPROVADO": "REPROVADO",
+      "PENDENTE": "PENDENTE",
+      "RECURSO": "RECURSO",
+      "EXAME": "EXAME",
+      "EXAME_ESPECIAL": "EXAME_ESPECIAL",
+      "FINALISTA": "FINALISTA"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "longonkeloApp": {
+    "EstadoItemFactura": {
+      "null": "",
+      "PENDENTE": "PENDENTE",
+      "PAGO": "PAGO",
+      "ATRASADO": "ATRASADO",
+      "CANCELADO": "CANCELADO"
+    }
+  }
+}

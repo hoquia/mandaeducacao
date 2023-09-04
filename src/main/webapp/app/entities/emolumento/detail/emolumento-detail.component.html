@@ -1,0 +1,101 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="emolumento">
+      <h2 data-cy="emolumentoDetailsHeading"><span appTranslate="longonkeloApp.emolumento.detail.title">Emolumento</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ emolumento.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.emolumento.imagem">Imagem</span></dt>
+        <dd>
+          <div *ngIf="emolumento.imagem">
+            <a (click)="openFile(emolumento.imagem, emolumento.imagemContentType)">
+              <img
+                [src]="'data:' + emolumento.imagemContentType + ';base64,' + emolumento.imagem"
+                style="max-width: 100%"
+                alt="emolumento image"
+              />
+            </a>
+            {{ emolumento.imagemContentType }}, {{ byteSize(emolumento.imagem) }}
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.emolumento.numero">Numero</span></dt>
+        <dd>
+          <span>{{ emolumento.numero }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.emolumento.nome">Nome</span></dt>
+        <dd>
+          <span>{{ emolumento.nome }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.emolumento.preco">Preco</span></dt>
+        <dd>
+          <span>{{ emolumento.preco }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.emolumento.quantidade">Quantidade</span></dt>
+        <dd>
+          <span>{{ emolumento.quantidade }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.emolumento.periodo">Periodo</span></dt>
+        <dd>
+          <span>{{ emolumento.periodo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.emolumento.inicioPeriodo">Inicio Periodo</span></dt>
+        <dd>
+          <span>{{ emolumento.inicioPeriodo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.emolumento.fimPeriodo">Fim Periodo</span></dt>
+        <dd>
+          <span>{{ emolumento.fimPeriodo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.emolumento.isObrigatorioMatricula">Is Obrigatorio Matricula</span></dt>
+        <dd>
+          <span>{{ emolumento.isObrigatorioMatricula }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.emolumento.isObrigatorioConfirmacao">Is Obrigatorio Confirmacao</span></dt>
+        <dd>
+          <span>{{ emolumento.isObrigatorioConfirmacao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.emolumento.categoria">Categoria</span></dt>
+        <dd>
+          <div *ngIf="emolumento.categoria">
+            <a [routerLink]="['/categoria-emolumento', emolumento.categoria.id, 'view']">{{ emolumento.categoria.nome }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.emolumento.imposto">Imposto</span></dt>
+        <dd>
+          <div *ngIf="emolumento.imposto">
+            <a [routerLink]="['/imposto', emolumento.imposto.id, 'view']">{{ emolumento.imposto.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.emolumento.referencia">Referencia</span></dt>
+        <dd>
+          <div *ngIf="emolumento.referencia">
+            <a [routerLink]="['/emolumento', emolumento.referencia.id, 'view']">{{ emolumento.referencia.nome }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.emolumento.planoMulta">Plano Multa</span></dt>
+        <dd>
+          <div *ngIf="emolumento.planoMulta">
+            <a [routerLink]="['/plano-multa', emolumento.planoMulta.id, 'view']">{{ emolumento.planoMulta.descricao }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/emolumento', emolumento.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

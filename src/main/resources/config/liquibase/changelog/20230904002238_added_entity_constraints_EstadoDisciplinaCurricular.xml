@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity EstadoDisciplinaCurricular.
+    -->
+    <changeSet id="20230904002238-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="estado_disciplina_curricular_id"
+                                 baseTableName="rel_estado_disciplina_curricular__disciplinas_curriculars"
+                                 constraintName="fk_rel_estado_disciplina_curric__estado_disciplina_curric_17_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="estado_disciplina_curricular"/>
+
+        <addForeignKeyConstraint baseColumnNames="disciplinas_curriculars_id"
+                                 baseTableName="rel_estado_disciplina_curricular__disciplinas_curriculars"
+                                 constraintName="fk_rel_estado_disciplina_curric__disciplinas_curriculars_c8_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="disciplina_curricular"/>
+
+        <addForeignKeyConstraint baseColumnNames="referencia_id"
+                                 baseTableName="estado_disciplina_curricular"
+                                 constraintName="fk_estado_disciplina_curricular__referencia_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="estado_disciplina_curricular"/>
+    </changeSet>
+</databaseChangeLog>

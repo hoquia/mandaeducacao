@@ -1,0 +1,157 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002221",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "nivel_ensino",
+  "fields": [
+    {
+      "fieldName": "codigo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "idadeMinima",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "idadeMaxima",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "duracao",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "unidadeDuracao",
+      "fieldType": "UnidadeDuracao",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "HORA,DIA,MES,ANO,AULA"
+    },
+    {
+      "fieldName": "classeInicial",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "classeFinal",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "classeExame",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "totalDisciplina",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "responsavelTurno",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "responsavelAreaFormacao",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "responsavelCurso",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "responsavelDisciplina",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "responsavelTurma",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "responsavelGeral",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "responsavelPedagogico",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "responsavelAdministrativo",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "responsavelSecretariaGeral",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "responsavelSecretariaPedagogico",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "descricaoDocente",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "descricaoDiscente",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "NivelEnsino",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "nivelEnsino",
+      "otherEntityRelationshipName": "referencia",
+      "relationshipName": "nivelEnsino",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "areaFormacao",
+      "otherEntityRelationshipName": "nivelEnsino",
+      "relationshipName": "areaFormacao",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "nivelEnsino",
+      "otherEntityRelationshipName": "nivelEnsino",
+      "relationshipName": "referencia",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "anoLectivo",
+      "otherEntityRelationshipName": "nivesEnsino",
+      "ownerSide": false,
+      "relationshipName": "anoLectivos",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "classe",
+      "otherEntityRelationshipName": "nivesEnsino",
+      "ownerSide": false,
+      "relationshipName": "classes",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

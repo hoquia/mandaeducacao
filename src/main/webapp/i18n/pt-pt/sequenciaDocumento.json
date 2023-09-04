@@ -1,0 +1,28 @@
+{
+  "longonkeloApp": {
+    "sequenciaDocumento": {
+      "home": {
+        "title": "Sequencia Documentos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Sequencia Documento",
+        "createOrEditLabel": "Criar ou editar Sequencia Documento",
+        "notFound": "Nenhum Sequencia Documentos encontrado"
+      },
+      "created": "Um novo Sequencia Documento foi criado com o identificador {{ param }}",
+      "updated": "Sequencia Documento com identificador {{ param }} foi actualizado",
+      "deleted": "Sequencia Documento com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Sequencia Documento {{ id }}?"
+      },
+      "detail": {
+        "title": "Sequencia Documento"
+      },
+      "id": "ID",
+      "sequencia": "Sequencia",
+      "data": "Data",
+      "hash": "Hash",
+      "timestamp": "Timestamp",
+      "serie": "Serie"
+    }
+  }
+}

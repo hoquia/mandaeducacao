@@ -1,0 +1,116 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-serie-documento-heading"
+        data-cy="SerieDocumentoCreateUpdateHeading"
+        appTranslate="longonkeloApp.serieDocumento.home.createOrEditLabel"
+      >
+        Criar ou editar Serie Documento
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.serieDocumento.anoFiscal" for="field_anoFiscal">Ano Fiscal</label>
+          <input type="number" class="form-control" name="anoFiscal" id="field_anoFiscal" data-cy="anoFiscal" formControlName="anoFiscal" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.serieDocumento.versao" for="field_versao">Versao</label>
+          <input type="number" class="form-control" name="versao" id="field_versao" data-cy="versao" formControlName="versao" />
+          <div *ngIf="editForm.get('versao')!.invalid && (editForm.get('versao')!.dirty || editForm.get('versao')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('versao')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('versao')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('versao')?.errors?.number" appTranslate="entity.validation.number">
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.serieDocumento.serie" for="field_serie">Serie</label>
+          <input type="text" class="form-control" name="serie" id="field_serie" data-cy="serie" formControlName="serie" />
+          <div *ngIf="editForm.get('serie')!.invalid && (editForm.get('serie')!.dirty || editForm.get('serie')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('serie')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.serieDocumento.isAtivo" for="field_isAtivo">Is Ativo</label>
+          <input type="checkbox" class="form-check" name="isAtivo" id="field_isAtivo" data-cy="isAtivo" formControlName="isAtivo" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.serieDocumento.isPadrao" for="field_isPadrao">Is Padrao</label>
+          <input type="checkbox" class="form-check" name="isPadrao" id="field_isPadrao" data-cy="isPadrao" formControlName="isPadrao" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.serieDocumento.tipoDocumento" for="field_tipoDocumento"
+            >Tipo Documento</label
+          >
+          <select
+            class="form-control"
+            id="field_tipoDocumento"
+            data-cy="tipoDocumento"
+            name="tipoDocumento"
+            formControlName="tipoDocumento"
+            [compareWith]="compareDocumentoComercial"
+          >
+            <option *ngIf="editForm.get(['tipoDocumento'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="documentoComercialOption" *ngFor="let documentoComercialOption of documentoComercialsSharedCollection">
+              {{ documentoComercialOption.siglaFiscal }}
+            </option>
+          </select>
+        </div>
+        <div
+          *ngIf="
+            editForm.get(['tipoDocumento'])!.invalid && (editForm.get(['tipoDocumento'])!.dirty || editForm.get(['tipoDocumento'])!.touched)
+          "
+        >
+          <small
+            class="form-text text-danger"
+            *ngIf="editForm.get(['tipoDocumento'])?.errors?.required"
+            appTranslate="entity.validation.required"
+          >
+            O campo é obrigatório.
+          </small>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

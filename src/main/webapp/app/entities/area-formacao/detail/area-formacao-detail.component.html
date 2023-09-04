@@ -1,0 +1,59 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="areaFormacao">
+      <h2 data-cy="areaFormacaoDetailsHeading"><span appTranslate="longonkeloApp.areaFormacao.detail.title">Area Formacao</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ areaFormacao.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.areaFormacao.imagem">Imagem</span></dt>
+        <dd>
+          <div *ngIf="areaFormacao.imagem">
+            <a (click)="openFile(areaFormacao.imagem, areaFormacao.imagemContentType)">
+              <img
+                [src]="'data:' + areaFormacao.imagemContentType + ';base64,' + areaFormacao.imagem"
+                style="max-width: 100%"
+                alt="areaFormacao image"
+              />
+            </a>
+            {{ areaFormacao.imagemContentType }}, {{ byteSize(areaFormacao.imagem) }}
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.areaFormacao.codigo">Codigo</span></dt>
+        <dd>
+          <span>{{ areaFormacao.codigo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.areaFormacao.nome">Nome</span></dt>
+        <dd>
+          <span>{{ areaFormacao.nome }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.areaFormacao.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ areaFormacao.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.areaFormacao.nivelEnsino">Nivel Ensino</span></dt>
+        <dd>
+          <div *ngIf="areaFormacao.nivelEnsino">
+            <a [routerLink]="['/nivel-ensino', areaFormacao.nivelEnsino.id, 'view']">{{ areaFormacao.nivelEnsino.nome }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/area-formacao', areaFormacao.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

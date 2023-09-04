@@ -1,0 +1,150 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="planoCurricular">
+      <h2 data-cy="planoCurricularDetailsHeading">
+        <span appTranslate="longonkeloApp.planoCurricular.detail.title">Plano Curricular</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ planoCurricular.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ planoCurricular.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.formulaClassificacaoFinal">Formula Classificacao Final</span></dt>
+        <dd>
+          <span>{{ planoCurricular.formulaClassificacaoFinal }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.numeroDisciplinaAprova">Numero Disciplina Aprova</span></dt>
+        <dd>
+          <span>{{ planoCurricular.numeroDisciplinaAprova }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.numeroDisciplinaReprova">Numero Disciplina Reprova</span></dt>
+        <dd>
+          <span>{{ planoCurricular.numeroDisciplinaReprova }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.numeroDisciplinaRecurso">Numero Disciplina Recurso</span></dt>
+        <dd>
+          <span>{{ planoCurricular.numeroDisciplinaRecurso }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.numeroDisciplinaExame">Numero Disciplina Exame</span></dt>
+        <dd>
+          <span>{{ planoCurricular.numeroDisciplinaExame }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.numeroDisciplinaExameEspecial">Numero Disciplina Exame Especial</span></dt>
+        <dd>
+          <span>{{ planoCurricular.numeroDisciplinaExameEspecial }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.numeroFaltaReprova">Numero Falta Reprova</span></dt>
+        <dd>
+          <span>{{ planoCurricular.numeroFaltaReprova }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.pesoMedia1">Peso Media 1</span></dt>
+        <dd>
+          <span>{{ planoCurricular.pesoMedia1 }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.pesoMedia2">Peso Media 2</span></dt>
+        <dd>
+          <span>{{ planoCurricular.pesoMedia2 }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.pesoMedia3">Peso Media 3</span></dt>
+        <dd>
+          <span>{{ planoCurricular.pesoMedia3 }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.pesoRecurso">Peso Recurso</span></dt>
+        <dd>
+          <span>{{ planoCurricular.pesoRecurso }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.pesoExame">Peso Exame</span></dt>
+        <dd>
+          <span>{{ planoCurricular.pesoExame }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.pesoExameEspecial">Peso Exame Especial</span></dt>
+        <dd>
+          <span>{{ planoCurricular.pesoExameEspecial }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.pesoNotaCoselho">Peso Nota Coselho</span></dt>
+        <dd>
+          <span>{{ planoCurricular.pesoNotaCoselho }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.siglaProva1">Sigla Prova 1</span></dt>
+        <dd>
+          <span>{{ planoCurricular.siglaProva1 }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.siglaProva2">Sigla Prova 2</span></dt>
+        <dd>
+          <span>{{ planoCurricular.siglaProva2 }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.siglaProva3">Sigla Prova 3</span></dt>
+        <dd>
+          <span>{{ planoCurricular.siglaProva3 }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.siglaMedia1">Sigla Media 1</span></dt>
+        <dd>
+          <span>{{ planoCurricular.siglaMedia1 }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.siglaMedia2">Sigla Media 2</span></dt>
+        <dd>
+          <span>{{ planoCurricular.siglaMedia2 }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.siglaMedia3">Sigla Media 3</span></dt>
+        <dd>
+          <span>{{ planoCurricular.siglaMedia3 }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.formulaMedia">Formula Media</span></dt>
+        <dd>
+          <span>{{ planoCurricular.formulaMedia }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.formulaDispensa">Formula Dispensa</span></dt>
+        <dd>
+          <span>{{ planoCurricular.formulaDispensa }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.formulaExame">Formula Exame</span></dt>
+        <dd>
+          <span>{{ planoCurricular.formulaExame }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.formulaRecurso">Formula Recurso</span></dt>
+        <dd>
+          <span>{{ planoCurricular.formulaRecurso }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.formulaExameEspecial">Formula Exame Especial</span></dt>
+        <dd>
+          <span>{{ planoCurricular.formulaExameEspecial }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ planoCurricular.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.classe">Classe</span></dt>
+        <dd>
+          <div *ngIf="planoCurricular.classe">
+            <a [routerLink]="['/classe', planoCurricular.classe.id, 'view']">{{ planoCurricular.classe.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoCurricular.curso">Curso</span></dt>
+        <dd>
+          <div *ngIf="planoCurricular.curso">
+            <a [routerLink]="['/curso', planoCurricular.curso.id, 'view']">{{ planoCurricular.curso.nome }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/plano-curricular', planoCurricular.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

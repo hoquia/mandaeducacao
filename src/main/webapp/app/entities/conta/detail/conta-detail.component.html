@@ -1,0 +1,67 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="conta">
+      <h2 data-cy="contaDetailsHeading"><span appTranslate="longonkeloApp.conta.detail.title">Conta</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ conta.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.conta.imagem">Imagem</span></dt>
+        <dd>
+          <div *ngIf="conta.imagem">
+            <a (click)="openFile(conta.imagem, conta.imagemContentType)">
+              <img [src]="'data:' + conta.imagemContentType + ';base64,' + conta.imagem" style="max-width: 100%" alt="conta image" />
+            </a>
+            {{ conta.imagemContentType }}, {{ byteSize(conta.imagem) }}
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.conta.tipo">Tipo</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.TipoConta.' + conta.tipo }}">{{ conta.tipo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.conta.titulo">Titulo</span></dt>
+        <dd>
+          <span>{{ conta.titulo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.conta.numero">Numero</span></dt>
+        <dd>
+          <span>{{ conta.numero }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.conta.iban">Iban</span></dt>
+        <dd>
+          <span>{{ conta.iban }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.conta.titular">Titular</span></dt>
+        <dd>
+          <span>{{ conta.titular }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.conta.isPadrao">Is Padrao</span></dt>
+        <dd>
+          <span>{{ conta.isPadrao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.conta.moeda">Moeda</span></dt>
+        <dd>
+          <div *ngIf="conta.moeda">
+            <a [routerLink]="['/lookup-item', conta.moeda.id, 'view']">{{ conta.moeda.descricao }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/conta', conta.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

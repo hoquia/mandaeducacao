@@ -1,0 +1,40 @@
+{
+  "longonkeloApp": {
+    "emolumento": {
+      "home": {
+        "title": "Emolumentos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Emolumento",
+        "createOrEditLabel": "Criar ou editar Emolumento",
+        "notFound": "Nenhum Emolumentos encontrado"
+      },
+      "created": "Um novo Emolumento foi criado com o identificador {{ param }}",
+      "updated": "Emolumento com identificador {{ param }} foi actualizado",
+      "deleted": "Emolumento com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Emolumento {{ id }}?"
+      },
+      "detail": {
+        "title": "Emolumento"
+      },
+      "id": "ID",
+      "imagem": "Imagem",
+      "numero": "Numero",
+      "nome": "Nome",
+      "preco": "Preco",
+      "quantidade": "Quantidade",
+      "periodo": "Periodo",
+      "inicioPeriodo": "Inicio Periodo",
+      "fimPeriodo": "Fim Periodo",
+      "isObrigatorioMatricula": "Is Obrigatorio Matricula",
+      "isObrigatorioConfirmacao": "Is Obrigatorio Confirmacao",
+      "itemFactura": "Item Factura",
+      "emolumento": "Emolumento",
+      "precosEmolumento": "Precos Emolumento",
+      "categoria": "Categoria",
+      "imposto": "Imposto",
+      "referencia": "Referencia",
+      "planoMulta": "Plano Multa"
+    }
+  }
+}

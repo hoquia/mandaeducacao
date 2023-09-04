@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Docente.
+    -->
+    <changeSet id="20230904002230-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="nacionalidade_id"
+                                 baseTableName="docente"
+                                 constraintName="fk_docente__nacionalidade_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="naturalidade_id"
+                                 baseTableName="docente"
+                                 constraintName="fk_docente__naturalidade_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="tipo_documento_id"
+                                 baseTableName="docente"
+                                 constraintName="fk_docente__tipo_documento_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="grau_academico_id"
+                                 baseTableName="docente"
+                                 constraintName="fk_docente__grau_academico_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="categoria_profissional_id"
+                                 baseTableName="docente"
+                                 constraintName="fk_docente__categoria_profissional_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="unidade_organica_id"
+                                 baseTableName="docente"
+                                 constraintName="fk_docente__unidade_organica_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="estado_civil_id"
+                                 baseTableName="docente"
+                                 constraintName="fk_docente__estado_civil_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="responsavel_turno_id"
+                                 baseTableName="docente"
+                                 constraintName="fk_docente__responsavel_turno_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="responsavel_turno"/>
+
+        <addForeignKeyConstraint baseColumnNames="responsavel_area_formacao_id"
+                                 baseTableName="docente"
+                                 constraintName="fk_docente__responsavel_area_formacao_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="responsavel_area_formacao"/>
+
+        <addForeignKeyConstraint baseColumnNames="responsavel_curso_id"
+                                 baseTableName="docente"
+                                 constraintName="fk_docente__responsavel_curso_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="responsavel_curso"/>
+
+        <addForeignKeyConstraint baseColumnNames="responsavel_disciplina_id"
+                                 baseTableName="docente"
+                                 constraintName="fk_docente__responsavel_disciplina_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="responsavel_disciplina"/>
+
+        <addForeignKeyConstraint baseColumnNames="responsavel_turma_id"
+                                 baseTableName="docente"
+                                 constraintName="fk_docente__responsavel_turma_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="responsavel_turma"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,49 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="campoActuacaoDissertacao">
+      <h2 data-cy="campoActuacaoDissertacaoDetailsHeading">
+        <span appTranslate="longonkeloApp.campoActuacaoDissertacao.detail.title">Campo Actuacao Dissertacao</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ campoActuacaoDissertacao.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.campoActuacaoDissertacao.nome">Nome</span></dt>
+        <dd>
+          <span>{{ campoActuacaoDissertacao.nome }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.campoActuacaoDissertacao.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ campoActuacaoDissertacao.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.campoActuacaoDissertacao.isActivo">Is Activo</span></dt>
+        <dd>
+          <span>{{ campoActuacaoDissertacao.isActivo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.campoActuacaoDissertacao.cursos">Cursos</span></dt>
+        <dd>
+          <span *ngFor="let cursos of campoActuacaoDissertacao.cursos; let last = last">
+            <a [routerLink]="['/curso', cursos.id, 'view']">{{ cursos.nome }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/campo-actuacao-dissertacao', campoActuacaoDissertacao.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

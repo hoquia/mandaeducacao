@@ -1,0 +1,250 @@
+<div>
+  <h2 id="page-heading" data-cy="NotasPeriodicaDisciplinaHeading">
+    <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.home.title">Notas Periodica Disciplinas</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-notas-periodica-disciplina"
+        [routerLink]="['/notas-periodica-disciplina/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.home.createLabel"> Criar novo(a) Notas Periodica Disciplina </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="notasPeriodicaDisciplinas?.length === 0">
+    <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.home.notFound">Nenhum Notas Periodica Disciplinas encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="notasPeriodicaDisciplinas && notasPeriodicaDisciplinas.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="chaveComposta">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.chaveComposta">Chave Composta</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="periodoLancamento">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.periodoLancamento">Periodo Lancamento</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="nota1">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.nota1">Nota 1</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="nota2">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.nota2">Nota 2</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="nota3">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.nota3">Nota 3</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="media">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.media">Media</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="faltaJusticada">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.faltaJusticada">Falta Justicada</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="faltaInjustificada">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.faltaInjustificada">Falta Injustificada</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="comportamento">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.comportamento">Comportamento</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="hash">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.hash">Hash</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="timestamp">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.timestamp">Timestamp</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="utilizador.login">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.utilizador">Utilizador</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="turma.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.turma">Turma</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="docente.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.docente">Docente</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="disciplinaCurricular.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.disciplinaCurricular">Disciplina Curricular</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="matricula.numeroMatricula">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.matricula">Matricula</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="estado.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.estado">Estado</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let notasPeriodicaDisciplina of notasPeriodicaDisciplinas; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/notas-periodica-disciplina', notasPeriodicaDisciplina.id, 'view']">{{ notasPeriodicaDisciplina.id }}</a>
+          </td>
+          <td>{{ notasPeriodicaDisciplina.chaveComposta }}</td>
+          <td>{{ notasPeriodicaDisciplina.periodoLancamento }}</td>
+          <td>{{ notasPeriodicaDisciplina.nota1 }}</td>
+          <td>{{ notasPeriodicaDisciplina.nota2 }}</td>
+          <td>{{ notasPeriodicaDisciplina.nota3 }}</td>
+          <td>{{ notasPeriodicaDisciplina.media }}</td>
+          <td>{{ notasPeriodicaDisciplina.faltaJusticada }}</td>
+          <td>{{ notasPeriodicaDisciplina.faltaInjustificada }}</td>
+          <td appTranslate="{{ 'longonkeloApp.Comporamento.' + notasPeriodicaDisciplina.comportamento }}">
+            {{ notasPeriodicaDisciplina.comportamento }}
+          </td>
+          <td>{{ notasPeriodicaDisciplina.hash }}</td>
+          <td>{{ notasPeriodicaDisciplina.timestamp | formatMediumDatetime }}</td>
+          <td>
+            {{ notasPeriodicaDisciplina.utilizador?.login }}
+          </td>
+          <td>
+            <div *ngIf="notasPeriodicaDisciplina.turma">
+              <a [routerLink]="['/turma', notasPeriodicaDisciplina.turma.id, 'view']">{{ notasPeriodicaDisciplina.turma.descricao }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="notasPeriodicaDisciplina.docente">
+              <a [routerLink]="['/docente', notasPeriodicaDisciplina.docente.id, 'view']">{{ notasPeriodicaDisciplina.docente.nome }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="notasPeriodicaDisciplina.disciplinaCurricular">
+              <a [routerLink]="['/disciplina-curricular', notasPeriodicaDisciplina.disciplinaCurricular.id, 'view']">{{
+                notasPeriodicaDisciplina.disciplinaCurricular.descricao
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="notasPeriodicaDisciplina.matricula">
+              <a [routerLink]="['/matricula', notasPeriodicaDisciplina.matricula.id, 'view']">{{
+                notasPeriodicaDisciplina.matricula.numeroMatricula
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="notasPeriodicaDisciplina.estado">
+              <a [routerLink]="['/estado-disciplina-curricular', notasPeriodicaDisciplina.estado.id, 'view']">{{
+                notasPeriodicaDisciplina.estado.descricao
+              }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/notas-periodica-disciplina', notasPeriodicaDisciplina.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/notas-periodica-disciplina', notasPeriodicaDisciplina.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(notasPeriodicaDisciplina)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="notasPeriodicaDisciplinas && notasPeriodicaDisciplinas.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

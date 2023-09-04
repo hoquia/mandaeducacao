@@ -1,0 +1,70 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002225",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "curso",
+  "fields": [
+    {
+      "fieldName": "imagem",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "image"
+    },
+    {
+      "fieldName": "codigo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "Curso",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "planoCurricular",
+      "otherEntityRelationshipName": "curso",
+      "relationshipName": "planoCurricular",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "responsavelCurso",
+      "otherEntityRelationshipName": "curso",
+      "relationshipName": "responsaveis",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "precoEmolumento",
+      "otherEntityRelationshipName": "curso",
+      "relationshipName": "precoEmolumento",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "areaFormacao",
+      "otherEntityRelationshipName": "cursos",
+      "relationshipName": "areaFormacao",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "campoActuacaoDissertacao",
+      "otherEntityRelationshipName": "cursos",
+      "ownerSide": false,
+      "relationshipName": "camposActuacao",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

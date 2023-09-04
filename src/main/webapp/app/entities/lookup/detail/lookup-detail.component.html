@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="lookup">
+      <h2 data-cy="lookupDetailsHeading"><span appTranslate="longonkeloApp.lookup.detail.title">Lookup</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ lookup.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.lookup.codigo">Codigo</span></dt>
+        <dd>
+          <span>{{ lookup.codigo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.lookup.nome">Nome</span></dt>
+        <dd>
+          <span>{{ lookup.nome }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.lookup.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ lookup.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.lookup.isSistema">Is Sistema</span></dt>
+        <dd>
+          <span>{{ lookup.isSistema }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.lookup.isModificavel">Is Modificavel</span></dt>
+        <dd>
+          <span>{{ lookup.isModificavel }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/lookup', lookup.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

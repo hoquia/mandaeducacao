@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity Transacao.
+    -->
+    <changeSet id="20230904002312-1" author="jhipster">
+        <createTable tableName="transacao">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="montante" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="data" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="referencia" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_transacao__referencia" />
+            </column>
+            <column name="estado" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="saldo" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="anexo" type="${blobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="anexo_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="timestamp" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="utilizador_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="moeda_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="matricula_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="meio_pagamento_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="conta_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+        <dropDefaultValue tableName="transacao" columnName="timestamp" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

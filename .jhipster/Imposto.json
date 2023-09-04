@@ -1,0 +1,77 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002307",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "imposto",
+  "fields": [
+    {
+      "fieldName": "descricao",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "pais",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "taxa",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max", "required"],
+      "fieldValidateRulesMax": "100",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "isRetencao",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "motivoDescricao",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "motivoCodigo",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Imposto",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "emolumento",
+      "otherEntityRelationshipName": "imposto",
+      "relationshipName": "emolumento",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "tipoImposto",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "codigoImposto",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "motivoIsencaoCodigo",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "descricao",
+      "otherEntityName": "lookupItem",
+      "relationshipName": "motivoIsencaoDescricao",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

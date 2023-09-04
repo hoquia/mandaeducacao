@@ -1,0 +1,54 @@
+{
+  "longonkeloApp": {
+    "planoCurricular": {
+      "home": {
+        "title": "Plano Curriculars",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Plano Curricular",
+        "createOrEditLabel": "Criar ou editar Plano Curricular",
+        "notFound": "Nenhum Plano Curriculars encontrado"
+      },
+      "created": "Um novo Plano Curricular foi criado com o identificador {{ param }}",
+      "updated": "Plano Curricular com identificador {{ param }} foi actualizado",
+      "deleted": "Plano Curricular com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Plano Curricular {{ id }}?"
+      },
+      "detail": {
+        "title": "Plano Curricular"
+      },
+      "id": "ID",
+      "descricao": "Descricao",
+      "formulaClassificacaoFinal": "Formula Classificacao Final",
+      "numeroDisciplinaAprova": "Numero Disciplina Aprova",
+      "numeroDisciplinaReprova": "Numero Disciplina Reprova",
+      "numeroDisciplinaRecurso": "Numero Disciplina Recurso",
+      "numeroDisciplinaExame": "Numero Disciplina Exame",
+      "numeroDisciplinaExameEspecial": "Numero Disciplina Exame Especial",
+      "numeroFaltaReprova": "Numero Falta Reprova",
+      "pesoMedia1": "Peso Media 1",
+      "pesoMedia2": "Peso Media 2",
+      "pesoMedia3": "Peso Media 3",
+      "pesoRecurso": "Peso Recurso",
+      "pesoExame": "Peso Exame",
+      "pesoExameEspecial": "Peso Exame Especial",
+      "pesoNotaCoselho": "Peso Nota Coselho",
+      "siglaProva1": "Sigla Prova 1",
+      "siglaProva2": "Sigla Prova 2",
+      "siglaProva3": "Sigla Prova 3",
+      "siglaMedia1": "Sigla Media 1",
+      "siglaMedia2": "Sigla Media 2",
+      "siglaMedia3": "Sigla Media 3",
+      "formulaMedia": "Formula Media",
+      "formulaDispensa": "Formula Dispensa",
+      "formulaExame": "Formula Exame",
+      "formulaRecurso": "Formula Recurso",
+      "formulaExameEspecial": "Formula Exame Especial",
+      "turma": "Turma",
+      "utilizador": "Utilizador",
+      "classe": "Classe",
+      "curso": "Curso",
+      "disciplinasCurricular": "Disciplinas Curricular"
+    }
+  }
+}

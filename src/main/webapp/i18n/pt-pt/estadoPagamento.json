@@ -1,0 +1,12 @@
+{
+  "longonkeloApp": {
+    "EstadoPagamento": {
+      "null": "",
+      "VALIDO": "VALIDO",
+      "REJEITADO": "REJEITADO",
+      "PENDENTE": "PENDENTE",
+      "CANCELADO": "CANCELADO",
+      "USADO": "USADO"
+    }
+  }
+}

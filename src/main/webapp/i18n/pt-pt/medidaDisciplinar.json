@@ -1,0 +1,28 @@
+{
+  "longonkeloApp": {
+    "medidaDisciplinar": {
+      "home": {
+        "title": "Medida Disciplinars",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Medida Disciplinar",
+        "createOrEditLabel": "Criar ou editar Medida Disciplinar",
+        "notFound": "Nenhum Medida Disciplinars encontrado"
+      },
+      "created": "Um novo Medida Disciplinar foi criado com o identificador {{ param }}",
+      "updated": "Medida Disciplinar com identificador {{ param }} foi actualizado",
+      "deleted": "Medida Disciplinar com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Medida Disciplinar {{ id }}?"
+      },
+      "detail": {
+        "title": "Medida Disciplinar"
+      },
+      "id": "ID",
+      "descricao": "Descricao",
+      "periodo": "Periodo",
+      "suspensao": "Suspensao",
+      "tempo": "Tempo",
+      "categoriaOcorrencia": "Categoria Ocorrencia"
+    }
+  }
+}

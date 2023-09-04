@@ -1,0 +1,72 @@
+{
+  "longonkeloApp": {
+    "factura": {
+      "home": {
+        "title": "Facturas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Factura",
+        "createOrEditLabel": "Criar ou editar Factura",
+        "notFound": "Nenhum Facturas encontrado"
+      },
+      "created": "Um novo Factura foi criado com o identificador {{ param }}",
+      "updated": "Factura com identificador {{ param }} foi actualizado",
+      "deleted": "Factura com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Factura {{ id }}?"
+      },
+      "detail": {
+        "title": "Factura"
+      },
+      "id": "ID",
+      "numero": "Numero",
+      "codigoEntrega": "Codigo Entrega",
+      "dataEmissao": "Data Emissao",
+      "dataVencimento": "Data Vencimento",
+      "cae": "Cae",
+      "inicioTransporte": "Inicio Transporte",
+      "fimTransporte": "Fim Transporte",
+      "observacaoGeral": "Observacao Geral",
+      "observacaoInterna": "Observacao Interna",
+      "estado": "Estado",
+      "origem": "Origem",
+      "timestamp": "Timestamp",
+      "isMoedaEntrangeira": "Is Moeda Entrangeira",
+      "moeda": "Moeda",
+      "cambio": "Cambio",
+      "totalMoedaEntrangeira": "Total Moeda Entrangeira",
+      "totalIliquido": "Total Iliquido",
+      "totalDescontoComercial": "Total Desconto Comercial",
+      "totalLiquido": "Total Liquido",
+      "totalImpostoIVA": "Total Imposto IVA",
+      "totalImpostoEspecialConsumo": "Total Imposto Especial Consumo",
+      "totalDescontoFinanceiro": "Total Desconto Financeiro",
+      "totalFactura": "Total Factura",
+      "totalImpostoRetencaoFonte": "Total Imposto Retencao Fonte",
+      "totalPagar": "Total Pagar",
+      "debito": "Debito",
+      "credito": "Credito",
+      "totalPago": "Total Pago",
+      "totalDiferenca": "Total Diferenca",
+      "isAutoFacturacao": "Is Auto Facturacao",
+      "isRegimeCaixa": "Is Regime Caixa",
+      "isEmitidaNomeEContaTerceiro": "Is Emitida Nome E Conta Terceiro",
+      "isNovo": "Is Novo",
+      "isFiscalizado": "Is Fiscalizado",
+      "signText": "Sign Text",
+      "hash": "Hash",
+      "hashShort": "Hash Short",
+      "hashControl": "Hash Control",
+      "keyVersion": "Key Version",
+      "factura": "Factura",
+      "itemsFactura": "Items Factura",
+      "aplicacoesFactura": "Aplicacoes Factura",
+      "resumosImposto": "Resumos Imposto",
+      "anoLectivo": "Ano Lectivo",
+      "utilizador": "Utilizador",
+      "motivoAnulacao": "Motivo Anulacao",
+      "matricula": "Matricula",
+      "referencia": "Referencia",
+      "documentoComercial": "Documento Comercial"
+    }
+  }
+}

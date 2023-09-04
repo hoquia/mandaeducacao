@@ -1,0 +1,453 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-nivel-ensino-heading"
+        data-cy="NivelEnsinoCreateUpdateHeading"
+        appTranslate="longonkeloApp.nivelEnsino.home.createOrEditLabel"
+      >
+        Criar ou editar Nivel Ensino
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.codigo" for="field_codigo">Codigo</label>
+          <input type="text" class="form-control" name="codigo" id="field_codigo" data-cy="codigo" formControlName="codigo" />
+          <div *ngIf="editForm.get('codigo')!.invalid && (editForm.get('codigo')!.dirty || editForm.get('codigo')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('codigo')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.nome" for="field_nome">Nome</label>
+          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
+          <div *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('nome')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.descricao" for="field_descricao">Descricao</label>
+          <textarea class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao"></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.idadeMinima" for="field_idadeMinima">Idade Minima</label>
+          <input
+            type="number"
+            class="form-control"
+            name="idadeMinima"
+            id="field_idadeMinima"
+            data-cy="idadeMinima"
+            formControlName="idadeMinima"
+          />
+          <div *ngIf="editForm.get('idadeMinima')!.invalid && (editForm.get('idadeMinima')!.dirty || editForm.get('idadeMinima')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('idadeMinima')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('idadeMinima')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.idadeMaxima" for="field_idadeMaxima">Idade Maxima</label>
+          <input
+            type="number"
+            class="form-control"
+            name="idadeMaxima"
+            id="field_idadeMaxima"
+            data-cy="idadeMaxima"
+            formControlName="idadeMaxima"
+          />
+          <div *ngIf="editForm.get('idadeMaxima')!.invalid && (editForm.get('idadeMaxima')!.dirty || editForm.get('idadeMaxima')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('idadeMaxima')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('idadeMaxima')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.duracao" for="field_duracao">Duracao</label>
+          <input type="number" class="form-control" name="duracao" id="field_duracao" data-cy="duracao" formControlName="duracao" />
+          <div *ngIf="editForm.get('duracao')!.invalid && (editForm.get('duracao')!.dirty || editForm.get('duracao')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('duracao')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('duracao')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.unidadeDuracao" for="field_unidadeDuracao"
+            >Unidade Duracao</label
+          >
+          <select
+            class="form-control"
+            name="unidadeDuracao"
+            formControlName="unidadeDuracao"
+            id="field_unidadeDuracao"
+            data-cy="unidadeDuracao"
+          >
+            <option [ngValue]="null">{{ 'longonkeloApp.UnidadeDuracao.null' | translate }}</option>
+            <option *ngFor="let unidadeDuracao of unidadeDuracaoValues" [value]="unidadeDuracao">
+              {{ 'longonkeloApp.UnidadeDuracao.' + unidadeDuracao | translate }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              editForm.get('unidadeDuracao')!.invalid && (editForm.get('unidadeDuracao')!.dirty || editForm.get('unidadeDuracao')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('unidadeDuracao')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.classeInicial" for="field_classeInicial">Classe Inicial</label>
+          <input
+            type="number"
+            class="form-control"
+            name="classeInicial"
+            id="field_classeInicial"
+            data-cy="classeInicial"
+            formControlName="classeInicial"
+          />
+          <div
+            *ngIf="
+              editForm.get('classeInicial')!.invalid && (editForm.get('classeInicial')!.dirty || editForm.get('classeInicial')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('classeInicial')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('classeInicial')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.classeFinal" for="field_classeFinal">Classe Final</label>
+          <input
+            type="number"
+            class="form-control"
+            name="classeFinal"
+            id="field_classeFinal"
+            data-cy="classeFinal"
+            formControlName="classeFinal"
+          />
+          <div *ngIf="editForm.get('classeFinal')!.invalid && (editForm.get('classeFinal')!.dirty || editForm.get('classeFinal')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('classeFinal')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('classeFinal')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.classeExame" for="field_classeExame">Classe Exame</label>
+          <input
+            type="number"
+            class="form-control"
+            name="classeExame"
+            id="field_classeExame"
+            data-cy="classeExame"
+            formControlName="classeExame"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.totalDisciplina" for="field_totalDisciplina"
+            >Total Disciplina</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="totalDisciplina"
+            id="field_totalDisciplina"
+            data-cy="totalDisciplina"
+            formControlName="totalDisciplina"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.responsavelTurno" for="field_responsavelTurno"
+            >Responsavel Turno</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="responsavelTurno"
+            id="field_responsavelTurno"
+            data-cy="responsavelTurno"
+            formControlName="responsavelTurno"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.responsavelAreaFormacao" for="field_responsavelAreaFormacao"
+            >Responsavel Area Formacao</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="responsavelAreaFormacao"
+            id="field_responsavelAreaFormacao"
+            data-cy="responsavelAreaFormacao"
+            formControlName="responsavelAreaFormacao"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.responsavelCurso" for="field_responsavelCurso"
+            >Responsavel Curso</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="responsavelCurso"
+            id="field_responsavelCurso"
+            data-cy="responsavelCurso"
+            formControlName="responsavelCurso"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.responsavelDisciplina" for="field_responsavelDisciplina"
+            >Responsavel Disciplina</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="responsavelDisciplina"
+            id="field_responsavelDisciplina"
+            data-cy="responsavelDisciplina"
+            formControlName="responsavelDisciplina"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.responsavelTurma" for="field_responsavelTurma"
+            >Responsavel Turma</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="responsavelTurma"
+            id="field_responsavelTurma"
+            data-cy="responsavelTurma"
+            formControlName="responsavelTurma"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.responsavelGeral" for="field_responsavelGeral"
+            >Responsavel Geral</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="responsavelGeral"
+            id="field_responsavelGeral"
+            data-cy="responsavelGeral"
+            formControlName="responsavelGeral"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.responsavelPedagogico" for="field_responsavelPedagogico"
+            >Responsavel Pedagogico</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="responsavelPedagogico"
+            id="field_responsavelPedagogico"
+            data-cy="responsavelPedagogico"
+            formControlName="responsavelPedagogico"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.responsavelAdministrativo" for="field_responsavelAdministrativo"
+            >Responsavel Administrativo</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="responsavelAdministrativo"
+            id="field_responsavelAdministrativo"
+            data-cy="responsavelAdministrativo"
+            formControlName="responsavelAdministrativo"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            appTranslate="longonkeloApp.nivelEnsino.responsavelSecretariaGeral"
+            for="field_responsavelSecretariaGeral"
+            >Responsavel Secretaria Geral</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="responsavelSecretariaGeral"
+            id="field_responsavelSecretariaGeral"
+            data-cy="responsavelSecretariaGeral"
+            formControlName="responsavelSecretariaGeral"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            appTranslate="longonkeloApp.nivelEnsino.responsavelSecretariaPedagogico"
+            for="field_responsavelSecretariaPedagogico"
+            >Responsavel Secretaria Pedagogico</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="responsavelSecretariaPedagogico"
+            id="field_responsavelSecretariaPedagogico"
+            data-cy="responsavelSecretariaPedagogico"
+            formControlName="responsavelSecretariaPedagogico"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.descricaoDocente" for="field_descricaoDocente"
+            >Descricao Docente</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="descricaoDocente"
+            id="field_descricaoDocente"
+            data-cy="descricaoDocente"
+            formControlName="descricaoDocente"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.descricaoDiscente" for="field_descricaoDiscente"
+            >Descricao Discente</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="descricaoDiscente"
+            id="field_descricaoDiscente"
+            data-cy="descricaoDiscente"
+            formControlName="descricaoDiscente"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.nivelEnsino.referencia" for="field_referencia">Referencia</label>
+          <select
+            class="form-control"
+            id="field_referencia"
+            data-cy="referencia"
+            name="referencia"
+            formControlName="referencia"
+            [compareWith]="compareNivelEnsino"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="nivelEnsinoOption" *ngFor="let nivelEnsinoOption of nivelEnsinosSharedCollection">
+              {{ nivelEnsinoOption.nome }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

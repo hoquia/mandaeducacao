@@ -1,0 +1,80 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="planoMulta">
+      <h2 data-cy="planoMultaDetailsHeading"><span appTranslate="longonkeloApp.planoMulta.detail.title">Plano Multa</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ planoMulta.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoMulta.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ planoMulta.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoMulta.diaAplicacaoMulta">Dia Aplicacao Multa</span></dt>
+        <dd>
+          <span>{{ planoMulta.diaAplicacaoMulta }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoMulta.metodoAplicacaoMulta">Metodo Aplicacao Multa</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.MetodoAplicacaoMulta.' + planoMulta.metodoAplicacaoMulta }}">{{
+            planoMulta.metodoAplicacaoMulta
+          }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoMulta.taxaMulta">Taxa Multa</span></dt>
+        <dd>
+          <span>{{ planoMulta.taxaMulta }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoMulta.isTaxaMultaPercentual">Is Taxa Multa Percentual</span></dt>
+        <dd>
+          <span>{{ planoMulta.isTaxaMultaPercentual }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoMulta.diaAplicacaoJuro">Dia Aplicacao Juro</span></dt>
+        <dd>
+          <span>{{ planoMulta.diaAplicacaoJuro }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoMulta.metodoAplicacaoJuro">Metodo Aplicacao Juro</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.MetodoAplicacaoMulta.' + planoMulta.metodoAplicacaoJuro }}">{{
+            planoMulta.metodoAplicacaoJuro
+          }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoMulta.taxaJuro">Taxa Juro</span></dt>
+        <dd>
+          <span>{{ planoMulta.taxaJuro }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoMulta.isTaxaJuroPercentual">Is Taxa Juro Percentual</span></dt>
+        <dd>
+          <span>{{ planoMulta.isTaxaJuroPercentual }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoMulta.aumentarJuroEmDias">Aumentar Juro Em Dias</span></dt>
+        <dd>
+          <span>{{ planoMulta.aumentarJuroEmDias }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoMulta.isAtivo">Is Ativo</span></dt>
+        <dd>
+          <span>{{ planoMulta.isAtivo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.planoMulta.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ planoMulta.utilizador?.login }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/plano-multa', planoMulta.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

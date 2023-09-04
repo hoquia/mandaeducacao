@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Matricula.
+    -->
+    <changeSet id="20230904002248-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="utilizador_id"
+                                 baseTableName="matricula"
+                                 constraintName="fk_matricula__utilizador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="app_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="matricula_id"
+                                 baseTableName="rel_matricula__categorias_matriculas"
+                                 constraintName="fk_rel_matricula__categorias_matriculas__matricula_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="matricula"/>
+
+        <addForeignKeyConstraint baseColumnNames="categorias_matriculas_id"
+                                 baseTableName="rel_matricula__categorias_matriculas"
+                                 constraintName="fk_rel_matricula__categorias_ma__categorias_matriculas_c9_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="plano_desconto"/>
+
+        <addForeignKeyConstraint baseColumnNames="turma_id"
+                                 baseTableName="matricula"
+                                 constraintName="fk_matricula__turma_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="turma"/>
+
+        <addForeignKeyConstraint baseColumnNames="responsavel_financeiro_id"
+                                 baseTableName="matricula"
+                                 constraintName="fk_matricula__responsavel_financeiro_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="encarregado_educacao"/>
+
+        <addForeignKeyConstraint baseColumnNames="discente_id"
+                                 baseTableName="matricula"
+                                 constraintName="fk_matricula__discente_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="discente"/>
+
+        <addForeignKeyConstraint baseColumnNames="referencia_id"
+                                 baseTableName="matricula"
+                                 constraintName="fk_matricula__referencia_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="matricula"/>
+    </changeSet>
+</databaseChangeLog>

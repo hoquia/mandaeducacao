@@ -1,0 +1,42 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="naturezaTrabalho">
+      <h2 data-cy="naturezaTrabalhoDetailsHeading">
+        <span appTranslate="longonkeloApp.naturezaTrabalho.detail.title">Natureza Trabalho</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ naturezaTrabalho.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.naturezaTrabalho.nome">Nome</span></dt>
+        <dd>
+          <span>{{ naturezaTrabalho.nome }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.naturezaTrabalho.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ naturezaTrabalho.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.naturezaTrabalho.isActivo">Is Activo</span></dt>
+        <dd>
+          <span>{{ naturezaTrabalho.isActivo }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/natureza-trabalho', naturezaTrabalho.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

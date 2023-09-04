@@ -1,0 +1,108 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-categoria-emolumento-heading"
+        data-cy="CategoriaEmolumentoCreateUpdateHeading"
+        appTranslate="longonkeloApp.categoriaEmolumento.home.createOrEditLabel"
+      >
+        Criar ou editar Categoria Emolumento
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.categoriaEmolumento.nome" for="field_nome">Nome</label>
+          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
+          <div *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('nome')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.categoriaEmolumento.isServico" for="field_isServico">Is Servico</label>
+          <input type="checkbox" class="form-check" name="isServico" id="field_isServico" data-cy="isServico" formControlName="isServico" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.categoriaEmolumento.cor" for="field_cor">Cor</label>
+          <input type="text" class="form-control" name="cor" id="field_cor" data-cy="cor" formControlName="cor" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.categoriaEmolumento.descricao" for="field_descricao">Descricao</label>
+          <textarea class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao"></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.categoriaEmolumento.isIsentoMulta" for="field_isIsentoMulta"
+            >Is Isento Multa</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isIsentoMulta"
+            id="field_isIsentoMulta"
+            data-cy="isIsentoMulta"
+            formControlName="isIsentoMulta"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.categoriaEmolumento.isIsentoJuro" for="field_isIsentoJuro"
+            >Is Isento Juro</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="isIsentoJuro"
+            id="field_isIsentoJuro"
+            data-cy="isIsentoJuro"
+            formControlName="isIsentoJuro"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.categoriaEmolumento.planoMulta" for="field_planoMulta">Plano Multa</label>
+          <select
+            class="form-control"
+            id="field_planoMulta"
+            data-cy="planoMulta"
+            name="planoMulta"
+            formControlName="planoMulta"
+            [compareWith]="comparePlanoMulta"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="planoMultaOption" *ngFor="let planoMultaOption of planoMultasSharedCollection">
+              {{ planoMultaOption.descricao }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

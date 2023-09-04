@@ -1,0 +1,258 @@
+<div>
+  <h2 id="page-heading" data-cy="NotasGeralDisciplinaHeading">
+    <span appTranslate="longonkeloApp.notasGeralDisciplina.home.title">Notas Geral Disciplinas</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.notasGeralDisciplina.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-notas-geral-disciplina"
+        [routerLink]="['/notas-geral-disciplina/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.notasGeralDisciplina.home.createLabel"> Criar novo(a) Notas Geral Disciplina </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="notasGeralDisciplinas?.length === 0">
+    <span appTranslate="longonkeloApp.notasGeralDisciplina.home.notFound">Nenhum Notas Geral Disciplinas encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="notasGeralDisciplinas && notasGeralDisciplinas.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="chaveComposta">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasGeralDisciplina.chaveComposta">Chave Composta</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="periodoLancamento">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasGeralDisciplina.periodoLancamento">Periodo Lancamento</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="media1">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasGeralDisciplina.media1">Media 1</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="media2">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasGeralDisciplina.media2">Media 2</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="media3">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasGeralDisciplina.media3">Media 3</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="exame">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasGeralDisciplina.exame">Exame</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="recurso">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasGeralDisciplina.recurso">Recurso</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="exameEspecial">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasGeralDisciplina.exameEspecial">Exame Especial</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="notaConselho">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasGeralDisciplina.notaConselho">Nota Conselho</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="mediaFinalDisciplina">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasGeralDisciplina.mediaFinalDisciplina">Media Final Disciplina</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="timestamp">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasGeralDisciplina.timestamp">Timestamp</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="hash">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasGeralDisciplina.hash">Hash</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="faltaJusticada">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasGeralDisciplina.faltaJusticada">Falta Justicada</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="faltaInjustificada">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasGeralDisciplina.faltaInjustificada">Falta Injustificada</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="utilizador.login">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasGeralDisciplina.utilizador">Utilizador</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="docente.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasGeralDisciplina.docente">Docente</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="disciplinaCurricular.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasGeralDisciplina.disciplinaCurricular">Disciplina Curricular</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="matricula.numeroMatricula">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasGeralDisciplina.matricula">Matricula</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="estado.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.notasGeralDisciplina.estado">Estado</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let notasGeralDisciplina of notasGeralDisciplinas; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/notas-geral-disciplina', notasGeralDisciplina.id, 'view']">{{ notasGeralDisciplina.id }}</a>
+          </td>
+          <td>{{ notasGeralDisciplina.chaveComposta }}</td>
+          <td>{{ notasGeralDisciplina.periodoLancamento }}</td>
+          <td>{{ notasGeralDisciplina.media1 }}</td>
+          <td>{{ notasGeralDisciplina.media2 }}</td>
+          <td>{{ notasGeralDisciplina.media3 }}</td>
+          <td>{{ notasGeralDisciplina.exame }}</td>
+          <td>{{ notasGeralDisciplina.recurso }}</td>
+          <td>{{ notasGeralDisciplina.exameEspecial }}</td>
+          <td>{{ notasGeralDisciplina.notaConselho }}</td>
+          <td>{{ notasGeralDisciplina.mediaFinalDisciplina }}</td>
+          <td>{{ notasGeralDisciplina.timestamp | formatMediumDatetime }}</td>
+          <td>{{ notasGeralDisciplina.hash }}</td>
+          <td>{{ notasGeralDisciplina.faltaJusticada }}</td>
+          <td>{{ notasGeralDisciplina.faltaInjustificada }}</td>
+          <td>
+            {{ notasGeralDisciplina.utilizador?.login }}
+          </td>
+          <td>
+            <div *ngIf="notasGeralDisciplina.docente">
+              <a [routerLink]="['/docente', notasGeralDisciplina.docente.id, 'view']">{{ notasGeralDisciplina.docente.nome }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="notasGeralDisciplina.disciplinaCurricular">
+              <a [routerLink]="['/disciplina-curricular', notasGeralDisciplina.disciplinaCurricular.id, 'view']">{{
+                notasGeralDisciplina.disciplinaCurricular.descricao
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="notasGeralDisciplina.matricula">
+              <a [routerLink]="['/matricula', notasGeralDisciplina.matricula.id, 'view']">{{
+                notasGeralDisciplina.matricula.numeroMatricula
+              }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="notasGeralDisciplina.estado">
+              <a [routerLink]="['/estado-disciplina-curricular', notasGeralDisciplina.estado.id, 'view']">{{
+                notasGeralDisciplina.estado.descricao
+              }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/notas-geral-disciplina', notasGeralDisciplina.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/notas-geral-disciplina', notasGeralDisciplina.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(notasGeralDisciplina)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="notasGeralDisciplinas && notasGeralDisciplinas.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

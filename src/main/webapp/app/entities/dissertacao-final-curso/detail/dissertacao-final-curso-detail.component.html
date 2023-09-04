@@ -1,0 +1,146 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="dissertacaoFinalCurso">
+      <h2 data-cy="dissertacaoFinalCursoDetailsHeading">
+        <span appTranslate="longonkeloApp.dissertacaoFinalCurso.detail.title">Dissertacao Final Curso</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ dissertacaoFinalCurso.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.numero">Numero</span></dt>
+        <dd>
+          <span>{{ dissertacaoFinalCurso.numero }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.timestamp">Timestamp</span></dt>
+        <dd>
+          <span>{{ dissertacaoFinalCurso.timestamp | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.data">Data</span></dt>
+        <dd>
+          <span>{{ dissertacaoFinalCurso.data | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.tema">Tema</span></dt>
+        <dd>
+          <span>{{ dissertacaoFinalCurso.tema }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.objectivoGeral">Objectivo Geral</span></dt>
+        <dd>
+          <span>{{ dissertacaoFinalCurso.objectivoGeral }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.objectivosEspecificos">Objectivos Especificos</span></dt>
+        <dd>
+          <span>{{ dissertacaoFinalCurso.objectivosEspecificos }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.introducao">Introducao</span></dt>
+        <dd>
+          <span>{{ dissertacaoFinalCurso.introducao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.resumo">Resumo</span></dt>
+        <dd>
+          <span>{{ dissertacaoFinalCurso.resumo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.problema">Problema</span></dt>
+        <dd>
+          <span>{{ dissertacaoFinalCurso.problema }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.resultado">Resultado</span></dt>
+        <dd>
+          <span>{{ dissertacaoFinalCurso.resultado }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.metodologia">Metodologia</span></dt>
+        <dd>
+          <span>{{ dissertacaoFinalCurso.metodologia }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.referenciasBibliograficas">Referencias Bibliograficas</span></dt>
+        <dd>
+          <span>{{ dissertacaoFinalCurso.referenciasBibliograficas }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.observacaoOrientador">Observacao Orientador</span></dt>
+        <dd>
+          <span>{{ dissertacaoFinalCurso.observacaoOrientador }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.observacaoAreaFormacao">Observacao Area Formacao</span></dt>
+        <dd>
+          <span>{{ dissertacaoFinalCurso.observacaoAreaFormacao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.observacaoInstituicao">Observacao Instituicao</span></dt>
+        <dd>
+          <span>{{ dissertacaoFinalCurso.observacaoInstituicao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.hash">Hash</span></dt>
+        <dd>
+          <span>{{ dissertacaoFinalCurso.hash }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.termosCompromissos">Termos Compromissos</span></dt>
+        <dd>
+          <span>{{ dissertacaoFinalCurso.termosCompromissos }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.isAceiteTermosCompromisso">Is Aceite Termos Compromisso</span></dt>
+        <dd>
+          <span>{{ dissertacaoFinalCurso.isAceiteTermosCompromisso }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.utilizador">Utilizador</span></dt>
+        <dd>
+          <span>{{ dissertacaoFinalCurso.utilizador?.login }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.turma">Turma</span></dt>
+        <dd>
+          <div *ngIf="dissertacaoFinalCurso.turma">
+            <a [routerLink]="['/turma', dissertacaoFinalCurso.turma.id, 'view']">{{ dissertacaoFinalCurso.turma.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.orientador">Orientador</span></dt>
+        <dd>
+          <div *ngIf="dissertacaoFinalCurso.orientador">
+            <a [routerLink]="['/docente', dissertacaoFinalCurso.orientador.id, 'view']">{{ dissertacaoFinalCurso.orientador.nome }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.especialidade">Especialidade</span></dt>
+        <dd>
+          <div *ngIf="dissertacaoFinalCurso.especialidade">
+            <a [routerLink]="['/area-formacao', dissertacaoFinalCurso.especialidade.id, 'view']">{{
+              dissertacaoFinalCurso.especialidade.nome
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.discente">Discente</span></dt>
+        <dd>
+          <div *ngIf="dissertacaoFinalCurso.discente">
+            <a [routerLink]="['/discente', dissertacaoFinalCurso.discente.id, 'view']">{{ dissertacaoFinalCurso.discente.nome }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.estado">Estado</span></dt>
+        <dd>
+          <div *ngIf="dissertacaoFinalCurso.estado">
+            <a [routerLink]="['/estado-dissertacao', dissertacaoFinalCurso.estado.id, 'view']">{{ dissertacaoFinalCurso.estado.nome }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.dissertacaoFinalCurso.natureza">Natureza</span></dt>
+        <dd>
+          <div *ngIf="dissertacaoFinalCurso.natureza">
+            <a [routerLink]="['/natureza-trabalho', dissertacaoFinalCurso.natureza.id, 'view']">{{
+              dissertacaoFinalCurso.natureza.nome
+            }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/dissertacao-final-curso', dissertacaoFinalCurso.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

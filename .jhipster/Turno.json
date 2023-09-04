@@ -1,0 +1,51 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002219",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "turno",
+  "fields": [
+    {
+      "fieldName": "codigo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Turno",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "responsavelTurno",
+      "otherEntityRelationshipName": "turno",
+      "relationshipName": "responsavelTurno",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "precoEmolumento",
+      "otherEntityRelationshipName": "turno",
+      "relationshipName": "precoEmolumento",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "periodoHorario",
+      "otherEntityRelationshipName": "turno",
+      "relationshipName": "periodoHorario",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "turma",
+      "otherEntityRelationshipName": "turno",
+      "relationshipName": "turma",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

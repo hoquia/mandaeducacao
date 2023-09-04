@@ -1,0 +1,52 @@
+{
+  "longonkeloApp": {
+    "anoLectivo": {
+      "home": {
+        "title": "Ano Lectivos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Ano Lectivo",
+        "createOrEditLabel": "Criar ou editar Ano Lectivo",
+        "notFound": "Nenhum Ano Lectivos encontrado"
+      },
+      "created": "Um novo Ano Lectivo foi criado com o identificador {{ param }}",
+      "updated": "Ano Lectivo com identificador {{ param }} foi actualizado",
+      "deleted": "Ano Lectivo com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Ano Lectivo {{ id }}?"
+      },
+      "detail": {
+        "title": "Ano Lectivo"
+      },
+      "id": "ID",
+      "ano": "Ano",
+      "inicio": "Inicio",
+      "fim": "Fim",
+      "descricao": "Descricao",
+      "timestam": "Timestam",
+      "isActual": "Is Actual",
+      "directorGeral": "Director Geral",
+      "subDirectorPdagogico": "Sub Director Pdagogico",
+      "subDirectorAdministrativo": "Sub Director Administrativo",
+      "responsavelSecretariaGeral": "Responsavel Secretaria Geral",
+      "responsavelSecretariaPedagogico": "Responsavel Secretaria Pedagogico",
+      "utilizador": "Utilizador",
+      "nivesEnsino": "Nives Ensino",
+      "turma": "Turma",
+      "horario": "Horario",
+      "planoAula": "Plano Aula",
+      "licao": "Licao",
+      "processoSelectivoMatricula": "Processo Selectivo Matricula",
+      "ocorrencia": "Ocorrencia",
+      "notasPeriodicaDisciplina": "Notas Periodica Disciplina",
+      "notasGeralDisciplina": "Notas Geral Disciplina",
+      "dissertacaoFinalCurso": "Dissertacao Final Curso",
+      "factura": "Factura",
+      "recibo": "Recibo",
+      "responsavelTurno": "Responsavel Turno",
+      "responsavelAreaFormacao": "Responsavel Area Formacao",
+      "responsavelCurso": "Responsavel Curso",
+      "responsavelDisciplina": "Responsavel Disciplina",
+      "responsavelTurma": "Responsavel Turma"
+    }
+  }
+}

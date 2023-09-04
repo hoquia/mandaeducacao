@@ -1,0 +1,252 @@
+<div>
+  <h2 id="page-heading" data-cy="DocumentoComercialHeading">
+    <span appTranslate="longonkeloApp.documentoComercial.home.title">Documento Comercials</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.documentoComercial.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-documento-comercial"
+        [routerLink]="['/documento-comercial/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.documentoComercial.home.createLabel"> Criar novo(a) Documento Comercial </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="documentoComercials?.length === 0">
+    <span appTranslate="longonkeloApp.documentoComercial.home.notFound">Nenhum Documento Comercials encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="documentoComercials && documentoComercials.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="modulo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.documentoComercial.modulo">Modulo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="origem">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.documentoComercial.origem">Origem</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="siglaInterna">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.documentoComercial.siglaInterna">Sigla Interna</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.documentoComercial.descricao">Descricao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="siglaFiscal">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.documentoComercial.siglaFiscal">Sigla Fiscal</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isMovimentaEstoque">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.documentoComercial.isMovimentaEstoque">Is Movimenta Estoque</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isMovimentaCaixa">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.documentoComercial.isMovimentaCaixa">Is Movimenta Caixa</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isNotificaEntidade">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.documentoComercial.isNotificaEntidade">Is Notifica Entidade</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isNotificaGerente">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.documentoComercial.isNotificaGerente">Is Notifica Gerente</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isEnviaSMS">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.documentoComercial.isEnviaSMS">Is Envia SMS</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isEnviaEmail">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.documentoComercial.isEnviaEmail">Is Envia Email</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="isEnviaPush">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.documentoComercial.isEnviaPush">Is Envia Push</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="validaCreditoDisponivel">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.documentoComercial.validaCreditoDisponivel">Valida Credito Disponivel</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="transformaEm.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.documentoComercial.transformaEm">Transforma Em</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let documentoComercial of documentoComercials; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/documento-comercial', documentoComercial.id, 'view']">{{ documentoComercial.id }}</a>
+          </td>
+          <td appTranslate="{{ 'longonkeloApp.ModuloDocumento.' + documentoComercial.modulo }}">{{ documentoComercial.modulo }}</td>
+          <td appTranslate="{{ 'longonkeloApp.OrigemDocumento.' + documentoComercial.origem }}">{{ documentoComercial.origem }}</td>
+          <td>{{ documentoComercial.siglaInterna }}</td>
+          <td>{{ documentoComercial.descricao }}</td>
+          <td appTranslate="{{ 'longonkeloApp.DocumentoFiscal.' + documentoComercial.siglaFiscal }}">
+            {{ documentoComercial.siglaFiscal }}
+          </td>
+          <td>{{ documentoComercial.isMovimentaEstoque }}</td>
+          <td>{{ documentoComercial.isMovimentaCaixa }}</td>
+          <td>{{ documentoComercial.isNotificaEntidade }}</td>
+          <td>{{ documentoComercial.isNotificaGerente }}</td>
+          <td>{{ documentoComercial.isEnviaSMS }}</td>
+          <td>{{ documentoComercial.isEnviaEmail }}</td>
+          <td>{{ documentoComercial.isEnviaPush }}</td>
+          <td>{{ documentoComercial.validaCreditoDisponivel }}</td>
+          <td>
+            <div *ngIf="documentoComercial.transformaEm">
+              <a [routerLink]="['/documento-comercial', documentoComercial.transformaEm.id, 'view']">{{
+                documentoComercial.transformaEm.descricao
+              }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/serie-documento']"
+                [queryParams]="{ 'filter[tipoDocumentoId.in]': documentoComercial.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.documentoComercial.serieDocumento' | translate) }"
+                  >Show Serie Documento</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/factura']"
+                [queryParams]="{ 'filter[documentoComercialId.in]': documentoComercial.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.documentoComercial.factura' | translate) }"
+                  >Show Factura</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/recibo']"
+                [queryParams]="{ 'filter[documentoComercialId.in]': documentoComercial.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.documentoComercial.recibo' | translate) }"
+                  >Show Recibo</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/documento-comercial', documentoComercial.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/documento-comercial', documentoComercial.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(documentoComercial)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="documentoComercials && documentoComercials.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

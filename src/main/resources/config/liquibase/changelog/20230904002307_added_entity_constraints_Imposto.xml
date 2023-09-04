@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Imposto.
+    -->
+    <changeSet id="20230904002307-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="tipo_imposto_id"
+                                 baseTableName="imposto"
+                                 constraintName="fk_imposto__tipo_imposto_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="codigo_imposto_id"
+                                 baseTableName="imposto"
+                                 constraintName="fk_imposto__codigo_imposto_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="motivo_isencao_codigo_id"
+                                 baseTableName="imposto"
+                                 constraintName="fk_imposto__motivo_isencao_codigo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="motivo_isencao_descricao_id"
+                                 baseTableName="imposto"
+                                 constraintName="fk_imposto__motivo_isencao_descricao_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+    </changeSet>
+</databaseChangeLog>

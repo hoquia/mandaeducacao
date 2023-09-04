@@ -1,0 +1,13 @@
+export enum CategoriaClassificacao {
+  APROVADO = 'APROVADO',
+
+  REPROVADO = 'REPROVADO',
+
+  RECURSO = 'RECURSO',
+
+  EXAME = 'EXAME',
+
+  EXAME_ESPECIAL = 'EXAME_ESPECIAL',
+
+  INDEFINIDO = 'INDEFINIDO',
+}

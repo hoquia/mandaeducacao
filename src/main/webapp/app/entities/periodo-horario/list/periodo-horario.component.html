@@ -1,0 +1,155 @@
+<div>
+  <h2 id="page-heading" data-cy="PeriodoHorarioHeading">
+    <span appTranslate="longonkeloApp.periodoHorario.home.title">Periodo Horarios</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.periodoHorario.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-periodo-horario"
+        [routerLink]="['/periodo-horario/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.periodoHorario.home.createLabel"> Criar novo(a) Periodo Horario </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="periodoHorarios?.length === 0">
+    <span appTranslate="longonkeloApp.periodoHorario.home.notFound">Nenhum Periodo Horarios encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="periodoHorarios && periodoHorarios.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.periodoHorario.descricao">Descricao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="tempo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.periodoHorario.tempo">Tempo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="inicio">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.periodoHorario.inicio">Inicio</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="fim">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.periodoHorario.fim">Fim</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="turno.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.periodoHorario.turno">Turno</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let periodoHorario of periodoHorarios; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/periodo-horario', periodoHorario.id, 'view']">{{ periodoHorario.id }}</a>
+          </td>
+          <td>{{ periodoHorario.descricao }}</td>
+          <td>{{ periodoHorario.tempo }}</td>
+          <td>{{ periodoHorario.inicio }}</td>
+          <td>{{ periodoHorario.fim }}</td>
+          <td>
+            <div *ngIf="periodoHorario.turno">
+              <a [routerLink]="['/turno', periodoHorario.turno.id, 'view']">{{ periodoHorario.turno.nome }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/horario']"
+                [queryParams]="{ 'filter[periodoId.in]': periodoHorario.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.periodoHorario.horario' | translate) }"
+                  >Show Horario</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/periodo-horario', periodoHorario.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/periodo-horario', periodoHorario.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(periodoHorario)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="periodoHorarios && periodoHorarios.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

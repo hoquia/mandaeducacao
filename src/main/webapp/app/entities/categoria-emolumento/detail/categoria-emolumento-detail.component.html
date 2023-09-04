@@ -1,0 +1,60 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="categoriaEmolumento">
+      <h2 data-cy="categoriaEmolumentoDetailsHeading">
+        <span appTranslate="longonkeloApp.categoriaEmolumento.detail.title">Categoria Emolumento</span>
+      </h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ categoriaEmolumento.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.categoriaEmolumento.nome">Nome</span></dt>
+        <dd>
+          <span>{{ categoriaEmolumento.nome }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.categoriaEmolumento.isServico">Is Servico</span></dt>
+        <dd>
+          <span>{{ categoriaEmolumento.isServico }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.categoriaEmolumento.cor">Cor</span></dt>
+        <dd>
+          <span>{{ categoriaEmolumento.cor }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.categoriaEmolumento.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ categoriaEmolumento.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.categoriaEmolumento.isIsentoMulta">Is Isento Multa</span></dt>
+        <dd>
+          <span>{{ categoriaEmolumento.isIsentoMulta }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.categoriaEmolumento.isIsentoJuro">Is Isento Juro</span></dt>
+        <dd>
+          <span>{{ categoriaEmolumento.isIsentoJuro }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.categoriaEmolumento.planoMulta">Plano Multa</span></dt>
+        <dd>
+          <div *ngIf="categoriaEmolumento.planoMulta">
+            <a [routerLink]="['/plano-multa', categoriaEmolumento.planoMulta.id, 'view']">{{ categoriaEmolumento.planoMulta.descricao }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/categoria-emolumento', categoriaEmolumento.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

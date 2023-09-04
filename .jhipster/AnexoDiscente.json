@@ -1,0 +1,49 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002234",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "anexo_discente",
+  "fields": [
+    {
+      "fieldName": "categoria",
+      "fieldType": "CategoriaAnexo",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "ACADEMICO,IDENTIFICACAO,SAUDE,CIVIL,OUTRO"
+    },
+    {
+      "fieldName": "anexo",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "any"
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "validade",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "timestamp",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "AnexoDiscente",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "nome",
+      "otherEntityName": "discente",
+      "otherEntityRelationshipName": "anexoDiscente",
+      "relationshipName": "discente",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "service": "serviceImpl"
+}

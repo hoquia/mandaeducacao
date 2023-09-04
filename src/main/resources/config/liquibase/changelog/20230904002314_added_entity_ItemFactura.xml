@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity ItemFactura.
+    -->
+    <changeSet id="20230904002314-1" author="jhipster">
+        <createTable tableName="item_factura">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="quantidade" type="double">
+                <constraints nullable="false" />
+            </column>
+            <column name="preco_unitario" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="desconto" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="multa" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="juro" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="preco_total" type="decimal(21,2)">
+                <constraints nullable="false" />
+            </column>
+            <column name="estado" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="tax_type" type="varchar(3)">
+                <constraints nullable="false" />
+            </column>
+            <column name="tax_country_region" type="varchar(6)">
+                <constraints nullable="false" />
+            </column>
+            <column name="tax_code" type="varchar(10)">
+                <constraints nullable="false" />
+            </column>
+            <column name="tax_percentage" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="tax_exemption_reason" type="varchar(60)">
+                <constraints nullable="true" />
+            </column>
+            <column name="tax_exemption_code" type="varchar(3)">
+                <constraints nullable="true" />
+            </column>
+            <column name="factura_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="emolumento_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

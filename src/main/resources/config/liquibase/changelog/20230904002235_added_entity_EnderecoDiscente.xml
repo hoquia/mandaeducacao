@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity EnderecoDiscente.
+    -->
+    <changeSet id="20230904002235-1" author="jhipster">
+        <createTable tableName="endereco_discente">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="tipo" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="bairro" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="rua" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="numero_casa" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="codigo_postal" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="latitude" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="longitude" type="double">
+                <constraints nullable="true" />
+            </column>
+            <column name="pais_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="provincia_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="municipio_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="discente_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

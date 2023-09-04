@@ -1,0 +1,190 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="app-estado-disciplina-curricular-heading"
+        data-cy="EstadoDisciplinaCurricularCreateUpdateHeading"
+        appTranslate="longonkeloApp.estadoDisciplinaCurricular.home.createOrEditLabel"
+      >
+        Criar ou editar Estado Disciplina Curricular
+      </h2>
+
+      <div>
+        <app-alert-error></app-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label
+            class="form-label"
+            appTranslate="longonkeloApp.estadoDisciplinaCurricular.uniqueSituacaoDisciplina"
+            for="field_uniqueSituacaoDisciplina"
+            >Unique Situacao Disciplina</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="uniqueSituacaoDisciplina"
+            id="field_uniqueSituacaoDisciplina"
+            data-cy="uniqueSituacaoDisciplina"
+            formControlName="uniqueSituacaoDisciplina"
+          />
+          <div
+            *ngIf="
+              editForm.get('uniqueSituacaoDisciplina')!.invalid &&
+              (editForm.get('uniqueSituacaoDisciplina')!.dirty || editForm.get('uniqueSituacaoDisciplina')!.touched)
+            "
+          ></div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.estadoDisciplinaCurricular.classificacao" for="field_classificacao"
+            >Classificacao</label
+          >
+          <select
+            class="form-control"
+            name="classificacao"
+            formControlName="classificacao"
+            id="field_classificacao"
+            data-cy="classificacao"
+          >
+            <option [ngValue]="null">{{ 'longonkeloApp.CategoriaClassificacao.null' | translate }}</option>
+            <option *ngFor="let categoriaClassificacao of categoriaClassificacaoValues" [value]="categoriaClassificacao">
+              {{ 'longonkeloApp.CategoriaClassificacao.' + categoriaClassificacao | translate }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              editForm.get('classificacao')!.invalid && (editForm.get('classificacao')!.dirty || editForm.get('classificacao')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('classificacao')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.estadoDisciplinaCurricular.codigo" for="field_codigo">Codigo</label>
+          <input type="text" class="form-control" name="codigo" id="field_codigo" data-cy="codigo" formControlName="codigo" />
+          <div *ngIf="editForm.get('codigo')!.invalid && (editForm.get('codigo')!.dirty || editForm.get('codigo')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('codigo')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.estadoDisciplinaCurricular.descricao" for="field_descricao"
+            >Descricao</label
+          >
+          <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
+          <div *ngIf="editForm.get('descricao')!.invalid && (editForm.get('descricao')!.dirty || editForm.get('descricao')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('descricao')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.estadoDisciplinaCurricular.cor" for="field_cor">Cor</label>
+          <input type="text" class="form-control" name="cor" id="field_cor" data-cy="cor" formControlName="cor" />
+          <div *ngIf="editForm.get('cor')!.invalid && (editForm.get('cor')!.dirty || editForm.get('cor')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('cor')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.estadoDisciplinaCurricular.valor" for="field_valor">Valor</label>
+          <input type="number" class="form-control" name="valor" id="field_valor" data-cy="valor" formControlName="valor" />
+          <div *ngIf="editForm.get('valor')!.invalid && (editForm.get('valor')!.dirty || editForm.get('valor')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('valor')?.errors?.required" appTranslate="entity.validation.required">
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('valor')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small class="form-text text-danger" [hidden]="!editForm.get('valor')?.errors?.number" appTranslate="entity.validation.number">
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label appTranslate="longonkeloApp.estadoDisciplinaCurricular.disciplinasCurriculars" for="field_disciplinasCurriculars"
+            >Disciplinas Curriculars</label
+          >
+          <select
+            class="form-control"
+            id="field_disciplinasCurriculars"
+            data-cy="disciplinasCurriculars"
+            multiple
+            name="disciplinasCurriculars"
+            formControlName="disciplinasCurriculars"
+            [compareWith]="compareDisciplinaCurricular"
+          >
+            <option [ngValue]="disciplinaCurricularOption" *ngFor="let disciplinaCurricularOption of disciplinaCurricularsSharedCollection">
+              {{ disciplinaCurricularOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.estadoDisciplinaCurricular.referencia" for="field_referencia"
+            >Referencia</label
+          >
+          <select
+            class="form-control"
+            id="field_referencia"
+            data-cy="referencia"
+            name="referencia"
+            formControlName="referencia"
+            [compareWith]="compareEstadoDisciplinaCurricular"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="estadoDisciplinaCurricularOption"
+              *ngFor="let estadoDisciplinaCurricularOption of estadoDisciplinaCurricularsSharedCollection"
+            >
+              {{ estadoDisciplinaCurricularOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

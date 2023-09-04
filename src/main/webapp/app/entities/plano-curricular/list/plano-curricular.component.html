@@ -1,0 +1,344 @@
+<div>
+  <h2 id="page-heading" data-cy="PlanoCurricularHeading">
+    <span appTranslate="longonkeloApp.planoCurricular.home.title">Plano Curriculars</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span appTranslate="longonkeloApp.planoCurricular.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-plano-curricular"
+        [routerLink]="['/plano-curricular/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span appTranslate="longonkeloApp.planoCurricular.home.createLabel"> Criar novo(a) Plano Curricular </span>
+      </button>
+    </div>
+  </h2>
+
+  <app-alert-error></app-alert-error>
+
+  <app-alert></app-alert>
+
+  <app-filter [filters]="filters"></app-filter>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="planoCurriculars?.length === 0">
+    <span appTranslate="longonkeloApp.planoCurricular.home.notFound">Nenhum Plano Curriculars encontrado</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="planoCurriculars && planoCurriculars.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" appSortBy="id">
+            <div class="d-flex">
+              <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.descricao">Descricao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="formulaClassificacaoFinal">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.formulaClassificacaoFinal">Formula Classificacao Final</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="numeroDisciplinaAprova">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.numeroDisciplinaAprova">Numero Disciplina Aprova</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="numeroDisciplinaReprova">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.numeroDisciplinaReprova">Numero Disciplina Reprova</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="numeroDisciplinaRecurso">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.numeroDisciplinaRecurso">Numero Disciplina Recurso</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="numeroDisciplinaExame">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.numeroDisciplinaExame">Numero Disciplina Exame</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="numeroDisciplinaExameEspecial">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.numeroDisciplinaExameEspecial">Numero Disciplina Exame Especial</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="numeroFaltaReprova">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.numeroFaltaReprova">Numero Falta Reprova</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="pesoMedia1">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.pesoMedia1">Peso Media 1</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="pesoMedia2">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.pesoMedia2">Peso Media 2</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="pesoMedia3">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.pesoMedia3">Peso Media 3</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="pesoRecurso">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.pesoRecurso">Peso Recurso</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="pesoExame">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.pesoExame">Peso Exame</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="pesoExameEspecial">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.pesoExameEspecial">Peso Exame Especial</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="pesoNotaCoselho">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.pesoNotaCoselho">Peso Nota Coselho</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="siglaProva1">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.siglaProva1">Sigla Prova 1</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="siglaProva2">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.siglaProva2">Sigla Prova 2</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="siglaProva3">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.siglaProva3">Sigla Prova 3</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="siglaMedia1">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.siglaMedia1">Sigla Media 1</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="siglaMedia2">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.siglaMedia2">Sigla Media 2</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="siglaMedia3">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.siglaMedia3">Sigla Media 3</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="formulaMedia">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.formulaMedia">Formula Media</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="formulaDispensa">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.formulaDispensa">Formula Dispensa</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="formulaExame">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.formulaExame">Formula Exame</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="formulaRecurso">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.formulaRecurso">Formula Recurso</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="formulaExameEspecial">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.formulaExameEspecial">Formula Exame Especial</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="utilizador.login">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.utilizador">Utilizador</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="classe.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.classe">Classe</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="curso.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoCurricular.curso">Curso</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let planoCurricular of planoCurriculars; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/plano-curricular', planoCurricular.id, 'view']">{{ planoCurricular.id }}</a>
+          </td>
+          <td>{{ planoCurricular.descricao }}</td>
+          <td>{{ planoCurricular.formulaClassificacaoFinal }}</td>
+          <td>{{ planoCurricular.numeroDisciplinaAprova }}</td>
+          <td>{{ planoCurricular.numeroDisciplinaReprova }}</td>
+          <td>{{ planoCurricular.numeroDisciplinaRecurso }}</td>
+          <td>{{ planoCurricular.numeroDisciplinaExame }}</td>
+          <td>{{ planoCurricular.numeroDisciplinaExameEspecial }}</td>
+          <td>{{ planoCurricular.numeroFaltaReprova }}</td>
+          <td>{{ planoCurricular.pesoMedia1 }}</td>
+          <td>{{ planoCurricular.pesoMedia2 }}</td>
+          <td>{{ planoCurricular.pesoMedia3 }}</td>
+          <td>{{ planoCurricular.pesoRecurso }}</td>
+          <td>{{ planoCurricular.pesoExame }}</td>
+          <td>{{ planoCurricular.pesoExameEspecial }}</td>
+          <td>{{ planoCurricular.pesoNotaCoselho }}</td>
+          <td>{{ planoCurricular.siglaProva1 }}</td>
+          <td>{{ planoCurricular.siglaProva2 }}</td>
+          <td>{{ planoCurricular.siglaProva3 }}</td>
+          <td>{{ planoCurricular.siglaMedia1 }}</td>
+          <td>{{ planoCurricular.siglaMedia2 }}</td>
+          <td>{{ planoCurricular.siglaMedia3 }}</td>
+          <td>{{ planoCurricular.formulaMedia }}</td>
+          <td>{{ planoCurricular.formulaDispensa }}</td>
+          <td>{{ planoCurricular.formulaExame }}</td>
+          <td>{{ planoCurricular.formulaRecurso }}</td>
+          <td>{{ planoCurricular.formulaExameEspecial }}</td>
+          <td>
+            {{ planoCurricular.utilizador?.login }}
+          </td>
+          <td>
+            <div *ngIf="planoCurricular.classe">
+              <a [routerLink]="['/classe', planoCurricular.classe.id, 'view']">{{ planoCurricular.classe.descricao }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="planoCurricular.curso">
+              <a [routerLink]="['/curso', planoCurricular.curso.id, 'view']">{{ planoCurricular.curso.nome }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/turma']"
+                [queryParams]="{ 'filter[planoCurricularId.in]': planoCurricular.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.planoCurricular.turma' | translate) }"
+                  >Show Turma</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/disciplina-curricular']"
+                [queryParams]="{ 'filter[planosCurricularId.in]': planoCurricular.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.planoCurricular.disciplinasCurricular' | translate) }"
+                  >Show Disciplina Curricular</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/plano-curricular', planoCurricular.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+              </button>
+
+              <button
+                type="submit"
+                [routerLink]="['/plano-curricular', planoCurricular.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+              </button>
+
+              <button type="submit" (click)="delete(planoCurricular)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="planoCurriculars && planoCurriculars.length > 0">
+    <div class="d-flex justify-content-center">
+      <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

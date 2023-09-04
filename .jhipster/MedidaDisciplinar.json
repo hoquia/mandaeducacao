@@ -1,0 +1,46 @@
+{
+  "applications": "*",
+  "changelogDate": "20230904002250",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "medida_disciplinar",
+  "fields": [
+    {
+      "fieldName": "descricao",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "periodo",
+      "fieldType": "UnidadeDuracao",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "HORA,DIA,MES,ANO,AULA"
+    },
+    {
+      "fieldName": "suspensao",
+      "fieldType": "Suspensao",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "NENHUMA,AULA,ESCOLA,EXPULSO"
+    },
+    {
+      "fieldName": "tempo",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "MedidaDisciplinar",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "categoriaOcorrencia",
+      "otherEntityRelationshipName": "medidaDisciplinar",
+      "relationshipName": "categoriaOcorrencia",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

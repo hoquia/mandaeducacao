@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity Docente.
+    -->
+    <changeSet id="20230904002230-1" author="jhipster">
+        <createTable tableName="docente">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="fotografia" type="${blobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="fotografia_content_type" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="nome" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="nascimento" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="nif" type="varchar(255)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_docente__nif" />
+            </column>
+            <column name="inss" type="varchar(255)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_docente__inss" />
+            </column>
+            <column name="sexo" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="pai" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="mae" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="documento_numero" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_docente__documento_numero" />
+            </column>
+            <column name="documento_emissao" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="documento_validade" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="residencia" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="data_inicio_funcoes" type="date">
+                <constraints nullable="false" />
+            </column>
+            <column name="telefone_principal" type="varchar(255)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_docente__telefone_principal" />
+            </column>
+            <column name="telefone_parente" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_docente__email" />
+            </column>
+            <column name="numero_agente" type="varchar(255)">
+                <constraints nullable="true" unique="true" uniqueConstraintName="ux_docente__numero_agente" />
+            </column>
+            <column name="tem_agregacao_pedagogica" type="boolean">
+                <constraints nullable="true" />
+            </column>
+            <column name="observacao" type="${clobType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="hash" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="timestamp" type="${datetimeType}">
+                <constraints nullable="true" />
+            </column>
+            <column name="nacionalidade_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="naturalidade_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="tipo_documento_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="grau_academico_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="categoria_profissional_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="unidade_organica_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="estado_civil_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="responsavel_turno_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsavel_area_formacao_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsavel_curso_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsavel_disciplina_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <column name="responsavel_turma_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+            <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
+        </createTable>
+        <dropDefaultValue tableName="docente" columnName="timestamp" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
+</databaseChangeLog>

@@ -1,0 +1,197 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="docente">
+      <h2 data-cy="docenteDetailsHeading"><span appTranslate="longonkeloApp.docente.detail.title">Docente</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ docente.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.fotografia">Fotografia</span></dt>
+        <dd>
+          <div *ngIf="docente.fotografia">
+            <a (click)="openFile(docente.fotografia, docente.fotografiaContentType)">
+              <img
+                [src]="'data:' + docente.fotografiaContentType + ';base64,' + docente.fotografia"
+                style="max-width: 100%"
+                alt="docente image"
+              />
+            </a>
+            {{ docente.fotografiaContentType }}, {{ byteSize(docente.fotografia) }}
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.nome">Nome</span></dt>
+        <dd>
+          <span>{{ docente.nome }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.nascimento">Nascimento</span></dt>
+        <dd>
+          <span>{{ docente.nascimento | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.nif">Nif</span></dt>
+        <dd>
+          <span>{{ docente.nif }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.inss">Inss</span></dt>
+        <dd>
+          <span>{{ docente.inss }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.sexo">Sexo</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.Sexo.' + docente.sexo }}">{{ docente.sexo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.pai">Pai</span></dt>
+        <dd>
+          <span>{{ docente.pai }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.mae">Mae</span></dt>
+        <dd>
+          <span>{{ docente.mae }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.documentoNumero">Documento Numero</span></dt>
+        <dd>
+          <span>{{ docente.documentoNumero }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.documentoEmissao">Documento Emissao</span></dt>
+        <dd>
+          <span>{{ docente.documentoEmissao | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.documentoValidade">Documento Validade</span></dt>
+        <dd>
+          <span>{{ docente.documentoValidade | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.residencia">Residencia</span></dt>
+        <dd>
+          <span>{{ docente.residencia }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.dataInicioFuncoes">Data Inicio Funcoes</span></dt>
+        <dd>
+          <span>{{ docente.dataInicioFuncoes | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.telefonePrincipal">Telefone Principal</span></dt>
+        <dd>
+          <span>{{ docente.telefonePrincipal }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.telefoneParente">Telefone Parente</span></dt>
+        <dd>
+          <span>{{ docente.telefoneParente }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.email">Email</span></dt>
+        <dd>
+          <span>{{ docente.email }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.numeroAgente">Numero Agente</span></dt>
+        <dd>
+          <span>{{ docente.numeroAgente }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.temAgregacaoPedagogica">Tem Agregacao Pedagogica</span></dt>
+        <dd>
+          <span>{{ docente.temAgregacaoPedagogica }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.observacao">Observacao</span></dt>
+        <dd>
+          <span>{{ docente.observacao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.hash">Hash</span></dt>
+        <dd>
+          <span>{{ docente.hash }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.timestamp">Timestamp</span></dt>
+        <dd>
+          <span>{{ docente.timestamp | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.nacionalidade">Nacionalidade</span></dt>
+        <dd>
+          <div *ngIf="docente.nacionalidade">
+            <a [routerLink]="['/lookup-item', docente.nacionalidade.id, 'view']">{{ docente.nacionalidade.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.naturalidade">Naturalidade</span></dt>
+        <dd>
+          <div *ngIf="docente.naturalidade">
+            <a [routerLink]="['/lookup-item', docente.naturalidade.id, 'view']">{{ docente.naturalidade.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.tipoDocumento">Tipo Documento</span></dt>
+        <dd>
+          <div *ngIf="docente.tipoDocumento">
+            <a [routerLink]="['/lookup-item', docente.tipoDocumento.id, 'view']">{{ docente.tipoDocumento.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.grauAcademico">Grau Academico</span></dt>
+        <dd>
+          <div *ngIf="docente.grauAcademico">
+            <a [routerLink]="['/lookup-item', docente.grauAcademico.id, 'view']">{{ docente.grauAcademico.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.categoriaProfissional">Categoria Profissional</span></dt>
+        <dd>
+          <div *ngIf="docente.categoriaProfissional">
+            <a [routerLink]="['/lookup-item', docente.categoriaProfissional.id, 'view']">{{ docente.categoriaProfissional.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.unidadeOrganica">Unidade Organica</span></dt>
+        <dd>
+          <div *ngIf="docente.unidadeOrganica">
+            <a [routerLink]="['/lookup-item', docente.unidadeOrganica.id, 'view']">{{ docente.unidadeOrganica.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.estadoCivil">Estado Civil</span></dt>
+        <dd>
+          <div *ngIf="docente.estadoCivil">
+            <a [routerLink]="['/lookup-item', docente.estadoCivil.id, 'view']">{{ docente.estadoCivil.descricao }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.responsavelTurno">Responsavel Turno</span></dt>
+        <dd>
+          <div *ngIf="docente.responsavelTurno">
+            <a [routerLink]="['/responsavel-turno', docente.responsavelTurno.id, 'view']">{{ docente.responsavelTurno.id }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.responsavelAreaFormacao">Responsavel Area Formacao</span></dt>
+        <dd>
+          <div *ngIf="docente.responsavelAreaFormacao">
+            <a [routerLink]="['/responsavel-area-formacao', docente.responsavelAreaFormacao.id, 'view']">{{
+              docente.responsavelAreaFormacao.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.responsavelCurso">Responsavel Curso</span></dt>
+        <dd>
+          <div *ngIf="docente.responsavelCurso">
+            <a [routerLink]="['/responsavel-curso', docente.responsavelCurso.id, 'view']">{{ docente.responsavelCurso.id }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.responsavelDisciplina">Responsavel Disciplina</span></dt>
+        <dd>
+          <div *ngIf="docente.responsavelDisciplina">
+            <a [routerLink]="['/responsavel-disciplina', docente.responsavelDisciplina.id, 'view']">{{
+              docente.responsavelDisciplina.id
+            }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.docente.responsavelTurma">Responsavel Turma</span></dt>
+        <dd>
+          <div *ngIf="docente.responsavelTurma">
+            <a [routerLink]="['/responsavel-turma', docente.responsavelTurma.id, 'view']">{{ docente.responsavelTurma.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/docente', docente.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

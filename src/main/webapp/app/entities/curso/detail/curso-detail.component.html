@@ -1,0 +1,55 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="curso">
+      <h2 data-cy="cursoDetailsHeading"><span appTranslate="longonkeloApp.curso.detail.title">Curso</span></h2>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <dd>
+          <span>{{ curso.id }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.curso.imagem">Imagem</span></dt>
+        <dd>
+          <div *ngIf="curso.imagem">
+            <a (click)="openFile(curso.imagem, curso.imagemContentType)">
+              <img [src]="'data:' + curso.imagemContentType + ';base64,' + curso.imagem" style="max-width: 100%" alt="curso image" />
+            </a>
+            {{ curso.imagemContentType }}, {{ byteSize(curso.imagem) }}
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.curso.codigo">Codigo</span></dt>
+        <dd>
+          <span>{{ curso.codigo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.curso.nome">Nome</span></dt>
+        <dd>
+          <span>{{ curso.nome }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.curso.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ curso.descricao }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.curso.areaFormacao">Area Formacao</span></dt>
+        <dd>
+          <div *ngIf="curso.areaFormacao">
+            <a [routerLink]="['/area-formacao', curso.areaFormacao.id, 'view']">{{ curso.areaFormacao.nome }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
+      </button>
+
+      <button type="button" [routerLink]="['/curso', curso.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
+      </button>
+    </div>
+  </div>
+</div>

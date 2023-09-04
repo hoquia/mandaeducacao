@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Transacao.
+    -->
+    <changeSet id="20230904002312-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="utilizador_id"
+                                 baseTableName="transacao"
+                                 constraintName="fk_transacao__utilizador_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="app_user"/>
+
+        <addForeignKeyConstraint baseColumnNames="moeda_id"
+                                 baseTableName="transacao"
+                                 constraintName="fk_transacao__moeda_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lookup_item"/>
+
+        <addForeignKeyConstraint baseColumnNames="matricula_id"
+                                 baseTableName="transacao"
+                                 constraintName="fk_transacao__matricula_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="matricula"/>
+
+        <addForeignKeyConstraint baseColumnNames="meio_pagamento_id"
+                                 baseTableName="transacao"
+                                 constraintName="fk_transacao__meio_pagamento_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="meio_pagamento"/>
+
+        <addForeignKeyConstraint baseColumnNames="conta_id"
+                                 baseTableName="transacao"
+                                 constraintName="fk_transacao__conta_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="conta"/>
+    </changeSet>
+</databaseChangeLog>
