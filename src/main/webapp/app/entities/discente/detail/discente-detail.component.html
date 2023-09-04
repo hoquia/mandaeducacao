@@ -35,6 +35,10 @@
         <dd>
           <span>{{ discente.nascimento | formatMediumDate }}</span>
         </dd>
+        <dt><span appTranslate="longonkeloApp.discente.tipoDocumento">Tipo Documento</span></dt>
+        <dd>
+          <span appTranslate="{{ 'longonkeloApp.TipoDocumento.' + discente.tipoDocumento }}">{{ discente.tipoDocumento }}</span>
+        </dd>
         <dt><span appTranslate="longonkeloApp.discente.documentoNumero">Documento Numero</span></dt>
         <dd>
           <span>{{ discente.documentoNumero }}</span>
@@ -53,7 +57,15 @@
         </dd>
         <dt><span appTranslate="longonkeloApp.discente.sexo">Sexo</span></dt>
         <dd>
-          <span appTranslate="{{ 'longonkeloApp.Sexo.' + discente.sexo }}">{{ discente.sexo }}</span>
+          <span>{{ discente.sexo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.nacionalidade">Nacionalidade</span></dt>
+        <dd>
+          <span>{{ discente.nacionalidade }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.discente.naturalidade">Naturalidade</span></dt>
+        <dd>
+          <span>{{ discente.naturalidade }}</span>
         </dd>
         <dt><span appTranslate="longonkeloApp.discente.pai">Pai</span></dt>
         <dd>
@@ -131,57 +143,21 @@
         <dd>
           <span>{{ discente.cuidadosEspeciaisSaude }}</span>
         </dd>
-        <dt><span appTranslate="longonkeloApp.discente.numeroProcesso">Numero Processo</span></dt>
+        <dt><span appTranslate="longonkeloApp.discente.profissao">Profissao</span></dt>
         <dd>
-          <span>{{ discente.numeroProcesso }}</span>
+          <span>{{ discente.profissao }}</span>
         </dd>
-        <dt><span appTranslate="longonkeloApp.discente.dataIngresso">Data Ingresso</span></dt>
+        <dt><span appTranslate="longonkeloApp.discente.grupoSanguinio">Grupo Sanguinio</span></dt>
         <dd>
-          <span>{{ discente.dataIngresso | formatMediumDatetime }}</span>
+          <span>{{ discente.grupoSanguinio }}</span>
         </dd>
-        <dt><span appTranslate="longonkeloApp.discente.hash">Hash</span></dt>
+        <dt><span appTranslate="longonkeloApp.discente.necessidadeEspecial">Necessidade Especial</span></dt>
         <dd>
-          <span>{{ discente.hash }}</span>
+          <span>{{ discente.necessidadeEspecial }}</span>
         </dd>
         <dt><span appTranslate="longonkeloApp.discente.observacao">Observacao</span></dt>
         <dd>
           <span>{{ discente.observacao }}</span>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.discente.nacionalidade">Nacionalidade</span></dt>
-        <dd>
-          <div *ngIf="discente.nacionalidade">
-            <a [routerLink]="['/lookup-item', discente.nacionalidade.id, 'view']">{{ discente.nacionalidade.descricao }}</a>
-          </div>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.discente.naturalidade">Naturalidade</span></dt>
-        <dd>
-          <div *ngIf="discente.naturalidade">
-            <a [routerLink]="['/lookup-item', discente.naturalidade.id, 'view']">{{ discente.naturalidade.descricao }}</a>
-          </div>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.discente.tipoDocumento">Tipo Documento</span></dt>
-        <dd>
-          <div *ngIf="discente.tipoDocumento">
-            <a [routerLink]="['/lookup-item', discente.tipoDocumento.id, 'view']">{{ discente.tipoDocumento.descricao }}</a>
-          </div>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.discente.profissao">Profissao</span></dt>
-        <dd>
-          <div *ngIf="discente.profissao">
-            <a [routerLink]="['/lookup-item', discente.profissao.id, 'view']">{{ discente.profissao.descricao }}</a>
-          </div>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.discente.grupoSanguinio">Grupo Sanguinio</span></dt>
-        <dd>
-          <div *ngIf="discente.grupoSanguinio">
-            <a [routerLink]="['/lookup-item', discente.grupoSanguinio.id, 'view']">{{ discente.grupoSanguinio.descricao }}</a>
-          </div>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.discente.necessidadeEspecial">Necessidade Especial</span></dt>
-        <dd>
-          <div *ngIf="discente.necessidadeEspecial">
-            <a [routerLink]="['/lookup-item', discente.necessidadeEspecial.id, 'view']">{{ discente.necessidadeEspecial.descricao }}</a>
-          </div>
         </dd>
         <dt><span appTranslate="longonkeloApp.discente.encarregadoEducacao">Encarregado Educacao</span></dt>
         <dd>

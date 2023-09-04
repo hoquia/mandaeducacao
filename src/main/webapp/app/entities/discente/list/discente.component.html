@@ -34,12 +34,12 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="fotografia">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.discente.fotografia">Fotografia</span>
@@ -55,6 +55,12 @@
           <th scope="col" appSortBy="nascimento">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.discente.nascimento">Nascimento</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <!-- <th scope="col" appSortBy="tipoDocumento">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.discente.tipoDocumento">Tipo Documento</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -75,7 +81,7 @@
               <span appTranslate="longonkeloApp.discente.documentoValidade">Documento Validade</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="nif">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.discente.nif">Nif</span>
@@ -88,7 +94,19 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="pai">
+          <th scope="col" appSortBy="nacionalidade">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.discente.nacionalidade">Nacionalidade</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="naturalidade">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.discente.naturalidade">Naturalidade</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <!-- <th scope="col" appSortBy="pai">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.discente.pai">Pai</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -99,14 +117,14 @@
               <span appTranslate="longonkeloApp.discente.mae">Mae</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="telefonePrincipal">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.discente.telefonePrincipal">Telefone Principal</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="telefoneParente">
+          <!-- <th scope="col" appSortBy="telefoneParente">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.discente.telefoneParente">Telefone Parente</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -117,8 +135,8 @@
               <span appTranslate="longonkeloApp.discente.email">Email</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="isEncarregadoEducacao">
+          </th> -->
+          <!-- <th scope="col" appSortBy="isEncarregadoEducacao">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.discente.isEncarregadoEducacao">Is Encarregado Educacao</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -202,21 +220,21 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="numeroProcesso">
+          <th scope="col" appSortBy="profissao">
             <div class="d-flex">
-              <span appTranslate="longonkeloApp.discente.numeroProcesso">Numero Processo</span>
+              <span appTranslate="longonkeloApp.discente.profissao">Profissao</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="dataIngresso">
+          <th scope="col" appSortBy="grupoSanguinio">
             <div class="d-flex">
-              <span appTranslate="longonkeloApp.discente.dataIngresso">Data Ingresso</span>
+              <span appTranslate="longonkeloApp.discente.grupoSanguinio">Grupo Sanguinio</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="hash">
+          <th scope="col" appSortBy="necessidadeEspecial">
             <div class="d-flex">
-              <span appTranslate="longonkeloApp.discente.hash">Hash</span>
+              <span appTranslate="longonkeloApp.discente.necessidadeEspecial">Necessidade Especial</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -225,43 +243,7 @@
               <span appTranslate="longonkeloApp.discente.observacao">Observacao</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="nacionalidade.descricao">
-            <div class="d-flex">
-              <span appTranslate="longonkeloApp.discente.nacionalidade">Nacionalidade</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" appSortBy="naturalidade.descricao">
-            <div class="d-flex">
-              <span appTranslate="longonkeloApp.discente.naturalidade">Naturalidade</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" appSortBy="tipoDocumento.descricao">
-            <div class="d-flex">
-              <span appTranslate="longonkeloApp.discente.tipoDocumento">Tipo Documento</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" appSortBy="profissao.descricao">
-            <div class="d-flex">
-              <span appTranslate="longonkeloApp.discente.profissao">Profissao</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" appSortBy="grupoSanguinio.descricao">
-            <div class="d-flex">
-              <span appTranslate="longonkeloApp.discente.grupoSanguinio">Grupo Sanguinio</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" appSortBy="necessidadeEspecial.descricao">
-            <div class="d-flex">
-              <span appTranslate="longonkeloApp.discente.necessidadeEspecial">Necessidade Especial</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="encarregadoEducacao.nome">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.discente.encarregadoEducacao">Encarregado Educacao</span>
@@ -273,9 +255,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let discente of discentes; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/discente', discente.id, 'view']">{{ discente.id }}</a>
-          </td>
+          </td> -->
           <td>
             <a *ngIf="discente.fotografia" (click)="openFile(discente.fotografia, discente.fotografiaContentType)">
               <img
@@ -284,19 +266,22 @@
                 alt="discente image"
               />
             </a>
-            <span *ngIf="discente.fotografia">{{ discente.fotografiaContentType }}, {{ byteSize(discente.fotografia) }}</span>
+            <!-- <span *ngIf="discente.fotografia">{{ discente.fotografiaContentType }}, {{ byteSize(discente.fotografia) }}</span> -->
           </td>
           <td>{{ discente.nome }}</td>
           <td>{{ discente.nascimento | formatMediumDate }}</td>
+          <!-- <td appTranslate="{{ 'longonkeloApp.TipoDocumento.' + discente.tipoDocumento }}">{{ discente.tipoDocumento }}</td>
           <td>{{ discente.documentoNumero }}</td>
           <td>{{ discente.documentoEmissao | formatMediumDate }}</td>
-          <td>{{ discente.documentoValidade | formatMediumDate }}</td>
+          <td>{{ discente.documentoValidade | formatMediumDate }}</td> -->
           <td>{{ discente.nif }}</td>
-          <td appTranslate="{{ 'longonkeloApp.Sexo.' + discente.sexo }}">{{ discente.sexo }}</td>
-          <td>{{ discente.pai }}</td>
-          <td>{{ discente.mae }}</td>
+          <td>{{ discente.sexo }}</td>
+          <td>{{ discente.nacionalidade }}</td>
+          <td>{{ discente.naturalidade }}</td>
+          <!-- <td>{{ discente.pai }}</td>
+          <td>{{ discente.mae }}</td> -->
           <td>{{ discente.telefonePrincipal }}</td>
-          <td>{{ discente.telefoneParente }}</td>
+          <!-- <td>{{ discente.telefoneParente }}</td>
           <td>{{ discente.email }}</td>
           <td>{{ discente.isEncarregadoEducacao }}</td>
           <td>{{ discente.isTrabalhador }}</td>
@@ -312,40 +297,10 @@
           <td>{{ discente.isPraticaEducacaoFisica }}</td>
           <td>{{ discente.isAutorizadoMedicacao }}</td>
           <td>{{ discente.cuidadosEspeciaisSaude }}</td>
-          <td>{{ discente.numeroProcesso }}</td>
-          <td>{{ discente.dataIngresso | formatMediumDatetime }}</td>
-          <td>{{ discente.hash }}</td>
-          <td>{{ discente.observacao }}</td>
-          <td>
-            <div *ngIf="discente.nacionalidade">
-              <a [routerLink]="['/lookup-item', discente.nacionalidade.id, 'view']">{{ discente.nacionalidade.descricao }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="discente.naturalidade">
-              <a [routerLink]="['/lookup-item', discente.naturalidade.id, 'view']">{{ discente.naturalidade.descricao }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="discente.tipoDocumento">
-              <a [routerLink]="['/lookup-item', discente.tipoDocumento.id, 'view']">{{ discente.tipoDocumento.descricao }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="discente.profissao">
-              <a [routerLink]="['/lookup-item', discente.profissao.id, 'view']">{{ discente.profissao.descricao }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="discente.grupoSanguinio">
-              <a [routerLink]="['/lookup-item', discente.grupoSanguinio.id, 'view']">{{ discente.grupoSanguinio.descricao }}</a>
-            </div>
-          </td>
-          <td>
-            <div *ngIf="discente.necessidadeEspecial">
-              <a [routerLink]="['/lookup-item', discente.necessidadeEspecial.id, 'view']">{{ discente.necessidadeEspecial.descricao }}</a>
-            </div>
-          </td>
+          <td>{{ discente.profissao }}</td>
+          <td>{{ discente.grupoSanguinio }}</td>
+          <td>{{ discente.necessidadeEspecial }}</td>
+          <td>{{ discente.observacao }}</td> -->
           <td>
             <div *ngIf="discente.encarregadoEducacao">
               <a [routerLink]="['/encarregado-educacao', discente.encarregadoEducacao.id, 'view']">{{
@@ -355,6 +310,21 @@
           </td>
           <td class="text-end">
             <div class="btn-group">
+              <!-- <button
+                type="submit"
+                [routerLink]="['/anexo-discente']"
+                [queryParams]="{ 'filter[discenteId.in]': discente.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.discente.anexoDiscente' | translate) }"
+                  >Show Anexo Discente</span
+                >
+              </button>
               <button
                 type="submit"
                 [routerLink]="['/endereco-discente']"
@@ -366,7 +336,7 @@
                 <span
                   class="d-none d-md-inline"
                   appTranslate="entity.action.show"
-                  [translateValues]="{ otherEntity: ('longonkeloApp.discente.enderecos' | translate) }"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.discente.enderecoDiscente' | translate) }"
                   >Show Endereco Discente</span
                 >
               </button>
@@ -381,8 +351,23 @@
                 <span
                   class="d-none d-md-inline"
                   appTranslate="entity.action.show"
-                  [translateValues]="{ otherEntity: ('longonkeloApp.discente.processosSelectivo' | translate) }"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.discente.inscricoes' | translate) }"
                   >Show Processo Selectivo Matricula</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/conta-discente']"
+                [queryParams]="{ 'filter[discenteId.in]': discente.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.discente.contas' | translate) }"
+                  >Show Conta Discente</span
                 >
               </button>
               <button
@@ -402,7 +387,7 @@
               </button>
               <button
                 type="submit"
-                [routerLink]="['/resumo-academico']"
+                [routerLink]="['/transferencia-turma']"
                 [queryParams]="{ 'filter[discenteId.in]': discente.id }"
                 class="btn btn-info btn-sm"
                 data-cy="filterOtherEntityButton"
@@ -411,8 +396,8 @@
                 <span
                   class="d-none d-md-inline"
                   appTranslate="entity.action.show"
-                  [translateValues]="{ otherEntity: ('longonkeloApp.discente.resumoAcademico' | translate) }"
-                  >Show Resumo Academico</span
+                  [translateValues]="{ otherEntity: ('longonkeloApp.discente.transferenciaTurma' | translate) }"
+                  >Show Transferencia Turma</span
                 >
               </button>
               <button
@@ -445,6 +430,66 @@
                   >Show Dissertacao Final Curso</span
                 >
               </button>
+              <button
+                type="submit"
+                [routerLink]="['/resumo-academico']"
+                [queryParams]="{ 'filter[discenteId.in]': discente.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.discente.resumoAcademico' | translate) }"
+                  >Show Resumo Academico</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/lancamento-nota']"
+                [queryParams]="{ 'filter[discenteId.in]': discente.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.discente.lancamentoNota' | translate) }"
+                  >Show Lancamento Nota</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/classificacao-geral']"
+                [queryParams]="{ 'filter[discenteId.in]': discente.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.discente.classificacaoGeral' | translate) }"
+                  >Show Classificacao Geral</span
+                >
+              </button>
+              <button
+                type="submit"
+                [routerLink]="['/ocorrencia']"
+                [queryParams]="{ 'filter[discenteId.in]': discente.id }"
+                class="btn btn-info btn-sm"
+                data-cy="filterOtherEntityButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span
+                  class="d-none d-md-inline"
+                  appTranslate="entity.action.show"
+                  [translateValues]="{ otherEntity: ('longonkeloApp.discente.ocorrencia' | translate) }"
+                  >Show Ocorrencia</span
+                >
+              </button> -->
               <button
                 type="submit"
                 [routerLink]="['/discente', discente.id, 'view']"
