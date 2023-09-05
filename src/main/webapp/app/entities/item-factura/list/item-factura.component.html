@@ -13,6 +13,7 @@
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-item-factura"
         [routerLink]="['/item-factura/new']"
+        [queryParams]="{ factura_id: facturaID }"
       >
         <fa-icon icon="plus"></fa-icon>
         <span appTranslate="longonkeloApp.itemFactura.home.createLabel"> Criar novo(a) Item Factura </span>
@@ -34,9 +35,15 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th> -->
+          <th scope="col" appSortBy="emolumento.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.itemFactura.emolumento">Emolumento</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -52,7 +59,7 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="desconto">
+          <!-- <th scope="col" appSortBy="desconto">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.itemFactura.desconto">Desconto</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -69,7 +76,7 @@
               <span appTranslate="longonkeloApp.itemFactura.juro">Juro</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="precoTotal">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.itemFactura.precoTotal">Preco Total</span>
@@ -82,7 +89,7 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="taxType">
+          <!-- <th scope="col" appSortBy="taxType">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.itemFactura.taxType">Tax Type</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -147,29 +154,28 @@
               <span appTranslate="longonkeloApp.itemFactura.factura">Factura</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="emolumento.nome">
-            <div class="d-flex">
-              <span appTranslate="longonkeloApp.itemFactura.emolumento">Emolumento</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
+          </th> -->
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let itemFactura of itemFacturas; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/item-factura', itemFactura.id, 'view']">{{ itemFactura.id }}</a>
+          </td> -->
+          <td>
+            <div *ngIf="itemFactura.emolumento">
+              <a [routerLink]="['/emolumento', itemFactura.emolumento.id, 'view']">{{ itemFactura.emolumento.nome }}</a>
+            </div>
           </td>
           <td>{{ itemFactura.quantidade }}</td>
           <td>{{ itemFactura.precoUnitario }}</td>
-          <td>{{ itemFactura.desconto }}</td>
+          <!-- <td>{{ itemFactura.desconto }}</td>
           <td>{{ itemFactura.multa }}</td>
-          <td>{{ itemFactura.juro }}</td>
+          <td>{{ itemFactura.juro }}</td> -->
           <td>{{ itemFactura.precoTotal }}</td>
           <td appTranslate="{{ 'longonkeloApp.EstadoItemFactura.' + itemFactura.estado }}">{{ itemFactura.estado }}</td>
-          <td>{{ itemFactura.taxType }}</td>
+          <!-- <td>{{ itemFactura.taxType }}</td>
           <td>{{ itemFactura.taxCountryRegion }}</td>
           <td>{{ itemFactura.taxCode }}</td>
           <td>{{ itemFactura.taxPercentage }}</td>
@@ -178,17 +184,12 @@
           <td>{{ itemFactura.emissao | formatMediumDate }}</td>
           <td>{{ itemFactura.expiracao | formatMediumDate }}</td>
           <td>{{ itemFactura.periodo }}</td>
-          <td>{{ itemFactura.descricao }}</td>
-          <td>
+          <td>{{ itemFactura.descricao }}</td> -->
+          <!-- <td>
             <div *ngIf="itemFactura.factura">
               <a [routerLink]="['/factura', itemFactura.factura.id, 'view']">{{ itemFactura.factura.numero }}</a>
             </div>
-          </td>
-          <td>
-            <div *ngIf="itemFactura.emolumento">
-              <a [routerLink]="['/emolumento', itemFactura.emolumento.id, 'view']">{{ itemFactura.emolumento.nome }}</a>
-            </div>
-          </td>
+          </td> -->
           <td class="text-end">
             <div class="btn-group">
               <button

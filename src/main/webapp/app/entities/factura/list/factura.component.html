@@ -13,6 +13,7 @@
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-factura"
         [routerLink]="['/factura/new']"
+        [queryParams]="{ matricula_id: matriculaID }"
       >
         <fa-icon icon="plus"></fa-icon>
         <span appTranslate="longonkeloApp.factura.home.createLabel"> Criar novo(a) Factura </span>
@@ -34,24 +35,24 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="numero">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.factura.numero">Numero</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="codigoEntrega">
+          <!-- <th scope="col" appSortBy="codigoEntrega">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.factura.codigoEntrega">Codigo Entrega</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="dataEmissao">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.factura.dataEmissao">Data Emissao</span>
@@ -64,7 +65,7 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="cae">
+          <!-- <th scope="col" appSortBy="cae">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.factura.cae">Cae</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -93,14 +94,14 @@
               <span appTranslate="longonkeloApp.factura.observacaoInterna">Observacao Interna</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="estado">
+          </th> -->
+          <!-- <th scope="col" appSortBy="estado">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.factura.estado">Estado</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="origem">
+          </th> -->
+          <!-- <th scope="col" appSortBy="origem">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.factura.origem">Origem</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -183,14 +184,14 @@
               <span appTranslate="longonkeloApp.factura.totalImpostoRetencaoFonte">Total Imposto Retencao Fonte</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="totalPagar">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.factura.totalPagar">Total Pagar</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="debito">
+          <!-- <th scope="col" appSortBy="debito">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.factura.debito">Debito</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -201,7 +202,7 @@
               <span appTranslate="longonkeloApp.factura.credito">Credito</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="totalPago">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.factura.totalPago">Total Pago</span>
@@ -214,7 +215,7 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="isAutoFacturacao">
+          <!-- <th scope="col" appSortBy="isAutoFacturacao">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.factura.isAutoFacturacao">Is Auto Facturacao</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -285,19 +286,19 @@
               <span appTranslate="longonkeloApp.factura.motivoAnulacao">Motivo Anulacao</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="matricula.numeroMatricula">
+          </th> -->
+          <!-- <th scope="col" appSortBy="matricula.numeroMatricula">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.factura.matricula">Matricula</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="referencia.numero">
+          </th> -->
+          <!-- <th scope="col" appSortBy="referencia.numero">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.factura.referencia">Referencia</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="documentoComercial.siglaInterna">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.factura.documentoComercial">Documento Comercial</span>
@@ -309,19 +310,19 @@
       </thead>
       <tbody>
         <tr *ngFor="let factura of facturas; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/factura', factura.id, 'view']">{{ factura.id }}</a>
-          </td>
+          </td> -->
           <td>{{ factura.numero }}</td>
-          <td>{{ factura.codigoEntrega }}</td>
+          <!-- <td>{{ factura.codigoEntrega }}</td> -->
           <td>{{ factura.dataEmissao | formatMediumDate }}</td>
           <td>{{ factura.dataVencimento | formatMediumDate }}</td>
-          <td>{{ factura.cae }}</td>
+          <!-- <td appTranslate="{{ 'longonkeloApp.EstadoDocumentoComercial.' + factura.estado }}">{{ factura.estado }}</td> -->
+          <!-- <td>{{ factura.cae }}</td>
           <td>{{ factura.inicioTransporte | formatMediumDatetime }}</td>
           <td>{{ factura.fimTransporte | formatMediumDatetime }}</td>
           <td>{{ factura.observacaoGeral }}</td>
           <td>{{ factura.observacaoInterna }}</td>
-          <td appTranslate="{{ 'longonkeloApp.EstadoDocumentoComercial.' + factura.estado }}">{{ factura.estado }}</td>
           <td>{{ factura.origem }}</td>
           <td>{{ factura.timestamp | formatMediumDatetime }}</td>
           <td>{{ factura.isMoedaEntrangeira }}</td>
@@ -335,13 +336,13 @@
           <td>{{ factura.totalImpostoEspecialConsumo }}</td>
           <td>{{ factura.totalDescontoFinanceiro }}</td>
           <td>{{ factura.totalFactura }}</td>
-          <td>{{ factura.totalImpostoRetencaoFonte }}</td>
-          <td>{{ factura.totalPagar }}</td>
-          <td>{{ factura.debito }}</td>
-          <td>{{ factura.credito }}</td>
-          <td>{{ factura.totalPago }}</td>
-          <td>{{ factura.totalDiferenca }}</td>
-          <td>{{ factura.isAutoFacturacao }}</td>
+          <td>{{ factura.totalImpostoRetencaoFonte }}</td> -->
+          <td>{{ factura.totalPagar | currency: 'AKZ' }}</td>
+          <!-- <td>{{ factura.debito }}</td>
+          <td>{{ factura.credito }}</td> -->
+          <td>{{ factura.totalPago | currency: 'AKZ' }}</td>
+          <td>{{ factura.totalDiferenca | currency: 'AKZ' }}</td>
+          <!-- <td>{{ factura.isAutoFacturacao }}</td>
           <td>{{ factura.isRegimeCaixa }}</td>
           <td>{{ factura.isEmitidaNomeEContaTerceiro }}</td>
           <td>{{ factura.isNovo }}</td>
@@ -358,17 +359,17 @@
             <div *ngIf="factura.motivoAnulacao">
               <a [routerLink]="['/lookup-item', factura.motivoAnulacao.id, 'view']">{{ factura.motivoAnulacao.descricao }}</a>
             </div>
-          </td>
-          <td>
+          </td> -->
+          <!-- <td>
             <div *ngIf="factura.matricula">
               <a [routerLink]="['/matricula', factura.matricula.id, 'view']">{{ factura.matricula.numeroMatricula }}</a>
             </div>
-          </td>
-          <td>
+          </td> -->
+          <!-- <td>
             <div *ngIf="factura.referencia">
               <a [routerLink]="['/factura', factura.referencia.id, 'view']">{{ factura.referencia.numero }}</a>
             </div>
-          </td>
+          </td> -->
           <td>
             <div *ngIf="factura.documentoComercial">
               <a [routerLink]="['/documento-comercial', factura.documentoComercial.id, 'view']">{{
@@ -378,7 +379,7 @@
           </td>
           <td class="text-end">
             <div class="btn-group">
-              <button
+              <!-- <button
                 type="submit"
                 [routerLink]="['/factura']"
                 [queryParams]="{ 'filter[referenciaId.in]': factura.id }"
@@ -407,7 +408,7 @@
                   [translateValues]="{ otherEntity: ('longonkeloApp.factura.itemsFactura' | translate) }"
                   >Show Item Factura</span
                 >
-              </button>
+              </button> -->
               <button
                 type="submit"
                 [routerLink]="['/factura', factura.id, 'view']"

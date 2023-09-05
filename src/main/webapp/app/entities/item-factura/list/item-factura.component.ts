@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
@@ -17,7 +17,8 @@ import { FilterOptions, IFilterOptions, IFilterOption } from 'app/shared/filter/
   templateUrl: './item-factura.component.html',
 })
 export class ItemFacturaComponent implements OnInit {
-  itemFacturas?: IItemFactura[];
+  @Input() itemFacturas?: IItemFactura[];
+  @Input() facturaID = 0;
   isLoading = false;
 
   predicate = 'id';

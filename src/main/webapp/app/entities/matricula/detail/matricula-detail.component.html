@@ -1,98 +1,10 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <div *ngIf="matricula">
-      <h2 data-cy="matriculaDetailsHeading"><span appTranslate="longonkeloApp.matricula.detail.title">Matricula</span></h2>
-
-      <hr />
-
-      <app-alert-error></app-alert-error>
-
-      <app-alert></app-alert>
-
-      <dl class="row-md jh-entity-details">
-        <dt><span appTranslate="global.field.id">Código</span></dt>
-        <dd>
-          <span>{{ matricula.id }}</span>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.matricula.chaveComposta1">Chave Composta 1</span></dt>
-        <dd>
-          <span>{{ matricula.chaveComposta1 }}</span>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.matricula.chaveComposta2">Chave Composta 2</span></dt>
-        <dd>
-          <span>{{ matricula.chaveComposta2 }}</span>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.matricula.numeroMatricula">Numero Matricula</span></dt>
-        <dd>
-          <span>{{ matricula.numeroMatricula }}</span>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.matricula.numeroChamada">Numero Chamada</span></dt>
-        <dd>
-          <span>{{ matricula.numeroChamada }}</span>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.matricula.estado">Estado</span></dt>
-        <dd>
-          <span appTranslate="{{ 'longonkeloApp.EstadoAcademico.' + matricula.estado }}">{{ matricula.estado }}</span>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.matricula.timestamp">Timestamp</span></dt>
-        <dd>
-          <span>{{ matricula.timestamp | formatMediumDatetime }}</span>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.matricula.descricao">Descricao</span></dt>
-        <dd>
-          <span>{{ matricula.descricao }}</span>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.matricula.termosCompromissos">Termos Compromissos</span></dt>
-        <dd>
-          <div *ngIf="matricula.termosCompromissos">
-            <a (click)="openFile(matricula.termosCompromissos, matricula.termosCompromissosContentType)" appTranslate="entity.action.open"
-              >Abrir</a
-            >
-            {{ matricula.termosCompromissosContentType }}, {{ byteSize(matricula.termosCompromissos) }}
-          </div>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.matricula.isAceiteTermosCompromisso">Is Aceite Termos Compromisso</span></dt>
-        <dd>
-          <span>{{ matricula.isAceiteTermosCompromisso }}</span>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.matricula.utilizador">Utilizador</span></dt>
-        <dd>
-          <span>{{ matricula.utilizador?.login }}</span>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.matricula.categoriasMatriculas">Categorias Matriculas</span></dt>
-        <dd>
-          <span *ngFor="let categoriasMatriculas of matricula.categoriasMatriculas; let last = last">
-            <a [routerLink]="['/plano-desconto', categoriasMatriculas.id, 'view']">{{ categoriasMatriculas.nome }}</a
-            >{{ last ? '' : ', ' }}
-          </span>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.matricula.turma">Turma</span></dt>
-        <dd>
-          <div *ngIf="matricula.turma">
-            <a [routerLink]="['/turma', matricula.turma.id, 'view']">{{ matricula.turma.descricao }}</a>
-          </div>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.matricula.responsavelFinanceiro">Responsavel Financeiro</span></dt>
-        <dd>
-          <div *ngIf="matricula.responsavelFinanceiro">
-            <a [routerLink]="['/encarregado-educacao', matricula.responsavelFinanceiro.id, 'view']">{{
-              matricula.responsavelFinanceiro.nome
-            }}</a>
-          </div>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.matricula.discente">Discente</span></dt>
-        <dd>
-          <div *ngIf="matricula.discente">
-            <a [routerLink]="['/discente', matricula.discente.id, 'view']">{{ matricula.discente.nome }}</a>
-          </div>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.matricula.referencia">Referencia</span></dt>
-        <dd>
-          <div *ngIf="matricula.referencia">
-            <a [routerLink]="['/matricula', matricula.referencia.id, 'view']">{{ matricula.referencia.id }}</a>
-          </div>
-        </dd>
-      </dl>
+      <h2 data-cy="matriculaDetailsHeading">
+        <span appTranslate="longonkeloApp.matricula.detail.title">Matricula</span> [<span>{{ matricula.numeroMatricula }}</span
+        >]
+      </h2>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
@@ -101,6 +13,105 @@
       <button type="button" [routerLink]="['/matricula', matricula.id, 'edit']" class="btn btn-primary">
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
       </button>
+
+      <div ngbDropdown class="d-inline-block">
+        <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Operações</button>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button ngbDropdownItem>Transação</button>
+          <button ngbDropdownItem>Factura</button>
+          <button ngbDropdownItem>Transferência de saldo</button>
+          <button ngbDropdownItem>Transferência de turma</button>
+          <button ngbDropdownItem>Ocorrências</button>
+          <button ngbDropdownItem>Lançamento de notas</button>
+        </div>
+      </div>
+
+      <hr />
+
+      <app-alert-error></app-alert-error>
+
+      <app-alert></app-alert>
+
+      <dl>
+        <div class="row">
+          <div class="col">
+            <dt><span appTranslate="longonkeloApp.matricula.categoriasMatriculas">Categorias Matriculas</span></dt>
+            <dd>
+              <span *ngFor="let categoriasMatriculas of matricula.categoriasMatriculas; let last = last">
+                <a [routerLink]="['/plano-desconto', categoriasMatriculas.id, 'view']">{{ categoriasMatriculas.nome }}</a
+                >{{ last ? '' : ', ' }}
+              </span>
+            </dd>
+            <dt><span appTranslate="longonkeloApp.matricula.turma">Turma</span></dt>
+            <dd>
+              <div *ngIf="matricula.turma">
+                <a [routerLink]="['/turma', matricula.turma.id, 'view']">{{ matricula.turma.descricao }}</a>
+              </div>
+            </dd>
+            <dt><span appTranslate="longonkeloApp.matricula.responsavelFinanceiro">Responsavel Financeiro</span></dt>
+            <dd>
+              <div *ngIf="matricula.responsavelFinanceiro">
+                <a [routerLink]="['/encarregado-educacao', matricula.responsavelFinanceiro.id, 'view']">{{
+                  matricula.responsavelFinanceiro.nome
+                }}</a>
+              </div>
+            </dd>
+            <dt><span appTranslate="longonkeloApp.matricula.discente">Discente</span></dt>
+            <dd>
+              <div *ngIf="matricula.discente">
+                <a [routerLink]="['/discente', matricula.discente.id, 'view']">{{ matricula.discente.nome }}</a>
+              </div>
+            </dd>
+            <dt><span appTranslate="longonkeloApp.matricula.referencia">Referencia</span></dt>
+            <dd>
+              <div *ngIf="matricula.referencia">
+                <a [routerLink]="['/matricula', matricula.referencia.id, 'view']">{{ matricula.referencia.id }}</a>
+              </div>
+            </dd>
+          </div>
+
+          <div class="col">
+            <dt><span appTranslate="longonkeloApp.matricula.numeroChamada">Numero Chamada</span></dt>
+            <dd>
+              <span>{{ matricula.numeroChamada }}</span>
+            </dd>
+            <dt><span appTranslate="longonkeloApp.matricula.estado">Estado</span></dt>
+            <dd>
+              <span appTranslate="{{ 'longonkeloApp.EstadoAcademico.' + matricula.estado }}">{{ matricula.estado }}</span>
+            </dd>
+            <dt><span appTranslate="longonkeloApp.matricula.timestamp">Timestamp</span></dt>
+            <dd>
+              <span>{{ matricula.timestamp | formatMediumDatetime }}</span>
+            </dd>
+            <dt><span appTranslate="longonkeloApp.matricula.descricao">Descricao</span></dt>
+            <dd>
+              <span>{{ matricula.descricao }}</span>
+            </dd>
+            <dt><span appTranslate="longonkeloApp.matricula.termosCompromissos">Termos Compromissos</span></dt>
+            <dd>
+              <div *ngIf="matricula.termosCompromissos">
+                <a
+                  (click)="openFile(matricula.termosCompromissos, matricula.termosCompromissosContentType)"
+                  appTranslate="entity.action.open"
+                  >Abrir</a
+                >
+                {{ matricula.termosCompromissosContentType }}, {{ byteSize(matricula.termosCompromissos) }}
+              </div>
+            </dd>
+            <dt><span appTranslate="longonkeloApp.matricula.isAceiteTermosCompromisso">Is Aceite Termos Compromisso</span></dt>
+            <dd>
+              <span>{{ matricula.isAceiteTermosCompromisso }}</span>
+            </dd>
+            <dt><span appTranslate="longonkeloApp.matricula.utilizador">Utilizador</span></dt>
+            <dd>
+              <span>{{ matricula.utilizador?.login }}</span>
+            </dd>
+          </div>
+        </div>
+      </dl>
+
+      <hr />
+      <app-factura [facturas]="facturas" [matriculaID]="matricula.id"></app-factura>
     </div>
   </div>
 </div>

@@ -9,5 +9,6 @@ import { ItemFacturaRoutingModule } from './route/item-factura-routing.module';
 @NgModule({
   imports: [SharedModule, ItemFacturaRoutingModule],
   declarations: [ItemFacturaComponent, ItemFacturaDetailComponent, ItemFacturaUpdateComponent, ItemFacturaDeleteDialogComponent],
+  exports: [ItemFacturaComponent],
 })
 export class ItemFacturaModule {}

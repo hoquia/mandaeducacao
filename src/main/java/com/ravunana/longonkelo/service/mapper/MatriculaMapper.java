@@ -23,7 +23,7 @@ import org.mapstruct.*;
 public interface MatriculaMapper extends EntityMapper<MatriculaDTO, Matricula> {
     @Mapping(target = "utilizador", source = "utilizador", qualifiedByName = "userLogin")
     @Mapping(target = "categoriasMatriculas", source = "categoriasMatriculas", qualifiedByName = "planoDescontoNomeSet")
-    @Mapping(target = "turma", source = "turma", qualifiedByName = "turmaDescricao")
+    @Mapping(target = "turma", source = "turma")
     @Mapping(target = "responsavelFinanceiro", source = "responsavelFinanceiro", qualifiedByName = "encarregadoEducacaoNome")
     @Mapping(target = "discente", source = "discente", qualifiedByName = "discenteNome")
     @Mapping(target = "referencia", source = "referencia", qualifiedByName = "matriculaId")
