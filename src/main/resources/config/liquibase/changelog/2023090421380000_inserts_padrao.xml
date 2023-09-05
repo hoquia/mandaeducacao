@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="2023090421380000-1" author="Ramiro Cardoso">
+
+
+        <!-- LOOKUP -->
+        <sql>
+            insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('PAIS', NULL, '968', false, true, 'País');
+            insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('PROVINCIA', NULL, '969', false, true, 'Província');
+            insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('MUNICIPIO', NULL, '970', false, true, 'Municipío');
+            insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('TIPO_DOCUMENTO', NULL, '971', false, true, 'Tipo Documento');
+            insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('GRAU_ACADEMICO', NULL, '972', false, true, 'Grau Académico');
+            insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('CATEGORIA_PROFISSIONAL', NULL, '973', false, true, 'Categoria Profissional');
+            insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('UNIDADE_ORGANICA', NULL, '974', false, true, 'Unidade Orgânica');
+            insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('TIPO_INSTALACAO_INSTITUICAO', NULL, '975', false, true, 'Tipo Instalação');
+            insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('CATEGORIA_INSTITUICAO', NULL, '976', false, true, 'Categoria Instituição');
+            insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('UNIDADE_PAGADORA', NULL, '977', false, true, 'Unidade Pagadora');
+            insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('TIPO_VINCULO_INSTITUICAO', NULL, '978', false, true, 'Tipo Vinculo');
+            insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('GRAU_PARENTESCO', NULL, '979', false, true, 'Grau Parentesco');
+            insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('PROFISSAO', NULL, '980', false, true, 'Profissão');
+            insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('GRUPO_SANGUINIO', NULL, '981', false, true, 'Grupo Sanguínio');
+            insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('NECESSIDADE_ESPECIAL', NULL, '982', false, true, 'Necessidade Especial');
+            insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('COMPONENTE_DISCIPLINA', NULL, '983', false, true, 'Componente Disciplina');
+            insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('REGIME_DISCIPLINA', NULL, '984', false, true, 'Regime');
+            insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('MOTIVO_TRANSFERENCIA', NULL, '985', false, true, 'Motivo Transferência');
+            insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('MOEDA', NULL, '986', false, true, 'Moeda');
+        </sql>
+
+        <!--  LOOKUP ITEM -->
+        <sql>
+            insert into "lookup_item" ("codigo", "descricao", "id", "is_sistema", "lookup_id", "ordem") values ('AN', 'Angola', '969', true, '968', 1);
+            insert into "lookup_item" ("codigo", "descricao", "id", "is_sistema", "lookup_id", "ordem") values ('LDA', 'Luanda', '970', true, '969', 1);
+            insert into "lookup_item" ("codigo", "descricao", "id", "is_sistema", "lookup_id", "ordem") values ('1', 'Ensino Médio', '971', true, '972', 1);
+            insert into "lookup_item" ("codigo", "descricao", "id", "is_sistema", "lookup_id", "ordem") values ('BI', 'Bilhete de Identidade', '972', true, '971', 1);
+            insert into "lookup_item" ("codigo", "descricao", "id", "is_sistema", "lookup_id", "ordem") values ('2', 'Certidão de Nascimento', '973', true, '971', 2);
+            insert into "lookup_item" ("codigo", "descricao", "id", "is_sistema", "lookup_id", "ordem") values ('3', 'Cédula Pessoal', '974', true, '971', 3);
+            insert into "lookup_item" ("codigo", "descricao", "id", "is_sistema", "lookup_id", "ordem") values ('4', 'Passaporte', '975', true, '971', 4);
+        </sql>
+
+        <!-- NIVEL ENSINO -->
+        <sql>
+            insert into "nivel_ensino" ("classe_exame", "classe_final", "classe_inicial", "codigo", "descricao", "descricao_discente", "descricao_docente", "duracao", "id", "idade_maxima", "idade_minima", "nome", "referencia_id", "responsavel_administrativo", "responsavel_area_formacao", "responsavel_curso", "responsavel_disciplina", "responsavel_geral", "responsavel_pedagogico", "responsavel_secretaria_geral", "responsavel_secretaria_pedagogico", "responsavel_turma", "responsavel_turno", "total_disciplina", "unidade_duracao") values (NULL, NULL, NULL, '2', NULL, NULL, NULL, 4, '965', NULL, NULL, 'Ensino Primario', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ANO');
+            insert into "nivel_ensino" ("classe_exame", "classe_final", "classe_inicial", "codigo", "descricao", "descricao_discente", "descricao_docente", "duracao", "id", "idade_maxima", "idade_minima", "nome", "referencia_id", "responsavel_administrativo", "responsavel_area_formacao", "responsavel_curso", "responsavel_disciplina", "responsavel_geral", "responsavel_pedagogico", "responsavel_secretaria_geral", "responsavel_secretaria_pedagogico", "responsavel_turma", "responsavel_turno", "total_disciplina", "unidade_duracao") values (NULL, NULL, NULL, '1', NULL, NULL, NULL, 4, '964', 4, 0, 'Pré Escolar', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ANO');
+            insert into "nivel_ensino" ("classe_exame", "classe_final", "classe_inicial", "codigo", "descricao", "descricao_discente", "descricao_docente", "duracao", "id", "idade_maxima", "idade_minima", "nome", "referencia_id", "responsavel_administrativo", "responsavel_area_formacao", "responsavel_curso", "responsavel_disciplina", "responsavel_geral", "responsavel_pedagogico", "responsavel_secretaria_geral", "responsavel_secretaria_pedagogico", "responsavel_turma", "responsavel_turno", "total_disciplina", "unidade_duracao") values (NULL, NULL, NULL, '3', NULL, NULL, NULL, 6, '966', NULL, NULL, 'Ensino Primário', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ANO');
+            insert into "nivel_ensino" ("classe_exame", "classe_final", "classe_inicial", "codigo", "descricao", "descricao_discente", "descricao_docente", "duracao", "id", "idade_maxima", "idade_minima", "nome", "referencia_id", "responsavel_administrativo", "responsavel_area_formacao", "responsavel_curso", "responsavel_disciplina", "responsavel_geral", "responsavel_pedagogico", "responsavel_secretaria_geral", "responsavel_secretaria_pedagogico", "responsavel_turma", "responsavel_turno", "total_disciplina", "unidade_duracao") values (NULL, NULL, NULL, '4', NULL, NULL, NULL, 3, '967', NULL, NULL, 'Ensino Secundário', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ANO');
+            insert into "nivel_ensino" ("classe_exame", "classe_final", "classe_inicial", "codigo", "descricao", "descricao_discente", "descricao_docente", "duracao", "id", "idade_maxima", "idade_minima", "nome", "referencia_id", "responsavel_administrativo", "responsavel_area_formacao", "responsavel_curso", "responsavel_disciplina", "responsavel_geral", "responsavel_pedagogico", "responsavel_secretaria_geral", "responsavel_secretaria_pedagogico", "responsavel_turma", "responsavel_turno", "total_disciplina", "unidade_duracao") values (NULL, NULL, NULL, '6', NULL, NULL, NULL, 4, '970', NULL, NULL, 'Ensino Médio Formação de Professores', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ANO');
+            insert into "nivel_ensino" ("classe_exame", "classe_final", "classe_inicial", "codigo", "descricao", "descricao_discente", "descricao_docente", "duracao", "id", "idade_maxima", "idade_minima", "nome", "referencia_id", "responsavel_administrativo", "responsavel_area_formacao", "responsavel_curso", "responsavel_disciplina", "responsavel_geral", "responsavel_pedagogico", "responsavel_secretaria_geral", "responsavel_secretaria_pedagogico", "responsavel_turma", "responsavel_turno", "total_disciplina", "unidade_duracao") values (NULL, NULL, NULL, '7', NULL, NULL, NULL, 3, '971', NULL, NULL, 'Ensino Médio PUNIV', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ANO');
+            insert into "nivel_ensino" ("classe_exame", "classe_final", "classe_inicial", "codigo", "descricao", "descricao_discente", "descricao_docente", "duracao", "id", "idade_maxima", "idade_minima", "nome", "referencia_id", "responsavel_administrativo", "responsavel_area_formacao", "responsavel_curso", "responsavel_disciplina", "responsavel_geral", "responsavel_pedagogico", "responsavel_secretaria_geral", "responsavel_secretaria_pedagogico", "responsavel_turma", "responsavel_turno", "total_disciplina", "unidade_duracao") values (NULL, NULL, NULL, '5', NULL, NULL, NULL, 4, '969', NULL, NULL, 'Ensino Médio Técnico-Profissional', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ANO');
+            insert into "nivel_ensino" ("classe_exame", "classe_final", "classe_inicial", "codigo", "descricao", "descricao_discente", "descricao_docente", "duracao", "id", "idade_maxima", "idade_minima", "nome", "referencia_id", "responsavel_administrativo", "responsavel_area_formacao", "responsavel_curso", "responsavel_disciplina", "responsavel_geral", "responsavel_pedagogico", "responsavel_secretaria_geral", "responsavel_secretaria_pedagogico", "responsavel_turma", "responsavel_turno", "total_disciplina", "unidade_duracao") values (NULL, NULL, NULL, '8', NULL, NULL, NULL, 5, '972', NULL, NULL, 'Ensino Superior', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ANO');
+        </sql>
+
+        <!-- TURNO -->
+        <sql>
+            insert into "turno" ("codigo", "id", "nome") values ('M', '962', 'Manhã');
+            insert into "turno" ("codigo", "id", "nome") values ('T', '963', 'Tarde');
+            insert into "turno" ("codigo", "id", "nome") values ('N', '964', 'Noite');
+        </sql>
+
+        <!-- AREA FORMACAO -->
+        <sql>
+            insert into "area_formacao" ("codigo", "descricao", "id", "imagem", "imagem_content_type", "nivel_ensino_id", "nome") values ('ADMSERV', NULL, '965', NULL, NULL, '969', 'Administração e Serviço');
+            insert into "area_formacao" ("codigo", "descricao", "id", "imagem", "imagem_content_type", "nivel_ensino_id", "nome") values ('CONSCIVIL', NULL, '966', NULL, NULL, '969', 'Construção Civil');
+            insert into "area_formacao" ("codigo", "descricao", "id", "imagem", "imagem_content_type", "nivel_ensino_id", "nome") values ('INFO', NULL, '967', NULL, NULL, '969', 'Informática');
+        </sql>
+
+        <!-- CURSO -->
+        <sql>
+            insert into "curso" ("area_formacao_id", "codigo", "descricao", "id", "imagem", "imagem_content_type", "nome") values ('967', 'TECINFO', NULL, '966', NULL, NULL, 'Técnico de Informática');
+            insert into "curso" ("area_formacao_id", "codigo", "descricao", "id", "imagem", "imagem_content_type", "nome") values ('967', 'TECINFOGEST', NULL, '967', NULL, NULL, 'Técnico de Informatica de Gestão');
+            insert into "curso" ("area_formacao_id", "codigo", "descricao", "id", "imagem", "imagem_content_type", "nome") values ('967', '3', NULL, '968', NULL, NULL, 'Técnico de Sistemas Informaticos');
+            insert into "curso" ("area_formacao_id", "codigo", "descricao", "id", "imagem", "imagem_content_type", "nome") values ('965', 'TECGESTEMP', NULL, '969', NULL, NULL, 'Técnico de Gestão Empresarial');
+            insert into "curso" ("area_formacao_id", "codigo", "descricao", "id", "imagem", "imagem_content_type", "nome") values ('965', 'TECFIN', NULL, '970', NULL, NULL, 'Técnico de Finanças');
+            insert into "curso" ("area_formacao_id", "codigo", "descricao", "id", "imagem", "imagem_content_type", "nome") values ('965', 'TECCONTGEST', NULL, '971', NULL, NULL, 'Técnico de Contabilidade e Finanças');
+            insert into "curso" ("area_formacao_id", "codigo", "descricao", "id", "imagem", "imagem_content_type", "nome") values ('966', 'TECDESPRJ', NULL, '972', NULL, NULL, 'Técnico Desenhador Projectista');
+            insert into "curso" ("area_formacao_id", "codigo", "descricao", "id", "imagem", "imagem_content_type", "nome") values ('966', 'TECOBRA', NULL, '973', NULL, NULL, 'Técnico de Obras');
+        </sql>
+
+        <!-- DISCIPLINA -->
+        <sql>
+            insert into "disciplina" ("codigo", "descricao", "id", "nome") values ('L. PORT', NULL, '967', 'Língua Portuguesa');
+            insert into "disciplina" ("codigo", "descricao", "id", "nome") values ('MAT', NULL, '968', 'Matemática');
+            insert into "disciplina" ("codigo", "descricao", "id", "nome") values ('ING', NULL, '969', 'Inglês');
+            insert into "disciplina" ("codigo", "descricao", "id", "nome") values ('FRAN', NULL, '970', 'Francês');
+        </sql>
+
+        <!-- PERIODO HORARIO -->
+        <sql>
+            insert into "periodo_horario" ("descricao", "fim", "id", "inicio", "tempo", "turno_id") values ('1º Tempo Manhã das 7h00 as 7h45', '07:45', '977', '07:00', 1, '962');
+        </sql>
+
+        <!-- CLASSE -->
+        <sql>
+            insert into "classe" ("descricao", "id") values ('10ª Classe', '961');
+            insert into "classe" ("descricao", "id") values ('11ª Classe', '962');
+            insert into "classe" ("descricao", "id") values ('12ª Classe', '963');
+            insert into "classe" ("descricao", "id") values ('13ª Classe', '964');
+            insert into "classe" ("descricao", "id") values ('1ª Classe', '965');
+            insert into "classe" ("descricao", "id") values ('2ª Classe', '966');
+            insert into "classe" ("descricao", "id") values ('3ª Classe', '967');
+            insert into "classe" ("descricao", "id") values ('4ª Classe', '968');
+            insert into "classe" ("descricao", "id") values ('5ª Classe', '969');
+            insert into "classe" ("descricao", "id") values ('6ª Classe', '970');
+            insert into "classe" ("descricao", "id") values ('7ª Classe', '971');
+            insert into "classe" ("descricao", "id") values ('8ª Classe', '972');
+            insert into "classe" ("descricao", "id") values ('9ª Classe', '973');
+            insert into "classe" ("descricao", "id") values ('1º Ano', '974');
+            insert into "classe" ("descricao", "id") values ('2º Ano', '975');
+            insert into "classe" ("descricao", "id") values ('3º Ano', '976');
+            insert into "classe" ("descricao", "id") values ('4º Ano', '977');
+            insert into "classe" ("descricao", "id") values ('5º Ano', '978');
+        </sql>
+
+
+        <!-- ANO LECTIVO -->
+        <sql>
+            insert into "ano_lectivo" ("ano", "descricao", "director_geral_id", "dissertacao_final_curso_id", "factura_id", "fim", "horario_id", "id", "inicio", "is_actual", "licao_id", "notas_geral_disciplina_id", "notas_periodica_disciplina_id", "ocorrencia_id", "plano_aula_id", "processo_selectivo_matricula_id", "recibo_id", "responsavel_area_formacao_id", "responsavel_curso_id", "responsavel_disciplina_id", "responsavel_secretaria_geral_id", "responsavel_secretaria_pedagogico_id", "responsavel_turma_id", "responsavel_turno_id", "sub_director_administrativo_id", "sub_director_pdagogico_id", "timestam", "turma_id", "utilizador_id") values (2023, '2023-2024', NULL, NULL, NULL, '2024-06-30', NULL, '962', '2023-09-01', true, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-04 21:04:00', NULL, NULL);
+        </sql>
+
+        <!-- CONTAS -->
+        <sql>
+            insert into "conta" ("iban", "id", "imagem", "imagem_content_type", "is_padrao", "moeda_id", "numero", "tipo", "titular", "titulo") values (NULL, '965', NULL, NULL, false, NULL, '1234567890', 'CAIXA', 'INSTITUIÇÂO DE ENSINO', 'GERAL');
+            insert into "conta" ("iban", "id", "imagem", "imagem_content_type", "is_padrao", "moeda_id", "numero", "tipo", "titular", "titulo") values (NULL, '966', NULL, NULL, false, NULL, '1', 'BANCO', 'BIC', 'BIC');
+            insert into "conta" ("iban", "id", "imagem", "imagem_content_type", "is_padrao", "moeda_id", "numero", "tipo", "titular", "titulo") values (NULL, '967', NULL, NULL, false, NULL, '2', 'BANCO', 'BAI', 'BAI');
+            insert into "conta" ("iban", "id", "imagem", "imagem_content_type", "is_padrao", "moeda_id", "numero", "tipo", "titular", "titulo") values (NULL, '969', NULL, NULL, false, NULL, '5', 'BANCO', 'SOL', 'SOL');
+            insert into "conta" ("iban", "id", "imagem", "imagem_content_type", "is_padrao", "moeda_id", "numero", "tipo", "titular", "titulo") values (NULL, '970', NULL, NULL, false, NULL, '7', 'BANCO', 'BCI', 'BCI');
+            insert into "conta" ("iban", "id", "imagem", "imagem_content_type", "is_padrao", "moeda_id", "numero", "tipo", "titular", "titulo") values (NULL, '971', NULL, NULL, false, NULL, '8', 'BANCO', 'BFA', 'BFA');
+            insert into "conta" ("iban", "id", "imagem", "imagem_content_type", "is_padrao", "moeda_id", "numero", "tipo", "titular", "titulo") values (NULL, '968', NULL, NULL, false, NULL, '3', 'BANCO', 'Millennium Atlântico', 'Millennium Atlântico');
+        </sql>
+
+        <!-- MEIO_PAGAMENTO -->
+        <sql>
+            insert into "meio_pagamento" ("codigo", "formato_referencia", "hash", "id", "imagem", "imagem_content_type", "is_pagamento_instantanio", "link", "nome", "numero_digito_referencia", "password", "token", "username") values ('TR', NULL, NULL, '966', NULL, NULL, false, NULL, 'TRANSFERÊNCIA', NULL, NULL, NULL, NULL);
+            insert into "meio_pagamento" ("codigo", "formato_referencia", "hash", "id", "imagem", "imagem_content_type", "is_pagamento_instantanio", "link", "nome", "numero_digito_referencia", "password", "token", "username") values ('TPA', NULL, NULL, '969', NULL, NULL, true, NULL, 'TPA', NULL, NULL, NULL, NULL);
+            insert into "meio_pagamento" ("codigo", "formato_referencia", "hash", "id", "imagem", "imagem_content_type", "is_pagamento_instantanio", "link", "nome", "numero_digito_referencia", "password", "token", "username") values ('NU', NULL, NULL, '964', NULL, NULL, true, NULL, 'NÚMERARIO', NULL, NULL, NULL, NULL);
+            insert into "meio_pagamento" ("codigo", "formato_referencia", "hash", "id", "imagem", "imagem_content_type", "is_pagamento_instantanio", "link", "nome", "numero_digito_referencia", "password", "token", "username") values ('DP', NULL, NULL, '965', NULL, NULL, false, NULL, 'DEPÓSITO', NULL, NULL, NULL, NULL);
+        </sql>
+
+        <!-- CATEGORIA-EMOLUMENTO -->
+        <sql>
+            insert into "categoria_emolumento" ("cor", "descricao", "id", "is_isento_juro", "is_isento_multa", "is_servico", "nome", "plano_multa_id") values (NULL, NULL, '963', false, false, true, 'Propina', NULL);
+            insert into "categoria_emolumento" ("cor", "descricao", "id", "is_isento_juro", "is_isento_multa", "is_servico", "nome", "plano_multa_id") values (NULL, NULL, '964', false, false, true, 'Transporte', NULL);
+            insert into "categoria_emolumento" ("cor", "descricao", "id", "is_isento_juro", "is_isento_multa", "is_servico", "nome", "plano_multa_id") values (NULL, NULL, '965', false, false, true, 'Alimentação', NULL);
+            insert into "categoria_emolumento" ("cor", "descricao", "id", "is_isento_juro", "is_isento_multa", "is_servico", "nome", "plano_multa_id") values (NULL, NULL, '967', false, false, false, 'Material Didatico', NULL);
+            insert into "categoria_emolumento" ("cor", "descricao", "id", "is_isento_juro", "is_isento_multa", "is_servico", "nome", "plano_multa_id") values (NULL, NULL, '966', false, false, false, 'Uniforme', NULL);
+            insert into "categoria_emolumento" ("cor", "descricao", "id", "is_isento_juro", "is_isento_multa", "is_servico", "nome", "plano_multa_id") values (NULL, NULL, '968', false, false, true, 'Extra Curricular', NULL);
+            insert into "categoria_emolumento" ("cor", "descricao", "id", "is_isento_juro", "is_isento_multa", "is_servico", "nome", "plano_multa_id") values (NULL, NULL, '969', false, false, true, 'Outros', NULL);
+        </sql>
+
+
+
+        <!-- PLANO CURRICULAR
+        <sql>
+            insert into "plano_curricular" ("classe_id", "curso_id", "descricao", "formula_classificacao_final", "formula_dispensa", "formula_exame", "formula_exame_especial", "formula_media", "formula_recurso", "id", "numero_disciplina_aprova", "numero_disciplina_exame", "numero_disciplina_exame_especial", "numero_disciplina_recurso", "numero_disciplina_reprova", "numero_falta_reprova", "peso_exame", "peso_exame_especial", "peso_media_1", "peso_media_2", "peso_media_3", "peso_nota_coselho", "peso_recurso", "sigla_media_1", "sigla_media_2", "sigla_media_3", "sigla_prova_1", "sigla_prova_2", "sigla_prova_3", "utilizador_id") values ('973', '973', 'TECOBRAS 10ª Classe', '3', '3', '3', '3', '3', '3', '974', 3, 3, 3, 3, 3, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', '3', '3', '3', '3', '3', NULL);
+        </sql>
+        -->
+
+        <!-- IMPOSTO
+        <sql>
+            insert into "imposto" ("codigo_imposto_id", "descricao", "id", "is_retencao", "motivo_codigo", "motivo_descricao", "motivo_isencao_codigo_id", "motivo_isencao_descricao_id", "pais", "taxa", "tipo_imposto_id") values ('982', 'IVA 0 % Isento', '1001', false, NULL, NULL, NULL, NULL, 'AO', 0, '983');
+        </sql>
+        -->
+
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,10 +1,12 @@
 package com.ravunana.longonkelo.service.impl;
 
+import com.ravunana.longokelo.config.LongonkeloException;
 import com.ravunana.longonkelo.domain.PrecoEmolumento;
 import com.ravunana.longonkelo.repository.PrecoEmolumentoRepository;
 import com.ravunana.longonkelo.service.PrecoEmolumentoService;
 import com.ravunana.longonkelo.service.dto.PrecoEmolumentoDTO;
 import com.ravunana.longonkelo.service.mapper.PrecoEmolumentoMapper;
+import java.math.BigDecimal;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +36,43 @@ public class PrecoEmolumentoServiceImpl implements PrecoEmolumentoService {
     @Override
     public PrecoEmolumentoDTO save(PrecoEmolumentoDTO precoEmolumentoDTO) {
         log.debug("Request to save PrecoEmolumento : {}", precoEmolumentoDTO);
+
+        var preco = precoEmolumentoDTO.getPreco();
+
+        if (preco == BigDecimal.ZERO) {
+            preco = precoEmolumentoDTO.getEmolumento().getPreco();
+        }
+
+        precoEmolumentoDTO.setPreco(preco);
+
+        if (precoEmolumentoDTO.getPlanoMulta() == null) {
+            precoEmolumentoDTO.setPlanoMulta(precoEmolumentoDTO.getEmolumento().getPlanoMulta());
+        }
+
+        if (precoEmolumentoDTO.getIsEspecificoAreaFormacao()) {
+            if (precoEmolumentoDTO.getAreaFormacao() == null) {
+                throw new LongonkeloException("Deve especificar a Área de formação");
+            }
+        }
+
+        if (precoEmolumentoDTO.getIsEspecificoClasse()) {
+            if (precoEmolumentoDTO.getClasse() == null) {
+                throw new LongonkeloException("Deve especificar a Classe");
+            }
+        }
+
+        if (precoEmolumentoDTO.getIsEspecificoTurno()) {
+            if (precoEmolumentoDTO.getTurno() == null) {
+                throw new LongonkeloException("Deve especificar o Turno");
+            }
+        }
+
+        if (precoEmolumentoDTO.getIsEspecificoCurso()) {
+            if (precoEmolumentoDTO.getCurso() == null) {
+                throw new LongonkeloException("Deve especificar o Curso");
+            }
+        }
+
         PrecoEmolumento precoEmolumento = precoEmolumentoMapper.toEntity(precoEmolumentoDTO);
         precoEmolumento = precoEmolumentoRepository.save(precoEmolumento);
         return precoEmolumentoMapper.toDto(precoEmolumento);

@@ -14,5 +14,6 @@ import { PrecoEmolumentoRoutingModule } from './route/preco-emolumento-routing.m
     PrecoEmolumentoUpdateComponent,
     PrecoEmolumentoDeleteDialogComponent,
   ],
+  exports: [PrecoEmolumentoComponent],
 })
 export class PrecoEmolumentoModule {}

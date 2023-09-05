@@ -1,7 +1,10 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <div *ngIf="emolumento">
-      <h2 data-cy="emolumentoDetailsHeading"><span appTranslate="longonkeloApp.emolumento.detail.title">Emolumento</span></h2>
+      <h2 data-cy="emolumentoDetailsHeading">
+        <span appTranslate="longonkeloApp.emolumento.detail.title">Emolumento</span>[<span>{{ emolumento.nome }}</span
+        >]
+      </h2>
 
       <hr />
 
@@ -10,10 +13,10 @@
       <app-alert></app-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <!-- <dt><span appTranslate="global.field.id">Código</span></dt>
         <dd>
           <span>{{ emolumento.id }}</span>
-        </dd>
+        </dd> -->
         <dt><span appTranslate="longonkeloApp.emolumento.imagem">Imagem</span></dt>
         <dd>
           <div *ngIf="emolumento.imagem">
@@ -37,7 +40,7 @@
         </dd>
         <dt><span appTranslate="longonkeloApp.emolumento.preco">Preco</span></dt>
         <dd>
-          <span>{{ emolumento.preco }}</span>
+          <span>{{ emolumento.preco | currency: 'AKZ' }}</span>
         </dd>
         <dt><span appTranslate="longonkeloApp.emolumento.quantidade">Quantidade</span></dt>
         <dd>
@@ -75,12 +78,12 @@
             <a [routerLink]="['/imposto', emolumento.imposto.id, 'view']">{{ emolumento.imposto.descricao }}</a>
           </div>
         </dd>
-        <dt><span appTranslate="longonkeloApp.emolumento.referencia">Referencia</span></dt>
+        <!-- <dt><span appTranslate="longonkeloApp.emolumento.referencia">Referencia</span></dt>
         <dd>
           <div *ngIf="emolumento.referencia">
             <a [routerLink]="['/emolumento', emolumento.referencia.id, 'view']">{{ emolumento.referencia.nome }}</a>
           </div>
-        </dd>
+        </dd> -->
         <dt><span appTranslate="longonkeloApp.emolumento.planoMulta">Plano Multa</span></dt>
         <dd>
           <div *ngIf="emolumento.planoMulta">
@@ -88,6 +91,8 @@
           </div>
         </dd>
       </dl>
+
+      <app-preco-emolumento [emolumentoID]="emolumento.id" [precoEmolumentos]="precoEmolumentos"></app-preco-emolumento>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>

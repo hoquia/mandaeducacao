@@ -77,7 +77,6 @@
     <include file="config/liquibase/changelog/20230904002318_added_entity_TransferenciaSaldo.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230904002319_added_entity_LongonkeloHistorico.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="config/liquibase/changelog/2023081920310000_users_and_users_roles.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230904002215_added_entity_constraints_InstituicaoEnsino.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230904002216_added_entity_constraints_ProvedorNotificacao.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230904002218_added_entity_constraints_LookupItem.xml" relativeToChangelogFile="false"/>
@@ -138,4 +137,6 @@
     <include file="config/liquibase/changelog/20230904002319_added_entity_constraints_LongonkeloHistorico.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
+    <include file="config/liquibase/changelog/2023081920310000_users_and_users_roles.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/2023090421380000_inserts_padrao.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

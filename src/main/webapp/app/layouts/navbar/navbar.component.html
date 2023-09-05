@@ -79,6 +79,18 @@
             <li>
               <a
                 class="dropdown-item"
+                routerLink="classe"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.classe">Classe</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
                 routerLink="area-formacao"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
@@ -311,6 +323,31 @@
             <li>
               <a
                 class="dropdown-item"
+                routerLink="plano-multa"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.planoMulta">Plano Multa</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="plano-desconto"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.planoDesconto">Plano Desconto</span>
+              </a>
+            </li>
+            <hr />
+            <li>
+              <a
+                class="dropdown-item"
                 routerLink="conta"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
@@ -320,6 +357,19 @@
                 <span appTranslate="global.menu.entities.conta">Conta</span>
               </a>
             </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="meio-pagamento"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.meioPagamento">Meio Pagamento</span>
+              </a>
+            </li>
+            <hr />
             <li>
               <a
                 class="dropdown-item"
@@ -342,30 +392,6 @@
               >
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                 <span appTranslate="global.menu.entities.emolumento">Emolumento</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="plano-multa"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.planoMulta">Plano Multa</span>
-              </a>
-            </li>
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="meio-pagamento"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.meioPagamento">Meio Pagamento</span>
               </a>
             </li>
             <hr />
@@ -436,18 +462,6 @@
             </span>
           </a>
           <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="secretari-menu">
-            <li>
-              <a
-                class="dropdown-item"
-                routerLink="plano-desconto"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.planoDesconto">Plano Desconto</span>
-              </a>
-            </li>
             <li>
               <a
                 class="dropdown-item"
@@ -789,18 +803,6 @@
                 <span appTranslate="global.menu.entities.instituicaoEnsino">Instituicao Ensino</span>
               </a>
             </li>
-            <!-- <li>
-              <a
-                class="dropdown-item"
-                routerLink="user-info"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.userInfo">User Info</span>
-              </a>
-            </li> -->
             <li>
               <a
                 class="dropdown-item"
@@ -816,13 +818,25 @@
             <li>
               <a
                 class="dropdown-item"
-                routerLink="lookup-item"
+                routerLink="imposto"
                 routerLinkActive="active"
                 [routerLinkActiveOptions]="{ exact: true }"
                 (click)="collapseNavbar()"
               >
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.lookupItem">Lookup Item</span>
+                <span appTranslate="global.menu.entities.imposto">Imposto</span>
+              </a>
+            </li>
+            <li>
+              <a
+                class="dropdown-item"
+                routerLink="documento-comercial"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.documentoComercial">Documento Comercial</span>
               </a>
             </li>
             <li>

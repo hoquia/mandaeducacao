@@ -11,7 +11,7 @@
     -->
     <changeSet id="20230904002319-1" author="jhipster">
         <createTable tableName="longonkelo_historico">
-            <column name="id" type="bigint">
+            <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="operacao" type="varchar(255)">

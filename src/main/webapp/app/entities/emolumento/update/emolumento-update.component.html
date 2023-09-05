@@ -55,35 +55,55 @@
           />
         </div>
 
-        <div class="row">
-          <div class="col-md-4 col-sm-12 mb-3">
-            <label class="form-label" appTranslate="longonkeloApp.emolumento.categoria" for="field_categoria">Categoria</label>
-            <ng-select
-              id="field_categoria"
-              data-cy="categoria"
-              name="categoria"
-              formControlName="categoria"
-              [compareWith]="compareCategoriaEmolumento"
-            >
-              <ng-option *ngIf="editForm.get(['categoria'])!.value == null" [value]="null" selected></ng-option>
-              <ng-option [value]="categoriaEmolumentoOption" *ngFor="let categoriaEmolumentoOption of categoriaEmolumentosSharedCollection">
-                {{ categoriaEmolumentoOption.nome }}
-              </ng-option>
-            </ng-select>
-            <div
-              *ngIf="editForm.get(['categoria'])!.invalid && (editForm.get(['categoria'])!.dirty || editForm.get(['categoria'])!.touched)"
-            >
-              <small
-                class="form-text text-danger"
-                *ngIf="editForm.get(['categoria'])?.errors?.required"
-                appTranslate="entity.validation.required"
-              >
-                O campo é obrigatório.
-              </small>
-            </div>
-          </div>
+        <div class="mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.emolumento.referencia" for="field_referencia">Referencia</label>
+          <fa-icon
+            icon="question-circle"
+            [fixedWidth]="true"
+            ngbTooltip="Ao selecionar uma categória de refêencia, vai criar uma nova categória com os atributos semelhantes da referência"
+            triggers="click:blur"
+          ></fa-icon>
+          <ng-select
+            id="field_referencia"
+            data-cy="referencia"
+            name="referencia"
+            formControlName="referencia"
+            [compareWith]="compareEmolumento"
+          >
+            <ng-option [value]="null"></ng-option>
+            <ng-option [value]="emolumentoOption" *ngFor="let emolumentoOption of emolumentosSharedCollection">
+              {{ emolumentoOption.nome }}
+            </ng-option>
+          </ng-select>
+        </div>
 
-          <div class="col-md-3 col-sm-12 mb-3">
+        <div class="mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.emolumento.categoria" for="field_categoria">Categoria</label>
+          <ng-select
+            id="field_categoria"
+            data-cy="categoria"
+            name="categoria"
+            formControlName="categoria"
+            [compareWith]="compareCategoriaEmolumento"
+          >
+            <ng-option *ngIf="editForm.get(['categoria'])!.value == null" [value]="null" selected></ng-option>
+            <ng-option [value]="categoriaEmolumentoOption" *ngFor="let categoriaEmolumentoOption of categoriaEmolumentosSharedCollection">
+              {{ categoriaEmolumentoOption.nome }}
+            </ng-option>
+          </ng-select>
+          <div *ngIf="editForm.get(['categoria'])!.invalid && (editForm.get(['categoria'])!.dirty || editForm.get(['categoria'])!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get(['categoria'])?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-2 col-sm-12 mb-3">
             <label class="form-label" appTranslate="longonkeloApp.emolumento.numero" for="field_numero">Numero</label>
             <input type="text" class="form-control" name="numero" id="field_numero" data-cy="numero" formControlName="numero" />
             <div *ngIf="editForm.get('numero')!.invalid && (editForm.get('numero')!.dirty || editForm.get('numero')!.touched)">
@@ -96,7 +116,8 @@
               </small>
             </div>
           </div>
-          <div class="col-md-5 col-sm-12 mb-3">
+
+          <div class="col-md-6 col-sm-12 mb-3">
             <label class="form-label" appTranslate="longonkeloApp.emolumento.nome" for="field_nome">Nome</label>
             <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
             <div *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)">
@@ -105,16 +126,15 @@
               </small>
             </div>
           </div>
-          <!--
-          <div class="col-md-3 col-sm-12 mb-3">
-            <label class="form-label" appTranslate="longonkeloApp.emolumento.mes" for="field_mes">Mes</label>
-            <input type="text" class="form-control" name="mes" id="field_mes" data-cy="mes" formControlName="mes" />
-          </div> -->
-        </div>
 
-        <div class="row">
-          <div class="col-md-3 col-sm-12 mb-3">
+          <div class="col-md-2 col-sm-12 mb-3">
             <label class="form-label" appTranslate="longonkeloApp.emolumento.quantidade" for="field_quantidade">Quantidade</label>
+            <fa-icon
+              icon="question-circle"
+              [fixedWidth]="true"
+              ngbTooltip="Nº de vezes que o emolumento é pago, Ex. Propina de Janeiro é cobrado uma vez por discente"
+              triggers="click:blur"
+            ></fa-icon>
             <input
               type="number"
               class="form-control"
@@ -149,7 +169,7 @@
             </div>
           </div>
 
-          <div class="col-md-3 col-sm-12 mb-3">
+          <div class="col-md-2 col-sm-12 mb-3">
             <label class="form-label" appTranslate="longonkeloApp.emolumento.preco" for="field_preco">Preco</label>
             <input type="number" class="form-control" name="preco" id="field_preco" data-cy="preco" formControlName="preco" />
             <div *ngIf="editForm.get('preco')!.invalid && (editForm.get('preco')!.dirty || editForm.get('preco')!.touched)">
@@ -178,37 +198,204 @@
             </div>
           </div>
         </div>
-        <!--
+
+        <legend>Período de cobrança</legend>
+
+        <div class="row">
+          <div class="col mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.emolumento.periodo" for="field_periodo">Periodo</label>
+            <fa-icon
+              icon="question-circle"
+              [fixedWidth]="true"
+              ngbTooltip="Nº de meses que esse emolumento é pago Ex. Propina é pago por 10 meses"
+              triggers="click:blur"
+            ></fa-icon>
+            <input type="number" class="form-control" name="periodo" id="field_periodo" data-cy="periodo" formControlName="periodo" />
+            <div *ngIf="editForm.get('periodo')!.invalid && (editForm.get('periodo')!.dirty || editForm.get('periodo')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('periodo')?.errors?.min"
+                appTranslate="entity.validation.min"
+                [translateValues]="{ min: 1 }"
+              >
+                Este campo deve ser maior que 1.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('periodo')?.errors?.max"
+                appTranslate="entity.validation.max"
+                [translateValues]="{ max: 12 }"
+              >
+                Este campo não pode ser maior que 12.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('periodo')?.errors?.number"
+                appTranslate="entity.validation.number"
+              >
+                Este campo é do tipo número.
+              </small>
+            </div>
+          </div>
+
+          <div class="col mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.emolumento.inicioPeriodo" for="field_inicioPeriodo">Inicio Periodo</label>
+            <fa-icon
+              icon="question-circle"
+              [fixedWidth]="true"
+              ngbTooltip="Mês inicial de Cobrança, Ex. 01(Janeiro)"
+              triggers="click:blur"
+            ></fa-icon>
+            <input
+              type="number"
+              class="form-control"
+              name="inicioPeriodo"
+              id="field_inicioPeriodo"
+              data-cy="inicioPeriodo"
+              formControlName="inicioPeriodo"
+            />
+            <div
+              *ngIf="
+                editForm.get('inicioPeriodo')!.invalid && (editForm.get('inicioPeriodo')!.dirty || editForm.get('inicioPeriodo')!.touched)
+              "
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('inicioPeriodo')?.errors?.min"
+                appTranslate="entity.validation.min"
+                [translateValues]="{ min: 1 }"
+              >
+                Este campo deve ser maior que 1.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('inicioPeriodo')?.errors?.max"
+                appTranslate="entity.validation.max"
+                [translateValues]="{ max: 12 }"
+              >
+                Este campo não pode ser maior que 12.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('inicioPeriodo')?.errors?.number"
+                appTranslate="entity.validation.number"
+              >
+                Este campo é do tipo número.
+              </small>
+            </div>
+          </div>
+
+          <div class="col mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.emolumento.fimPeriodo" for="field_fimPeriodo">Fim Periodo</label>
+            <fa-icon
+              icon="question-circle"
+              [fixedWidth]="true"
+              ngbTooltip="Mês que termina a Cobrança, Ex. 12(Dezembro)"
+              triggers="click:blur"
+            ></fa-icon>
+            <input
+              type="number"
+              class="form-control"
+              name="fimPeriodo"
+              id="field_fimPeriodo"
+              data-cy="fimPeriodo"
+              formControlName="fimPeriodo"
+            />
+            <div *ngIf="editForm.get('fimPeriodo')!.invalid && (editForm.get('fimPeriodo')!.dirty || editForm.get('fimPeriodo')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('fimPeriodo')?.errors?.min"
+                appTranslate="entity.validation.min"
+                [translateValues]="{ min: 1 }"
+              >
+                Este campo deve ser maior que 1.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('fimPeriodo')?.errors?.max"
+                appTranslate="entity.validation.max"
+                [translateValues]="{ max: 12 }"
+              >
+                Este campo não pode ser maior que 12.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('fimPeriodo')?.errors?.number"
+                appTranslate="entity.validation.number"
+              >
+                Este campo é do tipo número.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.emolumento.imposto" for="field_imposto">Imposto</label>
+          <ng-select id="field_imposto" data-cy="imposto" name="imposto" formControlName="imposto" [compareWith]="compareImposto">
+            <ng-option *ngIf="editForm.get(['imposto'])!.value == null" [value]="null" selected></ng-option>
+            <ng-option [value]="impostoOption" *ngFor="let impostoOption of impostosSharedCollection">{{
+              impostoOption.descricao
+            }}</ng-option>
+          </ng-select>
+          <div *ngIf="editForm.get(['imposto'])!.invalid && (editForm.get(['imposto'])!.dirty || editForm.get(['imposto'])!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get(['imposto'])?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <legend>Outras informações</legend>
+
         <div class="mb-3">
           <input
             type="checkbox"
             class="form-check-input"
-            name="isObrigatorio"
-            id="field_isObrigatorio"
-            data-cy="isObrigatorio"
-            formControlName="isObrigatorio"
+            name="isObrigatorioMatricula"
+            id="field_isObrigatorioMatricula"
+            data-cy="isObrigatorioMatricula"
+            formControlName="isObrigatorioMatricula"
           />
-          <span class="form-check-label" appTranslate="longonkeloApp.emolumento.isObrigatorio" for="field_isObrigatorio"
-            >Is Obrigatorio</span
+          <span class="form-check-label" appTranslate="longonkeloApp.emolumento.isObrigatorioMatricula" for="field_isObrigatorioMatricula"
+            >Is Obrigatorio Matricula</span
           >
-        </div> -->
+        </div>
 
-        <!-- <div class=" mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.emolumento.instituicao" for="field_instituicao">Instituicao</label>
-          <select
-            class="form-control"
-            id="field_instituicao"
-            data-cy="instituicao"
-            name="instituicao"
-            formControlName="instituicao"
-            [compareWith]="compareInstituicaoEnsino"
+        <div class="mb-3">
+          <input
+            type="checkbox"
+            class="form-check-input"
+            name="isObrigatorioConfirmacao"
+            id="field_isObrigatorioConfirmacao"
+            data-cy="isObrigatorioConfirmacao"
+            formControlName="isObrigatorioConfirmacao"
+          />
+          <span
+            class="form-check-label"
+            appTranslate="longonkeloApp.emolumento.isObrigatorioConfirmacao"
+            for="field_isObrigatorioConfirmacao"
+            >Is Obrigatorio Confirmacao</span
           >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="instituicaoEnsinoOption" *ngFor="let instituicaoEnsinoOption of instituicaoEnsinosSharedCollection">
-              {{ instituicaoEnsinoOption.tenant }}
-            </option>
-          </select>
-        </div> -->
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.emolumento.planoMulta" for="field_planoMulta">Plano Multa</label>
+          <ng-select
+            id="field_planoMulta"
+            data-cy="planoMulta"
+            name="planoMulta"
+            formControlName="planoMulta"
+            [compareWith]="comparePlanoMulta"
+          >
+            <ng-option [value]="null"></ng-option>
+            <ng-option [value]="planoMultaOption" *ngFor="let planoMultaOption of planoMultasSharedCollection">
+              {{ planoMultaOption.descricao }}
+            </ng-option>
+          </ng-select>
+        </div>
       </div>
 
       <div>

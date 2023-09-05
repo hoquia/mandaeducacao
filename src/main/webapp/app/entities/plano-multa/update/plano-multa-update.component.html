@@ -12,13 +12,19 @@
       <div>
         <app-alert-error></app-alert-error>
 
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+        <div class="mb-3" *ngIf="editForm.controls.id.value !== null">
           <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div>
 
-        <div class="row mb-3">
+        <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.planoMulta.descricao" for="field_descricao">Descricao</label>
+          <fa-icon
+            icon="question-circle"
+            [fixedWidth]="true"
+            ngbTooltip="Nome do plano de multa, Ex. Multa de 10% depois do dia 10 de cada mês"
+            triggers="click:blur"
+          ></fa-icon>
           <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
           <div *ngIf="editForm.get('descricao')!.invalid && (editForm.get('descricao')!.dirty || editForm.get('descricao')!.touched)">
             <small
@@ -31,272 +37,287 @@
           </div>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.planoMulta.diaAplicacaoMulta" for="field_diaAplicacaoMulta"
-            >Dia Aplicacao Multa</label
-          >
-          <input
-            type="number"
-            class="form-control"
-            name="diaAplicacaoMulta"
-            id="field_diaAplicacaoMulta"
-            data-cy="diaAplicacaoMulta"
-            formControlName="diaAplicacaoMulta"
-          />
-          <div
-            *ngIf="
-              editForm.get('diaAplicacaoMulta')!.invalid &&
-              (editForm.get('diaAplicacaoMulta')!.dirty || editForm.get('diaAplicacaoMulta')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('diaAplicacaoMulta')?.errors?.required"
-              appTranslate="entity.validation.required"
+        <legend>Critério Aplicação da Multa</legend>
+
+        <div class="row">
+          <div class="col-md-4 col-sm-12 mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.planoMulta.diaAplicacaoMulta" for="field_diaAplicacaoMulta"
+              >Dia Aplicacao Multa</label
             >
-              O campo é obrigatório.
-            </small>
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('diaAplicacaoMulta')?.errors?.min"
-              appTranslate="entity.validation.min"
-              [translateValues]="{ min: 1 }"
+            <input
+              type="number"
+              class="form-control"
+              name="diaAplicacaoMulta"
+              id="field_diaAplicacaoMulta"
+              data-cy="diaAplicacaoMulta"
+              formControlName="diaAplicacaoMulta"
+            />
+            <div
+              *ngIf="
+                editForm.get('diaAplicacaoMulta')!.invalid &&
+                (editForm.get('diaAplicacaoMulta')!.dirty || editForm.get('diaAplicacaoMulta')!.touched)
+              "
             >
-              Este campo deve ser maior que 1.
-            </small>
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('diaAplicacaoMulta')?.errors?.max"
-              appTranslate="entity.validation.max"
-              [translateValues]="{ max: 31 }"
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('diaAplicacaoMulta')?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                O campo é obrigatório.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('diaAplicacaoMulta')?.errors?.min"
+                appTranslate="entity.validation.min"
+                [translateValues]="{ min: 1 }"
+              >
+                Este campo deve ser maior que 1.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('diaAplicacaoMulta')?.errors?.max"
+                appTranslate="entity.validation.max"
+                [translateValues]="{ max: 31 }"
+              >
+                Este campo não pode ser maior que 31.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('diaAplicacaoMulta')?.errors?.number"
+                appTranslate="entity.validation.number"
+              >
+                Este campo é do tipo número.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-12 mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.planoMulta.metodoAplicacaoMulta" for="field_metodoAplicacaoMulta"
+              >Metodo Aplicacao Multa</label
             >
-              Este campo não pode ser maior que 31.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('diaAplicacaoMulta')?.errors?.number"
-              appTranslate="entity.validation.number"
+            <select
+              class="form-control"
+              name="metodoAplicacaoMulta"
+              formControlName="metodoAplicacaoMulta"
+              id="field_metodoAplicacaoMulta"
+              data-cy="metodoAplicacaoMulta"
             >
-              Este campo é do tipo número.
-            </small>
+              <option [ngValue]="null">{{ 'longonkeloApp.MetodoAplicacaoMulta.null' | translate }}</option>
+              <option *ngFor="let metodoAplicacaoMulta of metodoAplicacaoMultaValues" [value]="metodoAplicacaoMulta">
+                {{ 'longonkeloApp.MetodoAplicacaoMulta.' + metodoAplicacaoMulta | translate }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                editForm.get('metodoAplicacaoMulta')!.invalid &&
+                (editForm.get('metodoAplicacaoMulta')!.dirty || editForm.get('metodoAplicacaoMulta')!.touched)
+              "
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('metodoAplicacaoMulta')?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                O campo é obrigatório.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-12 mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.planoMulta.taxaMulta" for="field_taxaMulta">Taxa Multa</label>
+            <input
+              type="number"
+              class="form-control"
+              name="taxaMulta"
+              id="field_taxaMulta"
+              data-cy="taxaMulta"
+              formControlName="taxaMulta"
+            />
+            <div *ngIf="editForm.get('taxaMulta')!.invalid && (editForm.get('taxaMulta')!.dirty || editForm.get('taxaMulta')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('taxaMulta')?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                O campo é obrigatório.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('taxaMulta')?.errors?.min"
+                appTranslate="entity.validation.min"
+                [translateValues]="{ min: 0 }"
+              >
+                Este campo deve ser maior que 0.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('taxaMulta')?.errors?.number"
+                appTranslate="entity.validation.number"
+              >
+                Este campo é do tipo número.
+              </small>
+            </div>
           </div>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.planoMulta.metodoAplicacaoMulta" for="field_metodoAplicacaoMulta"
-            >Metodo Aplicacao Multa</label
-          >
-          <select
-            class="form-control"
-            name="metodoAplicacaoMulta"
-            formControlName="metodoAplicacaoMulta"
-            id="field_metodoAplicacaoMulta"
-            data-cy="metodoAplicacaoMulta"
-          >
-            <option [ngValue]="null">{{ 'longonkeloApp.MetodoAplicacaoMulta.null' | translate }}</option>
-            <option *ngFor="let metodoAplicacaoMulta of metodoAplicacaoMultaValues" [value]="metodoAplicacaoMulta">
-              {{ 'longonkeloApp.MetodoAplicacaoMulta.' + metodoAplicacaoMulta | translate }}
-            </option>
-          </select>
-          <div
-            *ngIf="
-              editForm.get('metodoAplicacaoMulta')!.invalid &&
-              (editForm.get('metodoAplicacaoMulta')!.dirty || editForm.get('metodoAplicacaoMulta')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('metodoAplicacaoMulta')?.errors?.required"
-              appTranslate="entity.validation.required"
-            >
-              O campo é obrigatório.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.planoMulta.taxaMulta" for="field_taxaMulta">Taxa Multa</label>
-          <input type="number" class="form-control" name="taxaMulta" id="field_taxaMulta" data-cy="taxaMulta" formControlName="taxaMulta" />
-          <div *ngIf="editForm.get('taxaMulta')!.invalid && (editForm.get('taxaMulta')!.dirty || editForm.get('taxaMulta')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('taxaMulta')?.errors?.required"
-              appTranslate="entity.validation.required"
-            >
-              O campo é obrigatório.
-            </small>
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('taxaMulta')?.errors?.min"
-              appTranslate="entity.validation.min"
-              [translateValues]="{ min: 0 }"
-            >
-              Este campo deve ser maior que 0.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('taxaMulta')?.errors?.number"
-              appTranslate="entity.validation.number"
-            >
-              Este campo é do tipo número.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.planoMulta.isTaxaMultaPercentual" for="field_isTaxaMultaPercentual"
-            >Is Taxa Multa Percentual</label
-          >
+        <div class="col-md-3 col-sm-12 mb-3">
           <input
             type="checkbox"
-            class="form-check"
+            class="form-check-input"
             name="isTaxaMultaPercentual"
             id="field_isTaxaMultaPercentual"
             data-cy="isTaxaMultaPercentual"
             formControlName="isTaxaMultaPercentual"
           />
+          <span class="form-check-label" appTranslate="longonkeloApp.planoMulta.isTaxaMultaPercentual" for="field_isTaxaMultaPercentual"
+            >Is Taxa Multa Percentual</span
+          >
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.planoMulta.diaAplicacaoJuro" for="field_diaAplicacaoJuro"
-            >Dia Aplicacao Juro</label
-          >
-          <input
-            type="number"
-            class="form-control"
-            name="diaAplicacaoJuro"
-            id="field_diaAplicacaoJuro"
-            data-cy="diaAplicacaoJuro"
-            formControlName="diaAplicacaoJuro"
-          />
-          <div
-            *ngIf="
-              editForm.get('diaAplicacaoJuro')!.invalid &&
-              (editForm.get('diaAplicacaoJuro')!.dirty || editForm.get('diaAplicacaoJuro')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('diaAplicacaoJuro')?.errors?.min"
-              appTranslate="entity.validation.min"
-              [translateValues]="{ min: 1 }"
+        <legend>Critério Aplicação de Juros</legend>
+
+        <div class="row">
+          <div class="col-md-3 col-sm-12 mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.planoMulta.diaAplicacaoJuro" for="field_diaAplicacaoJuro"
+              >Dia Aplicacao Juro</label
             >
-              Este campo deve ser maior que 1.
-            </small>
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('diaAplicacaoJuro')?.errors?.max"
-              appTranslate="entity.validation.max"
-              [translateValues]="{ max: 31 }"
+            <input
+              type="number"
+              class="form-control"
+              name="diaAplicacaoJuro"
+              id="field_diaAplicacaoJuro"
+              data-cy="diaAplicacaoJuro"
+              formControlName="diaAplicacaoJuro"
+            />
+            <div
+              *ngIf="
+                editForm.get('diaAplicacaoJuro')!.invalid &&
+                (editForm.get('diaAplicacaoJuro')!.dirty || editForm.get('diaAplicacaoJuro')!.touched)
+              "
             >
-              Este campo não pode ser maior que 31.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('diaAplicacaoJuro')?.errors?.number"
-              appTranslate="entity.validation.number"
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('diaAplicacaoJuro')?.errors?.min"
+                appTranslate="entity.validation.min"
+                [translateValues]="{ min: 1 }"
+              >
+                Este campo deve ser maior que 1.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('diaAplicacaoJuro')?.errors?.max"
+                appTranslate="entity.validation.max"
+                [translateValues]="{ max: 31 }"
+              >
+                Este campo não pode ser maior que 31.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('diaAplicacaoJuro')?.errors?.number"
+                appTranslate="entity.validation.number"
+              >
+                Este campo é do tipo número.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-sm-12 mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.planoMulta.metodoAplicacaoJuro" for="field_metodoAplicacaoJuro"
+              >Metodo Aplicacao Juro</label
             >
-              Este campo é do tipo número.
-            </small>
+            <select
+              class="form-control"
+              name="metodoAplicacaoJuro"
+              formControlName="metodoAplicacaoJuro"
+              id="field_metodoAplicacaoJuro"
+              data-cy="metodoAplicacaoJuro"
+            >
+              <option [ngValue]="null">{{ 'longonkeloApp.MetodoAplicacaoMulta.null' | translate }}</option>
+              <option *ngFor="let metodoAplicacaoMulta of metodoAplicacaoMultaValues" [value]="metodoAplicacaoMulta">
+                {{ 'longonkeloApp.MetodoAplicacaoMulta.' + metodoAplicacaoMulta | translate }}
+              </option>
+            </select>
+          </div>
+
+          <div class="col-md-3 col-sm-12 mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.planoMulta.taxaJuro" for="field_taxaJuro">Taxa Juro</label>
+            <input type="number" class="form-control" name="taxaJuro" id="field_taxaJuro" data-cy="taxaJuro" formControlName="taxaJuro" />
+            <div *ngIf="editForm.get('taxaJuro')!.invalid && (editForm.get('taxaJuro')!.dirty || editForm.get('taxaJuro')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('taxaJuro')?.errors?.min"
+                appTranslate="entity.validation.min"
+                [translateValues]="{ min: 0 }"
+              >
+                Este campo deve ser maior que 0.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('taxaJuro')?.errors?.number"
+                appTranslate="entity.validation.number"
+              >
+                Este campo é do tipo número.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-sm-12 mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.planoMulta.aumentarJuroEmDias" for="field_aumentarJuroEmDias"
+              >Aumentar Juro Em Dias</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="aumentarJuroEmDias"
+              id="field_aumentarJuroEmDias"
+              data-cy="aumentarJuroEmDias"
+              formControlName="aumentarJuroEmDias"
+            />
+            <div
+              *ngIf="
+                editForm.get('aumentarJuroEmDias')!.invalid &&
+                (editForm.get('aumentarJuroEmDias')!.dirty || editForm.get('aumentarJuroEmDias')!.touched)
+              "
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('aumentarJuroEmDias')?.errors?.min"
+                appTranslate="entity.validation.min"
+                [translateValues]="{ min: 0 }"
+              >
+                Este campo deve ser maior que 0.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('aumentarJuroEmDias')?.errors?.number"
+                appTranslate="entity.validation.number"
+              >
+                Este campo é do tipo número.
+              </small>
+            </div>
           </div>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.planoMulta.metodoAplicacaoJuro" for="field_metodoAplicacaoJuro"
-            >Metodo Aplicacao Juro</label
-          >
-          <select
-            class="form-control"
-            name="metodoAplicacaoJuro"
-            formControlName="metodoAplicacaoJuro"
-            id="field_metodoAplicacaoJuro"
-            data-cy="metodoAplicacaoJuro"
-          >
-            <option [ngValue]="null">{{ 'longonkeloApp.MetodoAplicacaoMulta.null' | translate }}</option>
-            <option *ngFor="let metodoAplicacaoMulta of metodoAplicacaoMultaValues" [value]="metodoAplicacaoMulta">
-              {{ 'longonkeloApp.MetodoAplicacaoMulta.' + metodoAplicacaoMulta | translate }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.planoMulta.taxaJuro" for="field_taxaJuro">Taxa Juro</label>
-          <input type="number" class="form-control" name="taxaJuro" id="field_taxaJuro" data-cy="taxaJuro" formControlName="taxaJuro" />
-          <div *ngIf="editForm.get('taxaJuro')!.invalid && (editForm.get('taxaJuro')!.dirty || editForm.get('taxaJuro')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('taxaJuro')?.errors?.min"
-              appTranslate="entity.validation.min"
-              [translateValues]="{ min: 0 }"
-            >
-              Este campo deve ser maior que 0.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('taxaJuro')?.errors?.number"
-              appTranslate="entity.validation.number"
-            >
-              Este campo é do tipo número.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.planoMulta.isTaxaJuroPercentual" for="field_isTaxaJuroPercentual"
-            >Is Taxa Juro Percentual</label
-          >
+        <div class="mb-3">
           <input
             type="checkbox"
-            class="form-check"
+            class="form-check-input"
             name="isTaxaJuroPercentual"
             id="field_isTaxaJuroPercentual"
             data-cy="isTaxaJuroPercentual"
             formControlName="isTaxaJuroPercentual"
           />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.planoMulta.aumentarJuroEmDias" for="field_aumentarJuroEmDias"
-            >Aumentar Juro Em Dias</label
+          <span class="form-check-label" appTranslate="longonkeloApp.planoMulta.isTaxaJuroPercentual" for="field_isTaxaJuroPercentual"
+            >Is Taxa Juro Percentual</span
           >
-          <input
-            type="number"
-            class="form-control"
-            name="aumentarJuroEmDias"
-            id="field_aumentarJuroEmDias"
-            data-cy="aumentarJuroEmDias"
-            formControlName="aumentarJuroEmDias"
-          />
-          <div
-            *ngIf="
-              editForm.get('aumentarJuroEmDias')!.invalid &&
-              (editForm.get('aumentarJuroEmDias')!.dirty || editForm.get('aumentarJuroEmDias')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('aumentarJuroEmDias')?.errors?.min"
-              appTranslate="entity.validation.min"
-              [translateValues]="{ min: 0 }"
-            >
-              Este campo deve ser maior que 0.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('aumentarJuroEmDias')?.errors?.number"
-              appTranslate="entity.validation.number"
-            >
-              Este campo é do tipo número.
-            </small>
-          </div>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.planoMulta.isAtivo" for="field_isAtivo">Is Ativo</label>
-          <input type="checkbox" class="form-check" name="isAtivo" id="field_isAtivo" data-cy="isAtivo" formControlName="isAtivo" />
+        <div class="mb-3">
+          <input type="checkbox" class="form-check-input" name="isAtivo" id="field_isAtivo" data-cy="isAtivo" formControlName="isAtivo" />
+          <span class="form-check-label" appTranslate="longonkeloApp.planoMulta.isAtivo" for="field_isAtivo">Is Ativo</span>
         </div>
 
-        <div class="row mb-3">
+        <!-- <div class=" mb-3">
           <label class="form-label" appTranslate="longonkeloApp.planoMulta.utilizador" for="field_utilizador">Utilizador</label>
           <select
             class="form-control"
@@ -309,7 +330,7 @@
             <option [ngValue]="null"></option>
             <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
           </select>
-        </div>
+        </div> -->
       </div>
 
       <div>

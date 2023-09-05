@@ -73,6 +73,18 @@ export class PrecoEmolumentoUpdateComponent implements OnInit {
       this.precoEmolumento = precoEmolumento;
       if (precoEmolumento) {
         this.updateForm(precoEmolumento);
+      } else {
+        const emolumentoID = Number(this.activatedRoute.snapshot.queryParamMap.get('emolumento_id'));
+
+        this.emolumentoService.find(emolumentoID).subscribe(res => {
+          this.editForm.patchValue({
+            emolumento: res.body,
+          });
+        });
+
+        this.editForm.patchValue({
+          preco: 0,
+        });
       }
 
       this.loadRelationshipsOptions();

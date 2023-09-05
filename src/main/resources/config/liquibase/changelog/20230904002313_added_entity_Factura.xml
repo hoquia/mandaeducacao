@@ -11,7 +11,7 @@
     -->
     <changeSet id="20230904002313-1" author="jhipster">
         <createTable tableName="factura">
-            <column name="id" type="bigint">
+            <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="numero" type="varchar(60)">

@@ -1,7 +1,9 @@
 package com.ravunana.longonkelo.service.impl;
 
+import com.ravunana.longokelo.config.LongonkeloException;
 import com.ravunana.longonkelo.domain.PlanoMulta;
 import com.ravunana.longonkelo.repository.PlanoMultaRepository;
+import com.ravunana.longonkelo.security.SecurityUtils;
 import com.ravunana.longonkelo.service.PlanoMultaService;
 import com.ravunana.longonkelo.service.dto.PlanoMultaDTO;
 import com.ravunana.longonkelo.service.mapper.PlanoMultaMapper;
@@ -34,6 +36,22 @@ public class PlanoMultaServiceImpl implements PlanoMultaService {
     @Override
     public PlanoMultaDTO save(PlanoMultaDTO planoMultaDTO) {
         log.debug("Request to save PlanoMulta : {}", planoMultaDTO);
+
+        var taxaMulta = planoMultaDTO.getTaxaMulta();
+        var taxaJuro = planoMultaDTO.getTaxaJuro();
+
+        if (planoMultaDTO.getIsTaxaMultaPercentual()) {
+            if (taxaMulta.doubleValue() > 100) {
+                throw new LongonkeloException("Taxa de Multa em percentagem deve estar entre 0 a 100%");
+            }
+        }
+
+        if (planoMultaDTO.getIsTaxaJuroPercentual()) {
+            if (taxaJuro.doubleValue() > 100) {
+                throw new LongonkeloException("Taxa de Juro em percentagem deve estar entre 0 a 100%");
+            }
+        }
+
         PlanoMulta planoMulta = planoMultaMapper.toEntity(planoMultaDTO);
         planoMulta = planoMultaRepository.save(planoMulta);
         return planoMultaMapper.toDto(planoMulta);

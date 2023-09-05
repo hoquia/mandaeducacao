@@ -87,7 +87,7 @@ export class LookupItemUpdateComponent implements OnInit {
 
   protected loadRelationshipsOptions(): void {
     this.lookupService
-      .query()
+      .query({ size: 500 })
       .pipe(map((res: HttpResponse<ILookup[]>) => res.body ?? []))
       .pipe(map((lookups: ILookup[]) => this.lookupService.addLookupToCollectionIfMissing<ILookup>(lookups, this.lookupItem?.lookup)))
       .subscribe((lookups: ILookup[]) => (this.lookupsSharedCollection = lookups));

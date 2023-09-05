@@ -1,5 +1,6 @@
 package com.ravunana.longonkelo.service.impl;
 
+import com.ravunana.longokelo.config.LongonkeloException;
 import com.ravunana.longonkelo.domain.PlanoDesconto;
 import com.ravunana.longonkelo.repository.PlanoDescontoRepository;
 import com.ravunana.longonkelo.service.PlanoDescontoService;
@@ -34,6 +35,11 @@ public class PlanoDescontoServiceImpl implements PlanoDescontoService {
     @Override
     public PlanoDescontoDTO save(PlanoDescontoDTO planoDescontoDTO) {
         log.debug("Request to save PlanoDesconto : {}", planoDescontoDTO);
+
+        if (planoDescontoDTO.getDesconto().doubleValue() > 100) {
+            throw new LongonkeloException("O Desconto é dado em percentagem, valor válido de 0 a 100%");
+        }
+
         PlanoDesconto planoDesconto = planoDescontoMapper.toEntity(planoDescontoDTO);
         planoDesconto = planoDescontoRepository.save(planoDesconto);
         return planoDescontoMapper.toDto(planoDesconto);

@@ -11,7 +11,7 @@
     -->
     <changeSet id="20230904002300-1" author="jhipster">
         <createTable tableName="resumo_academico">
-            <column name="id" type="bigint">
+            <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="tema_projecto" type="varchar(255)">

@@ -12,12 +12,12 @@
       <div>
         <app-alert-error></app-alert-error>
 
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+        <div class="mb-3" *ngIf="editForm.controls.id.value !== null">
           <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div>
 
-        <div class="row mb-3">
+        <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.precoEmolumento.preco" for="field_preco">Preco</label>
           <input type="number" class="form-control" name="preco" id="field_preco" data-cy="preco" formControlName="preco" />
           <div *ngIf="editForm.get('preco')!.invalid && (editForm.get('preco')!.dirty || editForm.get('preco')!.touched)">
@@ -38,66 +38,66 @@
           </div>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.precoEmolumento.isEspecificoCurso" for="field_isEspecificoCurso"
-            >Is Especifico Curso</label
-          >
+        <div class="mb-3">
           <input
             type="checkbox"
-            class="form-check"
+            class="form-check-input"
             name="isEspecificoCurso"
             id="field_isEspecificoCurso"
             data-cy="isEspecificoCurso"
             formControlName="isEspecificoCurso"
           />
+          <span class="form-check-label" appTranslate="longonkeloApp.precoEmolumento.isEspecificoCurso" for="field_isEspecificoCurso"
+            >Is Especifico Curso</span
+          >
         </div>
 
-        <div class="row mb-3">
-          <label
-            class="form-label"
-            appTranslate="longonkeloApp.precoEmolumento.isEspecificoAreaFormacao"
-            for="field_isEspecificoAreaFormacao"
-            >Is Especifico Area Formacao</label
-          >
+        <div class="mb-3">
           <input
             type="checkbox"
-            class="form-check"
+            class="form-check-input"
             name="isEspecificoAreaFormacao"
             id="field_isEspecificoAreaFormacao"
             data-cy="isEspecificoAreaFormacao"
             formControlName="isEspecificoAreaFormacao"
           />
+          <span
+            class="form-check-label"
+            appTranslate="longonkeloApp.precoEmolumento.isEspecificoAreaFormacao"
+            for="field_isEspecificoAreaFormacao"
+            >Is Especifico Area Formacao</span
+          >
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.precoEmolumento.isEspecificoClasse" for="field_isEspecificoClasse"
-            >Is Especifico Classe</label
-          >
+        <div class="mb-3">
           <input
             type="checkbox"
-            class="form-check"
+            class="form-check-input"
             name="isEspecificoClasse"
             id="field_isEspecificoClasse"
             data-cy="isEspecificoClasse"
             formControlName="isEspecificoClasse"
           />
+          <span class="form-check-label" appTranslate="longonkeloApp.precoEmolumento.isEspecificoClasse" for="field_isEspecificoClasse"
+            >Is Especifico Classe</span
+          >
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.precoEmolumento.isEspecificoTurno" for="field_isEspecificoTurno"
-            >Is Especifico Turno</label
-          >
+        <div class="mb-3">
           <input
             type="checkbox"
-            class="form-check"
+            class="form-check-input"
             name="isEspecificoTurno"
             id="field_isEspecificoTurno"
             data-cy="isEspecificoTurno"
             formControlName="isEspecificoTurno"
           />
+          <span class="form-check-label" appTranslate="longonkeloApp.precoEmolumento.isEspecificoTurno" for="field_isEspecificoTurno"
+            >Is Especifico Turno</span
+          >
         </div>
 
-        <div class="row mb-3">
+        <!-- <div class=" mb-3">
           <label class="form-label" appTranslate="longonkeloApp.precoEmolumento.utilizador" for="field_utilizador">Utilizador</label>
           <select
             class="form-control"
@@ -110,9 +110,9 @@
             <option [ngValue]="null"></option>
             <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
           </select>
-        </div>
+        </div> -->
 
-        <div class="row mb-3">
+        <!-- <div class=" mb-3">
           <label class="form-label" appTranslate="longonkeloApp.precoEmolumento.emolumento" for="field_emolumento">Emolumento</label>
           <select
             class="form-control"
@@ -127,68 +127,66 @@
               {{ emolumentoOption.nome }}
             </option>
           </select>
-        </div>
-        <div
-          *ngIf="editForm.get(['emolumento'])!.invalid && (editForm.get(['emolumento'])!.dirty || editForm.get(['emolumento'])!.touched)"
-        >
-          <small
-            class="form-text text-danger"
-            *ngIf="editForm.get(['emolumento'])?.errors?.required"
-            appTranslate="entity.validation.required"
+          <div
+            *ngIf="editForm.get(['emolumento'])!.invalid && (editForm.get(['emolumento'])!.dirty || editForm.get(['emolumento'])!.touched)"
           >
-            O campo é obrigatório.
-          </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get(['emolumento'])?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div> -->
+
+        <div class="row">
+          <div class="col-md-4 col-sm-12 mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.precoEmolumento.areaFormacao" for="field_areaFormacao"
+              >Area Formacao</label
+            >
+            <ng-select
+              id="field_areaFormacao"
+              data-cy="areaFormacao"
+              name="areaFormacao"
+              formControlName="areaFormacao"
+              [compareWith]="compareAreaFormacao"
+            >
+              <ng-option [value]="null"></ng-option>
+              <ng-option [value]="areaFormacaoOption" *ngFor="let areaFormacaoOption of areaFormacaosSharedCollection">
+                {{ areaFormacaoOption.nome }}
+              </ng-option>
+            </ng-select>
+          </div>
+
+          <div class="col-md-4 col-sm-12 mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.precoEmolumento.curso" for="field_curso">Curso</label>
+            <ng-select id="field_curso" data-cy="curso" name="curso" formControlName="curso" [compareWith]="compareCurso">
+              <ng-option [value]="null"></ng-option>
+              <ng-option [value]="cursoOption" *ngFor="let cursoOption of cursosSharedCollection">{{ cursoOption.nome }}</ng-option>
+            </ng-select>
+          </div>
+
+          <div class="col-md-2 col-sm-12 mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.precoEmolumento.classe" for="field_classe">Classe</label>
+            <ng-select id="field_classe" data-cy="classe" name="classe" formControlName="classe" [compareWith]="compareClasse">
+              <ng-option [value]="null"></ng-option>
+              <ng-option [value]="classeOption" *ngFor="let classeOption of classesSharedCollection">{{
+                classeOption.descricao
+              }}</ng-option>
+            </ng-select>
+          </div>
+
+          <div class="col-md-2 col-sm-12 mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.precoEmolumento.turno" for="field_turno">Turno</label>
+            <ng-select id="field_turno" data-cy="turno" name="turno" formControlName="turno" [compareWith]="compareTurno">
+              <ng-option [value]="null"></ng-option>
+              <ng-option [value]="turnoOption" *ngFor="let turnoOption of turnosSharedCollection">{{ turnoOption.nome }}</ng-option>
+            </ng-select>
+          </div>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.precoEmolumento.areaFormacao" for="field_areaFormacao">Area Formacao</label>
-          <select
-            class="form-control"
-            id="field_areaFormacao"
-            data-cy="areaFormacao"
-            name="areaFormacao"
-            formControlName="areaFormacao"
-            [compareWith]="compareAreaFormacao"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="areaFormacaoOption" *ngFor="let areaFormacaoOption of areaFormacaosSharedCollection">
-              {{ areaFormacaoOption.nome }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.precoEmolumento.curso" for="field_curso">Curso</label>
-          <select class="form-control" id="field_curso" data-cy="curso" name="curso" formControlName="curso" [compareWith]="compareCurso">
-            <option [ngValue]="null"></option>
-            <option [ngValue]="cursoOption" *ngFor="let cursoOption of cursosSharedCollection">{{ cursoOption.nome }}</option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.precoEmolumento.classe" for="field_classe">Classe</label>
-          <select
-            class="form-control"
-            id="field_classe"
-            data-cy="classe"
-            name="classe"
-            formControlName="classe"
-            [compareWith]="compareClasse"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="classeOption" *ngFor="let classeOption of classesSharedCollection">{{ classeOption.descricao }}</option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.precoEmolumento.turno" for="field_turno">Turno</label>
-          <select class="form-control" id="field_turno" data-cy="turno" name="turno" formControlName="turno" [compareWith]="compareTurno">
-            <option [ngValue]="null"></option>
-            <option [ngValue]="turnoOption" *ngFor="let turnoOption of turnosSharedCollection">{{ turnoOption.nome }}</option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
+        <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.precoEmolumento.planoMulta" for="field_planoMulta">Plano Multa</label>
           <select
             class="form-control"

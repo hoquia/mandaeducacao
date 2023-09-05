@@ -5,9 +5,10 @@ import { EmolumentoDetailComponent } from './detail/emolumento-detail.component'
 import { EmolumentoUpdateComponent } from './update/emolumento-update.component';
 import { EmolumentoDeleteDialogComponent } from './delete/emolumento-delete-dialog.component';
 import { EmolumentoRoutingModule } from './route/emolumento-routing.module';
+import { PrecoEmolumentoModule } from '../preco-emolumento/preco-emolumento.module';
 
 @NgModule({
-  imports: [SharedModule, EmolumentoRoutingModule],
+  imports: [SharedModule, EmolumentoRoutingModule, PrecoEmolumentoModule],
   declarations: [EmolumentoComponent, EmolumentoDetailComponent, EmolumentoUpdateComponent, EmolumentoDeleteDialogComponent],
 })
 export class EmolumentoModule {}

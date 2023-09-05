@@ -11,7 +11,7 @@
     -->
     <changeSet id="20230904002244-1" author="jhipster">
         <createTable tableName="detalhe_plano_aula">
-            <column name="id" type="bigint">
+            <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="estrategia_aula" type="${clobType}">

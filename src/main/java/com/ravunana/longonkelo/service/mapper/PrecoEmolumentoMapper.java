@@ -24,12 +24,12 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface PrecoEmolumentoMapper extends EntityMapper<PrecoEmolumentoDTO, PrecoEmolumento> {
     @Mapping(target = "utilizador", source = "utilizador", qualifiedByName = "userLogin")
-    @Mapping(target = "emolumento", source = "emolumento", qualifiedByName = "emolumentoNome")
+    @Mapping(target = "emolumento", source = "emolumento")
     @Mapping(target = "areaFormacao", source = "areaFormacao", qualifiedByName = "areaFormacaoNome")
     @Mapping(target = "curso", source = "curso", qualifiedByName = "cursoNome")
     @Mapping(target = "classe", source = "classe", qualifiedByName = "classeDescricao")
     @Mapping(target = "turno", source = "turno", qualifiedByName = "turnoNome")
-    @Mapping(target = "planoMulta", source = "planoMulta", qualifiedByName = "planoMultaDescricao")
+    @Mapping(target = "planoMulta", source = "planoMulta")
     PrecoEmolumentoDTO toDto(PrecoEmolumento s);
 
     @Named("userLogin")

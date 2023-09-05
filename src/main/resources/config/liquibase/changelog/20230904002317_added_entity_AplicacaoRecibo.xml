@@ -11,7 +11,7 @@
     -->
     <changeSet id="20230904002317-1" author="jhipster">
         <createTable tableName="aplicacao_recibo">
-            <column name="id" type="bigint">
+            <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="total_factura" type="decimal(21,2)">

@@ -38,6 +38,10 @@ export class PlanoMultaUpdateComponent implements OnInit {
       this.planoMulta = planoMulta;
       if (planoMulta) {
         this.updateForm(planoMulta);
+      } else {
+        this.editForm.patchValue({
+          isAtivo: true,
+        });
       }
 
       this.loadRelationshipsOptions();

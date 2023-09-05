@@ -13,6 +13,7 @@
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-preco-emolumento"
         [routerLink]="['/preco-emolumento/new']"
+        [queryParams]="{ emolumento_id: emolumentoID }"
       >
         <fa-icon icon="plus"></fa-icon>
         <span appTranslate="longonkeloApp.precoEmolumento.home.createLabel"> Criar novo(a) Preco Emolumento </span>
@@ -34,19 +35,19 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="preco">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.precoEmolumento.preco">Preco</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="isEspecificoCurso">
+          <!-- <th scope="col" appSortBy="isEspecificoCurso">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.precoEmolumento.isEspecificoCurso">Is Especifico Curso</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -69,8 +70,8 @@
               <span appTranslate="longonkeloApp.precoEmolumento.isEspecificoTurno">Is Especifico Turno</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="utilizador.login">
+          </th> -->
+          <!-- <th scope="col" appSortBy="utilizador.login">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.precoEmolumento.utilizador">Utilizador</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -81,7 +82,7 @@
               <span appTranslate="longonkeloApp.precoEmolumento.emolumento">Emolumento</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="areaFormacao.nome">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.precoEmolumento.areaFormacao">Area Formacao</span>
@@ -117,11 +118,11 @@
       </thead>
       <tbody>
         <tr *ngFor="let precoEmolumento of precoEmolumentos; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/preco-emolumento', precoEmolumento.id, 'view']">{{ precoEmolumento.id }}</a>
-          </td>
-          <td>{{ precoEmolumento.preco }}</td>
-          <td>{{ precoEmolumento.isEspecificoCurso }}</td>
+          </td> -->
+          <td>{{ precoEmolumento.preco | currency: 'AKZ' }}</td>
+          <!-- <td>{{ precoEmolumento.isEspecificoCurso }}</td>
           <td>{{ precoEmolumento.isEspecificoAreaFormacao }}</td>
           <td>{{ precoEmolumento.isEspecificoClasse }}</td>
           <td>{{ precoEmolumento.isEspecificoTurno }}</td>
@@ -132,7 +133,7 @@
             <div *ngIf="precoEmolumento.emolumento">
               <a [routerLink]="['/emolumento', precoEmolumento.emolumento.id, 'view']">{{ precoEmolumento.emolumento.nome }}</a>
             </div>
-          </td>
+          </td> -->
           <td>
             <div *ngIf="precoEmolumento.areaFormacao">
               <a [routerLink]="['/area-formacao', precoEmolumento.areaFormacao.id, 'view']">{{ precoEmolumento.areaFormacao.nome }}</a>

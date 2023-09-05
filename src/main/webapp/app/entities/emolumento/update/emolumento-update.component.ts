@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
@@ -41,7 +41,8 @@ export class EmolumentoUpdateComponent implements OnInit {
     protected impostoService: ImpostoService,
     protected planoMultaService: PlanoMultaService,
     protected elementRef: ElementRef,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router
   ) {}
 
   compareEmolumento = (o1: IEmolumento | null, o2: IEmolumento | null): boolean => this.emolumentoService.compareEmolumento(o1, o2);
@@ -58,6 +59,10 @@ export class EmolumentoUpdateComponent implements OnInit {
       this.emolumento = emolumento;
       if (emolumento) {
         this.updateForm(emolumento);
+      } else {
+        this.editForm.patchValue({
+          quantidade: 1,
+        });
       }
 
       this.loadRelationshipsOptions();
@@ -105,13 +110,14 @@ export class EmolumentoUpdateComponent implements OnInit {
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IEmolumento>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
-      next: () => this.onSaveSuccess(),
+      next: e => this.onSaveSuccess(e.body!.id),
       error: () => this.onSaveError(),
     });
   }
 
-  protected onSaveSuccess(): void {
-    this.previousState();
+  protected onSaveSuccess(id: any): void {
+    this.router.navigate(['/emolumento', id, 'view']);
+    // this.previousState();
   }
 
   protected onSaveError(): void {

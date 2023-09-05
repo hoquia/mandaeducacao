@@ -11,7 +11,7 @@
     -->
     <changeSet id="20230904002242-1" author="jhipster">
         <createTable tableName="horario">
-            <column name="id" type="bigint">
+            <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="chave_composta_1" type="varchar(255)">

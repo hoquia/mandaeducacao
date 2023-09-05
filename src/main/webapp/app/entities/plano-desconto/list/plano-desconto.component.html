@@ -34,7 +34,7 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -45,7 +45,7 @@
               <span appTranslate="longonkeloApp.planoDesconto.codigo">Codigo</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="nome">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.planoDesconto.nome">Nome</span>
@@ -75,17 +75,17 @@
       </thead>
       <tbody>
         <tr *ngFor="let planoDesconto of planoDescontos; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/plano-desconto', planoDesconto.id, 'view']">{{ planoDesconto.id }}</a>
           </td>
-          <td>{{ planoDesconto.codigo }}</td>
+          <td>{{ planoDesconto.codigo }}</td> -->
           <td>{{ planoDesconto.nome }}</td>
           <td>{{ planoDesconto.isIsentoMulta }}</td>
           <td>{{ planoDesconto.isIsentoJuro }}</td>
-          <td>{{ planoDesconto.desconto }}</td>
+          <td>{{ planoDesconto.desconto }}%</td>
           <td class="text-end">
             <div class="btn-group">
-              <button
+              <!-- <button
                 type="submit"
                 [routerLink]="['/matricula']"
                 [queryParams]="{ 'filter[categoriasMatriculasId.in]': planoDesconto.id }"
@@ -99,7 +99,7 @@
                   [translateValues]="{ otherEntity: ('longonkeloApp.planoDesconto.matriculas' | translate) }"
                   >Show Matricula</span
                 >
-              </button>
+              </button> -->
               <button
                 type="submit"
                 [routerLink]="['/plano-desconto', planoDesconto.id, 'view']"
