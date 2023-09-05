@@ -1,13 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 
+import { DATE_FORMAT } from 'app/config/input.constants';
 import { IItemFactura } from '../item-factura.model';
 import { sampleWithRequiredData, sampleWithNewData, sampleWithPartialData, sampleWithFullData } from '../item-factura.test-samples';
 
-import { ItemFacturaService } from './item-factura.service';
+import { ItemFacturaService, RestItemFactura } from './item-factura.service';
 
-const requireRestSample: IItemFactura = {
+const requireRestSample: RestItemFactura = {
   ...sampleWithRequiredData,
+  emissao: sampleWithRequiredData.emissao?.format(DATE_FORMAT),
+  expiracao: sampleWithRequiredData.expiracao?.format(DATE_FORMAT),
 };
 
 describe('ItemFactura Service', () => {

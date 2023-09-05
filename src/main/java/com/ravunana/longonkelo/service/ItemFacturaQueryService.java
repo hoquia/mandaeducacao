@@ -130,6 +130,18 @@ public class ItemFacturaQueryService extends QueryService<ItemFactura> {
             if (criteria.getTaxExemptionCode() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getTaxExemptionCode(), ItemFactura_.taxExemptionCode));
             }
+            if (criteria.getEmissao() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getEmissao(), ItemFactura_.emissao));
+            }
+            if (criteria.getExpiracao() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getExpiracao(), ItemFactura_.expiracao));
+            }
+            if (criteria.getPeriodo() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getPeriodo(), ItemFactura_.periodo));
+            }
+            if (criteria.getDescricao() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getDescricao(), ItemFactura_.descricao));
+            }
             if (criteria.getFacturaId() != null) {
                 specification =
                     specification.and(

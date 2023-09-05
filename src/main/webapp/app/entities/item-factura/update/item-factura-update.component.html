@@ -395,6 +395,50 @@
         </div>
 
         <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.itemFactura.emissao" for="field_emissao">Emissao</label>
+          <div class="input-group">
+            <input
+              id="field_emissao"
+              data-cy="emissao"
+              type="text"
+              class="form-control"
+              name="emissao"
+              ngbDatepicker
+              #emissaoDp="ngbDatepicker"
+              formControlName="emissao"
+            />
+            <button type="button" class="btn btn-secondary" (click)="emissaoDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.itemFactura.expiracao" for="field_expiracao">Expiracao</label>
+          <div class="input-group">
+            <input
+              id="field_expiracao"
+              data-cy="expiracao"
+              type="text"
+              class="form-control"
+              name="expiracao"
+              ngbDatepicker
+              #expiracaoDp="ngbDatepicker"
+              formControlName="expiracao"
+            />
+            <button type="button" class="btn btn-secondary" (click)="expiracaoDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.itemFactura.periodo" for="field_periodo">Periodo</label>
+          <input type="number" class="form-control" name="periodo" id="field_periodo" data-cy="periodo" formControlName="periodo" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.itemFactura.descricao" for="field_descricao">Descricao</label>
+          <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
+        </div>
+
+        <div class="row mb-3">
           <label class="form-label" appTranslate="longonkeloApp.itemFactura.factura" for="field_factura">Factura</label>
           <select
             class="form-control"

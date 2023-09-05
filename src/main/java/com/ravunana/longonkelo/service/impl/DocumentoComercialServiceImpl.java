@@ -1,10 +1,19 @@
 package com.ravunana.longonkelo.service.impl;
 
+import com.ravunana.longonkelo.config.LongonkeloException;
 import com.ravunana.longonkelo.domain.DocumentoComercial;
+import com.ravunana.longonkelo.domain.SequenciaDocumento;
+import com.ravunana.longonkelo.domain.enumeration.DocumentoFiscal;
 import com.ravunana.longonkelo.repository.DocumentoComercialRepository;
+import com.ravunana.longonkelo.repository.SequenciaDocumentoRepository;
+import com.ravunana.longonkelo.repository.SerieDocumentoRepository;
 import com.ravunana.longonkelo.service.DocumentoComercialService;
 import com.ravunana.longonkelo.service.dto.DocumentoComercialDTO;
+import com.ravunana.longonkelo.service.dto.SequenciaDocumentoDTO;
+import com.ravunana.longonkelo.service.dto.SerieDocumentoDTO;
 import com.ravunana.longonkelo.service.mapper.DocumentoComercialMapper;
+import com.ravunana.longonkelo.service.mapper.SequenciaDocumentoMapper;
+import com.ravunana.longonkelo.service.mapper.SerieDocumentoMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,13 +34,25 @@ public class DocumentoComercialServiceImpl implements DocumentoComercialService 
     private final DocumentoComercialRepository documentoComercialRepository;
 
     private final DocumentoComercialMapper documentoComercialMapper;
+    private final SerieDocumentoRepository serieDocumentoRepository;
+    private final SerieDocumentoMapper serieDocumentoMapper;
+    private final SequenciaDocumentoRepository sequenciaDocumentoRepository;
+    private final SequenciaDocumentoMapper sequenciaDocumentoMapper;
 
     public DocumentoComercialServiceImpl(
         DocumentoComercialRepository documentoComercialRepository,
-        DocumentoComercialMapper documentoComercialMapper
+        DocumentoComercialMapper documentoComercialMapper,
+        SerieDocumentoRepository serieDocumentoRepository,
+        SerieDocumentoMapper serieDocumentoMapper,
+        SequenciaDocumentoRepository sequenciaDocumentoRepository,
+        SequenciaDocumentoMapper sequenciaDocumentoMapper
     ) {
         this.documentoComercialRepository = documentoComercialRepository;
         this.documentoComercialMapper = documentoComercialMapper;
+        this.serieDocumentoRepository = serieDocumentoRepository;
+        this.serieDocumentoMapper = serieDocumentoMapper;
+        this.sequenciaDocumentoRepository = sequenciaDocumentoRepository;
+        this.sequenciaDocumentoMapper = sequenciaDocumentoMapper;
     }
 
     @Override
@@ -87,5 +108,28 @@ public class DocumentoComercialServiceImpl implements DocumentoComercialService 
     public void delete(Long id) {
         log.debug("Request to delete DocumentoComercial : {}", id);
         documentoComercialRepository.deleteById(id);
+    }
+
+    public SerieDocumentoDTO getSerieDocumentoComercialActivoByTipoFiscal(Integer ano, DocumentoFiscal documentoFiscal) {
+        var result = serieDocumentoRepository
+            .findAll()
+            .stream()
+            .filter(x ->
+                x.getIsPadrao() &&
+                x.getIsAtivo() &&
+                x.getAnoFiscal().intValue() == ano.intValue() &&
+                x.getTipoDocumento().getSiglaFiscal().name().equals(documentoFiscal.name())
+            )
+            .findFirst();
+
+        if (result.isEmpty()) {
+            throw new LongonkeloException("Não Existe uma Série Activa e Default para o Tipo de DOcumento Factura nesse ano lectivo");
+        }
+
+        return serieDocumentoMapper.toDto(result.get());
+    }
+
+    public Optional<SequenciaDocumento> getSequenciaDocumento(Long serieID) {
+        return sequenciaDocumentoRepository.findAll().stream().filter(x -> x.getSerie().getId().equals(serieID)).findFirst();
     }
 }

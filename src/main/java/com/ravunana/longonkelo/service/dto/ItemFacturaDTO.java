@@ -3,6 +3,7 @@ package com.ravunana.longonkelo.service.dto;
 import com.ravunana.longonkelo.domain.enumeration.EstadoItemFactura;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Objects;
 import javax.validation.constraints.*;
 
@@ -62,6 +63,14 @@ public class ItemFacturaDTO implements Serializable {
 
     @Size(max = 3)
     private String taxExemptionCode;
+
+    private LocalDate emissao;
+
+    private LocalDate expiracao;
+
+    private Integer periodo;
+
+    private String descricao;
 
     private FacturaDTO factura;
 
@@ -179,6 +188,38 @@ public class ItemFacturaDTO implements Serializable {
         this.taxExemptionCode = taxExemptionCode;
     }
 
+    public LocalDate getEmissao() {
+        return emissao;
+    }
+
+    public void setEmissao(LocalDate emissao) {
+        this.emissao = emissao;
+    }
+
+    public LocalDate getExpiracao() {
+        return expiracao;
+    }
+
+    public void setExpiracao(LocalDate expiracao) {
+        this.expiracao = expiracao;
+    }
+
+    public Integer getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(Integer periodo) {
+        this.periodo = periodo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
     public FacturaDTO getFactura() {
         return factura;
     }
@@ -234,6 +275,10 @@ public class ItemFacturaDTO implements Serializable {
             ", taxPercentage=" + getTaxPercentage() +
             ", taxExemptionReason='" + getTaxExemptionReason() + "'" +
             ", taxExemptionCode='" + getTaxExemptionCode() + "'" +
+            ", emissao='" + getEmissao() + "'" +
+            ", expiracao='" + getExpiracao() + "'" +
+            ", periodo=" + getPeriodo() +
+            ", descricao='" + getDescricao() + "'" +
             ", factura=" + getFactura() +
             ", emolumento=" + getEmolumento() +
             "}";

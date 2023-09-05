@@ -1,8 +1,8 @@
 package com.ravunana.longonkelo.service.impl;
 
+import com.ravunana.longonkelo.config.Constants;
 import com.ravunana.longonkelo.domain.Matricula;
-import com.ravunana.longonkelo.domain.enumeration.EstadoAcademico;
-import com.ravunana.longonkelo.domain.enumeration.EstadoItemFactura;
+import com.ravunana.longonkelo.domain.enumeration.*;
 import com.ravunana.longonkelo.repository.MatriculaRepository;
 import com.ravunana.longonkelo.service.MatriculaService;
 import com.ravunana.longonkelo.service.dto.FacturaDTO;
@@ -10,8 +10,11 @@ import com.ravunana.longonkelo.service.dto.ItemFacturaDTO;
 import com.ravunana.longonkelo.service.dto.MatriculaDTO;
 import com.ravunana.longonkelo.service.mapper.MatriculaMapper;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -28,17 +31,19 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class MatriculaServiceImpl implements MatriculaService {
 
+    private final List<ItemFacturaDTO> ITEMS_FACTURA = new ArrayList<ItemFacturaDTO>();
     private final Logger log = LoggerFactory.getLogger(MatriculaServiceImpl.class);
 
     private final MatriculaRepository matriculaRepository;
 
     private final MatriculaMapper matriculaMapper;
     private final AnoLectivoServiceImpl anoLectivoService;
-
     private final PrecoEmolumentoServiceImpl precoEmolumentoService;
-
     private final FacturaServiceImpl facturaService;
     private final ItemFacturaServiceImpl itemFacturaService;
+    private final DocumentoComercialServiceImpl documentoComercialService;
+
+    private final TurmaServiceImpl turmaService;
 
     public MatriculaServiceImpl(
         MatriculaRepository matriculaRepository,
@@ -46,7 +51,9 @@ public class MatriculaServiceImpl implements MatriculaService {
         AnoLectivoServiceImpl anoLectivoService,
         PrecoEmolumentoServiceImpl precoEmolumentoService,
         FacturaServiceImpl facturaService,
-        ItemFacturaServiceImpl itemFacturaService
+        ItemFacturaServiceImpl itemFacturaService,
+        DocumentoComercialServiceImpl documentoComercialService,
+        TurmaServiceImpl turmaService
     ) {
         this.matriculaRepository = matriculaRepository;
         this.matriculaMapper = matriculaMapper;
@@ -54,6 +61,8 @@ public class MatriculaServiceImpl implements MatriculaService {
         this.precoEmolumentoService = precoEmolumentoService;
         this.facturaService = facturaService;
         this.itemFacturaService = itemFacturaService;
+        this.documentoComercialService = documentoComercialService;
+        this.turmaService = turmaService;
     }
 
     @Override
@@ -93,6 +102,18 @@ public class MatriculaServiceImpl implements MatriculaService {
         matricula = matriculaRepository.save(matricula);
 
         // pegar todos os emolumentos obrigaorios da turma do aluno matricula/confirmado
+
+        criarFacturaActoMatricula(matriculaMapper.toDto(matricula));
+
+        // actualizar confirmados na turma
+        var turma = turmaService.findOne(matricula.getTurma().getId()).get();
+        turma.setConfirmado(turma.getConfirmado() + 1);
+
+        if (turma.getConfirmado().equals(turma.getLotacao())) {
+            turma.setIsDisponivel(false);
+        }
+
+        turmaService.partialUpdate(turma);
 
         return matriculaMapper.toDto(matricula);
     }
@@ -199,27 +220,136 @@ public class MatriculaServiceImpl implements MatriculaService {
     }
 
     private void criarFacturaActoMatricula(MatriculaDTO matriculaDTO) {
-        if (matriculaDTO.getEstado().equals(EstadoAcademico.MATRICULADO)) {
-            var factura = new FacturaDTO();
+        var anoLectivo = anoLectivoService.getAnoLectivoActual();
+        var serieDocumentoComercial = documentoComercialService.getSerieDocumentoComercialActivoByTipoFiscal(
+            anoLectivo.getAno(),
+            DocumentoFiscal.FT
+        );
+        var totalFactura = BigDecimal.ZERO;
+        var sequenciaResult = documentoComercialService.getSequenciaDocumento(serieDocumentoComercial.getId());
+        Long sequencia = 1L;
 
-            // Salvar a factura
-            facturaService.save(factura);
+        if (sequenciaResult.isPresent()) {
+            sequencia = sequenciaResult.get().getSequencia();
+            sequencia++;
+        }
 
-            var pacoteEmolumentoMatricula = precoEmolumentoService.getEmolumentosObrigatorioMatricula();
+        sequencia = facturaService.findAll(Pageable.ofSize(1000000)).getTotalElements();
+        sequencia++;
 
-            for (var p : pacoteEmolumentoMatricula) {
-                var itemFactura = new ItemFacturaDTO();
-                itemFactura.setDesconto(BigDecimal.ZERO);
-                itemFactura.setEmolumento(p.getEmolumento());
-                itemFactura.setEstado(EstadoItemFactura.PENDENTE);
-                itemFactura.setJuro(BigDecimal.ZERO);
-                itemFactura.setMulta(BigDecimal.ZERO);
+        var factura = new FacturaDTO();
 
-                itemFactura.setFactura(factura);
+        factura.setCambio(BigDecimal.ZERO);
+        factura.setCae("");
+        factura.setEstado(EstadoDocumentoComercial.P);
+        factura.setMatricula(matriculaDTO);
+        factura.setCodigoEntrega("");
+        factura.setDataEmissao(anoLectivo.getInicio());
+        factura.setDataVencimento(anoLectivo.getFim());
+        factura.setDocumentoComercial(serieDocumentoComercial.getTipoDocumento());
+        factura.setFimTransporte(ZonedDateTime.now().plusMonths(9));
+        factura.setInicioTransporte(ZonedDateTime.now());
+        factura.setIsAutoFacturacao(false);
+        factura.setIsEmitidaNomeEContaTerceiro(false);
+        factura.setIsFiscalizado(false);
+        factura.setIsMoedaEntrangeira(false);
+        factura.setIsNovo(true);
+        factura.setIsRegimeCaixa(false);
+        factura.setKeyVersion(1);
+        factura.setMoeda("AKZ");
+        factura.setMotivoAnulacao(null);
+        factura.setOrigem("P");
+        factura.setHash("");
+        factura.setHashControl("");
+        factura.setHashShort("");
+        factura.setSignText("");
 
-                // salvar os items da factura
-                itemFacturaService.save(itemFactura);
+        factura.setNumero(
+            serieDocumentoComercial.getTipoDocumento().getSiglaInterna() + " " + serieDocumentoComercial.getSerie() + "/" + sequencia
+        );
+
+        factura.setCredito(factura.getTotalFactura());
+        factura.setDebito(BigDecimal.ZERO);
+
+        var pacoteEmolumento = precoEmolumentoService.getEmolumentosObrigatorioMatricula();
+
+        if (matriculaDTO.getEstado().equals(EstadoAcademico.CONFIRMADO)) {
+            pacoteEmolumento = precoEmolumentoService.getEmolumentosObrigatorioConfirmacao();
+        }
+
+        for (var p : pacoteEmolumento) {
+            var emolumento = p.getEmolumento();
+
+            if (ITEMS_FACTURA.stream().anyMatch(x -> Objects.equals(x.getEmolumento().getId(), emolumento.getId()))) {
+                continue;
             }
+
+            var itemFactura = new ItemFacturaDTO();
+            var imposto = emolumento.getImposto();
+            var precoUnitario = p.getPreco();
+
+            var precoEspecifico = precoEmolumentoService.getPrecoEmolumento(matriculaDTO.getTurma());
+
+            if (precoEspecifico != null) {
+                precoUnitario = precoEspecifico.getPreco();
+            }
+
+            itemFactura.setDesconto(BigDecimal.ZERO);
+            itemFactura.setEmolumento(p.getEmolumento());
+            itemFactura.setEstado(EstadoItemFactura.PENDENTE);
+            itemFactura.setJuro(BigDecimal.ZERO);
+            itemFactura.setMulta(BigDecimal.ZERO);
+            itemFactura.setDescricao("");
+            itemFactura.setEmissao(factura.getDataEmissao());
+            itemFactura.setExpiracao(factura.getDataVencimento());
+            itemFactura.setTaxCode(imposto.getCodigoImposto().getDescricao());
+            itemFactura.setTaxCountryRegion(imposto.getPais());
+            itemFactura.setTaxExemptionCode(imposto.getMotivoIsencaoCodigo().getDescricao());
+            itemFactura.setTaxType(imposto.getTipoImposto().getDescricao());
+            itemFactura.setTaxPercentage(imposto.getTaxa());
+            itemFactura.setTaxExemptionReason(imposto.getMotivoDescricao());
+            itemFactura.setQuantidade(emolumento.getQuantidade());
+            itemFactura.setPrecoUnitario(precoUnitario);
+            itemFactura.setPrecoTotal(BigDecimal.valueOf(itemFactura.getQuantidade() * itemFactura.getPrecoUnitario().doubleValue()));
+            itemFactura.setPeriodo(emolumento.getPeriodo());
+
+            if (p.getPlanoMulta() != null) {
+                int periodoEmolumento = emolumento.getPeriodo();
+                int diaExpiracao = p.getPlanoMulta().getDiaAplicacaoMulta() - 1;
+
+                if (p.getPlanoMulta().getMetodoAplicacaoMulta().equals(MetodoAplicacaoMulta.DEPOIS_MES_EMOLUMENTO)) {
+                    periodoEmolumento++;
+                }
+
+                itemFactura.setExpiracao(LocalDate.of(factura.getDataEmissao().getYear(), periodoEmolumento, diaExpiracao));
+            }
+
+            totalFactura = totalFactura.add(itemFactura.getPrecoTotal());
+
+            ITEMS_FACTURA.add(itemFactura);
+        }
+
+        // Salvar a factura
+        factura.setTotalFactura(totalFactura);
+        factura.setTotalDiferenca(BigDecimal.ZERO);
+        factura.setTotalDescontoComercial(BigDecimal.ZERO);
+        factura.setTotalIliquido(totalFactura);
+        factura.setTotalDescontoFinanceiro(BigDecimal.ZERO);
+        factura.setTotalImpostoEspecialConsumo(BigDecimal.ZERO);
+        factura.setTotalImpostoIVA(BigDecimal.ZERO);
+        factura.setTotalImpostoRetencaoFonte(BigDecimal.ZERO);
+        factura.setTotalMoedaEntrangeira(BigDecimal.ZERO);
+        factura.setTotalPagar(totalFactura);
+        factura.setTotalLiquido(totalFactura);
+        factura.setTotalPago(BigDecimal.ZERO);
+        factura.setTimestamp(Constants.DATE_TIME);
+
+        var facturaSalva = facturaService.save(factura);
+
+        // salvar os items da factura
+        for (var item : ITEMS_FACTURA) {
+            item.setFactura(facturaSalva);
+            itemFacturaService.save(item);
         }
     }
 }

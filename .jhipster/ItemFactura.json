@@ -83,6 +83,22 @@
       "fieldType": "String",
       "fieldValidateRules": ["maxlength"],
       "fieldValidateRulesMaxlength": "3"
+    },
+    {
+      "fieldName": "emissao",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "expiracao",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "periodo",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "descricao",
+      "fieldType": "String"
     }
   ],
   "fluentMethods": true,

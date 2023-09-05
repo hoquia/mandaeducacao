@@ -67,6 +67,14 @@ public class ItemFacturaCriteria implements Serializable, Criteria {
 
     private StringFilter taxExemptionCode;
 
+    private LocalDateFilter emissao;
+
+    private LocalDateFilter expiracao;
+
+    private IntegerFilter periodo;
+
+    private StringFilter descricao;
+
     private LongFilter facturaId;
 
     private LongFilter emolumentoId;
@@ -90,6 +98,10 @@ public class ItemFacturaCriteria implements Serializable, Criteria {
         this.taxPercentage = other.taxPercentage == null ? null : other.taxPercentage.copy();
         this.taxExemptionReason = other.taxExemptionReason == null ? null : other.taxExemptionReason.copy();
         this.taxExemptionCode = other.taxExemptionCode == null ? null : other.taxExemptionCode.copy();
+        this.emissao = other.emissao == null ? null : other.emissao.copy();
+        this.expiracao = other.expiracao == null ? null : other.expiracao.copy();
+        this.periodo = other.periodo == null ? null : other.periodo.copy();
+        this.descricao = other.descricao == null ? null : other.descricao.copy();
         this.facturaId = other.facturaId == null ? null : other.facturaId.copy();
         this.emolumentoId = other.emolumentoId == null ? null : other.emolumentoId.copy();
         this.distinct = other.distinct;
@@ -310,6 +322,66 @@ public class ItemFacturaCriteria implements Serializable, Criteria {
         this.taxExemptionCode = taxExemptionCode;
     }
 
+    public LocalDateFilter getEmissao() {
+        return emissao;
+    }
+
+    public LocalDateFilter emissao() {
+        if (emissao == null) {
+            emissao = new LocalDateFilter();
+        }
+        return emissao;
+    }
+
+    public void setEmissao(LocalDateFilter emissao) {
+        this.emissao = emissao;
+    }
+
+    public LocalDateFilter getExpiracao() {
+        return expiracao;
+    }
+
+    public LocalDateFilter expiracao() {
+        if (expiracao == null) {
+            expiracao = new LocalDateFilter();
+        }
+        return expiracao;
+    }
+
+    public void setExpiracao(LocalDateFilter expiracao) {
+        this.expiracao = expiracao;
+    }
+
+    public IntegerFilter getPeriodo() {
+        return periodo;
+    }
+
+    public IntegerFilter periodo() {
+        if (periodo == null) {
+            periodo = new IntegerFilter();
+        }
+        return periodo;
+    }
+
+    public void setPeriodo(IntegerFilter periodo) {
+        this.periodo = periodo;
+    }
+
+    public StringFilter getDescricao() {
+        return descricao;
+    }
+
+    public StringFilter descricao() {
+        if (descricao == null) {
+            descricao = new StringFilter();
+        }
+        return descricao;
+    }
+
+    public void setDescricao(StringFilter descricao) {
+        this.descricao = descricao;
+    }
+
     public LongFilter getFacturaId() {
         return facturaId;
     }
@@ -372,6 +444,10 @@ public class ItemFacturaCriteria implements Serializable, Criteria {
             Objects.equals(taxPercentage, that.taxPercentage) &&
             Objects.equals(taxExemptionReason, that.taxExemptionReason) &&
             Objects.equals(taxExemptionCode, that.taxExemptionCode) &&
+            Objects.equals(emissao, that.emissao) &&
+            Objects.equals(expiracao, that.expiracao) &&
+            Objects.equals(periodo, that.periodo) &&
+            Objects.equals(descricao, that.descricao) &&
             Objects.equals(facturaId, that.facturaId) &&
             Objects.equals(emolumentoId, that.emolumentoId) &&
             Objects.equals(distinct, that.distinct)
@@ -395,6 +471,10 @@ public class ItemFacturaCriteria implements Serializable, Criteria {
             taxPercentage,
             taxExemptionReason,
             taxExemptionCode,
+            emissao,
+            expiracao,
+            periodo,
+            descricao,
             facturaId,
             emolumentoId,
             distinct
@@ -419,6 +499,10 @@ public class ItemFacturaCriteria implements Serializable, Criteria {
             (taxPercentage != null ? "taxPercentage=" + taxPercentage + ", " : "") +
             (taxExemptionReason != null ? "taxExemptionReason=" + taxExemptionReason + ", " : "") +
             (taxExemptionCode != null ? "taxExemptionCode=" + taxExemptionCode + ", " : "") +
+            (emissao != null ? "emissao=" + emissao + ", " : "") +
+            (expiracao != null ? "expiracao=" + expiracao + ", " : "") +
+            (periodo != null ? "periodo=" + periodo + ", " : "") +
+            (descricao != null ? "descricao=" + descricao + ", " : "") +
             (facturaId != null ? "facturaId=" + facturaId + ", " : "") +
             (emolumentoId != null ? "emolumentoId=" + emolumentoId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +

@@ -18,6 +18,8 @@ import com.ravunana.longonkelo.service.criteria.ItemFacturaCriteria;
 import com.ravunana.longonkelo.service.dto.ItemFacturaDTO;
 import com.ravunana.longonkelo.service.mapper.ItemFacturaMapper;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -93,6 +95,21 @@ class ItemFacturaResourceIT {
     private static final String DEFAULT_TAX_EXEMPTION_CODE = "AAA";
     private static final String UPDATED_TAX_EXEMPTION_CODE = "BBB";
 
+    private static final LocalDate DEFAULT_EMISSAO = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_EMISSAO = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDate SMALLER_EMISSAO = LocalDate.ofEpochDay(-1L);
+
+    private static final LocalDate DEFAULT_EXPIRACAO = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_EXPIRACAO = LocalDate.now(ZoneId.systemDefault());
+    private static final LocalDate SMALLER_EXPIRACAO = LocalDate.ofEpochDay(-1L);
+
+    private static final Integer DEFAULT_PERIODO = 1;
+    private static final Integer UPDATED_PERIODO = 2;
+    private static final Integer SMALLER_PERIODO = 1 - 1;
+
+    private static final String DEFAULT_DESCRICAO = "AAAAAAAAAA";
+    private static final String UPDATED_DESCRICAO = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/item-facturas";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -139,7 +156,11 @@ class ItemFacturaResourceIT {
             .taxCode(DEFAULT_TAX_CODE)
             .taxPercentage(DEFAULT_TAX_PERCENTAGE)
             .taxExemptionReason(DEFAULT_TAX_EXEMPTION_REASON)
-            .taxExemptionCode(DEFAULT_TAX_EXEMPTION_CODE);
+            .taxExemptionCode(DEFAULT_TAX_EXEMPTION_CODE)
+            .emissao(DEFAULT_EMISSAO)
+            .expiracao(DEFAULT_EXPIRACAO)
+            .periodo(DEFAULT_PERIODO)
+            .descricao(DEFAULT_DESCRICAO);
         // Add required entity
         Factura factura;
         if (TestUtil.findAll(em, Factura.class).isEmpty()) {
@@ -183,7 +204,11 @@ class ItemFacturaResourceIT {
             .taxCode(UPDATED_TAX_CODE)
             .taxPercentage(UPDATED_TAX_PERCENTAGE)
             .taxExemptionReason(UPDATED_TAX_EXEMPTION_REASON)
-            .taxExemptionCode(UPDATED_TAX_EXEMPTION_CODE);
+            .taxExemptionCode(UPDATED_TAX_EXEMPTION_CODE)
+            .emissao(UPDATED_EMISSAO)
+            .expiracao(UPDATED_EXPIRACAO)
+            .periodo(UPDATED_PERIODO)
+            .descricao(UPDATED_DESCRICAO);
         // Add required entity
         Factura factura;
         if (TestUtil.findAll(em, Factura.class).isEmpty()) {
@@ -241,6 +266,10 @@ class ItemFacturaResourceIT {
         assertThat(testItemFactura.getTaxPercentage()).isEqualTo(DEFAULT_TAX_PERCENTAGE);
         assertThat(testItemFactura.getTaxExemptionReason()).isEqualTo(DEFAULT_TAX_EXEMPTION_REASON);
         assertThat(testItemFactura.getTaxExemptionCode()).isEqualTo(DEFAULT_TAX_EXEMPTION_CODE);
+        assertThat(testItemFactura.getEmissao()).isEqualTo(DEFAULT_EMISSAO);
+        assertThat(testItemFactura.getExpiracao()).isEqualTo(DEFAULT_EXPIRACAO);
+        assertThat(testItemFactura.getPeriodo()).isEqualTo(DEFAULT_PERIODO);
+        assertThat(testItemFactura.getDescricao()).isEqualTo(DEFAULT_DESCRICAO);
     }
 
     @Test
@@ -488,7 +517,11 @@ class ItemFacturaResourceIT {
             .andExpect(jsonPath("$.[*].taxCode").value(hasItem(DEFAULT_TAX_CODE)))
             .andExpect(jsonPath("$.[*].taxPercentage").value(hasItem(DEFAULT_TAX_PERCENTAGE.doubleValue())))
             .andExpect(jsonPath("$.[*].taxExemptionReason").value(hasItem(DEFAULT_TAX_EXEMPTION_REASON)))
-            .andExpect(jsonPath("$.[*].taxExemptionCode").value(hasItem(DEFAULT_TAX_EXEMPTION_CODE)));
+            .andExpect(jsonPath("$.[*].taxExemptionCode").value(hasItem(DEFAULT_TAX_EXEMPTION_CODE)))
+            .andExpect(jsonPath("$.[*].emissao").value(hasItem(DEFAULT_EMISSAO.toString())))
+            .andExpect(jsonPath("$.[*].expiracao").value(hasItem(DEFAULT_EXPIRACAO.toString())))
+            .andExpect(jsonPath("$.[*].periodo").value(hasItem(DEFAULT_PERIODO)))
+            .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO)));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -532,7 +565,11 @@ class ItemFacturaResourceIT {
             .andExpect(jsonPath("$.taxCode").value(DEFAULT_TAX_CODE))
             .andExpect(jsonPath("$.taxPercentage").value(DEFAULT_TAX_PERCENTAGE.doubleValue()))
             .andExpect(jsonPath("$.taxExemptionReason").value(DEFAULT_TAX_EXEMPTION_REASON))
-            .andExpect(jsonPath("$.taxExemptionCode").value(DEFAULT_TAX_EXEMPTION_CODE));
+            .andExpect(jsonPath("$.taxExemptionCode").value(DEFAULT_TAX_EXEMPTION_CODE))
+            .andExpect(jsonPath("$.emissao").value(DEFAULT_EMISSAO.toString()))
+            .andExpect(jsonPath("$.expiracao").value(DEFAULT_EXPIRACAO.toString()))
+            .andExpect(jsonPath("$.periodo").value(DEFAULT_PERIODO))
+            .andExpect(jsonPath("$.descricao").value(DEFAULT_DESCRICAO));
     }
 
     @Test
@@ -1556,6 +1593,344 @@ class ItemFacturaResourceIT {
 
     @Test
     @Transactional
+    void getAllItemFacturasByEmissaoIsEqualToSomething() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where emissao equals to DEFAULT_EMISSAO
+        defaultItemFacturaShouldBeFound("emissao.equals=" + DEFAULT_EMISSAO);
+
+        // Get all the itemFacturaList where emissao equals to UPDATED_EMISSAO
+        defaultItemFacturaShouldNotBeFound("emissao.equals=" + UPDATED_EMISSAO);
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByEmissaoIsInShouldWork() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where emissao in DEFAULT_EMISSAO or UPDATED_EMISSAO
+        defaultItemFacturaShouldBeFound("emissao.in=" + DEFAULT_EMISSAO + "," + UPDATED_EMISSAO);
+
+        // Get all the itemFacturaList where emissao equals to UPDATED_EMISSAO
+        defaultItemFacturaShouldNotBeFound("emissao.in=" + UPDATED_EMISSAO);
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByEmissaoIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where emissao is not null
+        defaultItemFacturaShouldBeFound("emissao.specified=true");
+
+        // Get all the itemFacturaList where emissao is null
+        defaultItemFacturaShouldNotBeFound("emissao.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByEmissaoIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where emissao is greater than or equal to DEFAULT_EMISSAO
+        defaultItemFacturaShouldBeFound("emissao.greaterThanOrEqual=" + DEFAULT_EMISSAO);
+
+        // Get all the itemFacturaList where emissao is greater than or equal to UPDATED_EMISSAO
+        defaultItemFacturaShouldNotBeFound("emissao.greaterThanOrEqual=" + UPDATED_EMISSAO);
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByEmissaoIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where emissao is less than or equal to DEFAULT_EMISSAO
+        defaultItemFacturaShouldBeFound("emissao.lessThanOrEqual=" + DEFAULT_EMISSAO);
+
+        // Get all the itemFacturaList where emissao is less than or equal to SMALLER_EMISSAO
+        defaultItemFacturaShouldNotBeFound("emissao.lessThanOrEqual=" + SMALLER_EMISSAO);
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByEmissaoIsLessThanSomething() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where emissao is less than DEFAULT_EMISSAO
+        defaultItemFacturaShouldNotBeFound("emissao.lessThan=" + DEFAULT_EMISSAO);
+
+        // Get all the itemFacturaList where emissao is less than UPDATED_EMISSAO
+        defaultItemFacturaShouldBeFound("emissao.lessThan=" + UPDATED_EMISSAO);
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByEmissaoIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where emissao is greater than DEFAULT_EMISSAO
+        defaultItemFacturaShouldNotBeFound("emissao.greaterThan=" + DEFAULT_EMISSAO);
+
+        // Get all the itemFacturaList where emissao is greater than SMALLER_EMISSAO
+        defaultItemFacturaShouldBeFound("emissao.greaterThan=" + SMALLER_EMISSAO);
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByExpiracaoIsEqualToSomething() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where expiracao equals to DEFAULT_EXPIRACAO
+        defaultItemFacturaShouldBeFound("expiracao.equals=" + DEFAULT_EXPIRACAO);
+
+        // Get all the itemFacturaList where expiracao equals to UPDATED_EXPIRACAO
+        defaultItemFacturaShouldNotBeFound("expiracao.equals=" + UPDATED_EXPIRACAO);
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByExpiracaoIsInShouldWork() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where expiracao in DEFAULT_EXPIRACAO or UPDATED_EXPIRACAO
+        defaultItemFacturaShouldBeFound("expiracao.in=" + DEFAULT_EXPIRACAO + "," + UPDATED_EXPIRACAO);
+
+        // Get all the itemFacturaList where expiracao equals to UPDATED_EXPIRACAO
+        defaultItemFacturaShouldNotBeFound("expiracao.in=" + UPDATED_EXPIRACAO);
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByExpiracaoIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where expiracao is not null
+        defaultItemFacturaShouldBeFound("expiracao.specified=true");
+
+        // Get all the itemFacturaList where expiracao is null
+        defaultItemFacturaShouldNotBeFound("expiracao.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByExpiracaoIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where expiracao is greater than or equal to DEFAULT_EXPIRACAO
+        defaultItemFacturaShouldBeFound("expiracao.greaterThanOrEqual=" + DEFAULT_EXPIRACAO);
+
+        // Get all the itemFacturaList where expiracao is greater than or equal to UPDATED_EXPIRACAO
+        defaultItemFacturaShouldNotBeFound("expiracao.greaterThanOrEqual=" + UPDATED_EXPIRACAO);
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByExpiracaoIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where expiracao is less than or equal to DEFAULT_EXPIRACAO
+        defaultItemFacturaShouldBeFound("expiracao.lessThanOrEqual=" + DEFAULT_EXPIRACAO);
+
+        // Get all the itemFacturaList where expiracao is less than or equal to SMALLER_EXPIRACAO
+        defaultItemFacturaShouldNotBeFound("expiracao.lessThanOrEqual=" + SMALLER_EXPIRACAO);
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByExpiracaoIsLessThanSomething() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where expiracao is less than DEFAULT_EXPIRACAO
+        defaultItemFacturaShouldNotBeFound("expiracao.lessThan=" + DEFAULT_EXPIRACAO);
+
+        // Get all the itemFacturaList where expiracao is less than UPDATED_EXPIRACAO
+        defaultItemFacturaShouldBeFound("expiracao.lessThan=" + UPDATED_EXPIRACAO);
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByExpiracaoIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where expiracao is greater than DEFAULT_EXPIRACAO
+        defaultItemFacturaShouldNotBeFound("expiracao.greaterThan=" + DEFAULT_EXPIRACAO);
+
+        // Get all the itemFacturaList where expiracao is greater than SMALLER_EXPIRACAO
+        defaultItemFacturaShouldBeFound("expiracao.greaterThan=" + SMALLER_EXPIRACAO);
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByPeriodoIsEqualToSomething() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where periodo equals to DEFAULT_PERIODO
+        defaultItemFacturaShouldBeFound("periodo.equals=" + DEFAULT_PERIODO);
+
+        // Get all the itemFacturaList where periodo equals to UPDATED_PERIODO
+        defaultItemFacturaShouldNotBeFound("periodo.equals=" + UPDATED_PERIODO);
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByPeriodoIsInShouldWork() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where periodo in DEFAULT_PERIODO or UPDATED_PERIODO
+        defaultItemFacturaShouldBeFound("periodo.in=" + DEFAULT_PERIODO + "," + UPDATED_PERIODO);
+
+        // Get all the itemFacturaList where periodo equals to UPDATED_PERIODO
+        defaultItemFacturaShouldNotBeFound("periodo.in=" + UPDATED_PERIODO);
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByPeriodoIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where periodo is not null
+        defaultItemFacturaShouldBeFound("periodo.specified=true");
+
+        // Get all the itemFacturaList where periodo is null
+        defaultItemFacturaShouldNotBeFound("periodo.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByPeriodoIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where periodo is greater than or equal to DEFAULT_PERIODO
+        defaultItemFacturaShouldBeFound("periodo.greaterThanOrEqual=" + DEFAULT_PERIODO);
+
+        // Get all the itemFacturaList where periodo is greater than or equal to UPDATED_PERIODO
+        defaultItemFacturaShouldNotBeFound("periodo.greaterThanOrEqual=" + UPDATED_PERIODO);
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByPeriodoIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where periodo is less than or equal to DEFAULT_PERIODO
+        defaultItemFacturaShouldBeFound("periodo.lessThanOrEqual=" + DEFAULT_PERIODO);
+
+        // Get all the itemFacturaList where periodo is less than or equal to SMALLER_PERIODO
+        defaultItemFacturaShouldNotBeFound("periodo.lessThanOrEqual=" + SMALLER_PERIODO);
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByPeriodoIsLessThanSomething() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where periodo is less than DEFAULT_PERIODO
+        defaultItemFacturaShouldNotBeFound("periodo.lessThan=" + DEFAULT_PERIODO);
+
+        // Get all the itemFacturaList where periodo is less than UPDATED_PERIODO
+        defaultItemFacturaShouldBeFound("periodo.lessThan=" + UPDATED_PERIODO);
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByPeriodoIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where periodo is greater than DEFAULT_PERIODO
+        defaultItemFacturaShouldNotBeFound("periodo.greaterThan=" + DEFAULT_PERIODO);
+
+        // Get all the itemFacturaList where periodo is greater than SMALLER_PERIODO
+        defaultItemFacturaShouldBeFound("periodo.greaterThan=" + SMALLER_PERIODO);
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByDescricaoIsEqualToSomething() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where descricao equals to DEFAULT_DESCRICAO
+        defaultItemFacturaShouldBeFound("descricao.equals=" + DEFAULT_DESCRICAO);
+
+        // Get all the itemFacturaList where descricao equals to UPDATED_DESCRICAO
+        defaultItemFacturaShouldNotBeFound("descricao.equals=" + UPDATED_DESCRICAO);
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByDescricaoIsInShouldWork() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where descricao in DEFAULT_DESCRICAO or UPDATED_DESCRICAO
+        defaultItemFacturaShouldBeFound("descricao.in=" + DEFAULT_DESCRICAO + "," + UPDATED_DESCRICAO);
+
+        // Get all the itemFacturaList where descricao equals to UPDATED_DESCRICAO
+        defaultItemFacturaShouldNotBeFound("descricao.in=" + UPDATED_DESCRICAO);
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByDescricaoIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where descricao is not null
+        defaultItemFacturaShouldBeFound("descricao.specified=true");
+
+        // Get all the itemFacturaList where descricao is null
+        defaultItemFacturaShouldNotBeFound("descricao.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByDescricaoContainsSomething() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where descricao contains DEFAULT_DESCRICAO
+        defaultItemFacturaShouldBeFound("descricao.contains=" + DEFAULT_DESCRICAO);
+
+        // Get all the itemFacturaList where descricao contains UPDATED_DESCRICAO
+        defaultItemFacturaShouldNotBeFound("descricao.contains=" + UPDATED_DESCRICAO);
+    }
+
+    @Test
+    @Transactional
+    void getAllItemFacturasByDescricaoNotContainsSomething() throws Exception {
+        // Initialize the database
+        itemFacturaRepository.saveAndFlush(itemFactura);
+
+        // Get all the itemFacturaList where descricao does not contain DEFAULT_DESCRICAO
+        defaultItemFacturaShouldNotBeFound("descricao.doesNotContain=" + DEFAULT_DESCRICAO);
+
+        // Get all the itemFacturaList where descricao does not contain UPDATED_DESCRICAO
+        defaultItemFacturaShouldBeFound("descricao.doesNotContain=" + UPDATED_DESCRICAO);
+    }
+
+    @Test
+    @Transactional
     void getAllItemFacturasByFacturaIsEqualToSomething() throws Exception {
         Factura factura;
         if (TestUtil.findAll(em, Factura.class).isEmpty()) {
@@ -1621,7 +1996,11 @@ class ItemFacturaResourceIT {
             .andExpect(jsonPath("$.[*].taxCode").value(hasItem(DEFAULT_TAX_CODE)))
             .andExpect(jsonPath("$.[*].taxPercentage").value(hasItem(DEFAULT_TAX_PERCENTAGE.doubleValue())))
             .andExpect(jsonPath("$.[*].taxExemptionReason").value(hasItem(DEFAULT_TAX_EXEMPTION_REASON)))
-            .andExpect(jsonPath("$.[*].taxExemptionCode").value(hasItem(DEFAULT_TAX_EXEMPTION_CODE)));
+            .andExpect(jsonPath("$.[*].taxExemptionCode").value(hasItem(DEFAULT_TAX_EXEMPTION_CODE)))
+            .andExpect(jsonPath("$.[*].emissao").value(hasItem(DEFAULT_EMISSAO.toString())))
+            .andExpect(jsonPath("$.[*].expiracao").value(hasItem(DEFAULT_EXPIRACAO.toString())))
+            .andExpect(jsonPath("$.[*].periodo").value(hasItem(DEFAULT_PERIODO)))
+            .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO)));
 
         // Check, that the count call also returns 1
         restItemFacturaMockMvc
@@ -1682,7 +2061,11 @@ class ItemFacturaResourceIT {
             .taxCode(UPDATED_TAX_CODE)
             .taxPercentage(UPDATED_TAX_PERCENTAGE)
             .taxExemptionReason(UPDATED_TAX_EXEMPTION_REASON)
-            .taxExemptionCode(UPDATED_TAX_EXEMPTION_CODE);
+            .taxExemptionCode(UPDATED_TAX_EXEMPTION_CODE)
+            .emissao(UPDATED_EMISSAO)
+            .expiracao(UPDATED_EXPIRACAO)
+            .periodo(UPDATED_PERIODO)
+            .descricao(UPDATED_DESCRICAO);
         ItemFacturaDTO itemFacturaDTO = itemFacturaMapper.toDto(updatedItemFactura);
 
         restItemFacturaMockMvc
@@ -1710,6 +2093,10 @@ class ItemFacturaResourceIT {
         assertThat(testItemFactura.getTaxPercentage()).isEqualTo(UPDATED_TAX_PERCENTAGE);
         assertThat(testItemFactura.getTaxExemptionReason()).isEqualTo(UPDATED_TAX_EXEMPTION_REASON);
         assertThat(testItemFactura.getTaxExemptionCode()).isEqualTo(UPDATED_TAX_EXEMPTION_CODE);
+        assertThat(testItemFactura.getEmissao()).isEqualTo(UPDATED_EMISSAO);
+        assertThat(testItemFactura.getExpiracao()).isEqualTo(UPDATED_EXPIRACAO);
+        assertThat(testItemFactura.getPeriodo()).isEqualTo(UPDATED_PERIODO);
+        assertThat(testItemFactura.getDescricao()).isEqualTo(UPDATED_DESCRICAO);
     }
 
     @Test
@@ -1795,7 +2182,8 @@ class ItemFacturaResourceIT {
             .multa(UPDATED_MULTA)
             .estado(UPDATED_ESTADO)
             .taxCode(UPDATED_TAX_CODE)
-            .taxPercentage(UPDATED_TAX_PERCENTAGE);
+            .taxPercentage(UPDATED_TAX_PERCENTAGE)
+            .expiracao(UPDATED_EXPIRACAO);
 
         restItemFacturaMockMvc
             .perform(
@@ -1822,6 +2210,10 @@ class ItemFacturaResourceIT {
         assertThat(testItemFactura.getTaxPercentage()).isEqualTo(UPDATED_TAX_PERCENTAGE);
         assertThat(testItemFactura.getTaxExemptionReason()).isEqualTo(DEFAULT_TAX_EXEMPTION_REASON);
         assertThat(testItemFactura.getTaxExemptionCode()).isEqualTo(DEFAULT_TAX_EXEMPTION_CODE);
+        assertThat(testItemFactura.getEmissao()).isEqualTo(DEFAULT_EMISSAO);
+        assertThat(testItemFactura.getExpiracao()).isEqualTo(UPDATED_EXPIRACAO);
+        assertThat(testItemFactura.getPeriodo()).isEqualTo(DEFAULT_PERIODO);
+        assertThat(testItemFactura.getDescricao()).isEqualTo(DEFAULT_DESCRICAO);
     }
 
     @Test
@@ -1849,7 +2241,11 @@ class ItemFacturaResourceIT {
             .taxCode(UPDATED_TAX_CODE)
             .taxPercentage(UPDATED_TAX_PERCENTAGE)
             .taxExemptionReason(UPDATED_TAX_EXEMPTION_REASON)
-            .taxExemptionCode(UPDATED_TAX_EXEMPTION_CODE);
+            .taxExemptionCode(UPDATED_TAX_EXEMPTION_CODE)
+            .emissao(UPDATED_EMISSAO)
+            .expiracao(UPDATED_EXPIRACAO)
+            .periodo(UPDATED_PERIODO)
+            .descricao(UPDATED_DESCRICAO);
 
         restItemFacturaMockMvc
             .perform(
@@ -1876,6 +2272,10 @@ class ItemFacturaResourceIT {
         assertThat(testItemFactura.getTaxPercentage()).isEqualTo(UPDATED_TAX_PERCENTAGE);
         assertThat(testItemFactura.getTaxExemptionReason()).isEqualTo(UPDATED_TAX_EXEMPTION_REASON);
         assertThat(testItemFactura.getTaxExemptionCode()).isEqualTo(UPDATED_TAX_EXEMPTION_CODE);
+        assertThat(testItemFactura.getEmissao()).isEqualTo(UPDATED_EMISSAO);
+        assertThat(testItemFactura.getExpiracao()).isEqualTo(UPDATED_EXPIRACAO);
+        assertThat(testItemFactura.getPeriodo()).isEqualTo(UPDATED_PERIODO);
+        assertThat(testItemFactura.getDescricao()).isEqualTo(UPDATED_DESCRICAO);
     }
 
     @Test

@@ -11,7 +11,7 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface SerieDocumentoMapper extends EntityMapper<SerieDocumentoDTO, SerieDocumento> {
-    @Mapping(target = "tipoDocumento", source = "tipoDocumento", qualifiedByName = "documentoComercialSiglaFiscal")
+    @Mapping(target = "tipoDocumento", source = "tipoDocumento")
     SerieDocumentoDTO toDto(SerieDocumento s);
 
     @Named("documentoComercialSiglaFiscal")

@@ -66,6 +66,22 @@
         <dd>
           <span>{{ itemFactura.taxExemptionCode }}</span>
         </dd>
+        <dt><span appTranslate="longonkeloApp.itemFactura.emissao">Emissao</span></dt>
+        <dd>
+          <span>{{ itemFactura.emissao | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.itemFactura.expiracao">Expiracao</span></dt>
+        <dd>
+          <span>{{ itemFactura.expiracao | formatMediumDate }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.itemFactura.periodo">Periodo</span></dt>
+        <dd>
+          <span>{{ itemFactura.periodo }}</span>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.itemFactura.descricao">Descricao</span></dt>
+        <dd>
+          <span>{{ itemFactura.descricao }}</span>
+        </dd>
         <dt><span appTranslate="longonkeloApp.itemFactura.factura">Factura</span></dt>
         <dd>
           <div *ngIf="itemFactura.factura">

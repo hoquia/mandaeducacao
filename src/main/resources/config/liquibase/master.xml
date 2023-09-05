@@ -139,4 +139,5 @@
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
     <include file="config/liquibase/changelog/2023081920310000_users_and_users_roles.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/2023090421380000_inserts_padrao.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/2023090516010000_add_columns_item_factura.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
