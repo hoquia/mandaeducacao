@@ -68,6 +68,10 @@ export class TransacaoUpdateComponent implements OnInit {
       this.transacao = transacao;
       if (transacao) {
         this.updateForm(transacao);
+      } else {
+        this.editForm.patchValue({
+          saldo: 0,
+        });
       }
 
       this.loadRelationshipsOptions();
