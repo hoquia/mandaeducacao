@@ -25,7 +25,12 @@ export class DiscenteUpdateComponent implements OnInit {
   discente: IDiscente | null = null;
   sexoValues = Object.keys(Sexo);
 
-  lookupItemsSharedCollection: ILookupItem[] = [];
+  nacionalidadeCollection: ILookupItem[] = [];
+  naturalidadeCollection: ILookupItem[] = [];
+  tipoDocumentoCollection: ILookupItem[] = [];
+  grupoSanguinioCollection: ILookupItem[] = [];
+  necessidadeEspecialCollection: ILookupItem[] = [];
+  profissaoCollection: ILookupItem[] = [];
   encarregadoEducacaosSharedCollection: IEncarregadoEducacao[] = [];
 
   editForm: DiscenteFormGroup = this.discenteFormService.createDiscenteFormGroup();
@@ -51,6 +56,10 @@ export class DiscenteUpdateComponent implements OnInit {
       this.discente = discente;
       if (discente) {
         this.updateForm(discente);
+      } else {
+        this.editForm.patchValue({
+          numeroProcesso: '1010',
+        });
       }
 
       this.loadRelationshipsOptions();
@@ -119,40 +128,47 @@ export class DiscenteUpdateComponent implements OnInit {
     this.discente = discente;
     this.discenteFormService.resetForm(this.editForm, discente);
 
-    this.lookupItemsSharedCollection = this.lookupItemService.addLookupItemToCollectionIfMissing<ILookupItem>(
-      this.lookupItemsSharedCollection,
-      discente.nacionalidade,
-      discente.naturalidade,
-      discente.tipoDocumento,
-      discente.profissao,
-      discente.grupoSanguinio,
-      discente.necessidadeEspecial
-    );
-    this.encarregadoEducacaosSharedCollection =
-      this.encarregadoEducacaoService.addEncarregadoEducacaoToCollectionIfMissing<IEncarregadoEducacao>(
-        this.encarregadoEducacaosSharedCollection,
-        discente.encarregadoEducacao
-      );
+    // this.lookupItemsSharedCollection = this.lookupItemService.addLookupItemToCollectionIfMissing<ILookupItem>(
+    //   this.lookupItemsSharedCollection,
+    //   discente.nacionalidade,
+    //   discente.naturalidade,
+    //   discente.tipoDocumento,
+    //   discente.profissao,
+    //   discente.grupoSanguinio,
+    //   discente.necessidadeEspecial
+    // );
+    // this.encarregadoEducacaosSharedCollection =
+    //   this.encarregadoEducacaoService.addEncarregadoEducacaoToCollectionIfMissing<IEncarregadoEducacao>(
+    //     this.encarregadoEducacaosSharedCollection,
+    //     discente.encarregadoEducacao
+    //   );
   }
 
   protected loadRelationshipsOptions(): void {
-    this.lookupItemService
-      .query()
-      .pipe(map((res: HttpResponse<ILookupItem[]>) => res.body ?? []))
-      .pipe(
-        map((lookupItems: ILookupItem[]) =>
-          this.lookupItemService.addLookupItemToCollectionIfMissing<ILookupItem>(
-            lookupItems,
-            this.discente?.nacionalidade,
-            this.discente?.naturalidade,
-            this.discente?.tipoDocumento,
-            this.discente?.profissao,
-            this.discente?.grupoSanguinio,
-            this.discente?.necessidadeEspecial
-          )
-        )
-      )
-      .subscribe((lookupItems: ILookupItem[]) => (this.lookupItemsSharedCollection = lookupItems));
+    // nacionalidade
+    this.lookupItemService.query({ 'lookupId.equals': 968 }).subscribe(res => {
+      this.nacionalidadeCollection = res.body ?? [];
+    });
+    // naturalidade
+    this.lookupItemService.query({ 'lookupId.equals': 969 }).subscribe(res => {
+      this.naturalidadeCollection = res.body ?? [];
+    });
+    // tipo documento
+    this.lookupItemService.query({ 'lookupId.equals': 971 }).subscribe(res => {
+      this.tipoDocumentoCollection = res.body ?? [];
+    });
+    // grupo sanguinio
+    this.lookupItemService.query({ 'lookupId.equals': 981 }).subscribe(res => {
+      this.grupoSanguinioCollection = res.body ?? [];
+    });
+    // necessidade especial
+    this.lookupItemService.query({ 'lookupId.equals': 982 }).subscribe(res => {
+      this.necessidadeEspecialCollection = res.body ?? [];
+    });
+    // profissao
+    this.lookupItemService.query({ 'lookupId.equals': 980 }).subscribe(res => {
+      this.profissaoCollection = res.body ?? [];
+    });
 
     this.encarregadoEducacaoService
       .query()

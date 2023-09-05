@@ -72,6 +72,12 @@ export class MatriculaUpdateComponent implements OnInit {
       this.matricula = matricula;
       if (matricula) {
         this.updateForm(matricula);
+      } else {
+        this.editForm.patchValue({
+          numeroMatricula: 'NA',
+          isAceiteTermosCompromisso: true,
+          numeroChamada: 0,
+        });
       }
 
       this.loadRelationshipsOptions();

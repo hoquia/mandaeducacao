@@ -22,38 +22,14 @@
         <dd>
           <span>{{ matricula.chaveComposta2 }}</span>
         </dd>
-        <!-- <dt><span appTranslate="longonkeloApp.matricula.isPago">Is Pago</span></dt>
-        <dd>
-          <span>{{ matricula.isPago }}</span>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.matricula.user">User</span></dt>
-        <dd>
-          <span>{{ matricula.user }}</span>
-        </dd> -->
         <dt><span appTranslate="longonkeloApp.matricula.numeroMatricula">Numero Matricula</span></dt>
         <dd>
           <span>{{ matricula.numeroMatricula }}</span>
         </dd>
-        <!-- <dt><span appTranslate="longonkeloApp.matricula.numeroProcesso">Numero Processo</span></dt>
-        <dd>
-          <span>{{ matricula.numeroProcesso }}</span>
-        </dd> -->
         <dt><span appTranslate="longonkeloApp.matricula.numeroChamada">Numero Chamada</span></dt>
         <dd>
           <span>{{ matricula.numeroChamada }}</span>
         </dd>
-        <!-- <dt><span appTranslate="longonkeloApp.matricula.dataAssinatura">Data Assinatura</span></dt>
-        <dd>
-          <span>{{ matricula.dataAssinatura | formatMediumDate }}</span>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.matricula.inicioVigencia">Inicio Vigencia</span></dt>
-        <dd>
-          <span>{{ matricula.inicioVigencia | formatMediumDate }}</span>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.matricula.fimVigencia">Fim Vigencia</span></dt>
-        <dd>
-          <span>{{ matricula.fimVigencia | formatMediumDate }}</span>
-        </dd> -->
         <dt><span appTranslate="longonkeloApp.matricula.estado">Estado</span></dt>
         <dd>
           <span appTranslate="{{ 'longonkeloApp.EstadoAcademico.' + matricula.estado }}">{{ matricula.estado }}</span>
@@ -62,26 +38,10 @@
         <dd>
           <span>{{ matricula.timestamp | formatMediumDatetime }}</span>
         </dd>
-        <!-- <dt><span appTranslate="longonkeloApp.matricula.dataIngresso">Data Ingresso</span></dt>
-        <dd>
-          <span>{{ matricula.dataIngresso | formatMediumDatetime }}</span>
-        </dd> -->
-        <dt><span appTranslate="longonkeloApp.matricula.utilizador">Utilizador</span></dt>
-        <dd>
-          <span>{{ matricula.utilizador }}</span>
-        </dd>
         <dt><span appTranslate="longonkeloApp.matricula.descricao">Descricao</span></dt>
         <dd>
           <span>{{ matricula.descricao }}</span>
         </dd>
-        <!-- <dt><span appTranslate="longonkeloApp.matricula.debito">Debito</span></dt>
-        <dd>
-          <span>{{ matricula.debito }}</span>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.matricula.credito">Credito</span></dt>
-        <dd>
-          <span>{{ matricula.credito }}</span>
-        </dd> -->
         <dt><span appTranslate="longonkeloApp.matricula.termosCompromissos">Termos Compromissos</span></dt>
         <dd>
           <div *ngIf="matricula.termosCompromissos">
@@ -95,17 +55,9 @@
         <dd>
           <span>{{ matricula.isAceiteTermosCompromisso }}</span>
         </dd>
-        <!-- <dt><span appTranslate="longonkeloApp.matricula.instituicao">Instituicao</span></dt>
+        <dt><span appTranslate="longonkeloApp.matricula.utilizador">Utilizador</span></dt>
         <dd>
-          <div *ngIf="matricula.instituicao">
-            <a [routerLink]="['/instituicao-ensino', matricula.instituicao.id, 'view']">{{ matricula.instituicao.tenant }}</a>
-          </div>
-        </dd> -->
-        <dt><span appTranslate="longonkeloApp.matricula.turma">Turma</span></dt>
-        <dd>
-          <div *ngIf="matricula.turma">
-            <a [routerLink]="['/turma', matricula.turma.id, 'view']">{{ matricula.turma.descricao }}</a>
-          </div>
+          <span>{{ matricula.utilizador?.login }}</span>
         </dd>
         <dt><span appTranslate="longonkeloApp.matricula.categoriasMatriculas">Categorias Matriculas</span></dt>
         <dd>
@@ -114,18 +66,24 @@
             >{{ last ? '' : ', ' }}
           </span>
         </dd>
-        <dt><span appTranslate="longonkeloApp.matricula.discente">Discente</span></dt>
+        <dt><span appTranslate="longonkeloApp.matricula.turma">Turma</span></dt>
         <dd>
-          <div *ngIf="matricula.discente">
-            <a [routerLink]="['/discente', matricula.discente.id, 'view']">{{ matricula.discente.nome }}</a>
+          <div *ngIf="matricula.turma">
+            <a [routerLink]="['/turma', matricula.turma.id, 'view']">{{ matricula.turma.descricao }}</a>
           </div>
         </dd>
-        <dt><span appTranslate="longonkeloApp.matricula.responsavelFinanceiro">Encarregado Educacao</span></dt>
+        <dt><span appTranslate="longonkeloApp.matricula.responsavelFinanceiro">Responsavel Financeiro</span></dt>
         <dd>
           <div *ngIf="matricula.responsavelFinanceiro">
             <a [routerLink]="['/encarregado-educacao', matricula.responsavelFinanceiro.id, 'view']">{{
               matricula.responsavelFinanceiro.nome
             }}</a>
+          </div>
+        </dd>
+        <dt><span appTranslate="longonkeloApp.matricula.discente">Discente</span></dt>
+        <dd>
+          <div *ngIf="matricula.discente">
+            <a [routerLink]="['/discente', matricula.discente.id, 'view']">{{ matricula.discente.nome }}</a>
           </div>
         </dd>
         <dt><span appTranslate="longonkeloApp.matricula.referencia">Referencia</span></dt>

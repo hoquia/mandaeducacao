@@ -63,4 +63,5 @@ public interface DiscenteService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+    String getNumeroProcesso(String numeroDocumento, String anoLectivo);
 }

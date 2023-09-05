@@ -134,10 +134,25 @@ public class PrecoEmolumentoServiceImpl implements PrecoEmolumentoService {
             .filter(x -> x.getEmolumento().getId().equals(emolumentoID))
             .collect(Collectors.toList());
 
-        /*if ( result.isEmpty() ) {
-            throw new LongonkeloException("O Emolumento selecionado nao tem preço registrado");
-        }
-        */
+        return precoEmolumentoMapper.toDto(result);
+    }
+
+    public List<PrecoEmolumentoDTO> getEmolumentosObrigatorioMatricula() {
+        var result = precoEmolumentoRepository
+            .findAll()
+            .stream()
+            .filter(x -> x.getEmolumento().getIsObrigatorioMatricula())
+            .collect(Collectors.toList());
+
+        return precoEmolumentoMapper.toDto(result);
+    }
+
+    public List<PrecoEmolumentoDTO> getEmolumentosObrigatorioConfirmacao() {
+        var result = precoEmolumentoRepository
+            .findAll()
+            .stream()
+            .filter(x -> x.getEmolumento().getIsObrigatorioConfirmacao())
+            .collect(Collectors.toList());
 
         return precoEmolumentoMapper.toDto(result);
     }

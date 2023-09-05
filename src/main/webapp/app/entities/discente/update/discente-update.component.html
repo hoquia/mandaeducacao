@@ -145,7 +145,7 @@
               [compareWith]="compareLookupItem"
             >
               <option *ngIf="!editForm.get('nacionalidade')!.value" [ngValue]="null" selected></option>
-              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of nacionalidadeCollection">
                 {{ lookupItemOption.descricao }}
               </option>
             </select>
@@ -176,7 +176,7 @@
               [compareWith]="compareLookupItem"
             >
               <option *ngIf="!editForm.get('naturalidade')!.value" [ngValue]="null" selected></option>
-              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of naturalidadeCollection">
                 {{ lookupItemOption.descricao }}
               </option>
             </select>
@@ -233,7 +233,7 @@
               [compareWith]="compareLookupItem"
             >
               <option *ngIf="!editForm.get('tipoDocumento')!.value" [ngValue]="null" selected></option>
-              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of tipoDocumentoCollection">
                 {{ lookupItemOption.descricao }}
               </option>
             </select>
@@ -520,14 +520,19 @@
             <label class="form-label" appTranslate="longonkeloApp.discente.grupoSanguinio" for="field_grupoSanguinio"
               >Grupo Sanguinio</label
             >
-            <input
-              type="text"
+            <select
               class="form-control"
-              name="grupoSanguinio"
               id="field_grupoSanguinio"
               data-cy="grupoSanguinio"
+              name="grupoSanguinio"
               formControlName="grupoSanguinio"
-            />
+              [compareWith]="compareLookupItem"
+            >
+              <option [ngValue]="null"></option>
+              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of grupoSanguinioCollection">
+                {{ lookupItemOption.descricao }}
+              </option>
+            </select>
           </div>
         </div>
 
@@ -600,14 +605,19 @@
           <label class="form-label" appTranslate="longonkeloApp.discente.necessidadeEspecial" for="field_necessidadeEspecial"
             >Necessidade Especial</label
           >
-          <input
-            type="text"
+          <select
             class="form-control"
-            name="necessidadeEspecial"
             id="field_necessidadeEspecial"
             data-cy="necessidadeEspecial"
+            name="necessidadeEspecial"
             formControlName="necessidadeEspecial"
-          />
+            [compareWith]="compareLookupItem"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of necessidadeEspecialCollection">
+              {{ lookupItemOption.descricao }}
+            </option>
+          </select>
         </div>
 
         <legend>Outras informações</legend>
@@ -666,7 +676,7 @@
           >
         </div>
 
-        <div class="row mb-3">
+        <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.discente.profissao" for="field_profissao">Profissao</label>
           <select
             class="form-control"
@@ -677,43 +687,7 @@
             [compareWith]="compareLookupItem"
           >
             <option [ngValue]="null"></option>
-            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
-              {{ lookupItemOption.descricao }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.discente.grupoSanguinio" for="field_grupoSanguinio">Grupo Sanguinio</label>
-          <select
-            class="form-control"
-            id="field_grupoSanguinio"
-            data-cy="grupoSanguinio"
-            name="grupoSanguinio"
-            formControlName="grupoSanguinio"
-            [compareWith]="compareLookupItem"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
-              {{ lookupItemOption.descricao }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.discente.necessidadeEspecial" for="field_necessidadeEspecial"
-            >Necessidade Especial</label
-          >
-          <select
-            class="form-control"
-            id="field_necessidadeEspecial"
-            data-cy="necessidadeEspecial"
-            name="necessidadeEspecial"
-            formControlName="necessidadeEspecial"
-            [compareWith]="compareLookupItem"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of profissaoCollection">
               {{ lookupItemOption.descricao }}
             </option>
           </select>

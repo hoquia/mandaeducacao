@@ -26,14 +26,24 @@ public class DiscenteServiceImpl implements DiscenteService {
 
     private final DiscenteMapper discenteMapper;
 
-    public DiscenteServiceImpl(DiscenteRepository discenteRepository, DiscenteMapper discenteMapper) {
+    private final AnoLectivoServiceImpl anoLectivoService;
+
+    public DiscenteServiceImpl(
+        DiscenteRepository discenteRepository,
+        DiscenteMapper discenteMapper,
+        AnoLectivoServiceImpl anoLectivoService
+    ) {
         this.discenteRepository = discenteRepository;
         this.discenteMapper = discenteMapper;
+        this.anoLectivoService = anoLectivoService;
     }
 
     @Override
     public DiscenteDTO save(DiscenteDTO discenteDTO) {
         log.debug("Request to save Discente : {}", discenteDTO);
+        var anoLectivo = anoLectivoService.getAnoLectivoActual();
+        discenteDTO.setNumeroProcesso(getNumeroProcesso(discenteDTO.getDocumentoNumero(), anoLectivo.getDescricao()));
+
         Discente discente = discenteMapper.toEntity(discenteDTO);
         discente = discenteRepository.save(discente);
         return discenteMapper.toDto(discente);
@@ -84,5 +94,16 @@ public class DiscenteServiceImpl implements DiscenteService {
     public void delete(Long id) {
         log.debug("Request to delete Discente : {}", id);
         discenteRepository.deleteById(id);
+    }
+
+    @Override
+    public String getNumeroProcesso(String numeroDocumento, String anoLectivo) {
+        StringBuilder numeroDocumentoBuilder = new StringBuilder(numeroDocumento);
+        do {
+            numeroDocumentoBuilder.append("0");
+        } while (numeroDocumentoBuilder.length() < 9);
+        numeroDocumento = numeroDocumentoBuilder.toString();
+
+        return numeroDocumento.substring(0, 9) + "/" + anoLectivo;
     }
 }
