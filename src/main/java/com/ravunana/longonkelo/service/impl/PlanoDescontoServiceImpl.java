@@ -1,6 +1,6 @@
 package com.ravunana.longonkelo.service.impl;
 
-import com.ravunana.longokelo.config.LongonkeloException;
+import com.ravunana.longonkelo.config.LongonkeloException;
 import com.ravunana.longonkelo.domain.PlanoDesconto;
 import com.ravunana.longonkelo.repository.PlanoDescontoRepository;
 import com.ravunana.longonkelo.service.PlanoDescontoService;

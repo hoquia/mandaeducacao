@@ -1,6 +1,6 @@
 package com.ravunana.longonkelo.service.impl;
 
-import com.ravunana.longokelo.config.LongonkeloException;
+import com.ravunana.longonkelo.config.LongonkeloException;
 import com.ravunana.longonkelo.domain.PlanoMulta;
 import com.ravunana.longonkelo.repository.PlanoMultaRepository;
 import com.ravunana.longonkelo.security.SecurityUtils;

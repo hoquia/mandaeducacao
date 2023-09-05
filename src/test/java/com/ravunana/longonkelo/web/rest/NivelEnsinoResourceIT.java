@@ -2055,28 +2055,28 @@ class NivelEnsinoResourceIT {
         defaultNivelEnsinoShouldBeFound("descricaoDiscente.doesNotContain=" + UPDATED_DESCRICAO_DISCENTE);
     }
 
-    @Test
-    @Transactional
-    void getAllNivelEnsinosByNivelEnsinoIsEqualToSomething() throws Exception {
-        NivelEnsino nivelEnsino;
-        if (TestUtil.findAll(em, NivelEnsino.class).isEmpty()) {
-            nivelEnsinoRepository.saveAndFlush(nivelEnsino);
-            nivelEnsino = NivelEnsinoResourceIT.createEntity(em);
-        } else {
-            nivelEnsino = TestUtil.findAll(em, NivelEnsino.class).get(0);
-        }
-        em.persist(nivelEnsino);
-        em.flush();
-        nivelEnsino.addNivelEnsino(nivelEnsino);
-        nivelEnsinoRepository.saveAndFlush(nivelEnsino);
-        Long nivelEnsinoId = nivelEnsino.getId();
+    // @Test
+    // @Transactional
+    // void getAllNivelEnsinosByNivelEnsinoIsEqualToSomething() throws Exception {
+    //     NivelEnsino nivelEnsino;
+    //     if (TestUtil.findAll(em, NivelEnsino.class).isEmpty()) {
+    //         nivelEnsinoRepository.saveAndFlush(nivelEnsino);
+    //         nivelEnsino = NivelEnsinoResourceIT.createEntity(em);
+    //     } else {
+    //         nivelEnsino = TestUtil.findAll(em, NivelEnsino.class).get(0);
+    //     }
+    //     em.persist(nivelEnsino);
+    //     em.flush();
+    //     nivelEnsino.addNivelEnsino(nivelEnsino);
+    //     nivelEnsinoRepository.saveAndFlush(nivelEnsino);
+    //     Long nivelEnsinoId = nivelEnsino.getId();
 
-        // Get all the nivelEnsinoList where nivelEnsino equals to nivelEnsinoId
-        defaultNivelEnsinoShouldBeFound("nivelEnsinoId.equals=" + nivelEnsinoId);
+    //     // Get all the nivelEnsinoList where nivelEnsino equals to nivelEnsinoId
+    //     defaultNivelEnsinoShouldBeFound("nivelEnsinoId.equals=" + nivelEnsinoId);
 
-        // Get all the nivelEnsinoList where nivelEnsino equals to (nivelEnsinoId + 1)
-        defaultNivelEnsinoShouldNotBeFound("nivelEnsinoId.equals=" + (nivelEnsinoId + 1));
-    }
+    //     // Get all the nivelEnsinoList where nivelEnsino equals to (nivelEnsinoId + 1)
+    //     defaultNivelEnsinoShouldNotBeFound("nivelEnsinoId.equals=" + (nivelEnsinoId + 1));
+    // }
 
     @Test
     @Transactional

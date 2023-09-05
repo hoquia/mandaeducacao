@@ -1,4 +1,4 @@
-package com.ravunana.longokelo.config;
+package com.ravunana.longonkelo.config;
 
 public class LongonkeloException extends RuntimeException {
 

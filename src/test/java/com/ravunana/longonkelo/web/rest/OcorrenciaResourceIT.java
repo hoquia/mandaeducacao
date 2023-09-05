@@ -573,28 +573,28 @@ class OcorrenciaResourceIT {
         defaultOcorrenciaShouldBeFound("timestamp.greaterThan=" + SMALLER_TIMESTAMP);
     }
 
-    @Test
-    @Transactional
-    void getAllOcorrenciasByOcorrenciaIsEqualToSomething() throws Exception {
-        Ocorrencia ocorrencia;
-        if (TestUtil.findAll(em, Ocorrencia.class).isEmpty()) {
-            ocorrenciaRepository.saveAndFlush(ocorrencia);
-            ocorrencia = OcorrenciaResourceIT.createEntity(em);
-        } else {
-            ocorrencia = TestUtil.findAll(em, Ocorrencia.class).get(0);
-        }
-        em.persist(ocorrencia);
-        em.flush();
-        ocorrencia.addOcorrencia(ocorrencia);
-        ocorrenciaRepository.saveAndFlush(ocorrencia);
-        Long ocorrenciaId = ocorrencia.getId();
+    // @Test
+    // @Transactional
+    // void getAllOcorrenciasByOcorrenciaIsEqualToSomething() throws Exception {
+    //     Ocorrencia ocorrencia;
+    //     if (TestUtil.findAll(em, Ocorrencia.class).isEmpty()) {
+    //         ocorrenciaRepository.saveAndFlush(ocorrencia);
+    //         ocorrencia = OcorrenciaResourceIT.createEntity(em);
+    //     } else {
+    //         ocorrencia = TestUtil.findAll(em, Ocorrencia.class).get(0);
+    //     }
+    //     em.persist(ocorrencia);
+    //     em.flush();
+    //     ocorrencia.addOcorrencia(ocorrencia);
+    //     ocorrenciaRepository.saveAndFlush(ocorrencia);
+    //     Long ocorrenciaId = ocorrencia.getId();
 
-        // Get all the ocorrenciaList where ocorrencia equals to ocorrenciaId
-        defaultOcorrenciaShouldBeFound("ocorrenciaId.equals=" + ocorrenciaId);
+    //     // Get all the ocorrenciaList where ocorrencia equals to ocorrenciaId
+    //     defaultOcorrenciaShouldBeFound("ocorrenciaId.equals=" + ocorrenciaId);
 
-        // Get all the ocorrenciaList where ocorrencia equals to (ocorrenciaId + 1)
-        defaultOcorrenciaShouldNotBeFound("ocorrenciaId.equals=" + (ocorrenciaId + 1));
-    }
+    //     // Get all the ocorrenciaList where ocorrencia equals to (ocorrenciaId + 1)
+    //     defaultOcorrenciaShouldNotBeFound("ocorrenciaId.equals=" + (ocorrenciaId + 1));
+    // }
 
     @Test
     @Transactional

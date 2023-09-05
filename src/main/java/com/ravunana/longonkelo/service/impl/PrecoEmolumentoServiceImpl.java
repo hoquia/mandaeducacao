@@ -1,6 +1,6 @@
 package com.ravunana.longonkelo.service.impl;
 
-import com.ravunana.longokelo.config.LongonkeloException;
+import com.ravunana.longonkelo.config.LongonkeloException;
 import com.ravunana.longonkelo.domain.PrecoEmolumento;
 import com.ravunana.longonkelo.repository.PrecoEmolumentoRepository;
 import com.ravunana.longonkelo.service.PrecoEmolumentoService;
