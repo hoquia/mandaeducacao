@@ -63,4 +63,6 @@ public interface PlanoCurricularService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    String getDescricaoPlanoCurricular(String curso, String classe);
 }

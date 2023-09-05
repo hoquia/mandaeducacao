@@ -4,7 +4,9 @@ import com.ravunana.longonkelo.domain.Emolumento;
 import com.ravunana.longonkelo.repository.EmolumentoRepository;
 import com.ravunana.longonkelo.service.EmolumentoService;
 import com.ravunana.longonkelo.service.dto.EmolumentoDTO;
+import com.ravunana.longonkelo.service.dto.PrecoEmolumentoDTO;
 import com.ravunana.longonkelo.service.mapper.EmolumentoMapper;
+import java.math.BigDecimal;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,17 +27,45 @@ public class EmolumentoServiceImpl implements EmolumentoService {
     private final EmolumentoRepository emolumentoRepository;
 
     private final EmolumentoMapper emolumentoMapper;
+    private final PrecoEmolumentoServiceImpl precoEmolumentoService;
 
-    public EmolumentoServiceImpl(EmolumentoRepository emolumentoRepository, EmolumentoMapper emolumentoMapper) {
+    public EmolumentoServiceImpl(
+        EmolumentoRepository emolumentoRepository,
+        EmolumentoMapper emolumentoMapper,
+        PrecoEmolumentoServiceImpl precoEmolumentoService
+    ) {
         this.emolumentoRepository = emolumentoRepository;
         this.emolumentoMapper = emolumentoMapper;
+        this.precoEmolumentoService = precoEmolumentoService;
     }
 
     @Override
     public EmolumentoDTO save(EmolumentoDTO emolumentoDTO) {
         log.debug("Request to save Emolumento : {}", emolumentoDTO);
+
         Emolumento emolumento = emolumentoMapper.toEntity(emolumentoDTO);
         emolumento = emolumentoRepository.save(emolumento);
+
+        if (emolumentoDTO.getReferencia() != null) {
+            var precosEmolumento = precoEmolumentoService.getPrecoEmolumento(emolumento.getReferencia().getId());
+
+            for (var p : precosEmolumento) {
+                var entity = new PrecoEmolumentoDTO();
+                entity.setEmolumento(emolumentoMapper.toDto(emolumento));
+                entity.setTurno(p.getTurno());
+                entity.setPreco(p.getPreco());
+                entity.setPlanoMulta(p.getPlanoMulta());
+                entity.setClasse(p.getClasse());
+                entity.setCurso(p.getCurso());
+                entity.setAreaFormacao(p.getAreaFormacao());
+                entity.setIsEspecificoAreaFormacao(p.getIsEspecificoAreaFormacao());
+                entity.setIsEspecificoClasse(p.getIsEspecificoClasse());
+                entity.setIsEspecificoCurso(p.getIsEspecificoCurso());
+                entity.setIsEspecificoTurno(p.getIsEspecificoTurno());
+                precoEmolumentoService.save(entity);
+            }
+        }
+
         return emolumentoMapper.toDto(emolumento);
     }
 

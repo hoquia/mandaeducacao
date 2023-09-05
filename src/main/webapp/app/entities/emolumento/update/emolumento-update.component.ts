@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unnecessary-condition */
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -192,5 +194,23 @@ export class EmolumentoUpdateComponent implements OnInit {
         )
       )
       .subscribe((planoMultas: IPlanoMulta[]) => (this.planoMultasSharedCollection = planoMultas));
+  }
+
+  protected onSelectReferencia(referenciaID: any): void {
+    this.emolumentoService.find(Number(referenciaID)).subscribe(res => {
+      this.emolumento = res.body;
+      this.editForm.patchValue({
+        categoria: this.emolumento?.categoria,
+        preco: this.emolumento?.preco,
+        nome: this.emolumento?.nome,
+        periodo: this.emolumento?.periodo,
+        inicioPeriodo: this.emolumento?.inicioPeriodo,
+        fimPeriodo: this.emolumento?.fimPeriodo,
+        imposto: this.emolumento?.imposto,
+        isObrigatorioConfirmacao: this.emolumento?.isObrigatorioConfirmacao,
+        isObrigatorioMatricula: this.emolumento?.isObrigatorioMatricula,
+        planoMulta: this.emolumento?.planoMulta,
+      });
+    });
   }
 }

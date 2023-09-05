@@ -1,5 +1,6 @@
 package com.ravunana.longonkelo.service.impl;
 
+import com.ravunana.longokelo.config.LongonkeloException;
 import com.ravunana.longonkelo.domain.PlanoCurricular;
 import com.ravunana.longonkelo.repository.PlanoCurricularRepository;
 import com.ravunana.longonkelo.service.PlanoCurricularService;
@@ -34,6 +35,23 @@ public class PlanoCurricularServiceImpl implements PlanoCurricularService {
     @Override
     public PlanoCurricularDTO save(PlanoCurricularDTO planoCurricularDTO) {
         log.debug("Request to save PlanoCurricular : {}", planoCurricularDTO);
+
+        planoCurricularDTO.setDescricao(
+            getDescricaoPlanoCurricular(planoCurricularDTO.getCurso().getNome(), planoCurricularDTO.getClasse().getDescricao())
+        );
+
+        var result = planoCurricularRepository
+            .findAll()
+            .stream()
+            .filter(x -> x.getDescricao().equals(planoCurricularDTO.getDescricao()))
+            .findFirst();
+
+        if (result.isPresent()) {
+            if (result.get().getDescricao().equals(planoCurricularDTO.getDescricao())) {
+                throw new LongonkeloException("O Plano curricular que pretende registrar já existe, altera a classe ou  curso");
+            }
+        }
+
         PlanoCurricular planoCurricular = planoCurricularMapper.toEntity(planoCurricularDTO);
         planoCurricular = planoCurricularRepository.save(planoCurricular);
         return planoCurricularMapper.toDto(planoCurricular);
@@ -84,5 +102,10 @@ public class PlanoCurricularServiceImpl implements PlanoCurricularService {
     public void delete(Long id) {
         log.debug("Request to delete PlanoCurricular : {}", id);
         planoCurricularRepository.deleteById(id);
+    }
+
+    @Override
+    public String getDescricaoPlanoCurricular(String curso, String classe) {
+        return curso + " " + classe;
     }
 }

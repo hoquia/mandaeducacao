@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 import { EncarregadoEducacaoFormService, EncarregadoEducacaoFormGroup } from './encarregado-educacao-form.service';
 import { IEncarregadoEducacao } from '../encarregado-educacao.model';
@@ -23,7 +23,9 @@ export class EncarregadoEducacaoUpdateComponent implements OnInit {
   encarregadoEducacao: IEncarregadoEducacao | null = null;
   sexoValues = Object.keys(Sexo);
 
-  lookupItemsSharedCollection: ILookupItem[] = [];
+  grauParentescoCollection: ILookupItem[] = [];
+  tipoDocumentoCollection: ILookupItem[] = [];
+  profissaoCollection: ILookupItem[] = [];
 
   editForm: EncarregadoEducacaoFormGroup = this.encarregadoEducacaoFormService.createEncarregadoEducacaoFormGroup();
 
@@ -45,9 +47,9 @@ export class EncarregadoEducacaoUpdateComponent implements OnInit {
       if (encarregadoEducacao) {
         this.updateForm(encarregadoEducacao);
       }
-
-      this.loadRelationshipsOptions();
     });
+
+    this.loadRelationshipsOptions();
   }
 
   byteSize(base64String: string): string {
@@ -112,28 +114,28 @@ export class EncarregadoEducacaoUpdateComponent implements OnInit {
     this.encarregadoEducacao = encarregadoEducacao;
     this.encarregadoEducacaoFormService.resetForm(this.editForm, encarregadoEducacao);
 
-    this.lookupItemsSharedCollection = this.lookupItemService.addLookupItemToCollectionIfMissing<ILookupItem>(
-      this.lookupItemsSharedCollection,
-      encarregadoEducacao.grauParentesco,
-      encarregadoEducacao.tipoDocumento,
-      encarregadoEducacao.profissao
-    );
+    // this.grauParentescoCollection = this.lookupItemService.addLookupItemToCollectionIfMissing<ILookupItem>(
+    //   this.lookupItemsSharedCollection,
+    //   encarregadoEducacao.grauParentesco,
+    //   encarregadoEducacao.tipoDocumento,
+    //   encarregadoEducacao.profissao
+    // );
   }
 
   protected loadRelationshipsOptions(): void {
-    this.lookupItemService
-      .query()
-      .pipe(map((res: HttpResponse<ILookupItem[]>) => res.body ?? []))
-      .pipe(
-        map((lookupItems: ILookupItem[]) =>
-          this.lookupItemService.addLookupItemToCollectionIfMissing<ILookupItem>(
-            lookupItems,
-            this.encarregadoEducacao?.grauParentesco,
-            this.encarregadoEducacao?.tipoDocumento,
-            this.encarregadoEducacao?.profissao
-          )
-        )
-      )
-      .subscribe((lookupItems: ILookupItem[]) => (this.lookupItemsSharedCollection = lookupItems));
+    // grau parentesco
+    this.lookupItemService.query({ 'lookupId.equals': 979 }).subscribe(res => {
+      this.grauParentescoCollection = res.body ?? [];
+    });
+
+    // tipo documento
+    this.lookupItemService.query({ 'lookupId.equals': 971 }).subscribe(res => {
+      this.tipoDocumentoCollection = res.body ?? [];
+    });
+
+    // profissao
+    this.lookupItemService.query({ 'lookupId.equals': 980 }).subscribe(res => {
+      this.profissaoCollection = res.body ?? [];
+    });
   }
 }

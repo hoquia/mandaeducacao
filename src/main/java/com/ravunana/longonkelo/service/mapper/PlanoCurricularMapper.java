@@ -16,8 +16,8 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface PlanoCurricularMapper extends EntityMapper<PlanoCurricularDTO, PlanoCurricular> {
     @Mapping(target = "utilizador", source = "utilizador", qualifiedByName = "userLogin")
-    @Mapping(target = "classe", source = "classe", qualifiedByName = "classeDescricao")
-    @Mapping(target = "curso", source = "curso", qualifiedByName = "cursoNome")
+    @Mapping(target = "classe", source = "classe")
+    @Mapping(target = "curso", source = "curso")
     PlanoCurricularDTO toDto(PlanoCurricular s);
 
     @Named("userLogin")

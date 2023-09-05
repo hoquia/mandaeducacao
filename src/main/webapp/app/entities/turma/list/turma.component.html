@@ -34,7 +34,7 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -45,7 +45,7 @@
               <span appTranslate="longonkeloApp.turma.chaveComposta">Chave Composta</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="tipoTurma">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.turma.tipoTurma">Tipo Turma</span>
@@ -76,7 +76,7 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="abertura">
+          <!-- <th scope="col" appSortBy="abertura">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.turma.abertura">Abertura</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -123,7 +123,7 @@
               <span appTranslate="longonkeloApp.turma.referencia">Referencia</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="planoCurricular.descricao">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.turma.planoCurricular">Plano Curricular</span>
@@ -141,18 +141,18 @@
       </thead>
       <tbody>
         <tr *ngFor="let turma of turmas; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/turma', turma.id, 'view']">{{ turma.id }}</a>
           </td>
-          <td>{{ turma.chaveComposta }}</td>
+          <td>{{ turma.chaveComposta }}</td> -->
           <td appTranslate="{{ 'longonkeloApp.TipoTurma.' + turma.tipoTurma }}">{{ turma.tipoTurma }}</td>
           <td>{{ turma.sala }}</td>
           <td>{{ turma.descricao }}</td>
-          <td>{{ turma.lotacao }}</td>
-          <td>{{ turma.confirmado }}</td>
-          <td>{{ turma.abertura | formatMediumDate }}</td>
-          <td>{{ turma.encerramento | formatMediumDate }}</td>
-          <td appTranslate="{{ 'longonkeloApp.CriterioDescricaoTurma.' + turma.criterioDescricao }}">{{ turma.criterioDescricao }}</td>
+          <td>{{ turma.lotacao | number }}</td>
+          <td>{{ turma.confirmado | number }}</td>
+          <!-- <td>{{ turma.abertura | formatMediumDate }}</td>
+          <td>{{ turma.encerramento | formatMediumDate }}</td> -->
+          <!-- <td appTranslate="{{ 'longonkeloApp.CriterioDescricaoTurma.' + turma.criterioDescricao }}">{{ turma.criterioDescricao }}</td>
           <td appTranslate="{{ 'longonkeloApp.CriterioNumeroChamada.' + turma.criterioOrdenacaoNumero }}">
             {{ turma.criterioOrdenacaoNumero }}
           </td>
@@ -165,7 +165,7 @@
             <div *ngIf="turma.referencia">
               <a [routerLink]="['/turma', turma.referencia.id, 'view']">{{ turma.referencia.descricao }}</a>
             </div>
-          </td>
+          </td> -->
           <td>
             <div *ngIf="turma.planoCurricular">
               <a [routerLink]="['/plano-curricular', turma.planoCurricular.id, 'view']">{{ turma.planoCurricular.descricao }}</a>
@@ -178,7 +178,7 @@
           </td>
           <td class="text-end">
             <div class="btn-group">
-              <button
+              <!-- <button
                 type="submit"
                 [routerLink]="['/turma']"
                 [queryParams]="{ 'filter[referenciaId.in]': turma.id }"
@@ -312,7 +312,7 @@
                   [translateValues]="{ otherEntity: ('longonkeloApp.turma.dissertacaoFinalCurso' | translate) }"
                   >Show Dissertacao Final Curso</span
                 >
-              </button>
+              </button> -->
               <button type="submit" [routerLink]="['/turma', turma.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>

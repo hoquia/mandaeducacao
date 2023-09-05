@@ -93,7 +93,10 @@
 
           <div class="col-md-3 col-sm-12 mb-3">
             <label class="form-label" appTranslate="longonkeloApp.discente.sexo" for="field_sexo">Sexo</label>
-            <input type="text" class="form-control" name="sexo" id="field_sexo" data-cy="sexo" formControlName="sexo" />
+            <select class="form-control" name="sexo" formControlName="sexo" id="field_sexo" data-cy="sexo">
+              <option [ngValue]="null">{{ 'longonkeloApp.Sexo.null' | translate }}</option>
+              <option *ngFor="let sexo of sexoValues" [value]="sexo">{{ 'longonkeloApp.Sexo.' + sexo | translate }}</option>
+            </select>
             <div *ngIf="editForm.get('sexo')!.invalid && (editForm.get('sexo')!.dirty || editForm.get('sexo')!.touched)">
               <small class="form-text text-danger" *ngIf="editForm.get('sexo')?.errors?.required" appTranslate="entity.validation.required">
                 O campo é obrigatório.
@@ -133,22 +136,28 @@
         <div class="row">
           <div class="col mb-3">
             <label class="form-label" appTranslate="longonkeloApp.discente.nacionalidade" for="field_nacionalidade">Nacionalidade</label>
-            <input
-              type="text"
+            <select
               class="form-control"
-              name="nacionalidade"
               id="field_nacionalidade"
               data-cy="nacionalidade"
+              name="nacionalidade"
               formControlName="nacionalidade"
-            />
+              [compareWith]="compareLookupItem"
+            >
+              <option *ngIf="!editForm.get('nacionalidade')!.value" [ngValue]="null" selected></option>
+              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+                {{ lookupItemOption.descricao }}
+              </option>
+            </select>
             <div
               *ngIf="
-                editForm.get('nacionalidade')!.invalid && (editForm.get('nacionalidade')!.dirty || editForm.get('nacionalidade')!.touched)
+                editForm.get(['nacionalidade'])!.invalid &&
+                (editForm.get(['nacionalidade'])!.dirty || editForm.get(['nacionalidade'])!.touched)
               "
             >
               <small
                 class="form-text text-danger"
-                *ngIf="editForm.get('nacionalidade')?.errors?.required"
+                *ngIf="editForm.get(['nacionalidade'])?.errors?.required"
                 appTranslate="entity.validation.required"
               >
                 O campo é obrigatório.
@@ -158,22 +167,28 @@
 
           <div class="col mb-3">
             <label class="form-label" appTranslate="longonkeloApp.discente.naturalidade" for="field_naturalidade">Naturalidade</label>
-            <input
-              type="text"
+            <select
               class="form-control"
-              name="naturalidade"
               id="field_naturalidade"
               data-cy="naturalidade"
+              name="naturalidade"
               formControlName="naturalidade"
-            />
+              [compareWith]="compareLookupItem"
+            >
+              <option *ngIf="!editForm.get('naturalidade')!.value" [ngValue]="null" selected></option>
+              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+                {{ lookupItemOption.descricao }}
+              </option>
+            </select>
             <div
               *ngIf="
-                editForm.get('naturalidade')!.invalid && (editForm.get('naturalidade')!.dirty || editForm.get('naturalidade')!.touched)
+                editForm.get(['naturalidade'])!.invalid &&
+                (editForm.get(['naturalidade'])!.dirty || editForm.get(['naturalidade'])!.touched)
               "
             >
               <small
                 class="form-text text-danger"
-                *ngIf="editForm.get('naturalidade')?.errors?.required"
+                *ngIf="editForm.get(['naturalidade'])?.errors?.required"
                 appTranslate="entity.validation.required"
               >
                 O campo é obrigatório.
@@ -222,20 +237,20 @@
                 {{ lookupItemOption.descricao }}
               </option>
             </select>
-          </div>
-          <div
-            *ngIf="
-              editForm.get(['tipoDocumento'])!.invalid &&
-              (editForm.get(['tipoDocumento'])!.dirty || editForm.get(['tipoDocumento'])!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get(['tipoDocumento'])?.errors?.required"
-              appTranslate="entity.validation.required"
+            <div
+              *ngIf="
+                editForm.get(['tipoDocumento'])!.invalid &&
+                (editForm.get(['tipoDocumento'])!.dirty || editForm.get(['tipoDocumento'])!.touched)
+              "
             >
-              O campo é obrigatório.
-            </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get(['tipoDocumento'])?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                O campo é obrigatório.
+              </small>
+            </div>
           </div>
 
           <div class="col-md-3 col-sm-12 mb-3">
@@ -651,9 +666,57 @@
           >
         </div>
 
-        <div class="mb-3">
+        <div class="row mb-3">
           <label class="form-label" appTranslate="longonkeloApp.discente.profissao" for="field_profissao">Profissao</label>
-          <input type="text" class="form-control" name="profissao" id="field_profissao" data-cy="profissao" formControlName="profissao" />
+          <select
+            class="form-control"
+            id="field_profissao"
+            data-cy="profissao"
+            name="profissao"
+            formControlName="profissao"
+            [compareWith]="compareLookupItem"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              {{ lookupItemOption.descricao }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.discente.grupoSanguinio" for="field_grupoSanguinio">Grupo Sanguinio</label>
+          <select
+            class="form-control"
+            id="field_grupoSanguinio"
+            data-cy="grupoSanguinio"
+            name="grupoSanguinio"
+            formControlName="grupoSanguinio"
+            [compareWith]="compareLookupItem"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              {{ lookupItemOption.descricao }}
+            </option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.discente.necessidadeEspecial" for="field_necessidadeEspecial"
+            >Necessidade Especial</label
+          >
+          <select
+            class="form-control"
+            id="field_necessidadeEspecial"
+            data-cy="necessidadeEspecial"
+            name="necessidadeEspecial"
+            formControlName="necessidadeEspecial"
+            [compareWith]="compareLookupItem"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              {{ lookupItemOption.descricao }}
+            </option>
+          </select>
         </div>
 
         <div class="mb-3">

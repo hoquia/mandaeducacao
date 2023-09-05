@@ -13,8 +13,53 @@
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div>
 
-        <div class="row mb-3">
-          <div class="col-md-3 col-sm-12 mb-3">
+        <div class="mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.turma.referencia" for="field_referencia">Referencia</label>
+          <ng-select
+            id="field_referencia"
+            data-cy="referencia"
+            name="referencia"
+            formControlName="referencia"
+            [compareWith]="compareTurma"
+            (change)="onSelectReferencia(editForm.get(['referencia'])!.value.id)"
+          >
+            <ng-option [value]="null"></ng-option>
+            <ng-option [value]="turmaOption" *ngFor="let turmaOption of turmasSharedCollection">{{ turmaOption.descricao }}</ng-option>
+          </ng-select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.turma.planoCurricular" for="field_planoCurricular">Plano Curricular</label>
+          <ng-select
+            id="field_planoCurricular"
+            data-cy="planoCurricular"
+            name="planoCurricular"
+            formControlName="planoCurricular"
+            [compareWith]="comparePlanoCurricular"
+          >
+            <ng-option *ngIf="editForm.get(['planoCurricular'])!.value == null" [value]="null" selected></ng-option>
+            <ng-option [value]="planoCurricularOption" *ngFor="let planoCurricularOption of planoCurricularsSharedCollection">
+              {{ planoCurricularOption.descricao }}
+            </ng-option>
+          </ng-select>
+          <div
+            *ngIf="
+              editForm.get(['planoCurricular'])!.invalid &&
+              (editForm.get(['planoCurricular'])!.dirty || editForm.get(['planoCurricular'])!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get(['planoCurricular'])?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col mb-3">
             <label class="form-label" appTranslate="longonkeloApp.turma.tipoTurma" for="field_tipoTurma">Tipo Turma</label>
             <select class="form-control" name="tipoTurma" formControlName="tipoTurma" id="field_tipoTurma" data-cy="tipoTurma">
               <option [ngValue]="null">{{ 'longonkeloApp.TipoTurma.null' | translate }}</option>
@@ -33,39 +78,24 @@
             </div>
           </div>
 
-          <div class="col-md-5 col-sm-12 mb-3">
-            <label class="form-label" appTranslate="longonkeloApp.turma.planoCurricular" for="field_planoCurricular"
-              >Plano Curricular</label
-            >
-            <ng-select
-              id="field_planoCurricular"
-              data-cy="planoCurricular"
-              name="planoCurricular"
-              formControlName="planoCurricular"
-              [compareWith]="comparePlanoCurricular"
-            >
-              <ng-option *ngIf="editForm.get(['planoCurricular'])!.value == null" [value]="null" selected></ng-option>
-              <ng-option [value]="planoCurricularOption" *ngFor="let planoCurricularOption of planoCurricularsSharedCollection">
-                {{ planoCurricularOption.descricao }}
-              </ng-option>
-            </ng-select>
-          </div>
-          <div
-            *ngIf="
-              editForm.get(['planoCurricular'])!.invalid &&
-              (editForm.get(['planoCurricular'])!.dirty || editForm.get(['planoCurricular'])!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get(['planoCurricular'])?.errors?.required"
-              appTranslate="entity.validation.required"
-            >
-              O campo é obrigatório.
-            </small>
+          <div class="col mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.turma.turno" for="field_turno">Turno</label>
+            <select class="form-control" id="field_turno" data-cy="turno" name="turno" formControlName="turno" [compareWith]="compareTurno">
+              <option *ngIf="editForm.get(['turno'])!.value == null" [ngValue]="null" selected></option>
+              <option [ngValue]="turnoOption" *ngFor="let turnoOption of turnosSharedCollection">{{ turnoOption.nome }}</option>
+            </select>
+            <div *ngIf="editForm.get(['turno'])!.invalid && (editForm.get(['turno'])!.dirty || editForm.get(['turno'])!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get(['turno'])?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                O campo é obrigatório.
+              </small>
+            </div>
           </div>
 
-          <div class="col-md-2 col-sm-12 mb-3">
+          <div class="col mb-3">
             <label class="form-label" appTranslate="longonkeloApp.turma.sala" for="field_sala">Sala</label>
             <input type="number" class="form-control" name="sala" id="field_sala" data-cy="sala" formControlName="sala" />
             <div *ngIf="editForm.get('sala')!.invalid && (editForm.get('sala')!.dirty || editForm.get('sala')!.touched)">
@@ -86,107 +116,7 @@
             </div>
           </div>
 
-          <div class="col-md-2 col-sm-12 mb-3">
-            <div class="row mb-3">
-              <label class="form-label" appTranslate="longonkeloApp.turma.turno" for="field_turno">Turno</label>
-              <select
-                class="form-control"
-                id="field_turno"
-                data-cy="turno"
-                name="turno"
-                formControlName="turno"
-                [compareWith]="compareTurno"
-              >
-                <option *ngIf="editForm.get(['turno'])!.value == null" [ngValue]="null" selected></option>
-                <option [ngValue]="turnoOption" *ngFor="let turnoOption of turnosSharedCollection">{{ turnoOption.nome }}</option>
-              </select>
-            </div>
-            <div *ngIf="editForm.get(['turno'])!.invalid && (editForm.get(['turno'])!.dirty || editForm.get(['turno'])!.touched)">
-              <small
-                class="form-text text-danger"
-                *ngIf="editForm.get(['turno'])?.errors?.required"
-                appTranslate="entity.validation.required"
-              >
-                O campo é obrigatório.
-              </small>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-3 col-sm-12 mb-3">
-            <label class="form-label" appTranslate="longonkeloApp.turma.abertura" for="field_abertura">Abertura</label>
-            <div class="input-group">
-              <input
-                id="field_abertura"
-                data-cy="abertura"
-                type="text"
-                class="form-control"
-                name="abertura"
-                ngbDatepicker
-                #aberturaDp="ngbDatepicker"
-                formControlName="abertura"
-              />
-              <button type="button" class="btn btn-secondary" (click)="aberturaDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
-            </div>
-            <div *ngIf="editForm.get('abertura')!.invalid && (editForm.get('abertura')!.dirty || editForm.get('abertura')!.touched)">
-              <small
-                class="form-text text-danger"
-                *ngIf="editForm.get('abertura')?.errors?.required"
-                appTranslate="entity.validation.required"
-              >
-                O campo é obrigatório.
-              </small>
-            </div>
-          </div>
-
-          <div class="col-md-3 col-sm-12 mb-3">
-            <label class="form-label" appTranslate="longonkeloApp.turma.encerramento" for="field_encerramento">Encerramento</label>
-            <div class="input-group">
-              <input
-                id="field_encerramento"
-                data-cy="encerramento"
-                type="text"
-                class="form-control"
-                name="encerramento"
-                ngbDatepicker
-                #encerramentoDp="ngbDatepicker"
-                formControlName="encerramento"
-              />
-              <button type="button" class="btn btn-secondary" (click)="encerramentoDp.toggle()">
-                <fa-icon icon="calendar-alt"></fa-icon>
-              </button>
-            </div>
-            <div
-              *ngIf="
-                editForm.get('encerramento')!.invalid && (editForm.get('encerramento')!.dirty || editForm.get('encerramento')!.touched)
-              "
-            >
-              <small
-                class="form-text text-danger"
-                *ngIf="editForm.get('encerramento')?.errors?.required"
-                appTranslate="entity.validation.required"
-              >
-                O campo é obrigatório.
-              </small>
-            </div>
-          </div>
-
-          <div class="col-md-4 col-sm-12 mb-3">
-            <label class="form-label" appTranslate="longonkeloApp.turma.descricao" for="field_descricao">Descricao</label>
-            <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
-            <div *ngIf="editForm.get('descricao')!.invalid && (editForm.get('descricao')!.dirty || editForm.get('descricao')!.touched)">
-              <small
-                class="form-text text-danger"
-                *ngIf="editForm.get('descricao')?.errors?.required"
-                appTranslate="entity.validation.required"
-              >
-                O campo é obrigatório.
-              </small>
-            </div>
-          </div>
-
-          <div class="col-md-2 col-sm-12 mb-3">
+          <div class="col mb-3">
             <label class="form-label" appTranslate="longonkeloApp.turma.lotacao" for="field_lotacao">Lotacao</label>
             <input type="number" class="form-control" name="lotacao" id="field_lotacao" data-cy="lotacao" formControlName="lotacao" />
             <div *ngIf="editForm.get('lotacao')!.invalid && (editForm.get('lotacao')!.dirty || editForm.get('lotacao')!.touched)">
@@ -216,6 +146,94 @@
           </div>
         </div>
 
+        <div class="mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.turma.descricao" for="field_descricao">Descricao</label>
+          <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
+          <div *ngIf="editForm.get('descricao')!.invalid && (editForm.get('descricao')!.dirty || editForm.get('descricao')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('descricao')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <!-- <div class=" mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.turma.confirmado" for="field_confirmado">Confirmado</label>
+          <input
+            type="number"
+            class="form-control"
+            name="confirmado"
+            id="field_confirmado"
+            data-cy="confirmado"
+            formControlName="confirmado"
+          />
+          <div *ngIf="editForm.get('confirmado')!.invalid && (editForm.get('confirmado')!.dirty || editForm.get('confirmado')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('confirmado')?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('confirmado')?.errors?.min"
+              appTranslate="entity.validation.min"
+              [translateValues]="{ min: 0 }"
+            >
+              Este campo deve ser maior que 0.
+            </small>
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('confirmado')?.errors?.number"
+              appTranslate="entity.validation.number"
+            >
+              Este campo é do tipo número.
+            </small>
+          </div>
+        </div> -->
+
+        <div class="row">
+          <div class="col mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.turma.abertura" for="field_abertura">Abertura</label>
+            <div class="input-group">
+              <input
+                id="field_abertura"
+                data-cy="abertura"
+                type="text"
+                class="form-control"
+                name="abertura"
+                ngbDatepicker
+                #aberturaDp="ngbDatepicker"
+                formControlName="abertura"
+              />
+              <button type="button" class="btn btn-secondary" (click)="aberturaDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+            </div>
+          </div>
+
+          <div class="col mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.turma.encerramento" for="field_encerramento">Encerramento</label>
+            <div class="input-group">
+              <input
+                id="field_encerramento"
+                data-cy="encerramento"
+                type="text"
+                class="form-control"
+                name="encerramento"
+                ngbDatepicker
+                #encerramentoDp="ngbDatepicker"
+                formControlName="encerramento"
+              />
+              <button type="button" class="btn btn-secondary" (click)="encerramentoDp.toggle()">
+                <fa-icon icon="calendar-alt"></fa-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div class="row">
           <div class="col mb-3">
             <label class="form-label" appTranslate="longonkeloApp.turma.criterioDescricao" for="field_criterioDescricao"
@@ -233,20 +251,6 @@
                 {{ 'longonkeloApp.CriterioDescricaoTurma.' + criterioDescricaoTurma | translate }}
               </option>
             </select>
-            <div
-              *ngIf="
-                editForm.get('criterioDescricao')!.invalid &&
-                (editForm.get('criterioDescricao')!.dirty || editForm.get('criterioDescricao')!.touched)
-              "
-            >
-              <small
-                class="form-text text-danger"
-                *ngIf="editForm.get('criterioDescricao')?.errors?.required"
-                appTranslate="entity.validation.required"
-              >
-                O campo é obrigatório.
-              </small>
-            </div>
           </div>
 
           <div class="col mb-3">
@@ -265,20 +269,6 @@
                 {{ 'longonkeloApp.CriterioNumeroChamada.' + criterioNumeroChamada | translate }}
               </option>
             </select>
-            <div
-              *ngIf="
-                editForm.get('criterioOrdenacaoNumero')!.invalid &&
-                (editForm.get('criterioOrdenacaoNumero')!.dirty || editForm.get('criterioOrdenacaoNumero')!.touched)
-              "
-            >
-              <small
-                class="form-text text-danger"
-                *ngIf="editForm.get('criterioOrdenacaoNumero')?.errors?.required"
-                appTranslate="entity.validation.required"
-              >
-                O campo é obrigatório.
-              </small>
-            </div>
           </div>
         </div>
 
@@ -311,21 +301,36 @@
           <span class="form-check-label" appTranslate="longonkeloApp.turma.isDisponivel" for="field_isDisponivel">Is Disponivel</span>
         </div>
 
-        <div>
-          <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-            <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
-          </button>
-
-          <button
-            type="submit"
-            id="save-entity"
-            data-cy="entityCreateSaveButton"
-            [disabled]="editForm.invalid || isSaving"
-            class="btn btn-primary"
+        <!-- <div class=" mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.turma.utilizador" for="field_utilizador">Utilizador</label>
+          <select
+            class="form-control"
+            id="field_utilizador"
+            data-cy="utilizador"
+            name="utilizador"
+            formControlName="utilizador"
+            [compareWith]="compareUser"
           >
-            <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
-          </button>
-        </div>
+            <option [ngValue]="null"></option>
+            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
+          </select>
+        </div> -->
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
       </div>
     </form>
   </div>

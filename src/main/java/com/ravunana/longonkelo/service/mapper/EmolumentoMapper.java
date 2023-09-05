@@ -17,7 +17,7 @@ import org.mapstruct.*;
 public interface EmolumentoMapper extends EntityMapper<EmolumentoDTO, Emolumento> {
     @Mapping(target = "categoria", source = "categoria", qualifiedByName = "categoriaEmolumentoNome")
     @Mapping(target = "imposto", source = "imposto", qualifiedByName = "impostoDescricao")
-    @Mapping(target = "referencia", source = "referencia", qualifiedByName = "emolumentoNome")
+    @Mapping(target = "referencia", source = "referencia")
     @Mapping(target = "planoMulta", source = "planoMulta", qualifiedByName = "planoMultaDescricao")
     EmolumentoDTO toDto(Emolumento s);
 

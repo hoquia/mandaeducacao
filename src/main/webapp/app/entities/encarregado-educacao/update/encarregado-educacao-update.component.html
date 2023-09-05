@@ -67,7 +67,7 @@
         <legend>Dados pessoais</legend>
 
         <div class="row">
-          <div class="col-md-8 col-sm-12 mb-3">
+          <div class="col-md-6 col-sm-12 mb-3">
             <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.nome" for="field_nome">Nome</label>
             <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
             <div *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)">
@@ -77,19 +77,7 @@
             </div>
           </div>
 
-          <div class="col-md-4 col-sm-12 mb-3">
-            <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.sexo" for="field_sexo">Sexo</label>
-            <input type="text" class="form-control" name="sexo" id="field_sexo" data-cy="sexo" formControlName="sexo" />
-            <div *ngIf="editForm.get('sexo')!.invalid && (editForm.get('sexo')!.dirty || editForm.get('sexo')!.touched)">
-              <small class="form-text text-danger" *ngIf="editForm.get('sexo')?.errors?.required" appTranslate="entity.validation.required">
-                O campo é obrigatório.
-              </small>
-            </div>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col mb-3">
+          <div class="col-md-3 col-sm-12 mb-3">
             <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.nascimento" for="field_nascimento">Nascimento</label>
             <div class="input-group">
               <input
@@ -117,18 +105,21 @@
             </div>
           </div>
 
-          <div class="col mb-3">
-            <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.nif" for="field_nif">Nif</label>
-            <input type="text" class="form-control" name="nif" id="field_nif" data-cy="nif" formControlName="nif" />
-            <div *ngIf="editForm.get('nif')!.invalid && (editForm.get('nif')!.dirty || editForm.get('nif')!.touched)">
-              <small class="form-text text-danger" *ngIf="editForm.get('nif')?.errors?.required" appTranslate="entity.validation.required">
+          <div class="col-md-3 col-sm-12 mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.sexo" for="field_sexo">Sexo</label>
+            <select class="form-control" name="sexo" formControlName="sexo" id="field_sexo" data-cy="sexo">
+              <option [ngValue]="null">{{ 'longonkeloApp.Sexo.null' | translate }}</option>
+              <option *ngFor="let sexo of sexoValues" [value]="sexo">{{ 'longonkeloApp.Sexo.' + sexo | translate }}</option>
+            </select>
+            <div *ngIf="editForm.get('sexo')!.invalid && (editForm.get('sexo')!.dirty || editForm.get('sexo')!.touched)">
+              <small class="form-text text-danger" *ngIf="editForm.get('sexo')?.errors?.required" appTranslate="entity.validation.required">
                 O campo é obrigatório.
               </small>
             </div>
           </div>
         </div>
 
-        <div class="col mb-3">
+        <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.grauParentesco" for="field_grauParentesco"
             >Grau Parentesco</label
           >
@@ -138,10 +129,9 @@
             data-cy="grauParentesco"
             name="grauParentesco"
             formControlName="grauParentesco"
-            [compareWith]="compareLookupItem"
           >
             <option *ngIf="!editForm.get('grauParentesco')!.value" [ngValue]="null" selected></option>
-            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+            <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of grauParentescoCollection">
               {{ lookupItemOption.descricao }}
             </option>
           </select>
@@ -161,40 +151,80 @@
           </div>
         </div>
 
-        <!-- <div class="row">
+        <legend>Documento</legend>
+
+        <div class="row">
           <div class="col mb-3">
-            <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.nacionalidade" for="field_nacionalidade"
-              >Nacionalidade</label
+            <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.tipoDocumento" for="field_tipoDocumento"
+              >Tipo Documento</label
             >
-            <input
-              type="text"
+            <select
               class="form-control"
-              name="nacionalidade"
-              id="field_nacionalidade"
-              data-cy="nacionalidade"
-              formControlName="nacionalidade"
-            />
+              id="field_tipoDocumento"
+              data-cy="tipoDocumento"
+              name="tipoDocumento"
+              formControlName="tipoDocumento"
+            >
+              <option *ngIf="!editForm.get('tipoDocumento')!.value" [ngValue]="null" selected></option>
+              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of tipoDocumentoCollection">
+                {{ lookupItemOption.descricao }}
+              </option>
+            </select>
+            <div
+              *ngIf="
+                editForm.get(['tipoDocumento'])!.invalid &&
+                (editForm.get(['tipoDocumento'])!.dirty || editForm.get(['tipoDocumento'])!.touched)
+              "
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get(['tipoDocumento'])?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                O campo é obrigatório.
+              </small>
+            </div>
           </div>
 
           <div class="col mb-3">
-            <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.naturalidade" for="field_naturalidade"
-              >Naturalidade</label
+            <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.documentoNumero" for="field_documentoNumero"
+              >Documento Numero</label
             >
             <input
               type="text"
               class="form-control"
-              name="naturalidade"
-              id="field_naturalidade"
-              data-cy="naturalidade"
-              formControlName="naturalidade"
+              name="documentoNumero"
+              id="field_documentoNumero"
+              data-cy="documentoNumero"
+              formControlName="documentoNumero"
             />
+            <div
+              *ngIf="
+                editForm.get('documentoNumero')!.invalid &&
+                (editForm.get('documentoNumero')!.dirty || editForm.get('documentoNumero')!.touched)
+              "
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('documentoNumero')?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                O campo é obrigatório.
+              </small>
+            </div>
           </div>
-        </div> -->
+
+          <div class="col mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.nif" for="field_nif">Nif</label>
+            <input type="text" class="form-control" name="nif" id="field_nif" data-cy="nif" formControlName="nif" />
+            <div *ngIf="editForm.get('nif')!.invalid && (editForm.get('nif')!.dirty || editForm.get('nif')!.touched)"></div>
+          </div>
+        </div>
 
         <legend>Contacto</legend>
 
         <div class="row">
-          <div class="col-md-4 col-sm-12 mb-3">
+          <div class="col mb-3">
             <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.telefonePrincipal" for="field_telefonePrincipal"
               >Telefone Principal</label
             >
@@ -222,7 +252,7 @@
             </div>
           </div>
 
-          <div class="col-md-4 col-sm-12 mb-3">
+          <div class="col mb-3">
             <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.telefoneAlternativo" for="field_telefoneAlternativo"
               >Telefone Alternativo</label
             >
@@ -236,15 +266,16 @@
             />
           </div>
 
-          <div class="col-md-4 col-sm-12 mb-3">
+          <div class="col mb-3">
             <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.email" for="field_email">Email</label>
             <input type="text" class="form-control" name="email" id="field_email" data-cy="email" formControlName="email" />
+            <div *ngIf="editForm.get('email')!.invalid && (editForm.get('email')!.dirty || editForm.get('email')!.touched)"></div>
           </div>
         </div>
 
         <legend>Endereço</legend>
 
-        <div class="col mb-3">
+        <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.residencia" for="field_residencia">Residencia</label>
           <input
             type="text"
@@ -256,56 +287,18 @@
           />
         </div>
 
-        <legend>Trabalho</legend>
-
-        <div class="row">
-          <div class="col mb-3">
-            <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.empresaTrabalho" for="field_empresaTrabalho"
-              >Empresa Trabalho</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              name="empresaTrabalho"
-              id="field_empresaTrabalho"
-              data-cy="empresaTrabalho"
-              formControlName="empresaTrabalho"
-            />
-          </div>
-          <div class="col mb-3">
-            <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.enderecoTrabalho" for="field_enderecoTrabalho"
-              >Endereco Trabalho</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              name="enderecoTrabalho"
-              id="field_enderecoTrabalho"
-              data-cy="enderecoTrabalho"
-              formControlName="enderecoTrabalho"
-            />
-          </div>
-        </div>
+        <legend>Informação profissional</legend>
 
         <div class="row">
           <div class="col mb-3">
             <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.profissao" for="field_profissao">Profissao</label>
-            <input type="text" class="form-control" name="profissao" id="field_profissao" data-cy="profissao" formControlName="profissao" />
+            <select class="form-control" id="field_profissao" data-cy="profissao" name="profissao" formControlName="profissao">
+              <option [ngValue]="null"></option>
+              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of profissaoCollection">
+                {{ lookupItemOption.descricao }}
+              </option>
+            </select>
           </div>
-
-          <!-- <div class="col mb-3">
-            <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.cargoOcupacional" for="field_cargoOcupacional"
-              >Cargo Ocupacional</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              name="cargoOcupacional"
-              id="field_cargoOcupacional"
-              data-cy="cargoOcupacional"
-              formControlName="cargoOcupacional"
-            />
-          </div> -->
 
           <div class="col mb-3">
             <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.rendaMensal" for="field_rendaMensal"
@@ -339,7 +332,40 @@
               </small>
             </div>
           </div>
+
+          <div class="col mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.empresaTrabalho" for="field_empresaTrabalho"
+              >Empresa Trabalho</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              name="empresaTrabalho"
+              id="field_empresaTrabalho"
+              data-cy="empresaTrabalho"
+              formControlName="empresaTrabalho"
+            />
+          </div>
         </div>
+
+        <div class="mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.enderecoTrabalho" for="field_enderecoTrabalho"
+            >Endereco Trabalho</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="enderecoTrabalho"
+            id="field_enderecoTrabalho"
+            data-cy="enderecoTrabalho"
+            formControlName="enderecoTrabalho"
+          />
+        </div>
+
+        <!-- <div class=" mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.encarregadoEducacao.hash" for="field_hash">Hash</label>
+          <input type="text" class="form-control" name="hash" id="field_hash" data-cy="hash" formControlName="hash" />
+        </div> -->
       </div>
 
       <div>

@@ -34,24 +34,30 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="imagem">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.emolumento.imagem">Imagem</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="numero">
+          <th scope="col" appSortBy="categoria.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.emolumento.categoria">Categoria</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <!-- <th scope="col" appSortBy="numero">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.emolumento.numero">Numero</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="nome">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.emolumento.nome">Nome</span>
@@ -88,7 +94,7 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="isObrigatorioMatricula">
+          <!-- <th scope="col" appSortBy="isObrigatorioMatricula">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.emolumento.isObrigatorioMatricula">Is Obrigatorio Matricula</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -99,14 +105,8 @@
               <span appTranslate="longonkeloApp.emolumento.isObrigatorioConfirmacao">Is Obrigatorio Confirmacao</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="categoria.nome">
-            <div class="d-flex">
-              <span appTranslate="longonkeloApp.emolumento.categoria">Categoria</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" appSortBy="imposto.descricao">
+          </th> -->
+          <!-- <th scope="col" appSortBy="imposto.descricao">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.emolumento.imposto">Imposto</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -123,15 +123,15 @@
               <span appTranslate="longonkeloApp.emolumento.planoMulta">Plano Multa</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let emolumento of emolumentos; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/emolumento', emolumento.id, 'view']">{{ emolumento.id }}</a>
-          </td>
+          </td> -->
           <td>
             <a *ngIf="emolumento.imagem" (click)="openFile(emolumento.imagem, emolumento.imagemContentType)">
               <img
@@ -140,23 +140,23 @@
                 alt="emolumento image"
               />
             </a>
-            <span *ngIf="emolumento.imagem">{{ emolumento.imagemContentType }}, {{ byteSize(emolumento.imagem) }}</span>
+            <!-- <span *ngIf="emolumento.imagem">{{ emolumento.imagemContentType }}, {{ byteSize(emolumento.imagem) }}</span> -->
           </td>
-          <td>{{ emolumento.numero }}</td>
-          <td>{{ emolumento.nome }}</td>
-          <td>{{ emolumento.preco }}</td>
-          <td>{{ emolumento.quantidade }}</td>
-          <td>{{ emolumento.periodo }}</td>
-          <td>{{ emolumento.inicioPeriodo }}</td>
-          <td>{{ emolumento.fimPeriodo }}</td>
-          <td>{{ emolumento.isObrigatorioMatricula }}</td>
-          <td>{{ emolumento.isObrigatorioConfirmacao }}</td>
+          <!-- <td>{{ emolumento.numero }}</td> -->
           <td>
             <div *ngIf="emolumento.categoria">
               <a [routerLink]="['/categoria-emolumento', emolumento.categoria.id, 'view']">{{ emolumento.categoria.nome }}</a>
             </div>
           </td>
-          <td>
+          <td>{{ emolumento.nome }}</td>
+          <td>{{ emolumento.preco | currency: 'AKZ' }}</td>
+          <td>{{ emolumento.quantidade | number }}</td>
+          <td>{{ emolumento.periodo }}</td>
+          <td>{{ emolumento.inicioPeriodo }}</td>
+          <td>{{ emolumento.fimPeriodo }}</td>
+          <!-- <td>{{ emolumento.isObrigatorioMatricula }}</td>
+          <td>{{ emolumento.isObrigatorioConfirmacao }}</td> -->
+          <!-- <td>
             <div *ngIf="emolumento.imposto">
               <a [routerLink]="['/imposto', emolumento.imposto.id, 'view']">{{ emolumento.imposto.descricao }}</a>
             </div>
@@ -170,10 +170,10 @@
             <div *ngIf="emolumento.planoMulta">
               <a [routerLink]="['/plano-multa', emolumento.planoMulta.id, 'view']">{{ emolumento.planoMulta.descricao }}</a>
             </div>
-          </td>
+          </td> -->
           <td class="text-end">
             <div class="btn-group">
-              <button
+              <!-- <button
                 type="submit"
                 [routerLink]="['/item-factura']"
                 [queryParams]="{ 'filter[emolumentoId.in]': emolumento.id }"
@@ -217,7 +217,7 @@
                   [translateValues]="{ otherEntity: ('longonkeloApp.emolumento.precosEmolumento' | translate) }"
                   >Show Preco Emolumento</span
                 >
-              </button>
+              </button> -->
               <button
                 type="submit"
                 [routerLink]="['/emolumento', emolumento.id, 'view']"

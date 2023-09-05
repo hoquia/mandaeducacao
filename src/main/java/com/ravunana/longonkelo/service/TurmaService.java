@@ -1,5 +1,6 @@
 package com.ravunana.longonkelo.service;
 
+import com.ravunana.longonkelo.service.dto.PlanoCurricularDTO;
 import com.ravunana.longonkelo.service.dto.TurmaDTO;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -63,4 +64,8 @@ public interface TurmaService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    String getDescricaoTurma(TurmaDTO turmaDTO);
+
+    String getChaveComposta(TurmaDTO turmaDTO);
 }

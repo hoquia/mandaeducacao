@@ -16,9 +16,9 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface TurmaMapper extends EntityMapper<TurmaDTO, Turma> {
     @Mapping(target = "utilizador", source = "utilizador", qualifiedByName = "userLogin")
-    @Mapping(target = "referencia", source = "referencia", qualifiedByName = "turmaDescricao")
-    @Mapping(target = "planoCurricular", source = "planoCurricular", qualifiedByName = "planoCurricularDescricao")
-    @Mapping(target = "turno", source = "turno", qualifiedByName = "turnoNome")
+    @Mapping(target = "referencia", source = "referencia")
+    @Mapping(target = "planoCurricular", source = "planoCurricular")
+    @Mapping(target = "turno", source = "turno")
     TurmaDTO toDto(Turma s);
 
     @Named("turmaDescricao")

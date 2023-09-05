@@ -69,6 +69,7 @@
             name="referencia"
             formControlName="referencia"
             [compareWith]="compareEmolumento"
+            (change)="onSelectReferencia(editForm.get(['referencia'])!.value.id)"
           >
             <ng-option [value]="null"></ng-option>
             <ng-option [value]="emolumentoOption" *ngFor="let emolumentoOption of emolumentosSharedCollection">

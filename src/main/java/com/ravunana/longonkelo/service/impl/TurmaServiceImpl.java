@@ -1,8 +1,11 @@
 package com.ravunana.longonkelo.service.impl;
 
 import com.ravunana.longonkelo.domain.Turma;
+import com.ravunana.longonkelo.domain.enumeration.CriterioDescricaoTurma;
 import com.ravunana.longonkelo.repository.TurmaRepository;
 import com.ravunana.longonkelo.service.TurmaService;
+import com.ravunana.longonkelo.service.dto.CursoDTO;
+import com.ravunana.longonkelo.service.dto.PlanoCurricularDTO;
 import com.ravunana.longonkelo.service.dto.TurmaDTO;
 import com.ravunana.longonkelo.service.mapper.TurmaMapper;
 import java.util.Optional;
@@ -25,15 +28,41 @@ public class TurmaServiceImpl implements TurmaService {
     private final TurmaRepository turmaRepository;
 
     private final TurmaMapper turmaMapper;
+    private final AnoLectivoServiceImpl anoLectivoService;
+    private final InstituicaoEnsinoServiceImpl instituicaoEnsinoService;
 
-    public TurmaServiceImpl(TurmaRepository turmaRepository, TurmaMapper turmaMapper) {
+    private final PlanoCurricularServiceImpl planoCurricularService;
+
+    public TurmaServiceImpl(
+        TurmaRepository turmaRepository,
+        TurmaMapper turmaMapper,
+        AnoLectivoServiceImpl anoLectivoService,
+        InstituicaoEnsinoServiceImpl instituicaoEnsinoService,
+        PlanoCurricularServiceImpl planoCurricularService
+    ) {
         this.turmaRepository = turmaRepository;
         this.turmaMapper = turmaMapper;
+        this.anoLectivoService = anoLectivoService;
+        this.instituicaoEnsinoService = instituicaoEnsinoService;
+        this.planoCurricularService = planoCurricularService;
     }
 
     @Override
     public TurmaDTO save(TurmaDTO turmaDTO) {
         log.debug("Request to save Turma : {}", turmaDTO);
+
+        String descricao = turmaDTO.getDescricao();
+
+        var planoCUrricular = planoCurricularService.findOne(turmaDTO.getPlanoCurricular().getId()).get();
+        turmaDTO.setPlanoCurricular(planoCUrricular);
+
+        if (descricao.equals("NA")) {
+            descricao = getDescricaoTurma(turmaDTO);
+        }
+
+        turmaDTO.setDescricao(descricao);
+        turmaDTO.setChaveComposta(getChaveComposta(turmaDTO));
+
         Turma turma = turmaMapper.toEntity(turmaDTO);
         turma = turmaRepository.save(turma);
         return turmaMapper.toDto(turma);
@@ -84,5 +113,34 @@ public class TurmaServiceImpl implements TurmaService {
     public void delete(Long id) {
         log.debug("Request to delete Turma : {}", id);
         turmaRepository.deleteById(id);
+    }
+
+    @Override
+    public String getDescricaoTurma(TurmaDTO turmaDTO) {
+        String descricao = "";
+        PlanoCurricularDTO planoCurricular = turmaDTO.getPlanoCurricular();
+        CursoDTO curso = planoCurricular.getCurso();
+        String cursoCodigo = curso.getCodigo();
+        String classe = planoCurricular.getClasse().getDescricao();
+        String turno = turmaDTO.getTurno().getCodigo();
+        int sala = turmaDTO.getSala();
+        String anoLectivo = anoLectivoService.getAnoLectivoActual().getDescricao();
+
+        if (turmaDTO.getCriterioDescricao().equals(CriterioDescricaoTurma.ALFABETICA)) {
+            // 1AM
+            //TODO:
+        } else {
+            // I.INFO.10.1M/
+            // area formacao - curso - classe - turno - sala
+            descricao = cursoCodigo + "" + classe.substring(0, 3) + "." + sala + "" + turno + "/" + anoLectivo;
+        }
+
+        return descricao;
+    }
+
+    @Override
+    public String getChaveComposta(TurmaDTO turmaDTO) {
+        // sala-turno-anoLectivo-instituicaoID
+        return (turmaDTO.getSala() + " " + turmaDTO.getTurno().getCodigo() + " " + anoLectivoService.getAnoLectivoActual().getDescricao());
     }
 }

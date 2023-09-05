@@ -85,4 +85,11 @@ public class AnoLectivoServiceImpl implements AnoLectivoService {
         log.debug("Request to delete AnoLectivo : {}", id);
         anoLectivoRepository.deleteById(id);
     }
+
+    @Override
+    public AnoLectivoDTO getAnoLectivoActual() {
+        var result = anoLectivoRepository.findAll().stream().filter(AnoLectivo::getIsActual).findFirst().get();
+
+        return anoLectivoMapper.toDto(result);
+    }
 }

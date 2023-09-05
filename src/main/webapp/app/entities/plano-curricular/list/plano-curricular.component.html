@@ -34,19 +34,19 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="descricao">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.planoCurricular.descricao">Descricao</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="formulaClassificacaoFinal">
+          <!-- <th scope="col" appSortBy="formulaClassificacaoFinal">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.planoCurricular.formulaClassificacaoFinal">Formula Classificacao Final</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -201,7 +201,7 @@
               <span appTranslate="longonkeloApp.planoCurricular.utilizador">Utilizador</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="classe.descricao">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.planoCurricular.classe">Classe</span>
@@ -219,11 +219,11 @@
       </thead>
       <tbody>
         <tr *ngFor="let planoCurricular of planoCurriculars; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/plano-curricular', planoCurricular.id, 'view']">{{ planoCurricular.id }}</a>
-          </td>
+          </td> -->
           <td>{{ planoCurricular.descricao }}</td>
-          <td>{{ planoCurricular.formulaClassificacaoFinal }}</td>
+          <!-- <td>{{ planoCurricular.formulaClassificacaoFinal }}</td>
           <td>{{ planoCurricular.numeroDisciplinaAprova }}</td>
           <td>{{ planoCurricular.numeroDisciplinaReprova }}</td>
           <td>{{ planoCurricular.numeroDisciplinaRecurso }}</td>
@@ -250,7 +250,7 @@
           <td>{{ planoCurricular.formulaExameEspecial }}</td>
           <td>
             {{ planoCurricular.utilizador?.login }}
-          </td>
+          </td> -->
           <td>
             <div *ngIf="planoCurricular.classe">
               <a [routerLink]="['/classe', planoCurricular.classe.id, 'view']">{{ planoCurricular.classe.descricao }}</a>
@@ -263,7 +263,7 @@
           </td>
           <td class="text-end">
             <div class="btn-group">
-              <button
+              <!-- <button
                 type="submit"
                 [routerLink]="['/turma']"
                 [queryParams]="{ 'filter[planoCurricularId.in]': planoCurricular.id }"
@@ -292,7 +292,7 @@
                   [translateValues]="{ otherEntity: ('longonkeloApp.planoCurricular.disciplinasCurricular' | translate) }"
                   >Show Disciplina Curricular</span
                 >
-              </button>
+              </button> -->
               <button
                 type="submit"
                 [routerLink]="['/plano-curricular', planoCurricular.id, 'view']"

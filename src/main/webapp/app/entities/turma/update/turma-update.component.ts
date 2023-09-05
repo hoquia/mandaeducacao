@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/member-ordering */
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
@@ -58,6 +59,16 @@ export class TurmaUpdateComponent implements OnInit {
       this.turma = turma;
       if (turma) {
         this.updateForm(turma);
+      } else {
+        this.editForm.patchValue({
+          tipoTurma: TipoTurma.AULA,
+          descricao: 'NA',
+          lotacao: 100,
+          confirmado: 0,
+          criterioDescricao: CriterioDescricaoTurma.CURSO,
+          criterioOrdenacaoNumero: CriterioNumeroChamada.ALFABETICA,
+          isDisponivel: true,
+        });
       }
 
       this.loadRelationshipsOptions();
@@ -141,5 +152,26 @@ export class TurmaUpdateComponent implements OnInit {
       .pipe(map((res: HttpResponse<ITurno[]>) => res.body ?? []))
       .pipe(map((turnos: ITurno[]) => this.turnoService.addTurnoToCollectionIfMissing<ITurno>(turnos, this.turma?.turno)))
       .subscribe((turnos: ITurno[]) => (this.turnosSharedCollection = turnos));
+  }
+
+  onSelectReferencia(id: any): void {
+    this.turmaService.find(id).subscribe(res => {
+      this.turma = res.body;
+      this.editForm.patchValue({
+        tipoTurma: this.turma?.tipoTurma,
+        descricao: 'NA',
+        lotacao: this.turma?.lotacao,
+        confirmado: 0,
+        criterioDescricao: this.turma?.criterioDescricao,
+        criterioOrdenacaoNumero: this.turma?.criterioOrdenacaoNumero,
+        isDisponivel: true,
+        abertura: this.turma?.abertura,
+        encerramento: this.turma?.encerramento,
+        planoCurricular: this.turma?.planoCurricular,
+        fazInscricaoDepoisMatricula: this.turma?.fazInscricaoDepoisMatricula,
+        sala: this.turma?.sala,
+        turno: this.turma?.turno,
+      });
+    });
   }
 }

@@ -48,6 +48,35 @@ export class PlanoCurricularUpdateComponent implements OnInit {
       this.planoCurricular = planoCurricular;
       if (planoCurricular) {
         this.updateForm(planoCurricular);
+      } else {
+        this.editForm.patchValue({
+          descricao: 'NA',
+          formulaClassificacaoFinal: 'NA',
+          numeroDisciplinaAprova: 0,
+          numeroDisciplinaReprova: 0,
+          numeroDisciplinaRecurso: 0,
+          numeroDisciplinaExame: 0,
+          numeroDisciplinaExameEspecial: 0,
+          numeroFaltaReprova: 0,
+          pesoMedia1: 0,
+          pesoMedia2: 0,
+          pesoMedia3: 0,
+          pesoExame: 0,
+          pesoExameEspecial: 0,
+          pesoNotaCoselho: 0,
+          pesoRecurso: 0,
+          siglaProva1: 'P1',
+          siglaProva2: 'P2',
+          siglaProva3: 'P3',
+          siglaMedia1: 'M1',
+          siglaMedia2: 'M2',
+          siglaMedia3: 'M3',
+          formulaMedia: 'NA',
+          formulaDispensa: 'NA',
+          formulaExame: 'NA',
+          formulaExameEspecial: 'NA',
+          formulaRecurso: 'NA',
+        });
       }
 
       this.loadRelationshipsOptions();

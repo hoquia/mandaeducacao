@@ -9,7 +9,6 @@ import { IPrecoEmolumento } from '../preco-emolumento.model';
 import { PrecoEmolumentoService } from '../service/preco-emolumento.service';
 import { IUser } from 'app/entities/user/user.model';
 import { UserService } from 'app/entities/user/user.service';
-import { IEmolumento } from 'app/entities/emolumento/emolumento.model';
 import { EmolumentoService } from 'app/entities/emolumento/service/emolumento.service';
 import { IAreaFormacao } from 'app/entities/area-formacao/area-formacao.model';
 import { AreaFormacaoService } from 'app/entities/area-formacao/service/area-formacao.service';
@@ -21,6 +20,7 @@ import { ITurno } from 'app/entities/turno/turno.model';
 import { TurnoService } from 'app/entities/turno/service/turno.service';
 import { IPlanoMulta } from 'app/entities/plano-multa/plano-multa.model';
 import { PlanoMultaService } from 'app/entities/plano-multa/service/plano-multa.service';
+import { IEmolumento } from './../../emolumento/emolumento.model';
 
 @Component({
   selector: 'app-preco-emolumento-update',

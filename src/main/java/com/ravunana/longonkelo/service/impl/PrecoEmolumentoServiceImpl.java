@@ -6,8 +6,9 @@ import com.ravunana.longonkelo.repository.PrecoEmolumentoRepository;
 import com.ravunana.longonkelo.service.PrecoEmolumentoService;
 import com.ravunana.longonkelo.service.dto.PrecoEmolumentoDTO;
 import com.ravunana.longonkelo.service.mapper.PrecoEmolumentoMapper;
-import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -39,7 +40,7 @@ public class PrecoEmolumentoServiceImpl implements PrecoEmolumentoService {
 
         var preco = precoEmolumentoDTO.getPreco();
 
-        if (preco == BigDecimal.ZERO) {
+        if (preco.doubleValue() == 0) {
             preco = precoEmolumentoDTO.getEmolumento().getPreco();
         }
 
@@ -123,5 +124,21 @@ public class PrecoEmolumentoServiceImpl implements PrecoEmolumentoService {
     public void delete(Long id) {
         log.debug("Request to delete PrecoEmolumento : {}", id);
         precoEmolumentoRepository.deleteById(id);
+    }
+
+    @Override
+    public List<PrecoEmolumentoDTO> getPrecoEmolumento(Long emolumentoID) {
+        var result = precoEmolumentoRepository
+            .findAll()
+            .stream()
+            .filter(x -> x.getEmolumento().getId().equals(emolumentoID))
+            .collect(Collectors.toList());
+
+        /*if ( result.isEmpty() ) {
+            throw new LongonkeloException("O Emolumento selecionado nao tem preço registrado");
+        }
+        */
+
+        return precoEmolumentoMapper.toDto(result);
     }
 }

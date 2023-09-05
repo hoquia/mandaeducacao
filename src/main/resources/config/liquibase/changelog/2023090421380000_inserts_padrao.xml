@@ -6,7 +6,7 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <changeSet id="2023090421380000-1" author="Ramiro Cardoso">
+    <changeSet id="2023090421380000-2" author="Ramiro Cardoso">
 
 
         <!-- LOOKUP -->
@@ -30,6 +30,10 @@
             insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('REGIME_DISCIPLINA', NULL, '984', false, true, 'Regime');
             insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('MOTIVO_TRANSFERENCIA', NULL, '985', false, true, 'Motivo Transferência');
             insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('MOEDA', NULL, '986', false, true, 'Moeda');
+            insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('CODIGO_IMPOSTO', NULL, '1', false, true, 'Código Imposto');
+            insert into "lookup" ("codigo", "descricao", "id", "is_modificavel", "is_sistema", "nome") values ('CODIGO_TIPO_IMPOSTO', NULL, '2', false, true, 'Código Tipo Imposto');
+            ;
+
         </sql>
 
         <!--  LOOKUP ITEM -->
@@ -41,7 +45,19 @@
             insert into "lookup_item" ("codigo", "descricao", "id", "is_sistema", "lookup_id", "ordem") values ('2', 'Certidão de Nascimento', '973', true, '971', 2);
             insert into "lookup_item" ("codigo", "descricao", "id", "is_sistema", "lookup_id", "ordem") values ('3', 'Cédula Pessoal', '974', true, '971', 3);
             insert into "lookup_item" ("codigo", "descricao", "id", "is_sistema", "lookup_id", "ordem") values ('4', 'Passaporte', '975', true, '971', 4);
-        </sql>
+            insert into "lookup_item" ("codigo", "descricao", "id", "is_sistema", "lookup_id", "ordem") values ('IVA', 'IVA', '1', false, '1', NULL);
+            insert into "lookup_item" ("codigo", "descricao", "id", "is_sistema", "lookup_id", "ordem") values ('ISE', 'ISE', '2', false, '2', NULL);
+            insert into "lookup_item" ("codigo", "descricao", "id", "is_sistema", "lookup_id", "ordem") values ('NOR', 'NOR', '3', true, '2', NULL);
+            insert into "lookup_item" ("codigo", "descricao", "id", "is_sistema", "lookup_id", "ordem") values ('OUTRO', 'Outro', '7', true, '971', 4);
+            insert into "lookup_item" ("codigo", "descricao", "id", "is_sistema", "lookup_id", "ordem") values ('PAI', 'Pai', '8', true, '979', NULL);
+            insert into "lookup_item" ("codigo", "descricao", "id", "is_sistema", "lookup_id", "ordem") values ('MAE', 'Mãe', '9', true, '979', NULL);
+            insert into "lookup_item" ("codigo", "descricao", "id", "is_sistema", "lookup_id", "ordem") values ('IRMAO', 'Irmão', '10', false, '979', NULL);
+            insert into "lookup_item" ("codigo", "descricao", "id", "is_sistema", "lookup_id", "ordem") values ('TIO', 'Tio', '11', false, '979', NULL);
+            insert into "lookup_item" ("codigo", "descricao", "id", "is_sistema", "lookup_id", "ordem") values ('AVO', 'Avô', '12', false, '979', NULL);
+            insert into "lookup_item" ("codigo", "descricao", "id", "is_sistema", "lookup_id", "ordem") values ('AO', 'Angola', '13', true, '968', NULL);
+            ;
+
+</sql>
 
         <!-- NIVEL ENSINO -->
         <sql>
@@ -139,7 +155,10 @@
             insert into "meio_pagamento" ("codigo", "formato_referencia", "hash", "id", "imagem", "imagem_content_type", "is_pagamento_instantanio", "link", "nome", "numero_digito_referencia", "password", "token", "username") values ('TPA', NULL, NULL, '969', NULL, NULL, true, NULL, 'TPA', NULL, NULL, NULL, NULL);
             insert into "meio_pagamento" ("codigo", "formato_referencia", "hash", "id", "imagem", "imagem_content_type", "is_pagamento_instantanio", "link", "nome", "numero_digito_referencia", "password", "token", "username") values ('NU', NULL, NULL, '964', NULL, NULL, true, NULL, 'NÚMERARIO', NULL, NULL, NULL, NULL);
             insert into "meio_pagamento" ("codigo", "formato_referencia", "hash", "id", "imagem", "imagem_content_type", "is_pagamento_instantanio", "link", "nome", "numero_digito_referencia", "password", "token", "username") values ('DP', NULL, NULL, '965', NULL, NULL, false, NULL, 'DEPÓSITO', NULL, NULL, NULL, NULL);
-        </sql>
+            ;
+
+
+</sql>
 
         <!-- CATEGORIA-EMOLUMENTO -->
         <sql>
@@ -160,11 +179,24 @@
         </sql>
         -->
 
-        <!-- IMPOSTO
+        <!-- IMPOSTO -->
         <sql>
-            insert into "imposto" ("codigo_imposto_id", "descricao", "id", "is_retencao", "motivo_codigo", "motivo_descricao", "motivo_isencao_codigo_id", "motivo_isencao_descricao_id", "pais", "taxa", "tipo_imposto_id") values ('982', 'IVA 0 % Isento', '1001', false, NULL, NULL, NULL, NULL, 'AO', 0, '983');
+insert into "imposto" ("codigo_imposto_id", "descricao", "id", "is_retencao", "motivo_codigo", "motivo_descricao", "motivo_isencao_codigo_id", "motivo_isencao_descricao_id", "pais", "taxa", "tipo_imposto_id") values ('2', 'IVA 0% Isento', '1', false, NULL, NULL, '2', '2', 'AO', 0, '1');
+        insert into "imposto" ("codigo_imposto_id", "descricao", "id", "is_retencao", "motivo_codigo", "motivo_descricao", "motivo_isencao_codigo_id", "motivo_isencao_descricao_id", "pais", "taxa", "tipo_imposto_id") values ('3', 'IVA - Taxa Normal 14%', '2', false, NULL, NULL, NULL, NULL, 'AO', 14, '1');
+        ;
+
         </sql>
-        -->
+
+        <sql>
+            insert into "documento_comercial" ("descricao", "id", "is_envia_email", "is_envia_push", "is_envia_sms", "is_movimenta_caixa", "is_movimenta_estoque", "is_notifica_entidade", "is_notifica_gerente", "modulo", "origem", "sigla_fiscal", "sigla_interna", "transforma_em_id", "valida_credito_disponivel") values ('Factura recibo', '1', false, false, false, false, false, false, false, 'VENDA', 'P', 'FR', 'FR', NULL, false);
+            insert into "documento_comercial" ("descricao", "id", "is_envia_email", "is_envia_push", "is_envia_sms", "is_movimenta_caixa", "is_movimenta_estoque", "is_notifica_entidade", "is_notifica_gerente", "modulo", "origem", "sigla_fiscal", "sigla_interna", "transforma_em_id", "valida_credito_disponivel") values ('Factura', '2', false, false, false, false, false, false, false, 'VENDA', 'P', 'FT', 'FT', NULL, false);
+            insert into "documento_comercial" ("descricao", "id", "is_envia_email", "is_envia_push", "is_envia_sms", "is_movimenta_caixa", "is_movimenta_estoque", "is_notifica_entidade", "is_notifica_gerente", "modulo", "origem", "sigla_fiscal", "sigla_interna", "transforma_em_id", "valida_credito_disponivel") values ('Recibo', '3', false, false, false, false, false, false, false, 'FINANCA', 'P', 'RC', 'RC', NULL, false);
+            insert into "documento_comercial" ("descricao", "id", "is_envia_email", "is_envia_push", "is_envia_sms", "is_movimenta_caixa", "is_movimenta_estoque", "is_notifica_entidade", "is_notifica_gerente", "modulo", "origem", "sigla_fiscal", "sigla_interna", "transforma_em_id", "valida_credito_disponivel") values ('Nota Crédito', '4', false, false, false, false, false, false, false, 'VENDA', 'P', 'NC', 'NC', NULL, false);
+            insert into "documento_comercial" ("descricao", "id", "is_envia_email", "is_envia_push", "is_envia_sms", "is_movimenta_caixa", "is_movimenta_estoque", "is_notifica_entidade", "is_notifica_gerente", "modulo", "origem", "sigla_fiscal", "sigla_interna", "transforma_em_id", "valida_credito_disponivel") values ('Nota Débito', '5', false, false, false, false, false, false, false, 'VENDA', 'P', 'ND', 'ND', NULL, false);
+            insert into "documento_comercial" ("descricao", "id", "is_envia_email", "is_envia_push", "is_envia_sms", "is_movimenta_caixa", "is_movimenta_estoque", "is_notifica_entidade", "is_notifica_gerente", "modulo", "origem", "sigla_fiscal", "sigla_interna", "transforma_em_id", "valida_credito_disponivel") values ('Factura pro-forma', '6', false, false, false, false, false, false, false, 'VENDA', 'P', 'PP', 'PP', NULL, false);
+            ;
+
+        </sql>
 
     </changeSet>
 
