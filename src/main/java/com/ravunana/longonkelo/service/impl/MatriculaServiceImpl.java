@@ -351,5 +351,7 @@ public class MatriculaServiceImpl implements MatriculaService {
             item.setFactura(facturaSalva);
             itemFacturaService.save(item);
         }
+
+        ITEMS_FACTURA.clear();
     }
 }
