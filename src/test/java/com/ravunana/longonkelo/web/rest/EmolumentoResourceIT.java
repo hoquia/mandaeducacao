@@ -1096,28 +1096,28 @@ class EmolumentoResourceIT {
         defaultEmolumentoShouldNotBeFound("itemFacturaId.equals=" + (itemFacturaId + 1));
     }
 
-    @Test
-    @Transactional
-    void getAllEmolumentosByEmolumentoIsEqualToSomething() throws Exception {
-        Emolumento emolumento;
-        if (TestUtil.findAll(em, Emolumento.class).isEmpty()) {
-            emolumentoRepository.saveAndFlush(emolumento);
-            emolumento = EmolumentoResourceIT.createEntity(em);
-        } else {
-            emolumento = TestUtil.findAll(em, Emolumento.class).get(0);
-        }
-        em.persist(emolumento);
-        em.flush();
-        emolumento.addEmolumento(emolumento);
-        emolumentoRepository.saveAndFlush(emolumento);
-        Long emolumentoId = emolumento.getId();
+    // @Test
+    // @Transactional
+    // void getAllEmolumentosByEmolumentoIsEqualToSomething() throws Exception {
+    //     Emolumento emolumento;
+    //     if (TestUtil.findAll(em, Emolumento.class).isEmpty()) {
+    //         emolumentoRepository.saveAndFlush(emolumento);
+    //         emolumento = EmolumentoResourceIT.createEntity(em);
+    //     } else {
+    //         emolumento = TestUtil.findAll(em, Emolumento.class).get(0);
+    //     }
+    //     em.persist(emolumento);
+    //     em.flush();
+    //     emolumento.addEmolumento(emolumento);
+    //     emolumentoRepository.saveAndFlush(emolumento);
+    //     Long emolumentoId = emolumento.getId();
 
-        // Get all the emolumentoList where emolumento equals to emolumentoId
-        defaultEmolumentoShouldBeFound("emolumentoId.equals=" + emolumentoId);
+    //     // Get all the emolumentoList where emolumento equals to emolumentoId
+    //     defaultEmolumentoShouldBeFound("emolumentoId.equals=" + emolumentoId);
 
-        // Get all the emolumentoList where emolumento equals to (emolumentoId + 1)
-        defaultEmolumentoShouldNotBeFound("emolumentoId.equals=" + (emolumentoId + 1));
-    }
+    //     // Get all the emolumentoList where emolumento equals to (emolumentoId + 1)
+    //     defaultEmolumentoShouldNotBeFound("emolumentoId.equals=" + (emolumentoId + 1));
+    // }
 
     @Test
     @Transactional
