@@ -134,8 +134,9 @@ export class TurmaUpdateComponent implements OnInit {
       .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.turma?.utilizador)))
       .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
 
+    // TODO: Remover
     this.planoCurricularService
-      .query()
+      .query({ size: 1000 })
       .pipe(map((res: HttpResponse<IPlanoCurricular[]>) => res.body ?? []))
       .pipe(
         map((planoCurriculars: IPlanoCurricular[]) =>
