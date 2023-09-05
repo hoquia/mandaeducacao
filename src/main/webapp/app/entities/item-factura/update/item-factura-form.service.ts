@@ -31,6 +31,10 @@ type ItemFacturaFormGroupContent = {
   taxPercentage: FormControl<IItemFactura['taxPercentage']>;
   taxExemptionReason: FormControl<IItemFactura['taxExemptionReason']>;
   taxExemptionCode: FormControl<IItemFactura['taxExemptionCode']>;
+  emissao: FormControl<IItemFactura['emissao']>;
+  expiracao: FormControl<IItemFactura['expiracao']>;
+  periodo: FormControl<IItemFactura['periodo']>;
+  descricao: FormControl<IItemFactura['descricao']>;
   factura: FormControl<IItemFactura['factura']>;
   emolumento: FormControl<IItemFactura['emolumento']>;
 };
@@ -91,6 +95,10 @@ export class ItemFacturaFormService {
       taxExemptionCode: new FormControl(itemFacturaRawValue.taxExemptionCode, {
         validators: [Validators.maxLength(3)],
       }),
+      emissao: new FormControl(itemFacturaRawValue.emissao),
+      expiracao: new FormControl(itemFacturaRawValue.expiracao),
+      periodo: new FormControl(itemFacturaRawValue.periodo),
+      descricao: new FormControl(itemFacturaRawValue.descricao),
       factura: new FormControl(itemFacturaRawValue.factura, {
         validators: [Validators.required],
       }),

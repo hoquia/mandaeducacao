@@ -33,6 +33,10 @@ describe('ItemFactura Form Service', () => {
             taxPercentage: expect.any(Object),
             taxExemptionReason: expect.any(Object),
             taxExemptionCode: expect.any(Object),
+            emissao: expect.any(Object),
+            expiracao: expect.any(Object),
+            periodo: expect.any(Object),
+            descricao: expect.any(Object),
             factura: expect.any(Object),
             emolumento: expect.any(Object),
           })
@@ -58,6 +62,10 @@ describe('ItemFactura Form Service', () => {
             taxPercentage: expect.any(Object),
             taxExemptionReason: expect.any(Object),
             taxExemptionCode: expect.any(Object),
+            emissao: expect.any(Object),
+            expiracao: expect.any(Object),
+            periodo: expect.any(Object),
+            descricao: expect.any(Object),
             factura: expect.any(Object),
             emolumento: expect.any(Object),
           })

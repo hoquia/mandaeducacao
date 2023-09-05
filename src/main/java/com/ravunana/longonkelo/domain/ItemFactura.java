@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ravunana.longonkelo.domain.enumeration.EstadoItemFactura;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -87,6 +88,50 @@ public class ItemFactura implements Serializable {
     @Size(max = 3)
     @Column(name = "tax_exemption_code", length = 3)
     private String taxExemptionCode;
+
+    @Column(name = "emissao")
+    private LocalDate emissao;
+
+    @Column(name = "expiracao")
+    private LocalDate expiracao;
+
+    @Column(name = "periodo")
+    private Integer periodo;
+
+    public LocalDate getEmissao() {
+        return emissao;
+    }
+
+    public void setEmissao(LocalDate emissao) {
+        this.emissao = emissao;
+    }
+
+    public LocalDate getExpiracao() {
+        return expiracao;
+    }
+
+    public void setExpiracao(LocalDate expiracao) {
+        this.expiracao = expiracao;
+    }
+
+    public Integer getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(Integer periodo) {
+        this.periodo = periodo;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    @Column(name = "descricao")
+    private String descricao;
 
     @ManyToOne(optional = false)
     @NotNull

@@ -118,6 +118,30 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" appSortBy="emissao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.itemFactura.emissao">Emissao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="expiracao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.itemFactura.expiracao">Expiracao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="periodo">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.itemFactura.periodo">Periodo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" appSortBy="descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.itemFactura.descricao">Descricao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col" appSortBy="factura.numero">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.itemFactura.factura">Factura</span>
@@ -151,6 +175,10 @@
           <td>{{ itemFactura.taxPercentage }}</td>
           <td>{{ itemFactura.taxExemptionReason }}</td>
           <td>{{ itemFactura.taxExemptionCode }}</td>
+          <td>{{ itemFactura.emissao | formatMediumDate }}</td>
+          <td>{{ itemFactura.expiracao | formatMediumDate }}</td>
+          <td>{{ itemFactura.periodo }}</td>
+          <td>{{ itemFactura.descricao }}</td>
           <td>
             <div *ngIf="itemFactura.factura">
               <a [routerLink]="['/factura', itemFactura.factura.id, 'view']">{{ itemFactura.factura.numero }}</a>
