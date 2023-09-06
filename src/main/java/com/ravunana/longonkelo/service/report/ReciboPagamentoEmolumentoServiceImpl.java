@@ -564,7 +564,7 @@ public class ReciboPagamentoEmolumentoServiceImpl {
             // ValorUnit
             ajustesTable.addCell(
                 makeCellText(
-                    Constants.getMoneyFormat(emolumento.getPreco()),
+                    Constants.getMoneyFormat(pagamento.getPrecoUnitario()),
                     Element.ALIGN_MIDDLE,
                     Element.ALIGN_RIGHT,
                     fontNormal,
