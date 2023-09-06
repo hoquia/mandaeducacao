@@ -19,7 +19,7 @@ export interface ITransacao {
   timestamp?: dayjs.Dayjs | null;
   utilizador?: Pick<IUser, 'id' | 'login'> | null;
   moeda?: Pick<ILookupItem, 'id' | 'descricao'> | null;
-  matricula?: Pick<IMatricula, 'id' | 'numeroMatricula'> | null;
+  matricula?: Pick<IMatricula, 'id' | 'discente' | 'numeroMatricula'> | null;
   meioPagamento?: Pick<IMeioPagamento, 'id' | 'nome'> | null;
   conta?: Pick<IConta, 'id' | 'titulo'> | null;
   transferenciaSaldos?: Pick<ITransferenciaSaldo, 'id'>[] | null;

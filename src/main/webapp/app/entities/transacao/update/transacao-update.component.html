@@ -18,7 +18,7 @@
           <ng-select id="field_matricula" data-cy="matricula" name="matricula" formControlName="matricula" [compareWith]="compareMatricula">
             <ng-option *ngIf="editForm.get(['matricula'])!.value == null" [value]="null" selected></ng-option>
             <ng-option [value]="matriculaOption" *ngFor="let matriculaOption of matriculasSharedCollection">
-              {{ matriculaOption.numeroMatricula }}
+              {{ matriculaOption.numeroMatricula }}:{{ matriculaOption.discente!.nome }}
             </ng-option>
           </ng-select>
         </div>

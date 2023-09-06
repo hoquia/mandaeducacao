@@ -159,7 +159,7 @@ export class MatriculaUpdateComponent implements OnInit {
 
   protected loadRelationshipsOptions(): void {
     this.matriculaService
-      .query()
+      .query({'size':10000})
       .pipe(map((res: HttpResponse<IMatricula[]>) => res.body ?? []))
       .pipe(
         map((matriculas: IMatricula[]) =>
@@ -188,13 +188,13 @@ export class MatriculaUpdateComponent implements OnInit {
       .subscribe((planoDescontos: IPlanoDesconto[]) => (this.planoDescontosSharedCollection = planoDescontos));
 
     this.turmaService
-      .query()
+      .query({'size':10000})
       .pipe(map((res: HttpResponse<ITurma[]>) => res.body ?? []))
       .pipe(map((turmas: ITurma[]) => this.turmaService.addTurmaToCollectionIfMissing<ITurma>(turmas, this.matricula?.turma)))
       .subscribe((turmas: ITurma[]) => (this.turmasSharedCollection = turmas));
 
     this.encarregadoEducacaoService
-      .query()
+      .query({'size':10000})
       .pipe(map((res: HttpResponse<IEncarregadoEducacao[]>) => res.body ?? []))
       .pipe(
         map((encarregadoEducacaos: IEncarregadoEducacao[]) =>
@@ -207,7 +207,7 @@ export class MatriculaUpdateComponent implements OnInit {
       .subscribe((encarregadoEducacaos: IEncarregadoEducacao[]) => (this.encarregadoEducacaosSharedCollection = encarregadoEducacaos));
 
     this.discenteService
-      .query()
+      .query({'size':10000})
       .pipe(map((res: HttpResponse<IDiscente[]>) => res.body ?? []))
       .pipe(
         map((discentes: IDiscente[]) =>

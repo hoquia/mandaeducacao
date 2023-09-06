@@ -21,7 +21,7 @@ import org.mapstruct.*;
 public interface TransacaoMapper extends EntityMapper<TransacaoDTO, Transacao> {
     @Mapping(target = "utilizador", source = "utilizador", qualifiedByName = "userLogin")
     @Mapping(target = "moeda", source = "moeda", qualifiedByName = "lookupItemDescricao")
-    @Mapping(target = "matricula", source = "matricula", qualifiedByName = "matriculaNumeroMatricula")
+    @Mapping(target = "matricula", source = "matricula")
     @Mapping(target = "meioPagamento", source = "meioPagamento", qualifiedByName = "meioPagamentoNome")
     @Mapping(target = "conta", source = "conta", qualifiedByName = "contaTitulo")
     TransacaoDTO toDto(Transacao s);

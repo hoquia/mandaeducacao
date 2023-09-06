@@ -182,7 +182,8 @@ public class ReciboPagamentoEmolumentoServiceImpl {
 
         BigDecimal totalContrato = BigDecimal.ZERO;
         BigDecimal totalPago = BigDecimal.ZERO;
-        BigDecimal saldo = contas.getSaldo();
+        // BigDecimal saldo = contas.getSaldo();
+        BigDecimal saldo = BigDecimal.ZERO;
 
         /*
         for (var conta : contas) {

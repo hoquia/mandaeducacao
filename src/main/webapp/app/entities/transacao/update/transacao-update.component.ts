@@ -164,7 +164,7 @@ export class TransacaoUpdateComponent implements OnInit {
       .subscribe((lookupItems: ILookupItem[]) => (this.lookupItemsSharedCollection = lookupItems));
 
     this.matriculaService
-      .query()
+      .query({'size':10000})
       .pipe(map((res: HttpResponse<IMatricula[]>) => res.body ?? []))
       .pipe(
         map((matriculas: IMatricula[]) =>

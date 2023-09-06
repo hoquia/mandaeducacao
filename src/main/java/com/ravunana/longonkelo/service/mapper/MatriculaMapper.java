@@ -25,7 +25,7 @@ public interface MatriculaMapper extends EntityMapper<MatriculaDTO, Matricula> {
     @Mapping(target = "categoriasMatriculas", source = "categoriasMatriculas", qualifiedByName = "planoDescontoNomeSet")
     @Mapping(target = "turma", source = "turma")
     @Mapping(target = "responsavelFinanceiro", source = "responsavelFinanceiro", qualifiedByName = "encarregadoEducacaoNome")
-    @Mapping(target = "discente", source = "discente", qualifiedByName = "discenteNome")
+    @Mapping(target = "discente", source = "discente")
     @Mapping(target = "referencia", source = "referencia", qualifiedByName = "matriculaId")
     MatriculaDTO toDto(Matricula s);
 
