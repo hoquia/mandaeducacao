@@ -71,9 +71,9 @@ public class ListaPresencaTurmaServiceImpl {
             pdfDocument.add(getLogotipo());
 
             String curso = planoCurricular.getCurso().getNome();
-            String classe = planoCurricular.getClasse().getNumero() + " " + planoCurricular.getClasse().getDescricao();
+            String classe = planoCurricular.getClasse().getDescricao();
             String sala = turmaDTO.getSala().toString();
-            String turno = turmaDTO.getTurno().name();
+            String turno = turmaDTO.getTurno().getCodigo();
 
             var header = getHeader();
             pdfDocument.add(header);
@@ -333,7 +333,7 @@ public class ListaPresencaTurmaServiceImpl {
             // Nº processo
             tableDetalhe.addCell(
                 makeCell(
-                    matricula.getNumeroProcesso(),
+                    matricula.getNumeroMatricula(),
                     Element.ALIGN_TOP,
                     Element.ALIGN_LEFT,
                     tableFontNormal,
@@ -353,7 +353,7 @@ public class ListaPresencaTurmaServiceImpl {
             // Sexo
             tableDetalhe.addCell(
                 makeCell(
-                    discente.getSexo(),
+                    discente.getSexo().name(),
                     Element.ALIGN_TOP,
                     Element.ALIGN_CENTER,
                     tableFontNormal,
