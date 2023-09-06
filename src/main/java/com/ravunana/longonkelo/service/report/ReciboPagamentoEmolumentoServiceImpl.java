@@ -303,7 +303,7 @@ public class ReciboPagamentoEmolumentoServiceImpl {
 
         detalheFuncionario.addCell(
             makeCellText(
-                planoCurricular.getClasse().getDescricao() + planoCurricular.getClasse().getDescricao(),
+                planoCurricular.getClasse().getDescricao(),
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_LEFT,
                 fontNormal,
