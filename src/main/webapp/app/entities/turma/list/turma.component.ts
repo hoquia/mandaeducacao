@@ -150,4 +150,34 @@ export class TurmaComponent implements OnInit {
       return [predicate + ',' + ascendingQueryParam];
     }
   }
+
+  protected gerarListaPresenca(turmaID: number): void {
+    this.turmaService.downloadListaPresencaPdf(turmaID).subscribe(res => {
+      const url = window.URL.createObjectURL(res);
+      const a = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      a.target = `lista-presenca-turma-${turmaID}`;
+      a.rel = 'noopener noreferrer';
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    });
+  }
+
+  protected gerarHorarioDiscente(turmaID: number): void {
+    this.turmaService.downloadHorarioDiscentePdf(turmaID).subscribe(res => {
+      const url = window.URL.createObjectURL(res);
+      const a = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      a.target = `horario-discente-${turmaID}`;
+      a.rel = 'noopener noreferrer';
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    });
+  }
 }

@@ -5,9 +5,16 @@ import com.ravunana.longonkelo.service.TurmaQueryService;
 import com.ravunana.longonkelo.service.TurmaService;
 import com.ravunana.longonkelo.service.criteria.TurmaCriteria;
 import com.ravunana.longonkelo.service.dto.TurmaDTO;
+import com.ravunana.longonkelo.service.report.HorarioDiscenteServiceImpl;
+import com.ravunana.longonkelo.service.report.ListaPresencaTurmaServiceImpl;
 import com.ravunana.longonkelo.web.rest.errors.BadRequestAlertException;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -16,9 +23,12 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -46,10 +56,21 @@ public class TurmaResource {
 
     private final TurmaQueryService turmaQueryService;
 
-    public TurmaResource(TurmaService turmaService, TurmaRepository turmaRepository, TurmaQueryService turmaQueryService) {
+    private final ListaPresencaTurmaServiceImpl listaPresencaTurmaService;
+    private final HorarioDiscenteServiceImpl horarioDiscenteService;
+
+    public TurmaResource(
+        TurmaService turmaService,
+        TurmaRepository turmaRepository,
+        TurmaQueryService turmaQueryService,
+        ListaPresencaTurmaServiceImpl listaPresencaTurmaService,
+        HorarioDiscenteServiceImpl horarioDiscenteService
+    ) {
         this.turmaService = turmaService;
         this.turmaRepository = turmaRepository;
         this.turmaQueryService = turmaQueryService;
+        this.listaPresencaTurmaService = listaPresencaTurmaService;
+        this.horarioDiscenteService = horarioDiscenteService;
     }
 
     /**
@@ -199,5 +220,37 @@ public class TurmaResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @GetMapping("/turmas/lista-presenca/{turmaID}")
+    public ResponseEntity<Resource> getReciboSalario(@PathVariable Long turmaID) throws IOException {
+        var filePath = listaPresencaTurmaService.gerarPdf(turmaID);
+        File file = new File(filePath);
+
+        Path path = Paths.get(file.getAbsolutePath());
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(resource);
+    }
+
+    @GetMapping("/turmas/horario-discente/{turmaID}")
+    public ResponseEntity<Resource> getHorarioDiscente(@PathVariable Long turmaID) throws IOException {
+        var filePath = horarioDiscenteService.gerarPdf(turmaID);
+        File file = new File(filePath);
+
+        Path path = Paths.get(file.getAbsolutePath());
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(resource);
     }
 }

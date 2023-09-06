@@ -63,4 +63,6 @@ public interface InstituicaoEnsinoService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    InstituicaoEnsinoDTO getInstituicao(String login);
 }

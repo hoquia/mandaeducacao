@@ -5,7 +5,9 @@ import com.ravunana.longonkelo.repository.HorarioRepository;
 import com.ravunana.longonkelo.service.HorarioService;
 import com.ravunana.longonkelo.service.dto.HorarioDTO;
 import com.ravunana.longonkelo.service.mapper.HorarioMapper;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -84,5 +86,21 @@ public class HorarioServiceImpl implements HorarioService {
     public void delete(Long id) {
         log.debug("Request to delete Horario : {}", id);
         horarioRepository.deleteById(id);
+    }
+
+    @Override
+    public List<HorarioDTO> getHorarioDiscente(Long turmaID) {
+        var result = horarioRepository.findAll().stream().filter(x -> x.getTurma().getId().equals(turmaID)).collect(Collectors.toList());
+        return horarioMapper.toDto(result);
+    }
+
+    @Override
+    public List<HorarioDTO> getHorarioDocente(Long docenteID) {
+        var result = horarioRepository
+            .findAll()
+            .stream()
+            .filter(x -> x.getDocente().getId().equals(docenteID))
+            .collect(Collectors.toList());
+        return horarioMapper.toDto(result);
     }
 }

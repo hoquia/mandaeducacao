@@ -13,8 +13,8 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface ItemFacturaMapper extends EntityMapper<ItemFacturaDTO, ItemFactura> {
-    @Mapping(target = "factura", source = "factura", qualifiedByName = "facturaNumero")
-    @Mapping(target = "emolumento", source = "emolumento", qualifiedByName = "emolumentoNome")
+    @Mapping(target = "factura", source = "factura")
+    @Mapping(target = "emolumento", source = "emolumento")
     ItemFacturaDTO toDto(ItemFactura s);
 
     @Named("facturaNumero")

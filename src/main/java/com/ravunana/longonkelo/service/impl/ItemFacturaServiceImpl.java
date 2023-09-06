@@ -5,7 +5,9 @@ import com.ravunana.longonkelo.repository.ItemFacturaRepository;
 import com.ravunana.longonkelo.service.ItemFacturaService;
 import com.ravunana.longonkelo.service.dto.ItemFacturaDTO;
 import com.ravunana.longonkelo.service.mapper.ItemFacturaMapper;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -84,5 +86,15 @@ public class ItemFacturaServiceImpl implements ItemFacturaService {
     public void delete(Long id) {
         log.debug("Request to delete ItemFactura : {}", id);
         itemFacturaRepository.deleteById(id);
+    }
+
+    public List<ItemFacturaDTO> getItemsFactura(Long facturaID) {
+        var result = itemFacturaRepository
+            .findAll()
+            .stream()
+            .filter(x -> x.getFactura().getId().equals(facturaID))
+            .collect(Collectors.toList());
+
+        return itemFacturaMapper.toDto(result);
     }
 }

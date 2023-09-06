@@ -1,5 +1,6 @@
 package com.ravunana.longonkelo.service.impl;
 
+import com.ravunana.longonkelo.config.LongonkeloException;
 import com.ravunana.longonkelo.domain.InstituicaoEnsino;
 import com.ravunana.longonkelo.repository.InstituicaoEnsinoRepository;
 import com.ravunana.longonkelo.service.InstituicaoEnsinoService;
@@ -87,5 +88,16 @@ public class InstituicaoEnsinoServiceImpl implements InstituicaoEnsinoService {
     public void delete(Long id) {
         log.debug("Request to delete InstituicaoEnsino : {}", id);
         instituicaoEnsinoRepository.deleteById(id);
+    }
+
+    @Override
+    public InstituicaoEnsinoDTO getInstituicao(String login) {
+        var result = instituicaoEnsinoRepository.findAll().stream().findFirst();
+
+        if (result.isEmpty()) {
+            throw new LongonkeloException("Não foi registrado nenhuma instituição de ensino");
+        }
+
+        return instituicaoEnsinoMapper.toDto(result.get());
     }
 }

@@ -161,4 +161,19 @@ export class FacturaComponent implements OnInit {
       return [predicate + ',' + ascendingQueryParam];
     }
   }
+
+  protected gerarRecibo(facturaID: number): void {
+    this.facturaService.downloadReciboPdf(facturaID).subscribe(res => {
+      const url = window.URL.createObjectURL(res);
+      const a = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      a.target = `recibo-pagamento-${facturaID}`;
+      a.rel = 'noopener noreferrer';
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    });
+  }
 }

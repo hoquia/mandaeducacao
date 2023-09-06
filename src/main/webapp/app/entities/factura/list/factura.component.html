@@ -409,6 +409,10 @@
                   >Show Item Factura</span
                 >
               </button> -->
+              <button type="submit" class="btn btn-warning btn-sm" data-cy="entityDetailsButton" (click)="gerarRecibo(factura.id)">
+                <!-- <fa-icon icon="eye"></fa-icon> -->
+                <span class="d-none d-md-inline">Recibo</span>
+              </button>
               <button
                 type="submit"
                 [routerLink]="['/factura', factura.id, 'view']"

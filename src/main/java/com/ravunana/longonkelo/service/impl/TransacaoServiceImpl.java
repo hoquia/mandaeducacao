@@ -85,4 +85,10 @@ public class TransacaoServiceImpl implements TransacaoService {
         log.debug("Request to delete Transacao : {}", id);
         transacaoRepository.deleteById(id);
     }
+
+    public TransacaoDTO getUltimaTransacaoMatricula(Long matriculaID) {
+        var result = transacaoRepository.findAll().stream().filter(x -> x.getMatricula().getId().equals(matriculaID)).findFirst();
+
+        return transacaoMapper.toDto(result.get());
+    }
 }
