@@ -263,7 +263,7 @@ public class MatriculaServiceImpl implements MatriculaService {
         factura.setHashControl("");
         factura.setHashShort("");
         factura.setSignText("");
-        
+
         factura.setTotalFactura(totalFactura);
         factura.setTotalDiferenca(BigDecimal.ZERO);
         factura.setTotalDescontoComercial(BigDecimal.ZERO);
@@ -302,7 +302,7 @@ public class MatriculaServiceImpl implements MatriculaService {
             var imposto = emolumento.getImposto();
             var precoUnitario = p.getPreco();
 
-            var precoEspecifico = precoEmolumentoService.getPrecoEmolumento(matriculaDTO.getTurma());
+            var precoEspecifico = precoEmolumentoService.getPrecoEmolumento(matriculaDTO.getTurma(), emolumento.getId());
 
             if (precoEspecifico != null) {
                 precoUnitario = precoEspecifico.getPreco();
