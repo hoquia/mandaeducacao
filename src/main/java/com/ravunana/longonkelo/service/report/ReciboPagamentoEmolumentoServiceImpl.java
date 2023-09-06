@@ -761,9 +761,9 @@ public class ReciboPagamentoEmolumentoServiceImpl {
         resumoPagamentoTable.addCell(
             makeCellTable(formaPagamentoTable, Element.ALIGN_TOP, Element.ALIGN_LEFT, leading, padding, borderNone, true, false)
         );
-        resumoPagamentoTable.addCell(
-            makeCellTable(totaisTable, Element.ALIGN_TOP, Element.ALIGN_RIGHT, leading, padding, borderNone, true, false)
-        );
+        //        resumoPagamentoTable.addCell(
+        //            makeCellTable(totaisTable, Element.ALIGN_TOP, Element.ALIGN_RIGHT, leading, padding, borderNone, true, false)
+        //        );
 
         // Layout Página
         layoutTable.addCell(makeCellTable(headerTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false));

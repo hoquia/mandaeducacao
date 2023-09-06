@@ -1,6 +1,7 @@
 package com.ravunana.longonkelo.service.impl;
 
 import com.ravunana.longonkelo.domain.ItemFactura;
+import com.ravunana.longonkelo.domain.enumeration.EstadoItemFactura;
 import com.ravunana.longonkelo.repository.ItemFacturaRepository;
 import com.ravunana.longonkelo.service.ItemFacturaService;
 import com.ravunana.longonkelo.service.dto.ItemFacturaDTO;
@@ -92,7 +93,7 @@ public class ItemFacturaServiceImpl implements ItemFacturaService {
         var result = itemFacturaRepository
             .findAll()
             .stream()
-            .filter(x -> x.getFactura().getId().equals(facturaID))
+            .filter(x -> x.getFactura().getId().equals(facturaID) && x.getEstado().equals(EstadoItemFactura.PAGO))
             .collect(Collectors.toList());
 
         return itemFacturaMapper.toDto(result);
