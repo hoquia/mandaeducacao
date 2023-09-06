@@ -234,14 +234,14 @@ public class PrecoEmolumentoServiceImpl implements PrecoEmolumentoService {
         //        }
 
         //  x.Classe()
-        var result = precoEmolumentoRepository.findAll().stream().filter(PrecoEmolumento::getIsEspecificoClasse).findFirst();
+        // var result = precoEmolumentoRepository.findAll().stream().filter(PrecoEmolumento::getIsEspecificoClasse).findFirst();
 
-        if (result.isPresent()) {
+        // if (result.isPresent()) {
             var precoResult = result.filter(x -> x.getClasse().getId().equals(classeID));
             if (precoResult.isPresent()) {
                 return precoEmolumentoMapper.toDto(precoResult.get());
             }
-        }
+        // }
 
         return null;
     }
