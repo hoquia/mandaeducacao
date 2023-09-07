@@ -8,6 +8,7 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.ravunana.longonkelo.config.Constants;
+import com.ravunana.longonkelo.domain.enumeration.EstadoItemFactura;
 import com.ravunana.longonkelo.domain.enumeration.EstadoPagamento;
 import com.ravunana.longonkelo.repository.InstituicaoEnsinoRepository;
 import com.ravunana.longonkelo.security.SecurityUtils;
@@ -525,10 +526,10 @@ public class ReciboPagamentoEmolumentoServiceImpl {
             var emolumento = pagamento.getEmolumento();
 
             // Total do contrato incluido as multas e juros
-            totalContrato = factura.getTotalFactura();
 
-            if (pagamento.getEstado().equals(EstadoPagamento.VALIDO)) {
+            if (pagamento.getEstado().equals(EstadoItemFactura.PAGO)) {
                 totalPago = totalPago.add(pagamento.getPrecoTotal());
+                totalContrato = totalPago;
             }
 
             // Emolumento
