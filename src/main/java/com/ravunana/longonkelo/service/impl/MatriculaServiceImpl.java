@@ -264,20 +264,6 @@ public class MatriculaServiceImpl implements MatriculaService {
         factura.setHashShort("");
         factura.setSignText("");
 
-        factura.setTotalFactura(totalFactura);
-        factura.setTotalDiferenca(BigDecimal.ZERO);
-        factura.setTotalDescontoComercial(BigDecimal.ZERO);
-        factura.setTotalIliquido(totalFactura);
-        factura.setTotalDescontoFinanceiro(BigDecimal.ZERO);
-        factura.setTotalImpostoEspecialConsumo(BigDecimal.ZERO);
-        factura.setTotalImpostoIVA(BigDecimal.ZERO);
-        factura.setTotalImpostoRetencaoFonte(BigDecimal.ZERO);
-        factura.setTotalMoedaEntrangeira(BigDecimal.ZERO);
-        factura.setTotalPagar(totalFactura);
-        factura.setTotalLiquido(totalFactura);
-        factura.setTotalPago(BigDecimal.ZERO);
-        factura.setTimestamp(Constants.DATE_TIME);
-
         factura.setNumero(
             serieDocumentoComercial.getTipoDocumento().getSiglaInterna() + " " + serieDocumentoComercial.getSerie() + "/" + sequencia
         );
@@ -342,6 +328,20 @@ public class MatriculaServiceImpl implements MatriculaService {
 
             ITEMS_FACTURA.add(itemFactura);
         }
+
+        factura.setTotalFactura(totalFactura);
+        factura.setTotalDiferenca(BigDecimal.ZERO);
+        factura.setTotalDescontoComercial(BigDecimal.ZERO);
+        factura.setTotalIliquido(totalFactura);
+        factura.setTotalDescontoFinanceiro(BigDecimal.ZERO);
+        factura.setTotalImpostoEspecialConsumo(BigDecimal.ZERO);
+        factura.setTotalImpostoIVA(BigDecimal.ZERO);
+        factura.setTotalImpostoRetencaoFonte(BigDecimal.ZERO);
+        factura.setTotalMoedaEntrangeira(BigDecimal.ZERO);
+        factura.setTotalPagar(totalFactura);
+        factura.setTotalLiquido(totalFactura);
+        factura.setTotalPago(BigDecimal.ZERO);
+        factura.setTimestamp(Constants.DATE_TIME);
 
         // Salvar a factura
 
