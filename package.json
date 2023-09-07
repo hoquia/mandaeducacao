@@ -1,8 +1,8 @@
 {
   "name": "longonkelo",
-  "version": "0.0.1-SNAPSHOT",
+  "version": "0.0.1",
   "private": true,
-  "description": "Description for longonkelo",
+  "description": "Sistema Integrado d Gestão Escola - SIGE",
   "license": "UNLICENSED",
   "scripts": {
     "app:start": "./mvnw",

@@ -161,7 +161,7 @@
       "delete": "Eliminar",
       "edit": "Editar",
       "open": "Abrir",
-      "save": "Guardar",
+      "save": "Salvar",
       "view": "Visualizar",
       "show": "Show {{otherEntity}}"
     },

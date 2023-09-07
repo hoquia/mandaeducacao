@@ -7,10 +7,10 @@
 
     <groupId>com.ravunana.longonkelo</groupId>
     <artifactId>longonkelo</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <packaging>jar</packaging>
     <name>Longonkelo</name>
-    <description>Description for longonkelo</description>
+    <description>Sistema Integrado d Gestão Escola - SIGE</description>
 
     <repositories>
         <!-- jhipster-needle-maven-repository -->
