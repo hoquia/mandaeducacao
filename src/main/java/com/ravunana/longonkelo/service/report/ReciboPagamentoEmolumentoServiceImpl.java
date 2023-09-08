@@ -9,8 +9,6 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.ravunana.longonkelo.config.Constants;
 import com.ravunana.longonkelo.domain.enumeration.EstadoItemFactura;
-import com.ravunana.longonkelo.domain.enumeration.EstadoPagamento;
-import com.ravunana.longonkelo.repository.InstituicaoEnsinoRepository;
 import com.ravunana.longonkelo.security.SecurityUtils;
 import com.ravunana.longonkelo.service.impl.*;
 import java.awt.*;
@@ -29,18 +27,15 @@ public class ReciboPagamentoEmolumentoServiceImpl {
     private final MatriculaServiceImpl matriculaService;
     private final FacturaServiceImpl facturaService;
     private final TransacaoServiceImpl transacaoService;
-    private final PrecoEmolumentoServiceImpl precoEmolumentoService;
 
     private final ItemFacturaServiceImpl itemFacturaService;
 
     public ReciboPagamentoEmolumentoServiceImpl(
         ReportService reportService,
-        InstituicaoEnsinoRepository instituicaoEnsinoRepository,
         InstituicaoEnsinoServiceImpl instituicaoEnsinoService,
         MatriculaServiceImpl matriculaService,
         FacturaServiceImpl facturaService,
         TransacaoServiceImpl transacaoService,
-        PrecoEmolumentoServiceImpl precoEmolumentoService,
         ItemFacturaServiceImpl itemFacturaService
     ) {
         this.reportService = reportService;
@@ -48,7 +43,6 @@ public class ReciboPagamentoEmolumentoServiceImpl {
         this.matriculaService = matriculaService;
         this.facturaService = facturaService;
         this.transacaoService = transacaoService;
-        this.precoEmolumentoService = precoEmolumentoService;
         this.itemFacturaService = itemFacturaService;
     }
 
@@ -75,6 +69,14 @@ public class ReciboPagamentoEmolumentoServiceImpl {
             file = new FileOutputStream(tempFileName);
 
             final PdfWriter pdfWriter = PdfWriter.getInstance(document, file);
+
+            HeaderFooter header = new HeaderFooter(new Phrase("This is a header."), false);
+            HeaderFooter footer = new HeaderFooter(
+                new Phrase(String.valueOf(getAssinatura("Ramio Cardoso", "Rainer Cardoso"))),
+                new Phrase(".")
+            );
+            document.setHeader(header);
+            document.setFooter(footer);
 
             document.open();
 
