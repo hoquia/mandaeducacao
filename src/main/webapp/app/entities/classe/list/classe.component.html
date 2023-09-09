@@ -13,6 +13,7 @@
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-classe"
         [routerLink]="['/classe/new']"
+        *appHasAnyAuthority="['ROLE_ADMIN']"
       >
         <fa-icon icon="plus"></fa-icon>
         <span appTranslate="longonkeloApp.classe.home.createLabel"> Criar novo(a) Classe </span>
@@ -51,13 +52,13 @@
       </thead>
       <tbody>
         <tr *ngFor="let classe of classes; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/classe', classe.id, 'view']">{{ classe.id }}</a>
-          </td>
+          </td> -->
           <td>{{ classe.descricao }}</td>
           <td class="text-end">
             <div class="btn-group">
-              <button
+              <!-- <button
                 type="submit"
                 [routerLink]="['/plano-curricular']"
                 [queryParams]="{ 'filter[classeId.in]': classe.id }"
@@ -105,14 +106,26 @@
               <button type="submit" [routerLink]="['/classe', classe.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
-              </button>
+              </button> -->
 
-              <button type="submit" [routerLink]="['/classe', classe.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+              <button
+                *appHasAnyAuthority="['ROLE_ADMIN']"
+                type="submit"
+                [routerLink]="['/classe', classe.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
               </button>
 
-              <button type="submit" (click)="delete(classe)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button
+                *appHasAnyAuthority="['ROLE_ADMIN']"
+                type="submit"
+                (click)="delete(classe)"
+                class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton"
+              >
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
               </button>

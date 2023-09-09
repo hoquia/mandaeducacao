@@ -118,7 +118,12 @@
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>
       </button>
 
-      <button type="button" [routerLink]="['/nivel-ensino', nivelEnsino.id, 'edit']" class="btn btn-primary">
+      <button
+        *appHasAnyAuthority="['ROLE_ADMIN']"
+        type="button"
+        [routerLink]="['/nivel-ensino', nivelEnsino.id, 'edit']"
+        class="btn btn-primary"
+      >
         <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span appTranslate="entity.action.edit">Editar</span>
       </button>
     </div>

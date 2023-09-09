@@ -50,7 +50,7 @@
 
         <!-- Pedagogico -->
         <li
-          *appHasAnyAuthority="'ROLE_ADMIN'"
+          *appHasAnyAuthority="['DIRECTOR_GERAL', 'SUB_DIRECTOR_PEDAGOGICO']"
           ngbDropdown
           class="nav-item dropdown pointer"
           display="dynamic"
@@ -64,7 +64,7 @@
             </span>
           </a>
           <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="pedagogico-menu">
-            <li>
+            <li *appHasAnyAuthority="['DIRECTOR_GERAL', 'SUB_DIRECTOR_PEDAGOGICO']">
               <a
                 class="dropdown-item"
                 routerLink="nivel-ensino"
@@ -76,7 +76,7 @@
                 <span appTranslate="global.menu.entities.nivelEnsino">Nivel Ensino</span>
               </a>
             </li>
-            <li>
+            <li *appHasAnyAuthority="['DIRECTOR_GERAL', 'SUB_DIRECTOR_PEDAGOGICO']">
               <a
                 class="dropdown-item"
                 routerLink="turno"
@@ -88,7 +88,7 @@
                 <span appTranslate="global.menu.entities.turno">Turno</span>
               </a>
             </li>
-            <li>
+            <li *appHasAnyAuthority="['DIRECTOR_GERAL', 'SUB_DIRECTOR_PEDAGOGICO']">
               <a
                 class="dropdown-item"
                 routerLink="area-formacao"
@@ -100,7 +100,7 @@
                 <span appTranslate="global.menu.entities.areaFormacao">Area Formacao</span>
               </a>
             </li>
-            <li>
+            <li *appHasAnyAuthority="['DIRECTOR_GERAL', 'SUB_DIRECTOR_PEDAGOGICO']">
               <a
                 class="dropdown-item"
                 routerLink="curso"
@@ -112,7 +112,7 @@
                 <span appTranslate="global.menu.entities.curso">Curso</span>
               </a>
             </li>
-            <li>
+            <li *appHasAnyAuthority="['DIRECTOR_GERAL', 'SUB_DIRECTOR_PEDAGOGICO']">
               <a
                 class="dropdown-item"
                 routerLink="classe"
@@ -124,7 +124,7 @@
                 <span appTranslate="global.menu.entities.classe">Classe</span>
               </a>
             </li>
-            <li *appHasAnyAuthority="'GERENTE'">
+            <li *appHasAnyAuthority="['DIRECTOR_GERAL', 'SUB_DIRECTOR_PEDAGOGICO']">
               <a
                 class="dropdown-item"
                 routerLink="disciplina"
@@ -136,7 +136,7 @@
                 <span appTranslate="global.menu.entities.disciplina">Disciplina</span>
               </a>
             </li>
-            <li>
+            <li *appHasAnyAuthority="['DIRECTOR_GERAL', 'SUB_DIRECTOR_PEDAGOGICO']">
               <a
                 class="dropdown-item"
                 routerLink="ano-lectivo"
@@ -151,7 +151,7 @@
 
             <hr />
 
-            <li *appHasAnyAuthority="'GERENTE'">
+            <li *appHasAnyAuthority="['SUB_DIRECTOR_PEDAGOGICO']">
               <a
                 class="dropdown-item"
                 routerLink="medida-disciplinar"
@@ -163,7 +163,7 @@
                 <span appTranslate="global.menu.entities.medidaDisciplinar">Medida Disciplinar</span>
               </a>
             </li>
-            <li *appHasAnyAuthority="'GERENTE'">
+            <li *appHasAnyAuthority="['SUB_DIRECTOR_PEDAGOGICO']">
               <a
                 class="dropdown-item"
                 routerLink="docente"
@@ -175,20 +175,8 @@
                 <span appTranslate="global.menu.entities.docente">Docente</span>
               </a>
             </li>
-            <!-- <li>
-              <a
-                class="dropdown-item"
-                routerLink="formacao-docente"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.formacaoDocente">Formacao Docente</span>
-              </a>
-            </li> -->
 
-            <li *appHasAnyAuthority="'GERENTE'">
+            <li *appHasAnyAuthority="['SUB_DIRECTOR_PEDAGOGICO']">
               <a
                 class="dropdown-item"
                 routerLink="periodo-lancamento-nota"
@@ -201,7 +189,7 @@
               </a>
             </li>
 
-            <li>
+            <li *appHasAnyAuthority="['SUB_DIRECTOR_PEDAGOGICO']">
               <a
                 class="dropdown-item"
                 routerLink="disciplina-curricular"
@@ -241,7 +229,7 @@
 
             <hr />
 
-            <li *appHasAnyAuthority="'GERENTE'">
+            <li *appHasAnyAuthority="['SUB_DIRECTOR_PEDAGOGICO']">
               <a
                 class="dropdown-item"
                 routerLink="periodo-horario"
@@ -253,7 +241,7 @@
                 <span appTranslate="global.menu.entities.periodoHorario">Periodo Horario</span>
               </a>
             </li>
-            <li>
+            <li *appHasAnyAuthority="['DIRECTOR_GERAL', 'SUB_DIRECTOR_PEDAGOGICO']">
               <a
                 class="dropdown-item"
                 routerLink="plano-curricular"
@@ -277,7 +265,7 @@
                 <span appTranslate="global.menu.entities.cargoDocente">Cargo Docente</span>
               </a>
             </li> -->
-            <li>
+            <li *appHasAnyAuthority="['DIRECTOR_GERAL', 'SUB_DIRECTOR_PEDAGOGICO']">
               <a
                 class="dropdown-item"
                 routerLink="turma"
@@ -289,7 +277,7 @@
                 <span appTranslate="global.menu.entities.turma">Turma</span>
               </a>
             </li>
-            <li *appHasAnyAuthority="'GERENTE'">
+            <li *appHasAnyAuthority="['DIRECTOR_GERAL', 'SUB_DIRECTOR_PEDAGOGICO']">
               <a
                 class="dropdown-item"
                 routerLink="horario"
@@ -306,7 +294,7 @@
 
         <!-- Tesouraria -->
         <li
-          *appHasAnyAuthority="'ROLE_ADMIN'"
+          *appHasAnyAuthority="['RESPONSAVEL_SECRETARIA_ADMINISTRATIVA', 'SECRETARIO_ADMINISTRATIVO', 'GERENTE']"
           ngbDropdown
           class="nav-item dropdown pointer"
           display="dynamic"
@@ -320,7 +308,7 @@
             </span>
           </a>
           <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="tesouraria-menu">
-            <li>
+            <li *appHasAnyAuthority="['RESPONSAVEL_SECRETARIA_ADMINISTRATIVA', 'GERENTE']">
               <a
                 class="dropdown-item"
                 routerLink="plano-multa"
@@ -332,7 +320,7 @@
                 <span appTranslate="global.menu.entities.planoMulta">Plano Multa</span>
               </a>
             </li>
-            <li>
+            <li *appHasAnyAuthority="['RESPONSAVEL_SECRETARIA_ADMINISTRATIVA', 'GERENTE']">
               <a
                 class="dropdown-item"
                 routerLink="plano-desconto"
@@ -345,7 +333,7 @@
               </a>
             </li>
             <hr />
-            <li>
+            <li *appHasAnyAuthority="['GERENTE']">
               <a
                 class="dropdown-item"
                 routerLink="conta"
@@ -357,7 +345,7 @@
                 <span appTranslate="global.menu.entities.conta">Conta</span>
               </a>
             </li>
-            <li>
+            <li *appHasAnyAuthority="['GERENTE']">
               <a
                 class="dropdown-item"
                 routerLink="meio-pagamento"
@@ -370,7 +358,7 @@
               </a>
             </li>
             <hr />
-            <li>
+            <li *appHasAnyAuthority="['RESPONSAVEL_SECRETARIA_ADMINISTRATIVA', 'GERENTE']">
               <a
                 class="dropdown-item"
                 routerLink="categoria-emolumento"
@@ -382,7 +370,7 @@
                 <span appTranslate="global.menu.entities.categoriaEmolumento">Categoria Emolumento</span>
               </a>
             </li>
-            <li>
+            <li *appHasAnyAuthority="['RESPONSAVEL_SECRETARIA_ADMINISTRATIVA', 'GERENTE']">
               <a
                 class="dropdown-item"
                 routerLink="emolumento"
@@ -395,19 +383,7 @@
               </a>
             </li>
             <hr />
-            <!-- <li>
-              <a
-                class="dropdown-item"
-                routerLink="emolumento-turma"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.emolumentoTurma">Emolumento Turma</span>
-              </a>
-            </li> -->
-            <li>
+            <li *appHasAnyAuthority="['RESPONSAVEL_SECRETARIA_ADMINISTRATIVA', 'GERENTE', 'SECRETARIO_ADMINISTRATIVO']">
               <a
                 class="dropdown-item"
                 routerLink="transacao"
@@ -419,7 +395,7 @@
                 <span appTranslate="global.menu.entities.transacao">Transacao</span>
               </a>
             </li>
-            <li>
+            <li *appHasAnyAuthority="['RESPONSAVEL_SECRETARIA_ADMINISTRATIVA', 'GERENTE', 'SECRETARIO_ADMINISTRATIVO']">
               <a
                 class="dropdown-item"
                 routerLink="factura"
@@ -431,7 +407,7 @@
                 <span appTranslate="global.menu.entities.factura">Factura</span>
               </a>
             </li>
-            <li *appHasAnyAuthority="'GERENTE'">
+            <li *appHasAnyAuthority="['RESPONSAVEL_SECRETARIA_ADMINISTRATIVA', 'GERENTE']">
               <a
                 class="dropdown-item"
                 routerLink="transferencia-saldo"
@@ -448,7 +424,7 @@
 
         <!-- Secretaria -->
         <li
-          *appHasAnyAuthority="'ROLE_ADMIN'"
+          *appHasAnyAuthority="['RESPONSAVEL_SECRETARIA_PEDAGOGICA', 'DOCENTE', 'SECRETARIO_PEDAGOGICO', 'SUB_DIRECTOR_PEDAGOGICO']"
           ngbDropdown
           class="nav-item dropdown pointer"
           display="dynamic"
@@ -462,7 +438,7 @@
             </span>
           </a>
           <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="secretari-menu">
-            <li>
+            <li *appHasAnyAuthority="['RESPONSAVEL_SECRETARIA_PEDAGOGICA', 'SUB_DIRECTOR_PEDAGOGICO']">
               <a
                 class="dropdown-item"
                 routerLink="categoria-ocorrencia"
@@ -475,7 +451,7 @@
               </a>
             </li>
             <hr />
-            <li>
+            <li *appHasAnyAuthority="['RESPONSAVEL_SECRETARIA_PEDAGOGICA', 'DOCENTE', 'SECRETARIO_PEDAGOGICO', 'SUB_DIRECTOR_PEDAGOGICO']">
               <a
                 class="dropdown-item"
                 routerLink="encarregado-educacao"
@@ -487,7 +463,7 @@
                 <span appTranslate="global.menu.entities.encarregadoEducacao">Encarregado Educacao</span>
               </a>
             </li>
-            <li>
+            <li *appHasAnyAuthority="['RESPONSAVEL_SECRETARIA_PEDAGOGICA', 'DOCENTE', 'SECRETARIO_PEDAGOGICO', 'SUB_DIRECTOR_PEDAGOGICO']">
               <a
                 class="dropdown-item"
                 routerLink="discente"
@@ -499,45 +475,8 @@
                 <span appTranslate="global.menu.entities.discente">Discente</span>
               </a>
             </li>
-            <!-- <li>
-              <a
-                class="dropdown-item"
-                routerLink="anexo-discente"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.anexoDiscente">Anexo Discente</span>
-              </a>
-            </li> -->
-            <!-- <li>
-              <a
-                class="dropdown-item"
-                routerLink="endereco-discente"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.enderecoDiscente">Endereco Discente</span>
-              </a>
-            </li> -->
-
-            <!-- <li>
-              <a
-                class="dropdown-item"
-                routerLink="historico-saude"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.historicoSaude">Historico Saude</span>
-              </a>
-            </li> -->
             <hr />
-            <li>
+            <li *appHasAnyAuthority="['RESPONSAVEL_SECRETARIA_PEDAGOGICA', 'SECRETARIO_PEDAGOGICO']">
               <a
                 class="dropdown-item"
                 routerLink="matricula"
@@ -549,7 +488,7 @@
                 <span appTranslate="global.menu.entities.matricula">Matricula</span>
               </a>
             </li>
-            <li>
+            <li *appHasAnyAuthority="['SECRETARIO_PEDAGOGICO', 'ESTUDANTE', 'ENCARREGADO', 'ESTUDANTE']">
               <a
                 class="dropdown-item"
                 routerLink="processo-selectivo-matricula"
@@ -561,7 +500,7 @@
                 <span appTranslate="global.menu.entities.processoSelectivoMatricula">Processo Selectivo Matricula</span>
               </a>
             </li>
-            <li>
+            <li *appHasAnyAuthority="['RESPONSAVEL_SECRETARIA_PEDAGOGICA']">
               <a
                 class="dropdown-item"
                 routerLink="transferencia-turma"
@@ -574,7 +513,7 @@
               </a>
             </li>
             <hr />
-            <li>
+            <li *appHasAnyAuthority="['RESPONSAVEL_SECRETARIA_PEDAGOGICA', 'DOCENTE', 'ENCARREGADO', 'ESTUDANTE']">
               <a
                 class="dropdown-item"
                 routerLink="ocorrencia"
@@ -591,7 +530,7 @@
 
         <!-- Coordenacao -->
         <li
-          *appHasAnyAuthority="'GERENTE'"
+          *appHasAnyAuthority="['DOCENTE', 'ESTUDANTE', 'ENCARREGADO']"
           ngbDropdown
           class="nav-item dropdown pointer"
           display="dynamic"
@@ -605,7 +544,7 @@
             </span>
           </a>
           <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="coordenacao-menu">
-            <li>
+            <li *appHasAnyAuthority="['COORDENADOR_AREA_FORMACAO']">
               <a
                 class="dropdown-item"
                 routerLink="estado-dissertacao"
@@ -617,7 +556,7 @@
                 <span appTranslate="global.menu.entities.estadoDissertacao">Estado Dissertacao</span>
               </a>
             </li>
-            <li>
+            <li *appHasAnyAuthority="['COORDENADOR_AREA_FORMACAO']">
               <a
                 class="dropdown-item"
                 routerLink="campo-actuacao-dissertacao"
@@ -629,7 +568,7 @@
                 <span appTranslate="global.menu.entities.campoActuacaoDissertacao">Campo Actuacao Dissertacao</span>
               </a>
             </li>
-            <li>
+            <li *appHasAnyAuthority="['COORDENADOR_AREA_FORMACAO']">
               <a
                 class="dropdown-item"
                 routerLink="natureza-trabalho"
@@ -642,7 +581,7 @@
               </a>
             </li>
             <hr />
-            <li>
+            <li *appHasAnyAuthority="['DOCENTE']">
               <a
                 class="dropdown-item"
                 routerLink="plano-aula"
@@ -666,7 +605,7 @@
                 <span appTranslate="global.menu.entities.detalhePlanoAula">Detalhe Plano Aula</span>
               </a>
             </li> -->
-            <li>
+            <li *appHasAnyAuthority="['DOCENTE', 'ESTUDANTE']">
               <a
                 class="dropdown-item"
                 routerLink="licao"
@@ -679,7 +618,7 @@
               </a>
             </li>
 
-            <li>
+            <li *appHasAnyAuthority="['DOCENTE', 'ESTUDANTE']">
               <a
                 class="dropdown-item"
                 routerLink="notas-periodica-disciplina"
@@ -691,7 +630,7 @@
                 <span appTranslate="global.menu.entities.notasPeriodicaDisciplina">Nota Periodica Disciplina</span>
               </a>
             </li>
-            <li>
+            <li *appHasAnyAuthority="['DOCENTE', 'ESTUDANTE']">
               <a
                 class="dropdown-item"
                 routerLink="notas-geral-disciplina"
@@ -705,7 +644,7 @@
             </li>
             <hr />
 
-            <li>
+            <li *appHasAnyAuthority="['COORDENADOR_CURSO', 'ESTUDANTE']">
               <a
                 class="dropdown-item"
                 routerLink="dissertacao-final-curso"
@@ -717,7 +656,7 @@
                 <span appTranslate="global.menu.entities.dissertacaoFinalCurso">Dissertacao Final Curso</span>
               </a>
             </li>
-            <li>
+            <li *appHasAnyAuthority="['DOCENTE', 'ESTUDANTE']">
               <a
                 class="dropdown-item"
                 routerLink="resumo-academico"
@@ -733,7 +672,7 @@
         </li>
 
         <li
-          *appHasAnyAuthority="'ROLE_ADMIN'"
+          *appHasAnyAuthority="'GERENTE'"
           ngbDropdown
           class="nav-item dropdown pointer"
           display="dynamic"

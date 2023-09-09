@@ -13,6 +13,7 @@
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-nivel-ensino"
         [routerLink]="['/nivel-ensino/new']"
+        *appHasAnyAuthority="['ROLE_ADMIN']"
       >
         <fa-icon icon="plus"></fa-icon>
         <span appTranslate="longonkeloApp.nivelEnsino.home.createLabel"> Criar novo(a) Nivel Ensino </span>
@@ -34,12 +35,12 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="codigo">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.nivelEnsino.codigo">Codigo</span>
@@ -58,7 +59,7 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="idadeMinima">
+          <!--<th scope="col" appSortBy="idadeMinima">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.nivelEnsino.idadeMinima">Idade Minima</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -69,20 +70,20 @@
               <span appTranslate="longonkeloApp.nivelEnsino.idadeMaxima">Idade Maxima</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="duracao">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.nivelEnsino.duracao">Duracao</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="unidadeDuracao">
+          <!-- <th scope="col" appSortBy="unidadeDuracao">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.nivelEnsino.unidadeDuracao">Unidade Duracao</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="classeInicial">
+          </th> -->
+          <!-- <th scope="col" appSortBy="classeInicial">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.nivelEnsino.classeInicial">Classe Inicial</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -183,23 +184,25 @@
               <span appTranslate="longonkeloApp.nivelEnsino.referencia">Referencia</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let nivelEnsino of nivelEnsinos; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/nivel-ensino', nivelEnsino.id, 'view']">{{ nivelEnsino.id }}</a>
-          </td>
+          </td> -->
           <td>{{ nivelEnsino.codigo }}</td>
           <td>{{ nivelEnsino.nome }}</td>
           <td>{{ nivelEnsino.descricao }}</td>
-          <td>{{ nivelEnsino.idadeMinima }}</td>
-          <td>{{ nivelEnsino.idadeMaxima }}</td>
-          <td>{{ nivelEnsino.duracao }}</td>
-          <td appTranslate="{{ 'longonkeloApp.UnidadeDuracao.' + nivelEnsino.unidadeDuracao }}">{{ nivelEnsino.unidadeDuracao }}</td>
-          <td>{{ nivelEnsino.classeInicial }}</td>
+          <!-- <td>{{ nivelEnsino.idadeMinima }}</td>
+          <td>{{ nivelEnsino.idadeMaxima }}</td> -->
+          <td>
+            {{ nivelEnsino.duracao }}
+            <span appTranslate="{{ 'longonkeloApp.UnidadeDuracao.' + nivelEnsino.unidadeDuracao }}">{{ nivelEnsino.unidadeDuracao }}</span>
+          </td>
+          <!-- <td>{{ nivelEnsino.classeInicial }}</td>
           <td>{{ nivelEnsino.classeFinal }}</td>
           <td>{{ nivelEnsino.classeExame }}</td>
           <td>{{ nivelEnsino.totalDisciplina }}</td>
@@ -219,10 +222,10 @@
             <div *ngIf="nivelEnsino.referencia">
               <a [routerLink]="['/nivel-ensino', nivelEnsino.referencia.id, 'view']">{{ nivelEnsino.referencia.nome }}</a>
             </div>
-          </td>
+          </td> -->
           <td class="text-end">
             <div class="btn-group">
-              <button
+              <!-- <button
                 type="submit"
                 [routerLink]="['/nivel-ensino']"
                 [queryParams]="{ 'filter[referenciaId.in]': nivelEnsino.id }"
@@ -251,7 +254,7 @@
                   [translateValues]="{ otherEntity: ('longonkeloApp.nivelEnsino.classes' | translate) }"
                   >Show Classe</span
                 >
-              </button>
+              </button> -->
               <button
                 type="submit"
                 [routerLink]="['/nivel-ensino', nivelEnsino.id, 'view']"
@@ -263,6 +266,7 @@
               </button>
 
               <button
+                *appHasAnyAuthority="['ROLE_ADMIN']"
                 type="submit"
                 [routerLink]="['/nivel-ensino', nivelEnsino.id, 'edit']"
                 class="btn btn-primary btn-sm"
@@ -272,7 +276,13 @@
                 <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
               </button>
 
-              <button type="submit" (click)="delete(nivelEnsino)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button
+                *appHasAnyAuthority="['ROLE_ADMIN']"
+                type="submit"
+                (click)="delete(nivelEnsino)"
+                class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton"
+              >
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
               </button>

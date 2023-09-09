@@ -13,6 +13,7 @@
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-disciplina"
         [routerLink]="['/disciplina/new']"
+        *appHasAnyAuthority="['ROLE_ADMIN']"
       >
         <fa-icon icon="plus"></fa-icon>
         <span appTranslate="longonkeloApp.disciplina.home.createLabel"> Criar novo(a) Disciplina </span>
@@ -34,12 +35,12 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="codigo">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.disciplina.codigo">Codigo</span>
@@ -63,15 +64,15 @@
       </thead>
       <tbody>
         <tr *ngFor="let disciplina of disciplinas; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/disciplina', disciplina.id, 'view']">{{ disciplina.id }}</a>
-          </td>
+          </td> -->
           <td>{{ disciplina.codigo }}</td>
           <td>{{ disciplina.nome }}</td>
           <td>{{ disciplina.descricao }}</td>
           <td class="text-end">
             <div class="btn-group">
-              <button
+              <!-- <button
                 type="submit"
                 [routerLink]="['/responsavel-disciplina']"
                 [queryParams]="{ 'filter[disciplinaId.in]': disciplina.id }"
@@ -109,19 +110,26 @@
               >
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
-              </button>
+              </button> -->
 
               <button
                 type="submit"
                 [routerLink]="['/disciplina', disciplina.id, 'edit']"
                 class="btn btn-primary btn-sm"
                 data-cy="entityEditButton"
+                *appHasAnyAuthority="['ROLE_ADMIN']"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
               </button>
 
-              <button type="submit" (click)="delete(disciplina)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button
+                *appHasAnyAuthority="['ROLE_ADMIN']"
+                type="submit"
+                (click)="delete(disciplina)"
+                class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton"
+              >
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
               </button>

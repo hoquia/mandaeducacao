@@ -13,6 +13,7 @@
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-ano-lectivo"
         [routerLink]="['/ano-lectivo/new']"
+        *appHasAnyAuthority="['ROLE_ADMIN']"
       >
         <fa-icon icon="plus"></fa-icon>
         <span appTranslate="longonkeloApp.anoLectivo.home.createLabel"> Criar novo(a) Ano Lectivo </span>
@@ -32,12 +33,12 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="ano">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.anoLectivo.ano">Ano</span>
@@ -62,7 +63,7 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="timestam">
+          <!-- <th scope="col" appSortBy="timestam">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.anoLectivo.timestam">Timestam</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -73,8 +74,8 @@
               <span appTranslate="longonkeloApp.anoLectivo.isActual">Is Actual</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="directorGeral.nome">
+          </th> -->
+          <!-- <th scope="col" appSortBy="directorGeral.nome">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.anoLectivo.directorGeral">Director Geral</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -103,8 +104,8 @@
               <span appTranslate="longonkeloApp.anoLectivo.responsavelSecretariaPedagogico">Responsavel Secretaria Pedagogico</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="utilizador.login">
+          </th> -->
+          <!-- <th scope="col" appSortBy="utilizador.login">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.anoLectivo.utilizador">Utilizador</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -205,20 +206,20 @@
               <span appTranslate="longonkeloApp.anoLectivo.responsavelTurma">Responsavel Turma</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let anoLectivo of anoLectivos; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/ano-lectivo', anoLectivo.id, 'view']">{{ anoLectivo.id }}</a>
-          </td>
+          </td> -->
           <td>{{ anoLectivo.ano }}</td>
           <td>{{ anoLectivo.inicio | formatMediumDate }}</td>
           <td>{{ anoLectivo.fim | formatMediumDate }}</td>
           <td>{{ anoLectivo.descricao }}</td>
-          <td>{{ anoLectivo.timestam | formatMediumDatetime }}</td>
+          <!-- <td>{{ anoLectivo.timestam | formatMediumDatetime }}</td>
           <td>{{ anoLectivo.isActual }}</td>
           <td>
             <div *ngIf="anoLectivo.directorGeral">
@@ -345,7 +346,7 @@
             <div *ngIf="anoLectivo.responsavelTurma">
               <a [routerLink]="['/responsavel-turma', anoLectivo.responsavelTurma.id, 'view']">{{ anoLectivo.responsavelTurma.id }}</a>
             </div>
-          </td>
+          </td> -->
           <td class="text-end">
             <div class="btn-group">
               <button
@@ -359,6 +360,7 @@
               </button>
 
               <button
+                *appHasAnyAuthority="['ROLE_ADMIN']"
                 type="submit"
                 [routerLink]="['/ano-lectivo', anoLectivo.id, 'edit']"
                 class="btn btn-primary btn-sm"
@@ -368,7 +370,13 @@
                 <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
               </button>
 
-              <button type="submit" (click)="delete(anoLectivo)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button
+                *appHasAnyAuthority="['ROLE_ADMIN']"
+                type="submit"
+                (click)="delete(anoLectivo)"
+                class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton"
+              >
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
               </button>
