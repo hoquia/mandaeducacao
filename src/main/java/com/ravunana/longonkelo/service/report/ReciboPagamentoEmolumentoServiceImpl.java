@@ -120,11 +120,6 @@ public class ReciboPagamentoEmolumentoServiceImpl {
             );
 
             document.add(layoutTable);
-            document.add(Chunk.NEWLINE);
-            document.add(Chunk.NEWLINE);
-            document.add(Chunk.NEWLINE);
-            document.add(Chunk.NEWLINE);
-            document.add(Chunk.NEWLINE);
 
             document.close();
             pdfWriter.close();
@@ -257,12 +252,12 @@ public class ReciboPagamentoEmolumentoServiceImpl {
         detalheTable.setWidthPercentage(100f);
 
         // Detalhes do DIscente
-        PdfPTable detalheFuncionario = new PdfPTable(2);
-        detalheFuncionario.setWidthPercentage(100f);
-        detalheFuncionario.addCell(
+        PdfPTable detalheMatricula = new PdfPTable(2);
+        detalheMatricula.setWidthPercentage(100f);
+        detalheMatricula.addCell(
             makeCellText("Discente", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
-        detalheFuncionario.addCell(
+        detalheMatricula.addCell(
             makeCellText(
                 discente.getNome(),
                 Element.ALIGN_MIDDLE,
@@ -276,10 +271,10 @@ public class ReciboPagamentoEmolumentoServiceImpl {
             )
         );
 
-        detalheFuncionario.addCell(
+        detalheMatricula.addCell(
             makeCellText("Processo nº", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
-        detalheFuncionario.addCell(
+        detalheMatricula.addCell(
             makeCellText(
                 matricula.getNumeroMatricula(),
                 Element.ALIGN_MIDDLE,
@@ -293,10 +288,10 @@ public class ReciboPagamentoEmolumentoServiceImpl {
             )
         );
 
-        detalheFuncionario.addCell(
+        detalheMatricula.addCell(
             makeCellText("Curso", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
-        detalheFuncionario.addCell(
+        detalheMatricula.addCell(
             makeCellText(
                 planoCurricular.getCurso().getNome(),
                 Element.ALIGN_MIDDLE,
@@ -310,11 +305,11 @@ public class ReciboPagamentoEmolumentoServiceImpl {
             )
         );
 
-        detalheFuncionario.addCell(
+        detalheMatricula.addCell(
             makeCellText("Classe", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
 
-        detalheFuncionario.addCell(
+        detalheMatricula.addCell(
             makeCellText(
                 planoCurricular.getClasse().getDescricao(),
                 Element.ALIGN_MIDDLE,
@@ -328,10 +323,10 @@ public class ReciboPagamentoEmolumentoServiceImpl {
             )
         );
 
-        detalheFuncionario.addCell(
+        detalheMatricula.addCell(
             makeCellText("Sala", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
-        detalheFuncionario.addCell(
+        detalheMatricula.addCell(
             makeCellText(
                 turma.getSala().toString(),
                 Element.ALIGN_MIDDLE,
@@ -345,10 +340,10 @@ public class ReciboPagamentoEmolumentoServiceImpl {
             )
         );
 
-        detalheFuncionario.addCell(
+        detalheMatricula.addCell(
             makeCellText("Turno", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
-        detalheFuncionario.addCell(
+        detalheMatricula.addCell(
             makeCellText(
                 turma.getTurno().getNome(),
                 Element.ALIGN_MIDDLE,
@@ -418,13 +413,13 @@ public class ReciboPagamentoEmolumentoServiceImpl {
         );
 
         detalheTable.addCell(
-            makeCellTable(detalheFuncionario, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
+            makeCellTable(detalheMatricula, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
         );
         detalheTable.addCell(
             makeCellTable(detalheSalario, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
         );
 
-        // Caluclo do Ajuste de Salario
+        // Items
         PdfPTable ajustesTable = new PdfPTable(6);
         ajustesTable.setWidthPercentage(100f);
         // Calculo Header
@@ -507,32 +502,9 @@ public class ReciboPagamentoEmolumentoServiceImpl {
                 false
             )
         );
-        //        ajustesTable.addCell(
-        //            makeCellBackgroudColor(
-        //                "Data",
-        //                Element.ALIGN_MIDDLE,
-        //                Element.ALIGN_CENTER,
-        //                fontBold,
-        //                leading,
-        //                padding,
-        //                borderNormal,
-        //                true,
-        //                false
-        //            )
-        //        );
-        //        ajustesTable.addCell(
-        //            makeCellBackgroudColor(
-        //                "Estado",
-        //                Element.ALIGN_MIDDLE,
-        //                Element.ALIGN_CENTER,
-        //                fontBold,
-        //                leading,
-        //                padding,
-        //                borderNormal,
-        //                true,
-        //                false
-        //            )
-        //        );
+
+
+        int NUM_LINHA_ATE_FIM_PAGINA = 10;
 
         for (var pagamento : itemsFactura) {
             var emolumento = pagamento.getEmolumento();
@@ -544,124 +516,16 @@ public class ReciboPagamentoEmolumentoServiceImpl {
                 totalContrato = totalPago;
             }
 
-            // Emolumento
-            ajustesTable.addCell(
-                makeCellText(
-                    emolumento.getNome(),
-                    Element.ALIGN_MIDDLE,
-                    Element.ALIGN_CENTER,
-                    fontNormal,
-                    leading,
-                    padding,
-                    borderSmaller,
-                    true,
-                    false
-                )
-            );
+            // LinhasDocumento
+            getLinhasDocumento( ajustesTable, fontNormal, leading, padding, borderSmaller, emolumento.getNome(), 
+            pagamento.getQuantidade().toString(), Constants.getMoneyFormat(pagamento.getPrecoUnitario()), Constants.getMoneyFormat(pagamento.getDesconto()),
+            Constants.getMoneyFormat(pagamento.getJuro()), Constants.getMoneyFormat(pagamento.getPrecoTotal()) );
+            
+        }
 
-            // Quantidade
-            ajustesTable.addCell(
-                makeCellText(
-                    pagamento.getQuantidade().toString(),
-                    Element.ALIGN_MIDDLE,
-                    Element.ALIGN_CENTER,
-                    fontNormal,
-                    leading,
-                    padding,
-                    borderSmaller,
-                    true,
-                    false
-                )
-            );
-
-            // ValorUnit
-            ajustesTable.addCell(
-                makeCellText(
-                    Constants.getMoneyFormat(pagamento.getPrecoUnitario()),
-                    Element.ALIGN_MIDDLE,
-                    Element.ALIGN_RIGHT,
-                    fontNormal,
-                    leading,
-                    padding,
-                    borderSmaller,
-                    true,
-                    false
-                )
-            );
-
-            // Desconto
-            ajustesTable.addCell(
-                makeCellText(
-                    Constants.getMoneyFormat(pagamento.getDesconto()),
-                    Element.ALIGN_MIDDLE,
-                    Element.ALIGN_RIGHT,
-                    fontNormal,
-                    leading,
-                    padding,
-                    borderSmaller,
-                    true,
-                    false
-                )
-            );
-
-            // Multa
-            ajustesTable.addCell(
-                makeCellText(
-                    Constants.getMoneyFormat(pagamento.getJuro()),
-                    Element.ALIGN_MIDDLE,
-                    Element.ALIGN_RIGHT,
-                    fontNormal,
-                    leading,
-                    padding,
-                    borderSmaller,
-                    true,
-                    false
-                )
-            );
-
-            // Total
-            ajustesTable.addCell(
-                makeCellText(
-                    Constants.getMoneyFormat(pagamento.getPrecoTotal()),
-                    Element.ALIGN_MIDDLE,
-                    Element.ALIGN_RIGHT,
-                    fontNormal,
-                    leading,
-                    padding,
-                    borderSmaller,
-                    true,
-                    false
-                )
-            );
-            // Data
-            //            ajustesTable.addCell(
-            //                makeCellText(
-            //                    Constants.getDateFormat(pagamento.getEmissao()),
-            //                    Element.ALIGN_MIDDLE,
-            //                    Element.ALIGN_RIGHT,
-            //                    fontNormal,
-            //                    leading,
-            //                    padding,
-            //                    borderSmaller,
-            //                    true,
-            //                    false
-            //                )
-            //            );
-
-            // Estado
-            //            ajustesTable.addCell(
-            //                makeCellText(
-            //                    pagamento.getEstado().name(),
-            //                    Element.ALIGN_MIDDLE,
-            //                    Element.ALIGN_RIGHT,
-            //                    fontNormal,
-            //                    leading,
-            //                    padding,
-            //                    borderSmaller,
-            //                    true,
-            //                    false
-            //                )
-            //            );
+        for ( int i = 0; i >= NUM_LINHA_ATE_FIM_PAGINA - itemsFactura.size(); i++ ) {
+                        // LinhasDocumento em branco
+            getLinhasDocumento( ajustesTable, fontNormal, leading, padding, borderSmaller, "", "", "", "", "", "" );
         }
 
         // Resumo do Pagamento
@@ -842,6 +706,105 @@ public class ReciboPagamentoEmolumentoServiceImpl {
         );
 
         return layoutTable;
+    }
+
+    private void getLinhasDocumento(  PdfPTable ajustesTable,
+    Font fontNormal,
+    float leading,
+    float padding,
+    Rectangle borderSmaller, 
+    String descricao, String quantidade, String precoUnit, String desconto, String multaJuro, String total) {
+
+            // Emolumento
+            ajustesTable.addCell(
+                makeCellText(
+                    descricao,
+                    Element.ALIGN_MIDDLE,
+                    Element.ALIGN_CENTER,
+                    fontNormal,
+                    leading,
+                    padding,
+                    borderSmaller,
+                    true,
+                    false
+                )
+            );
+
+            // Quantidade
+            ajustesTable.addCell(
+                makeCellText(
+                    quantidade,
+                    Element.ALIGN_MIDDLE,
+                    Element.ALIGN_CENTER,
+                    fontNormal,
+                    leading,
+                    padding,
+                    borderSmaller,
+                    true,
+                    false
+                )
+            );
+
+            // ValorUnit
+            ajustesTable.addCell(
+                makeCellText(
+                    precoUnit,
+                    Element.ALIGN_MIDDLE,
+                    Element.ALIGN_RIGHT,
+                    fontNormal,
+                    leading,
+                    padding,
+                    borderSmaller,
+                    true,
+                    false
+                )
+            );
+
+            // Desconto
+            ajustesTable.addCell(
+                makeCellText(
+                    desconto,
+                    Element.ALIGN_MIDDLE,
+                    Element.ALIGN_RIGHT,
+                    fontNormal,
+                    leading,
+                    padding,
+                    borderSmaller,
+                    true,
+                    false
+                )
+            );
+
+            // Multa
+            ajustesTable.addCell(
+                makeCellText(
+                    multaJuro,
+                    Element.ALIGN_MIDDLE,
+                    Element.ALIGN_RIGHT,
+                    fontNormal,
+                    leading,
+                    padding,
+                    borderSmaller,
+                    true,
+                    false
+                )
+            );
+
+            // Total
+            ajustesTable.addCell(
+                makeCellText(
+                    total,
+                    Element.ALIGN_MIDDLE,
+                    Element.ALIGN_RIGHT,
+                    fontNormal,
+                    leading,
+                    padding,
+                    borderSmaller,
+                    true,
+                    false
+                )
+            );
+
     }
 
     private PdfPTable getAssinatura(String nomeResponsavel, String nomeFuncionario) {
