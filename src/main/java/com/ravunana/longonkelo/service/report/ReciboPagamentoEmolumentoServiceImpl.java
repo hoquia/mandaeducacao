@@ -50,7 +50,7 @@ public class ReciboPagamentoEmolumentoServiceImpl {
         Document document;
         String pdfName;
         FileOutputStream file;
-        pdfName = "recibo-salario";
+        pdfName = "recibo-pagamento";
         document = new Document(PageSize.A4.rotate(), 4f, 4f, 4f, 4f);
         String tempFileName = "./" + pdfName + ".pdf";
 
@@ -67,15 +67,16 @@ public class ReciboPagamentoEmolumentoServiceImpl {
 
             tempFileName = reportService.createTempFile(pdfName, ".pdf");
             file = new FileOutputStream(tempFileName);
+            var matricula = matriculaService.findOne(matriculaID).get();
 
             final PdfWriter pdfWriter = PdfWriter.getInstance(document, file);
 
             HeaderFooter header = new HeaderFooter(new Phrase("This is a header."), false);
             HeaderFooter footer = new HeaderFooter(
-                new Phrase(String.valueOf(getAssinatura("Ramio Cardoso", "Rainer Cardoso"))),
+                new Phrase(String.valueOf(getAssinatura(SecurityUtils.getCurrentUserLogin().get(), matricula.getDiscente().getNome()))),
                 new Phrase(".")
             );
-            document.setHeader(header);
+            // document.setHeader(header);
             document.setFooter(footer);
 
             document.open();
@@ -814,6 +815,8 @@ public class ReciboPagamentoEmolumentoServiceImpl {
             makeCellTable(resumoPagamentoTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
         );
 
+        // Assinatura
+        /*
         layoutTable.addCell(
             makeCellTable(
                 getAssinatura(SecurityUtils.getCurrentUserLogin().get(), discente.getNome()),
@@ -829,7 +832,7 @@ public class ReciboPagamentoEmolumentoServiceImpl {
         layoutTable.addCell(
             makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
         );
-
+        */
         return layoutTable;
     }
 

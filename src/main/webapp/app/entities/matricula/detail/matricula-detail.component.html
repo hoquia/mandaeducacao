@@ -17,12 +17,12 @@
       <div ngbDropdown class="d-inline-block">
         <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>Operações</button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-          <button ngbDropdownItem>Transação</button>
-          <button ngbDropdownItem>Factura</button>
+          <button ngbDropdownItem [routerLink]="['/transacao/new']" [queryParams]="{ matricula_id: matricula.id }">Transação</button>
+          <!-- <button ngbDropdownItem>Factura</button>
           <button ngbDropdownItem>Transferência de saldo</button>
           <button ngbDropdownItem>Transferência de turma</button>
           <button ngbDropdownItem>Ocorrências</button>
-          <button ngbDropdownItem>Lançamento de notas</button>
+          <button ngbDropdownItem>Lançamento de notas</button> -->
         </div>
       </div>
 
