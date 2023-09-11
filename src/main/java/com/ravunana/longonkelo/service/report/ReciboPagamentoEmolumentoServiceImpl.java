@@ -504,7 +504,7 @@ public class ReciboPagamentoEmolumentoServiceImpl {
         );
 
 
-        int NUM_LINHA_ATE_FIM_PAGINA = 10;
+        int NUM_LINHA_ATE_FIM_PAGINA = 25;
         int NUM_LINHA_FACTURA = itemsFactura.size();
         int NUM_LINHA_BRANCA_ADICIONAR = NUM_LINHA_ATE_FIM_PAGINA - NUM_LINHA_FACTURA;
 
@@ -525,9 +525,15 @@ public class ReciboPagamentoEmolumentoServiceImpl {
             
         }
 
-        for ( int i = 0; i < NUM_LINHA_BRANCA_ADICIONAR; i++ ) {
+            Rectangle noBorder = new Rectangle(0f, 0f);
+            noBorder.setBorderWidthLeft(0f);
+            noBorder.setBorderWidthBottom(0f);
+            noBorder.setBorderWidthRight(0f);
+            noBorder.setBorderWidthTop(0f);
+
+        for ( int i = 0; i <= NUM_LINHA_BRANCA_ADICIONAR; i++ ) {
                         // LinhasDocumento em branco
-            getLinhasDocumento( ajustesTable, fontNormal, leading, padding, borderSmaller, "", "", "", "", "", "" );
+            getLinhasDocumento( ajustesTable, fontNormal, leading, padding, noBorder, "", "", "", "", "", "" );
         }
 
         // Resumo do Pagamento
