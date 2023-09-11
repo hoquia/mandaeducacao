@@ -504,7 +504,7 @@ public class ReciboPagamentoEmolumentoServiceImpl {
         );
 
 
-        int NUM_LINHA_ATE_FIM_PAGINA = 25;
+        int NUM_LINHA_ATE_FIM_PAGINA = 30;
         int NUM_LINHA_FACTURA = itemsFactura.size();
         int NUM_LINHA_BRANCA_ADICIONAR = NUM_LINHA_ATE_FIM_PAGINA - NUM_LINHA_FACTURA;
 
