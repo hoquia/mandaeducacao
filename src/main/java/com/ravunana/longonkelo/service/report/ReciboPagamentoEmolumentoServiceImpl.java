@@ -525,7 +525,7 @@ public class ReciboPagamentoEmolumentoServiceImpl {
             
         }
 
-        for ( int i = 0; i >= NUM_LINHA_BRANCA_ADICIONAR; i++ ) {
+        for ( int i = 0; i < NUM_LINHA_BRANCA_ADICIONAR; i++ ) {
                         // LinhasDocumento em branco
             getLinhasDocumento( ajustesTable, fontNormal, leading, padding, borderSmaller, "", "", "", "", "", "" );
         }
