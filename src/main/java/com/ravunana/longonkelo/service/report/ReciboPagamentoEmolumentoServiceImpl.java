@@ -505,6 +505,8 @@ public class ReciboPagamentoEmolumentoServiceImpl {
 
 
         int NUM_LINHA_ATE_FIM_PAGINA = 10;
+        int NUM_LINHA_FACTURA = itemsFactura.size();
+        int NUM_LINHA_BRANCA_ADICIONAR = NUM_LINHA_ATE_FIM_PAGINA - NUM_LINHA_FACTURA;
 
         for (var pagamento : itemsFactura) {
             var emolumento = pagamento.getEmolumento();
@@ -523,7 +525,7 @@ public class ReciboPagamentoEmolumentoServiceImpl {
             
         }
 
-        for ( int i = 0; i >= NUM_LINHA_ATE_FIM_PAGINA - itemsFactura.size(); i++ ) {
+        for ( int i = 0; i >= NUM_LINHA_BRANCA_ADICIONAR; i++ ) {
                         // LinhasDocumento em branco
             getLinhasDocumento( ajustesTable, fontNormal, leading, padding, borderSmaller, "", "", "", "", "", "" );
         }
