@@ -46,7 +46,7 @@ public class ReciboPagamentoEmolumentoServiceImpl {
         this.itemFacturaService = itemFacturaService;
     }
 
-    public String gerarReciboPdf(Long matriculaID) {
+    public String gerarReciboPdf(Long facturaId) {
         Document document;
         String pdfName;
         FileOutputStream file;
@@ -67,7 +67,10 @@ public class ReciboPagamentoEmolumentoServiceImpl {
 
             tempFileName = reportService.createTempFile(pdfName, ".pdf");
             file = new FileOutputStream(tempFileName);
-            var matricula = matriculaService.findOne(matriculaID).get();
+
+            var factura = facturaService.findOne(facturaId).get();
+
+            var matricula = factura.getMatricula();
 
             final PdfWriter pdfWriter = PdfWriter.getInstance(document, file);
 
@@ -77,23 +80,23 @@ public class ReciboPagamentoEmolumentoServiceImpl {
                 new Phrase(".")
             );
             // document.setHeader(header);
-            document.setFooter(footer);
 
             document.open();
 
             // Pdf Metadatas
-            document.addTitle("Extracto de Pagamento " + matriculaID);
-            document.addSubject(matriculaID.toString());
-            document.addKeywords("recibo," + "pagamento," + matriculaID);
+            document.addTitle("Extracto de Pagamento " + facturaId);
+            document.addSubject(facturaId.toString());
+            document.addKeywords("recibo," + "pagamento," + facturaId);
             document.addCreator("ravunana,lda");
             document.addAuthor("ravunana");
+            //            document.setFooter(footer);
 
             PdfPTable layoutTable = new PdfPTable(2);
             layoutTable.setWidthPercentage(100f);
 
             layoutTable.addCell(
                 makeCellTable(
-                    getRecibo(matriculaID, "Original"),
+                    getRecibo(facturaId, "Original"),
                     Element.ALIGN_CENTER,
                     Element.ALIGN_LEFT,
                     leading,
@@ -105,7 +108,7 @@ public class ReciboPagamentoEmolumentoServiceImpl {
             );
             layoutTable.addCell(
                 makeCellTable(
-                    getRecibo(matriculaID, "Cópia"),
+                    getRecibo(facturaId, "Cópia"),
                     Element.ALIGN_CENTER,
                     Element.ALIGN_RIGHT,
                     leading,
@@ -117,6 +120,11 @@ public class ReciboPagamentoEmolumentoServiceImpl {
             );
 
             document.add(layoutTable);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
 
             document.close();
             pdfWriter.close();
@@ -244,6 +252,7 @@ public class ReciboPagamentoEmolumentoServiceImpl {
         );
 
         // SubHeader
+
         PdfPTable detalheTable = new PdfPTable(2);
         detalheTable.setWidthPercentage(100f);
 
@@ -416,13 +425,13 @@ public class ReciboPagamentoEmolumentoServiceImpl {
         );
 
         // Caluclo do Ajuste de Salario
-        PdfPTable ajustesTable = new PdfPTable(8);
+        PdfPTable ajustesTable = new PdfPTable(6);
         ajustesTable.setWidthPercentage(100f);
         // Calculo Header
 
         ajustesTable.addCell(
             makeCellBackgroudColor(
-                "Emolumento",
+                "Descrição",
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontBold,
@@ -448,7 +457,7 @@ public class ReciboPagamentoEmolumentoServiceImpl {
         );
         ajustesTable.addCell(
             makeCellBackgroudColor(
-                "Valor",
+                "Preço Unit.",
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontBold,
@@ -498,32 +507,32 @@ public class ReciboPagamentoEmolumentoServiceImpl {
                 false
             )
         );
-        ajustesTable.addCell(
-            makeCellBackgroudColor(
-                "Data",
-                Element.ALIGN_MIDDLE,
-                Element.ALIGN_CENTER,
-                fontBold,
-                leading,
-                padding,
-                borderNormal,
-                true,
-                false
-            )
-        );
-        ajustesTable.addCell(
-            makeCellBackgroudColor(
-                "Estado",
-                Element.ALIGN_MIDDLE,
-                Element.ALIGN_CENTER,
-                fontBold,
-                leading,
-                padding,
-                borderNormal,
-                true,
-                false
-            )
-        );
+        //        ajustesTable.addCell(
+        //            makeCellBackgroudColor(
+        //                "Data",
+        //                Element.ALIGN_MIDDLE,
+        //                Element.ALIGN_CENTER,
+        //                fontBold,
+        //                leading,
+        //                padding,
+        //                borderNormal,
+        //                true,
+        //                false
+        //            )
+        //        );
+        //        ajustesTable.addCell(
+        //            makeCellBackgroudColor(
+        //                "Estado",
+        //                Element.ALIGN_MIDDLE,
+        //                Element.ALIGN_CENTER,
+        //                fontBold,
+        //                leading,
+        //                padding,
+        //                borderNormal,
+        //                true,
+        //                false
+        //            )
+        //        );
 
         for (var pagamento : itemsFactura) {
             var emolumento = pagamento.getEmolumento();
@@ -624,36 +633,35 @@ public class ReciboPagamentoEmolumentoServiceImpl {
                     false
                 )
             );
-
             // Data
-            ajustesTable.addCell(
-                makeCellText(
-                    Constants.getDateFormat(pagamento.getEmissao()),
-                    Element.ALIGN_MIDDLE,
-                    Element.ALIGN_RIGHT,
-                    fontNormal,
-                    leading,
-                    padding,
-                    borderSmaller,
-                    true,
-                    false
-                )
-            );
+            //            ajustesTable.addCell(
+            //                makeCellText(
+            //                    Constants.getDateFormat(pagamento.getEmissao()),
+            //                    Element.ALIGN_MIDDLE,
+            //                    Element.ALIGN_RIGHT,
+            //                    fontNormal,
+            //                    leading,
+            //                    padding,
+            //                    borderSmaller,
+            //                    true,
+            //                    false
+            //                )
+            //            );
 
             // Estado
-            ajustesTable.addCell(
-                makeCellText(
-                    pagamento.getEstado().name(),
-                    Element.ALIGN_MIDDLE,
-                    Element.ALIGN_RIGHT,
-                    fontNormal,
-                    leading,
-                    padding,
-                    borderSmaller,
-                    true,
-                    false
-                )
-            );
+            //            ajustesTable.addCell(
+            //                makeCellText(
+            //                    pagamento.getEstado().name(),
+            //                    Element.ALIGN_MIDDLE,
+            //                    Element.ALIGN_RIGHT,
+            //                    fontNormal,
+            //                    leading,
+            //                    padding,
+            //                    borderSmaller,
+            //                    true,
+            //                    false
+            //                )
+            //            );
         }
 
         // Resumo do Pagamento
@@ -816,7 +824,7 @@ public class ReciboPagamentoEmolumentoServiceImpl {
         );
 
         // Assinatura
-        /*
+
         layoutTable.addCell(
             makeCellTable(
                 getAssinatura(SecurityUtils.getCurrentUserLogin().get(), discente.getNome()),
@@ -832,7 +840,7 @@ public class ReciboPagamentoEmolumentoServiceImpl {
         layoutTable.addCell(
             makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
         );
-        */
+
         return layoutTable;
     }
 
