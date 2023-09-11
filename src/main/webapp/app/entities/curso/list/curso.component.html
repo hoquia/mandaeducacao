@@ -13,6 +13,7 @@
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-curso"
         [routerLink]="['/curso/new']"
+        *appHasAnyAuthority="['ROLE_ADMIN']"
       >
         <fa-icon icon="plus"></fa-icon>
         <span appTranslate="longonkeloApp.curso.home.createLabel"> Criar novo(a) Curso </span>
@@ -34,12 +35,12 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="imagem">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.curso.imagem">Imagem</span>
@@ -75,26 +76,26 @@
       </thead>
       <tbody>
         <tr *ngFor="let curso of cursos; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/curso', curso.id, 'view']">{{ curso.id }}</a>
-          </td>
+          </td> -->
           <td>
             <a *ngIf="curso.imagem" (click)="openFile(curso.imagem, curso.imagemContentType)">
               <img [src]="'data:' + curso.imagemContentType + ';base64,' + curso.imagem" style="max-height: 30px" alt="curso image" />
             </a>
-            <span *ngIf="curso.imagem">{{ curso.imagemContentType }}, {{ byteSize(curso.imagem) }}</span>
+            <!-- <span *ngIf="curso.imagem">{{ curso.imagemContentType }}, {{ byteSize(curso.imagem) }}</span> -->
           </td>
           <td>{{ curso.codigo }}</td>
           <td>{{ curso.nome }}</td>
           <td>{{ curso.descricao }}</td>
           <td>
             <div *ngIf="curso.areaFormacao">
-              <a [routerLink]="['/area-formacao', curso.areaFormacao.id, 'view']">{{ curso.areaFormacao.nome }}</a>
+              <span>{{ curso.areaFormacao.nome }}</span>
             </div>
           </td>
           <td class="text-end">
             <div class="btn-group">
-              <button
+              <!-- <button
                 type="submit"
                 [routerLink]="['/plano-curricular']"
                 [queryParams]="{ 'filter[cursoId.in]': curso.id }"
@@ -157,7 +158,7 @@
               <button type="submit" [routerLink]="['/curso', curso.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
-              </button>
+              </button> -->
 
               <button type="submit" [routerLink]="['/curso', curso.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
                 <fa-icon icon="pencil-alt"></fa-icon>

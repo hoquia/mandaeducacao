@@ -69,6 +69,14 @@ export class TransacaoUpdateComponent implements OnInit {
       if (transacao) {
         this.updateForm(transacao);
       } else {
+        const matriculaID = Number(this.activatedRoute.snapshot.queryParamMap.get('matricula_id'));
+
+        this.matriculaService.find(matriculaID).subscribe(res => {
+          this.editForm.patchValue({
+            matricula: res.body,
+          });
+        });
+
         this.editForm.patchValue({
           saldo: 0,
         });
@@ -164,7 +172,7 @@ export class TransacaoUpdateComponent implements OnInit {
       .subscribe((lookupItems: ILookupItem[]) => (this.lookupItemsSharedCollection = lookupItems));
 
     this.matriculaService
-      .query({'size':10000})
+      .query({ size: 10000 })
       .pipe(map((res: HttpResponse<IMatricula[]>) => res.body ?? []))
       .pipe(
         map((matriculas: IMatricula[]) =>

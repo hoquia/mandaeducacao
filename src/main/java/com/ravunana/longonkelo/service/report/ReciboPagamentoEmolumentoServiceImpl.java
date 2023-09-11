@@ -9,8 +9,6 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.ravunana.longonkelo.config.Constants;
 import com.ravunana.longonkelo.domain.enumeration.EstadoItemFactura;
-import com.ravunana.longonkelo.domain.enumeration.EstadoPagamento;
-import com.ravunana.longonkelo.repository.InstituicaoEnsinoRepository;
 import com.ravunana.longonkelo.security.SecurityUtils;
 import com.ravunana.longonkelo.service.impl.*;
 import java.awt.*;
@@ -29,18 +27,15 @@ public class ReciboPagamentoEmolumentoServiceImpl {
     private final MatriculaServiceImpl matriculaService;
     private final FacturaServiceImpl facturaService;
     private final TransacaoServiceImpl transacaoService;
-    private final PrecoEmolumentoServiceImpl precoEmolumentoService;
 
     private final ItemFacturaServiceImpl itemFacturaService;
 
     public ReciboPagamentoEmolumentoServiceImpl(
         ReportService reportService,
-        InstituicaoEnsinoRepository instituicaoEnsinoRepository,
         InstituicaoEnsinoServiceImpl instituicaoEnsinoService,
         MatriculaServiceImpl matriculaService,
         FacturaServiceImpl facturaService,
         TransacaoServiceImpl transacaoService,
-        PrecoEmolumentoServiceImpl precoEmolumentoService,
         ItemFacturaServiceImpl itemFacturaService
     ) {
         this.reportService = reportService;
@@ -48,15 +43,14 @@ public class ReciboPagamentoEmolumentoServiceImpl {
         this.matriculaService = matriculaService;
         this.facturaService = facturaService;
         this.transacaoService = transacaoService;
-        this.precoEmolumentoService = precoEmolumentoService;
         this.itemFacturaService = itemFacturaService;
     }
 
-    public String gerarReciboPdf(Long matriculaID) {
+    public String gerarReciboPdf(Long facturaId) {
         Document document;
         String pdfName;
         FileOutputStream file;
-        pdfName = "recibo-salario";
+        pdfName = "recibo-pagamento";
         document = new Document(PageSize.A4.rotate(), 4f, 4f, 4f, 4f);
         String tempFileName = "./" + pdfName + ".pdf";
 
@@ -74,23 +68,35 @@ public class ReciboPagamentoEmolumentoServiceImpl {
             tempFileName = reportService.createTempFile(pdfName, ".pdf");
             file = new FileOutputStream(tempFileName);
 
+            var factura = facturaService.findOne(facturaId).get();
+
+            var matricula = factura.getMatricula();
+
             final PdfWriter pdfWriter = PdfWriter.getInstance(document, file);
+
+            HeaderFooter header = new HeaderFooter(new Phrase("This is a header."), false);
+            HeaderFooter footer = new HeaderFooter(
+                new Phrase(String.valueOf(getAssinatura(SecurityUtils.getCurrentUserLogin().get(), matricula.getDiscente().getNome()))),
+                new Phrase(".")
+            );
+            // document.setHeader(header);
 
             document.open();
 
             // Pdf Metadatas
-            document.addTitle("Extracto de Pagamento " + matriculaID);
-            document.addSubject(matriculaID.toString());
-            document.addKeywords("recibo," + "pagamento," + matriculaID);
+            document.addTitle("Extracto de Pagamento " + facturaId);
+            document.addSubject(facturaId.toString());
+            document.addKeywords("recibo," + "pagamento," + facturaId);
             document.addCreator("ravunana,lda");
             document.addAuthor("ravunana");
+            //            document.setFooter(footer);
 
             PdfPTable layoutTable = new PdfPTable(2);
             layoutTable.setWidthPercentage(100f);
 
             layoutTable.addCell(
                 makeCellTable(
-                    getRecibo(matriculaID, "Original"),
+                    getRecibo(facturaId, "Original"),
                     Element.ALIGN_CENTER,
                     Element.ALIGN_LEFT,
                     leading,
@@ -102,7 +108,7 @@ public class ReciboPagamentoEmolumentoServiceImpl {
             );
             layoutTable.addCell(
                 makeCellTable(
-                    getRecibo(matriculaID, "Cópia"),
+                    getRecibo(facturaId, "Cópia"),
                     Element.ALIGN_CENTER,
                     Element.ALIGN_RIGHT,
                     leading,
@@ -114,6 +120,11 @@ public class ReciboPagamentoEmolumentoServiceImpl {
             );
 
             document.add(layoutTable);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
+            document.add(Chunk.NEWLINE);
 
             document.close();
             pdfWriter.close();
@@ -241,6 +252,7 @@ public class ReciboPagamentoEmolumentoServiceImpl {
         );
 
         // SubHeader
+
         PdfPTable detalheTable = new PdfPTable(2);
         detalheTable.setWidthPercentage(100f);
 
@@ -413,13 +425,13 @@ public class ReciboPagamentoEmolumentoServiceImpl {
         );
 
         // Caluclo do Ajuste de Salario
-        PdfPTable ajustesTable = new PdfPTable(8);
+        PdfPTable ajustesTable = new PdfPTable(6);
         ajustesTable.setWidthPercentage(100f);
         // Calculo Header
 
         ajustesTable.addCell(
             makeCellBackgroudColor(
-                "Emolumento",
+                "Descrição",
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontBold,
@@ -445,7 +457,7 @@ public class ReciboPagamentoEmolumentoServiceImpl {
         );
         ajustesTable.addCell(
             makeCellBackgroudColor(
-                "Valor",
+                "Preço Unit.",
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontBold,
@@ -495,32 +507,32 @@ public class ReciboPagamentoEmolumentoServiceImpl {
                 false
             )
         );
-        ajustesTable.addCell(
-            makeCellBackgroudColor(
-                "Data",
-                Element.ALIGN_MIDDLE,
-                Element.ALIGN_CENTER,
-                fontBold,
-                leading,
-                padding,
-                borderNormal,
-                true,
-                false
-            )
-        );
-        ajustesTable.addCell(
-            makeCellBackgroudColor(
-                "Estado",
-                Element.ALIGN_MIDDLE,
-                Element.ALIGN_CENTER,
-                fontBold,
-                leading,
-                padding,
-                borderNormal,
-                true,
-                false
-            )
-        );
+        //        ajustesTable.addCell(
+        //            makeCellBackgroudColor(
+        //                "Data",
+        //                Element.ALIGN_MIDDLE,
+        //                Element.ALIGN_CENTER,
+        //                fontBold,
+        //                leading,
+        //                padding,
+        //                borderNormal,
+        //                true,
+        //                false
+        //            )
+        //        );
+        //        ajustesTable.addCell(
+        //            makeCellBackgroudColor(
+        //                "Estado",
+        //                Element.ALIGN_MIDDLE,
+        //                Element.ALIGN_CENTER,
+        //                fontBold,
+        //                leading,
+        //                padding,
+        //                borderNormal,
+        //                true,
+        //                false
+        //            )
+        //        );
 
         for (var pagamento : itemsFactura) {
             var emolumento = pagamento.getEmolumento();
@@ -621,36 +633,35 @@ public class ReciboPagamentoEmolumentoServiceImpl {
                     false
                 )
             );
-
             // Data
-            ajustesTable.addCell(
-                makeCellText(
-                    Constants.getDateFormat(pagamento.getEmissao()),
-                    Element.ALIGN_MIDDLE,
-                    Element.ALIGN_RIGHT,
-                    fontNormal,
-                    leading,
-                    padding,
-                    borderSmaller,
-                    true,
-                    false
-                )
-            );
+            //            ajustesTable.addCell(
+            //                makeCellText(
+            //                    Constants.getDateFormat(pagamento.getEmissao()),
+            //                    Element.ALIGN_MIDDLE,
+            //                    Element.ALIGN_RIGHT,
+            //                    fontNormal,
+            //                    leading,
+            //                    padding,
+            //                    borderSmaller,
+            //                    true,
+            //                    false
+            //                )
+            //            );
 
             // Estado
-            ajustesTable.addCell(
-                makeCellText(
-                    pagamento.getEstado().name(),
-                    Element.ALIGN_MIDDLE,
-                    Element.ALIGN_RIGHT,
-                    fontNormal,
-                    leading,
-                    padding,
-                    borderSmaller,
-                    true,
-                    false
-                )
-            );
+            //            ajustesTable.addCell(
+            //                makeCellText(
+            //                    pagamento.getEstado().name(),
+            //                    Element.ALIGN_MIDDLE,
+            //                    Element.ALIGN_RIGHT,
+            //                    fontNormal,
+            //                    leading,
+            //                    padding,
+            //                    borderSmaller,
+            //                    true,
+            //                    false
+            //                )
+            //            );
         }
 
         // Resumo do Pagamento
@@ -811,6 +822,8 @@ public class ReciboPagamentoEmolumentoServiceImpl {
         layoutTable.addCell(
             makeCellTable(resumoPagamentoTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
         );
+
+        // Assinatura
 
         layoutTable.addCell(
             makeCellTable(

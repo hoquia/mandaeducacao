@@ -13,6 +13,7 @@
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-turno"
         [routerLink]="['/turno/new']"
+        *appHasAnyAuthority="['ROLE_ADMIN']"
       >
         <fa-icon icon="plus"></fa-icon>
         <span appTranslate="longonkeloApp.turno.home.createLabel"> Criar novo(a) Turno </span>
@@ -32,12 +33,12 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="codigo">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.turno.codigo">Codigo</span>
@@ -55,14 +56,14 @@
       </thead>
       <tbody>
         <tr *ngFor="let turno of turnos; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/turno', turno.id, 'view']">{{ turno.id }}</a>
-          </td>
+          </td> -->
           <td>{{ turno.codigo }}</td>
           <td>{{ turno.nome }}</td>
           <td class="text-end">
             <div class="btn-group">
-              <button
+              <!-- <button
                 type="submit"
                 [routerLink]="['/responsavel-turno']"
                 [queryParams]="{ 'filter[turnoId.in]': turno.id }"
@@ -125,14 +126,26 @@
               <button type="submit" [routerLink]="['/turno', turno.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
-              </button>
+              </button> -->
 
-              <button type="submit" [routerLink]="['/turno', turno.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+              <button
+                *appHasAnyAuthority="['ROLE_ADMIN']"
+                type="submit"
+                [routerLink]="['/turno', turno.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
               </button>
 
-              <button type="submit" (click)="delete(turno)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button
+                *appHasAnyAuthority="['ROLE_ADMIN']"
+                type="submit"
+                (click)="delete(turno)"
+                class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton"
+              >
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
               </button>

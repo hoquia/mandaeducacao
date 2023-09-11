@@ -6,6 +6,33 @@
       </h2>
 
       <div>
+        <button type="button" id="cancel-save1" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity1"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+        </button>
+
+        <!-- <div ngbDropdown class="d-inline-block">
+			<button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+				Salva como
+			</button>
+			<div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+				<button (click)="save('MATRICULADO')" ngbDropdownItem>Matriculado</button>
+				<button (click)="save('CONFIRMADO')" ngbDropdownItem>Confirmado</button>
+				<button (click)="save('INSCRITO')" ngbDropdownItem>Inscrito</button>
+			</div>
+		</div> -->
+      </div>
+
+      <div>
         <app-alert-error></app-alert-error>
 
         <div class="mb-3" *ngIf="editForm.controls.id.value !== null">

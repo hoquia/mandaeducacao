@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
@@ -50,7 +50,8 @@ export class MatriculaUpdateComponent implements OnInit {
     protected turmaService: TurmaService,
     protected encarregadoEducacaoService: EncarregadoEducacaoService,
     protected discenteService: DiscenteService,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router
   ) {}
 
   compareMatricula = (o1: IMatricula | null, o2: IMatricula | null): boolean => this.matriculaService.compareMatricula(o1, o2);
@@ -73,6 +74,14 @@ export class MatriculaUpdateComponent implements OnInit {
       if (matricula) {
         this.updateForm(matricula);
       } else {
+        const discenteID = Number(this.activatedRoute.snapshot.queryParamMap.get('discente_id'));
+
+        this.discenteService.find(discenteID).subscribe(res => {
+          this.editForm.patchValue({
+            discente: res.body,
+          });
+        });
+
         this.editForm.patchValue({
           numeroMatricula: 'NA',
           isAceiteTermosCompromisso: true,
@@ -115,13 +124,14 @@ export class MatriculaUpdateComponent implements OnInit {
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IMatricula>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
-      next: () => this.onSaveSuccess(),
+      next: e => this.onSaveSuccess(e.body?.id),
       error: () => this.onSaveError(),
     });
   }
 
-  protected onSaveSuccess(): void {
-    this.previousState();
+  protected onSaveSuccess(id: any): void {
+    this.router.navigate(['/matricula', Number(id), 'view']);
+    // this.previousState();
   }
 
   protected onSaveError(): void {
@@ -159,7 +169,7 @@ export class MatriculaUpdateComponent implements OnInit {
 
   protected loadRelationshipsOptions(): void {
     this.matriculaService
-      .query({'size':10000})
+      .query({ size: 10000 })
       .pipe(map((res: HttpResponse<IMatricula[]>) => res.body ?? []))
       .pipe(
         map((matriculas: IMatricula[]) =>
@@ -188,13 +198,13 @@ export class MatriculaUpdateComponent implements OnInit {
       .subscribe((planoDescontos: IPlanoDesconto[]) => (this.planoDescontosSharedCollection = planoDescontos));
 
     this.turmaService
-      .query({'size':10000})
+      .query({ size: 10000 })
       .pipe(map((res: HttpResponse<ITurma[]>) => res.body ?? []))
       .pipe(map((turmas: ITurma[]) => this.turmaService.addTurmaToCollectionIfMissing<ITurma>(turmas, this.matricula?.turma)))
       .subscribe((turmas: ITurma[]) => (this.turmasSharedCollection = turmas));
 
     this.encarregadoEducacaoService
-      .query({'size':10000})
+      .query({ size: 10000 })
       .pipe(map((res: HttpResponse<IEncarregadoEducacao[]>) => res.body ?? []))
       .pipe(
         map((encarregadoEducacaos: IEncarregadoEducacao[]) =>
@@ -207,7 +217,7 @@ export class MatriculaUpdateComponent implements OnInit {
       .subscribe((encarregadoEducacaos: IEncarregadoEducacao[]) => (this.encarregadoEducacaosSharedCollection = encarregadoEducacaos));
 
     this.discenteService
-      .query({'size':10000})
+      .query({ size: 10000 })
       .pipe(map((res: HttpResponse<IDiscente[]>) => res.body ?? []))
       .pipe(
         map((discentes: IDiscente[]) =>

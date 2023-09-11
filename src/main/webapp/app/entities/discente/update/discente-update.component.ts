@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
@@ -43,7 +43,8 @@ export class DiscenteUpdateComponent implements OnInit {
     protected lookupItemService: LookupItemService,
     protected encarregadoEducacaoService: EncarregadoEducacaoService,
     protected elementRef: ElementRef,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router
   ) {}
 
   compareLookupItem = (o1: ILookupItem | null, o2: ILookupItem | null): boolean => this.lookupItemService.compareLookupItem(o1, o2);
@@ -107,13 +108,14 @@ export class DiscenteUpdateComponent implements OnInit {
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IDiscente>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
-      next: () => this.onSaveSuccess(),
+      next: e => this.onSaveSuccess(e.body?.id),
       error: () => this.onSaveError(),
     });
   }
 
-  protected onSaveSuccess(): void {
-    this.previousState();
+  protected onSaveSuccess(id: any): void {
+    this.router.navigate(['/matricula/new'], { queryParams: { discente_id: id } });
+    // this.previousState();
   }
 
   protected onSaveError(): void {

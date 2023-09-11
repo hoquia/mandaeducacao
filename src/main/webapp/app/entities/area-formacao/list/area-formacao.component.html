@@ -13,6 +13,7 @@
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-area-formacao"
         [routerLink]="['/area-formacao/new']"
+        *appHasAnyAuthority="['ROLE_ADMIN']"
       >
         <fa-icon icon="plus"></fa-icon>
         <span appTranslate="longonkeloApp.areaFormacao.home.createLabel"> Criar novo(a) Area Formacao </span>
@@ -32,12 +33,12 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="imagem">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.areaFormacao.imagem">Imagem</span>
@@ -73,9 +74,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let areaFormacao of areaFormacaos; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/area-formacao', areaFormacao.id, 'view']">{{ areaFormacao.id }}</a>
-          </td>
+          </td> -->
           <td>
             <a *ngIf="areaFormacao.imagem" (click)="openFile(areaFormacao.imagem, areaFormacao.imagemContentType)">
               <img
@@ -91,12 +92,12 @@
           <td>{{ areaFormacao.descricao }}</td>
           <td>
             <div *ngIf="areaFormacao.nivelEnsino">
-              <a [routerLink]="['/nivel-ensino', areaFormacao.nivelEnsino.id, 'view']">{{ areaFormacao.nivelEnsino.nome }}</a>
+              <span>{{ areaFormacao.nivelEnsino.nome }}</span>
             </div>
           </td>
           <td class="text-end">
             <div class="btn-group">
-              <button
+              <!-- <button
                 type="submit"
                 [routerLink]="['/curso']"
                 [queryParams]="{ 'filter[areaFormacaoId.in]': areaFormacao.id }"
@@ -164,19 +165,26 @@
               >
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
-              </button>
+              </button> -->
 
               <button
                 type="submit"
                 [routerLink]="['/area-formacao', areaFormacao.id, 'edit']"
                 class="btn btn-primary btn-sm"
                 data-cy="entityEditButton"
+                *appHasAnyAuthority="['ROLE_ADMIN']"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
                 <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
               </button>
 
-              <button type="submit" (click)="delete(areaFormacao)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+              <button
+                *appHasAnyAuthority="['ROLE_ADMIN']"
+                type="submit"
+                (click)="delete(areaFormacao)"
+                class="btn btn-danger btn-sm"
+                data-cy="entityDeleteButton"
+              >
                 <fa-icon icon="times"></fa-icon>
                 <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
               </button>
