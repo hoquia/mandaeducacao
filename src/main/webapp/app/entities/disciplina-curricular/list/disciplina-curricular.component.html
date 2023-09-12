@@ -40,9 +40,15 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="uniqueDisciplinaCurricular">
+          <!-- <th scope="col" appSortBy="uniqueDisciplinaCurricular">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.disciplinaCurricular.uniqueDisciplinaCurricular">Unique Disciplina Curricular</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th> -->
+          <th scope="col" appSortBy="disciplina.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.disciplinaCurricular.disciplina">Disciplina</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -58,13 +64,13 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="isTerminal">
+          <!-- <th scope="col" appSortBy="isTerminal">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.disciplinaCurricular.isTerminal">Is Terminal</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="mediaParaExame">
+          </th> -->
+          <!-- <th scope="col" appSortBy="mediaParaExame">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.disciplinaCurricular.mediaParaExame">Media Para Exame</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -87,7 +93,7 @@
               <span appTranslate="longonkeloApp.disciplinaCurricular.mediaParaDespensar">Media Para Despensar</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="componente.descricao">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.disciplinaCurricular.componente">Componente</span>
@@ -100,19 +106,15 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="disciplina.nome">
-            <div class="d-flex">
-              <span appTranslate="longonkeloApp.disciplinaCurricular.disciplina">Disciplina</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
+
+          <!--
           <th scope="col" appSortBy="referencia.descricao">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.disciplinaCurricular.referencia">Referencia</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col"></th>
+          </th> -->
+          <!-- <th scope="col"></th> -->
         </tr>
       </thead>
       <tbody>
@@ -120,14 +122,19 @@
           <td>
             <a [routerLink]="['/disciplina-curricular', disciplinaCurricular.id, 'view']">{{ disciplinaCurricular.id }}</a>
           </td>
-          <td>{{ disciplinaCurricular.uniqueDisciplinaCurricular }}</td>
+          <!-- <td>{{ disciplinaCurricular.uniqueDisciplinaCurricular }}</td> -->
+          <td>
+            <div *ngIf="disciplinaCurricular.disciplina">
+              <a [routerLink]="['/disciplina', disciplinaCurricular.disciplina.id, 'view']">{{ disciplinaCurricular.disciplina.nome }}</a>
+            </div>
+          </td>
           <td>{{ disciplinaCurricular.descricao }}</td>
           <td>{{ disciplinaCurricular.cargaSemanal }}</td>
-          <td>{{ disciplinaCurricular.isTerminal }}</td>
+          <!-- <td>{{ disciplinaCurricular.isTerminal }}</td>
           <td>{{ disciplinaCurricular.mediaParaExame }}</td>
           <td>{{ disciplinaCurricular.mediaParaRecurso }}</td>
           <td>{{ disciplinaCurricular.mediaParaExameEspecial }}</td>
-          <td>{{ disciplinaCurricular.mediaParaDespensar }}</td>
+          <td>{{ disciplinaCurricular.mediaParaDespensar }}</td> -->
           <td>
             <div *ngIf="disciplinaCurricular.componente">
               <a [routerLink]="['/lookup-item', disciplinaCurricular.componente.id, 'view']">{{
@@ -140,21 +147,17 @@
               <a [routerLink]="['/lookup-item', disciplinaCurricular.regime.id, 'view']">{{ disciplinaCurricular.regime.descricao }}</a>
             </div>
           </td>
-          <td>
-            <div *ngIf="disciplinaCurricular.disciplina">
-              <a [routerLink]="['/disciplina', disciplinaCurricular.disciplina.id, 'view']">{{ disciplinaCurricular.disciplina.nome }}</a>
-            </div>
-          </td>
-          <td>
+
+          <!-- <td>
             <div *ngIf="disciplinaCurricular.referencia">
               <a [routerLink]="['/disciplina-curricular', disciplinaCurricular.referencia.id, 'view']">{{
                 disciplinaCurricular.referencia.descricao
               }}</a>
             </div>
-          </td>
+          </td> -->
           <td class="text-end">
             <div class="btn-group">
-              <button
+              <!-- <button
                 type="submit"
                 [routerLink]="['/disciplina-curricular']"
                 [queryParams]="{ 'filter[referenciaId.in]': disciplinaCurricular.id }"
@@ -243,7 +246,7 @@
                   [translateValues]="{ otherEntity: ('longonkeloApp.disciplinaCurricular.estados' | translate) }"
                   >Show Estado Disciplina Curricular</span
                 >
-              </button>
+              </button> -->
               <button
                 type="submit"
                 [routerLink]="['/disciplina-curricular', disciplinaCurricular.id, 'view']"
@@ -251,7 +254,7 @@
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+                <!-- <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span> -->
               </button>
 
               <button
@@ -261,12 +264,12 @@
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+                <!-- <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span> -->
               </button>
 
               <button type="submit" (click)="delete(disciplinaCurricular)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+                <!-- <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span> -->
               </button>
             </div>
           </td>

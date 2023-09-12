@@ -64,19 +64,19 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="inss">
+          <!-- <th scope="col" appSortBy="inss">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.docente.inss">Inss</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="sexo">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.docente.sexo">Sexo</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="pai">
+          <!-- <th scope="col" appSortBy="pai">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.docente.pai">Pai</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -111,7 +111,7 @@
               <span appTranslate="longonkeloApp.docente.residencia">Residencia</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="dataInicioFuncoes">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.docente.dataInicioFuncoes">Data Inicio Funcoes</span>
@@ -124,7 +124,7 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="telefoneParente">
+          <!-- <th scope="col" appSortBy="telefoneParente">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.docente.telefoneParente">Telefone Parente</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -237,8 +237,8 @@
               <span appTranslate="longonkeloApp.docente.responsavelTurma">Responsavel Turma</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col"></th>
+          </th> -->
+          <!-- <th scope="col"></th> -->
         </tr>
       </thead>
       <tbody>
@@ -259,24 +259,24 @@
           <td>{{ docente.nome }}</td>
           <td>{{ docente.nascimento | formatMediumDate }}</td>
           <td>{{ docente.nif }}</td>
-          <td>{{ docente.inss }}</td>
+          <!-- <td>{{ docente.inss }}</td> -->
           <td appTranslate="{{ 'longonkeloApp.Sexo.' + docente.sexo }}">{{ docente.sexo }}</td>
-          <td>{{ docente.pai }}</td>
+          <!-- <td>{{ docente.pai }}</td>
           <td>{{ docente.mae }}</td>
           <td>{{ docente.documentoNumero }}</td>
           <td>{{ docente.documentoEmissao | formatMediumDate }}</td>
           <td>{{ docente.documentoValidade | formatMediumDate }}</td>
-          <td>{{ docente.residencia }}</td>
+          <td>{{ docente.residencia }}</td> -->
           <td>{{ docente.dataInicioFuncoes | formatMediumDate }}</td>
           <td>{{ docente.telefonePrincipal }}</td>
-          <td>{{ docente.telefoneParente }}</td>
+          <!-- <td>{{ docente.telefoneParente }}</td>
           <td>{{ docente.email }}</td>
           <td>{{ docente.numeroAgente }}</td>
           <td>{{ docente.temAgregacaoPedagogica }}</td>
           <td>{{ docente.observacao }}</td>
           <td>{{ docente.hash }}</td>
-          <td>{{ docente.timestamp | formatMediumDatetime }}</td>
-          <td>
+          <td>{{ docente.timestamp | formatMediumDatetime }}</td> -->
+          <!-- <td>
             <div *ngIf="docente.nacionalidade">
               <a [routerLink]="['/lookup-item', docente.nacionalidade.id, 'view']">{{ docente.nacionalidade.descricao }}</a>
             </div>
@@ -339,10 +339,10 @@
             <div *ngIf="docente.responsavelTurma">
               <a [routerLink]="['/responsavel-turma', docente.responsavelTurma.id, 'view']">{{ docente.responsavelTurma.id }}</a>
             </div>
-          </td>
+          </td> -->
           <td class="text-end">
             <div class="btn-group">
-              <button
+              <!-- <button
                 type="submit"
                 [routerLink]="['/ocorrencia']"
                 [queryParams]="{ 'filter[docenteId.in]': docente.id }"
@@ -356,23 +356,23 @@
                   [translateValues]="{ otherEntity: ('longonkeloApp.docente.ocorrencia' | translate) }"
                   >Show Ocorrencia</span
                 >
-              </button>
+              </button> -->
               <button
                 type="submit"
                 [routerLink]="['/horario']"
                 [queryParams]="{ 'filter[docenteId.in]': docente.id }"
-                class="btn btn-info btn-sm"
+                class="btn btn-warning btn-sm"
                 data-cy="filterOtherEntityButton"
               >
-                <fa-icon icon="eye"></fa-icon>
+                <!-- <fa-icon icon="eye"></fa-icon> -->
                 <span
                   class="d-none d-md-inline"
                   appTranslate="entity.action.show"
                   [translateValues]="{ otherEntity: ('longonkeloApp.docente.horarios' | translate) }"
-                  >Show Horario</span
+                  >Horario</span
                 >
               </button>
-              <button
+              <!-- <button
                 type="submit"
                 [routerLink]="['/plano-aula']"
                 [queryParams]="{ 'filter[docenteId.in]': docente.id }"
@@ -386,8 +386,8 @@
                   [translateValues]="{ otherEntity: ('longonkeloApp.docente.planoAula' | translate) }"
                   >Show Plano Aula</span
                 >
-              </button>
-              <button
+              </button> -->
+              <!-- <button
                 type="submit"
                 [routerLink]="['/notas-periodica-disciplina']"
                 [queryParams]="{ 'filter[docenteId.in]': docente.id }"
@@ -461,7 +461,7 @@
                   [translateValues]="{ otherEntity: ('longonkeloApp.docente.formacoes' | translate) }"
                   >Show Formacao Docente</span
                 >
-              </button>
+              </button> -->
               <button
                 type="submit"
                 [routerLink]="['/docente', docente.id, 'view']"
@@ -469,7 +469,7 @@
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+                <!-- <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span> -->
               </button>
 
               <button
@@ -479,12 +479,12 @@
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+                <!-- <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span> -->
               </button>
 
               <button type="submit" (click)="delete(docente)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+                <!-- <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span> -->
               </button>
             </div>
           </td>

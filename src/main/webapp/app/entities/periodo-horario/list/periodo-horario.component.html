@@ -52,6 +52,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" appSortBy="turno.nome">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.periodoHorario.turno">Turno</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col" appSortBy="inicio">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.periodoHorario.inicio">Inicio</span>
@@ -64,13 +70,8 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="turno.nome">
-            <div class="d-flex">
-              <span appTranslate="longonkeloApp.periodoHorario.turno">Turno</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col"></th>
+
+          <!-- <th scope="col"></th> -->
         </tr>
       </thead>
       <tbody>
@@ -80,28 +81,29 @@
           </td>
           <td>{{ periodoHorario.descricao }}</td>
           <td>{{ periodoHorario.tempo }}</td>
-          <td>{{ periodoHorario.inicio }}</td>
-          <td>{{ periodoHorario.fim }}</td>
           <td>
             <div *ngIf="periodoHorario.turno">
               <a [routerLink]="['/turno', periodoHorario.turno.id, 'view']">{{ periodoHorario.turno.nome }}</a>
             </div>
           </td>
+          <td>{{ periodoHorario.inicio }}</td>
+          <td>{{ periodoHorario.fim }}</td>
+
           <td class="text-end">
             <div class="btn-group">
               <button
                 type="submit"
                 [routerLink]="['/horario']"
                 [queryParams]="{ 'filter[periodoId.in]': periodoHorario.id }"
-                class="btn btn-info btn-sm"
+                class="btn btn-warning btn-sm"
                 data-cy="filterOtherEntityButton"
               >
-                <fa-icon icon="eye"></fa-icon>
+                <!-- <fa-icon icon="eye"></fa-icon> -->
                 <span
                   class="d-none d-md-inline"
                   appTranslate="entity.action.show"
                   [translateValues]="{ otherEntity: ('longonkeloApp.periodoHorario.horario' | translate) }"
-                  >Show Horario</span
+                  >Horario</span
                 >
               </button>
               <button

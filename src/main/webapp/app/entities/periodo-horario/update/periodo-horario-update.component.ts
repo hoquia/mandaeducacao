@@ -36,6 +36,10 @@ export class PeriodoHorarioUpdateComponent implements OnInit {
       this.periodoHorario = periodoHorario;
       if (periodoHorario) {
         this.updateForm(periodoHorario);
+      } else {
+        this.editForm.patchValue({
+          descricao: '1010',
+        });
       }
 
       this.loadRelationshipsOptions();

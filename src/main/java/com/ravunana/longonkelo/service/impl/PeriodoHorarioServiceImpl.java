@@ -2,6 +2,8 @@ package com.ravunana.longonkelo.service.impl;
 
 import com.ravunana.longonkelo.domain.PeriodoHorario;
 import com.ravunana.longonkelo.repository.PeriodoHorarioRepository;
+import com.ravunana.longonkelo.security.SecurityUtils;
+import com.ravunana.longonkelo.service.InstituicaoEnsinoService;
 import com.ravunana.longonkelo.service.PeriodoHorarioService;
 import com.ravunana.longonkelo.service.dto.PeriodoHorarioDTO;
 import com.ravunana.longonkelo.service.mapper.PeriodoHorarioMapper;
@@ -25,15 +27,46 @@ public class PeriodoHorarioServiceImpl implements PeriodoHorarioService {
     private final PeriodoHorarioRepository periodoHorarioRepository;
 
     private final PeriodoHorarioMapper periodoHorarioMapper;
+    private final InstituicaoEnsinoService instituicaoEnsinoService;
 
-    public PeriodoHorarioServiceImpl(PeriodoHorarioRepository periodoHorarioRepository, PeriodoHorarioMapper periodoHorarioMapper) {
+    public PeriodoHorarioServiceImpl(
+        PeriodoHorarioRepository periodoHorarioRepository,
+        PeriodoHorarioMapper periodoHorarioMapper,
+        InstituicaoEnsinoService instituicaoEnsinoService
+    ) {
         this.periodoHorarioRepository = periodoHorarioRepository;
         this.periodoHorarioMapper = periodoHorarioMapper;
+        this.instituicaoEnsinoService = instituicaoEnsinoService;
     }
 
     @Override
     public PeriodoHorarioDTO save(PeriodoHorarioDTO periodoHorarioDTO) {
         log.debug("Request to save PeriodoHorario : {}", periodoHorarioDTO);
+
+        var inicio = periodoHorarioDTO.getInicio().substring(0, 5);
+        var fim = periodoHorarioDTO.getFim().substring(0, 5);
+        //
+        //        if (!inicio.contains(":")) {
+        //            throw new LongokeloException("Formato da Hora de inicio incorreta, formato certo: HH:mm");
+        //        }
+        //
+        //        if (!fim.contains(":")) {
+        //            throw new LongokeloException("Formato da Hora final incorreta, formato certo: HH:mm");
+        //        }
+
+        var instituicao = instituicaoEnsinoService.getInstituicao(SecurityUtils.getCurrentUserLogin().get());
+        //        periodoHorarioDTO.setInstituicao(instituicao);
+        String descricao =
+            periodoHorarioDTO.getTempo() +
+            "º Tempo, " +
+            periodoHorarioDTO.getTurno().getNome() +
+            " das " +
+            periodoHorarioDTO.getInicio() +
+            " as " +
+            periodoHorarioDTO.getFim();
+        periodoHorarioDTO.setDescricao(descricao);
+        //        periodoHorarioDTO.setUniquePeriodo(descricao + periodoHorarioDTO.getInstituicao().getId());
+
         PeriodoHorario periodoHorario = periodoHorarioMapper.toEntity(periodoHorarioDTO);
         periodoHorario = periodoHorarioRepository.save(periodoHorario);
         return periodoHorarioMapper.toDto(periodoHorario);

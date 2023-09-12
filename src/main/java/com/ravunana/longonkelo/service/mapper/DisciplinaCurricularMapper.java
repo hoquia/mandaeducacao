@@ -19,7 +19,7 @@ import org.mapstruct.*;
 public interface DisciplinaCurricularMapper extends EntityMapper<DisciplinaCurricularDTO, DisciplinaCurricular> {
     @Mapping(target = "componente", source = "componente", qualifiedByName = "lookupItemDescricao")
     @Mapping(target = "regime", source = "regime", qualifiedByName = "lookupItemDescricao")
-    @Mapping(target = "planosCurriculars", source = "planosCurriculars", qualifiedByName = "planoCurricularDescricaoSet")
+    @Mapping(target = "planosCurriculars", source = "planosCurriculars")
     @Mapping(target = "disciplina", source = "disciplina", qualifiedByName = "disciplinaNome")
     @Mapping(target = "referencia", source = "referencia", qualifiedByName = "disciplinaCurricularDescricao")
     DisciplinaCurricularDTO toDto(DisciplinaCurricular s);

@@ -503,8 +503,7 @@ public class ReciboPagamentoEmolumentoServiceImpl {
             )
         );
 
-
-        int NUM_LINHA_ATE_FIM_PAGINA = 30;
+        int NUM_LINHA_ATE_FIM_PAGINA = 46;
         int NUM_LINHA_FACTURA = itemsFactura.size();
         int NUM_LINHA_BRANCA_ADICIONAR = NUM_LINHA_ATE_FIM_PAGINA - NUM_LINHA_FACTURA;
 
@@ -519,21 +518,30 @@ public class ReciboPagamentoEmolumentoServiceImpl {
             }
 
             // LinhasDocumento
-            getLinhasDocumento( ajustesTable, fontNormal, leading, padding, borderSmaller, emolumento.getNome(), 
-            pagamento.getQuantidade().toString(), Constants.getMoneyFormat(pagamento.getPrecoUnitario()), Constants.getMoneyFormat(pagamento.getDesconto()),
-            Constants.getMoneyFormat(pagamento.getJuro()), Constants.getMoneyFormat(pagamento.getPrecoTotal()) );
-            
+            getLinhasDocumento(
+                ajustesTable,
+                fontNormal,
+                leading,
+                padding,
+                borderSmaller,
+                emolumento.getNome(),
+                pagamento.getQuantidade().toString(),
+                Constants.getMoneyFormat(pagamento.getPrecoUnitario()),
+                Constants.getMoneyFormat(pagamento.getDesconto()),
+                Constants.getMoneyFormat(pagamento.getJuro()),
+                Constants.getMoneyFormat(pagamento.getPrecoTotal())
+            );
         }
 
-            Rectangle noBorder = new Rectangle(0f, 0f);
-            noBorder.setBorderWidthLeft(0f);
-            noBorder.setBorderWidthBottom(0f);
-            noBorder.setBorderWidthRight(0f);
-            noBorder.setBorderWidthTop(0f);
+        Rectangle noBorder = new Rectangle(0f, 0f);
+        noBorder.setBorderWidthLeft(0f);
+        noBorder.setBorderWidthBottom(0f);
+        noBorder.setBorderWidthRight(0f);
+        noBorder.setBorderWidthTop(0f);
 
-        for ( int i = 0; i <= NUM_LINHA_BRANCA_ADICIONAR; i++ ) {
-                        // LinhasDocumento em branco
-            getLinhasDocumento( ajustesTable, fontNormal, leading, padding, noBorder, "", "", "", "", "", "" );
+        for (int i = 0; i <= NUM_LINHA_BRANCA_ADICIONAR; i++) {
+            // LinhasDocumento em branco
+            getLinhasDocumento(ajustesTable, fontNormal, leading, padding, noBorder, "", "", "", "", "", "");
         }
 
         // Resumo do Pagamento
@@ -716,103 +724,48 @@ public class ReciboPagamentoEmolumentoServiceImpl {
         return layoutTable;
     }
 
-    private void getLinhasDocumento(  PdfPTable ajustesTable,
-    Font fontNormal,
-    float leading,
-    float padding,
-    Rectangle borderSmaller, 
-    String descricao, String quantidade, String precoUnit, String desconto, String multaJuro, String total) {
+    private void getLinhasDocumento(
+        PdfPTable ajustesTable,
+        Font fontNormal,
+        float leading,
+        float padding,
+        Rectangle borderSmaller,
+        String descricao,
+        String quantidade,
+        String precoUnit,
+        String desconto,
+        String multaJuro,
+        String total
+    ) {
+        // Emolumento
+        ajustesTable.addCell(
+            makeCellText(descricao, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
+        );
 
-            // Emolumento
-            ajustesTable.addCell(
-                makeCellText(
-                    descricao,
-                    Element.ALIGN_MIDDLE,
-                    Element.ALIGN_CENTER,
-                    fontNormal,
-                    leading,
-                    padding,
-                    borderSmaller,
-                    true,
-                    false
-                )
-            );
+        // Quantidade
+        ajustesTable.addCell(
+            makeCellText(quantidade, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
+        );
 
-            // Quantidade
-            ajustesTable.addCell(
-                makeCellText(
-                    quantidade,
-                    Element.ALIGN_MIDDLE,
-                    Element.ALIGN_CENTER,
-                    fontNormal,
-                    leading,
-                    padding,
-                    borderSmaller,
-                    true,
-                    false
-                )
-            );
+        // ValorUnit
+        ajustesTable.addCell(
+            makeCellText(precoUnit, Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontNormal, leading, padding, borderSmaller, true, false)
+        );
 
-            // ValorUnit
-            ajustesTable.addCell(
-                makeCellText(
-                    precoUnit,
-                    Element.ALIGN_MIDDLE,
-                    Element.ALIGN_RIGHT,
-                    fontNormal,
-                    leading,
-                    padding,
-                    borderSmaller,
-                    true,
-                    false
-                )
-            );
+        // Desconto
+        ajustesTable.addCell(
+            makeCellText(desconto, Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontNormal, leading, padding, borderSmaller, true, false)
+        );
 
-            // Desconto
-            ajustesTable.addCell(
-                makeCellText(
-                    desconto,
-                    Element.ALIGN_MIDDLE,
-                    Element.ALIGN_RIGHT,
-                    fontNormal,
-                    leading,
-                    padding,
-                    borderSmaller,
-                    true,
-                    false
-                )
-            );
+        // Multa
+        ajustesTable.addCell(
+            makeCellText(multaJuro, Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontNormal, leading, padding, borderSmaller, true, false)
+        );
 
-            // Multa
-            ajustesTable.addCell(
-                makeCellText(
-                    multaJuro,
-                    Element.ALIGN_MIDDLE,
-                    Element.ALIGN_RIGHT,
-                    fontNormal,
-                    leading,
-                    padding,
-                    borderSmaller,
-                    true,
-                    false
-                )
-            );
-
-            // Total
-            ajustesTable.addCell(
-                makeCellText(
-                    total,
-                    Element.ALIGN_MIDDLE,
-                    Element.ALIGN_RIGHT,
-                    fontNormal,
-                    leading,
-                    padding,
-                    borderSmaller,
-                    true,
-                    false
-                )
-            );
-
+        // Total
+        ajustesTable.addCell(
+            makeCellText(total, Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontNormal, leading, padding, borderSmaller, true, false)
+        );
     }
 
     private PdfPTable getAssinatura(String nomeResponsavel, String nomeFuncionario) {

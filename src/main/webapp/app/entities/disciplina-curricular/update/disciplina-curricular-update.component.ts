@@ -53,6 +53,22 @@ export class DisciplinaCurricularUpdateComponent implements OnInit {
       this.disciplinaCurricular = disciplinaCurricular;
       if (disciplinaCurricular) {
         this.updateForm(disciplinaCurricular);
+      } else {
+        const planoCurricularID = Number(this.activatedRoute.snapshot.queryParamMap.get('plano_curricular_id'));
+
+        this.planoCurricularService.find(planoCurricularID).subscribe(res => {
+          this.editForm.patchValue({
+            planosCurriculars: res.body?.disciplinasCurriculars,
+          });
+        });
+
+        this.editForm.patchValue({
+          descricao: '1010',
+          mediaParaDespensar: 0,
+          mediaParaExame: 0,
+          mediaParaExameEspecial: 0,
+          mediaParaRecurso: 0,
+        });
       }
 
       this.loadRelationshipsOptions();

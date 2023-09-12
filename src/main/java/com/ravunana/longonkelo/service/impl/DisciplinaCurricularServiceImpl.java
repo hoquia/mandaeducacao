@@ -37,6 +37,15 @@ public class DisciplinaCurricularServiceImpl implements DisciplinaCurricularServ
     @Override
     public DisciplinaCurricularDTO save(DisciplinaCurricularDTO disciplinaCurricularDTO) {
         log.debug("Request to save DisciplinaCurricular : {}", disciplinaCurricularDTO);
+
+        var planoCurricular = disciplinaCurricularDTO.getPlanosCurriculars();
+
+        for (var planoCurricul : planoCurricular) {
+            var descricao = disciplinaCurricularDTO.getDisciplina().getNome() + ", " + planoCurricul.getDescricao();
+            disciplinaCurricularDTO.setDescricao(descricao);
+            disciplinaCurricularDTO.setUniqueDisciplinaCurricular(descricao);
+        }
+
         DisciplinaCurricular disciplinaCurricular = disciplinaCurricularMapper.toEntity(disciplinaCurricularDTO);
         disciplinaCurricular = disciplinaCurricularRepository.save(disciplinaCurricular);
         return disciplinaCurricularMapper.toDto(disciplinaCurricular);
