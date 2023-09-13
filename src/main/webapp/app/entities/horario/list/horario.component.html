@@ -34,7 +34,7 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -51,31 +51,31 @@
               <span appTranslate="longonkeloApp.horario.chaveComposta2">Chave Composta 2</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="diaSemana">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.horario.diaSemana">Dia Semana</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="utilizador.login">
+          <!-- <th scope="col" appSortBy="utilizador.login">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.horario.utilizador">Utilizador</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="turma.descricao">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.horario.turma">Turma</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="referencia.id">
+          <!-- <th scope="col" appSortBy="referencia.id">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.horario.referencia">Referencia</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="periodo.descricao">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.horario.periodo">Periodo</span>
@@ -99,25 +99,25 @@
       </thead>
       <tbody>
         <tr *ngFor="let horario of horarios; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/horario', horario.id, 'view']">{{ horario.id }}</a>
           </td>
           <td>{{ horario.chaveComposta1 }}</td>
-          <td>{{ horario.chaveComposta2 }}</td>
+          <td>{{ horario.chaveComposta2 }}</td> -->
           <td appTranslate="{{ 'longonkeloApp.DiaSemana.' + horario.diaSemana }}">{{ horario.diaSemana }}</td>
-          <td>
+          <!-- <td>
             {{ horario.utilizador?.login }}
-          </td>
+          </td> -->
           <td>
             <div *ngIf="horario.turma">
               <a [routerLink]="['/turma', horario.turma.id, 'view']">{{ horario.turma.descricao }}</a>
             </div>
           </td>
-          <td>
+          <!-- <td>
             <div *ngIf="horario.referencia">
               <a [routerLink]="['/horario', horario.referencia.id, 'view']">{{ horario.referencia.id }}</a>
             </div>
-          </td>
+          </td> -->
           <td>
             <div *ngIf="horario.periodo">
               <a [routerLink]="['/periodo-horario', horario.periodo.id, 'view']">{{ horario.periodo.descricao }}</a>
@@ -137,7 +137,7 @@
           </td>
           <td class="text-end">
             <div class="btn-group">
-              <button
+              <!-- <button
                 type="submit"
                 [routerLink]="['/horario']"
                 [queryParams]="{ 'filter[referenciaId.in]': horario.id }"
@@ -175,7 +175,7 @@
               >
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
-              </button>
+              </button> -->
 
               <button
                 type="submit"

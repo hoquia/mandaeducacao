@@ -1,5 +1,6 @@
 package com.ravunana.longonkelo.service.impl;
 
+import com.ravunana.longonkelo.config.LongonkeloException;
 import com.ravunana.longonkelo.domain.Horario;
 import com.ravunana.longonkelo.repository.HorarioRepository;
 import com.ravunana.longonkelo.service.HorarioService;
@@ -36,6 +37,50 @@ public class HorarioServiceImpl implements HorarioService {
     @Override
     public HorarioDTO save(HorarioDTO horarioDTO) {
         log.debug("Request to save Horario : {}", horarioDTO);
+
+        // turmaId-tempo-diaSemana-DocenteId
+        // O docente já tem um tempo definido nesse periodo para essa turma
+        var chaveComposta1 =
+            horarioDTO.getTurma().getId() +
+            horarioDTO.getPeriodo().getTempo() +
+            horarioDTO.getDiaSemana().name() +
+            horarioDTO.getDocente().getId();
+
+        var chaveComposta1Result = horarioRepository
+            .findAll()
+            .stream()
+            .filter(x -> x.getChaveComposta1().equals(chaveComposta1))
+            .findFirst();
+
+        if (chaveComposta1Result.isPresent()) {
+            throw new LongonkeloException(
+                "O Docente " +
+                horarioDTO.getDocente().getNome() +
+                " já tem um tempo definido nesse periodo para essa turma, altera o periodo ou turma"
+            );
+        }
+
+        // tipoHorarioDocente-pofessorId-tempo-diaSemana
+        // O docente não pode estar no mesmo periodo em duas turmas diferentes
+        var chaveComposta2 = horarioDTO.getDocente().getId() + horarioDTO.getPeriodo().getTempo() + horarioDTO.getDiaSemana().name();
+
+        var chaveComposta2Result = horarioRepository
+            .findAll()
+            .stream()
+            .filter(x -> x.getChaveComposta2().equals(chaveComposta2))
+            .findFirst();
+
+        if (chaveComposta2Result.isPresent()) {
+            throw new LongonkeloException(
+                "O Docente " +
+                horarioDTO.getDocente().getNome() +
+                " não pode estar no mesmo periodo e turmas diferentes, altera o perido de aula"
+            );
+        }
+
+        horarioDTO.setChaveComposta1(chaveComposta1);
+        horarioDTO.setChaveComposta2(chaveComposta2);
+
         Horario horario = horarioMapper.toEntity(horarioDTO);
         horario = horarioRepository.save(horario);
         return horarioMapper.toDto(horario);

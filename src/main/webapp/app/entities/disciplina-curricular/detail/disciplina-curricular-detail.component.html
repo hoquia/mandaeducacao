@@ -12,25 +12,25 @@
       <app-alert></app-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <!-- <dt><span appTranslate="global.field.id">Código</span></dt>
         <dd>
           <span>{{ disciplinaCurricular.id }}</span>
         </dd>
         <dt><span appTranslate="longonkeloApp.disciplinaCurricular.uniqueDisciplinaCurricular">Unique Disciplina Curricular</span></dt>
         <dd>
           <span>{{ disciplinaCurricular.uniqueDisciplinaCurricular }}</span>
-        </dd>
+        </dd> -->
         <dt><span appTranslate="longonkeloApp.disciplinaCurricular.descricao">Descricao</span></dt>
         <dd>
           <span>{{ disciplinaCurricular.descricao }}</span>
         </dd>
         <dt><span appTranslate="longonkeloApp.disciplinaCurricular.cargaSemanal">Carga Semanal</span></dt>
         <dd>
-          <span>{{ disciplinaCurricular.cargaSemanal }}</span>
+          <span>{{ disciplinaCurricular.cargaSemanal }} semanal</span>
         </dd>
         <dt><span appTranslate="longonkeloApp.disciplinaCurricular.isTerminal">Is Terminal</span></dt>
         <dd>
-          <span>{{ disciplinaCurricular.isTerminal }}</span>
+          <span>{{ disciplinaCurricular.isTerminal ? 'Sim' : 'Não' }}</span>
         </dd>
         <dt><span appTranslate="longonkeloApp.disciplinaCurricular.mediaParaExame">Media Para Exame</span></dt>
         <dd>
@@ -75,14 +75,14 @@
             <a [routerLink]="['/disciplina', disciplinaCurricular.disciplina.id, 'view']">{{ disciplinaCurricular.disciplina.nome }}</a>
           </div>
         </dd>
-        <dt><span appTranslate="longonkeloApp.disciplinaCurricular.referencia">Referencia</span></dt>
+        <!-- <dt><span appTranslate="longonkeloApp.disciplinaCurricular.referencia">Referencia</span></dt>
         <dd>
           <div *ngIf="disciplinaCurricular.referencia">
             <a [routerLink]="['/disciplina-curricular', disciplinaCurricular.referencia.id, 'view']">{{
               disciplinaCurricular.referencia.descricao
             }}</a>
           </div>
-        </dd>
+        </dd> -->
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

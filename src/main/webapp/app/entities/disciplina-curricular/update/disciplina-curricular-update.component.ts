@@ -23,7 +23,8 @@ export class DisciplinaCurricularUpdateComponent implements OnInit {
   disciplinaCurricular: IDisciplinaCurricular | null = null;
 
   disciplinaCurricularsSharedCollection: IDisciplinaCurricular[] = [];
-  lookupItemsSharedCollection: ILookupItem[] = [];
+  regimeCollection: ILookupItem[] = [];
+  componenteCollection: ILookupItem[] = [];
   planoCurricularsSharedCollection: IPlanoCurricular[] = [];
   disciplinasSharedCollection: IDisciplina[] = [];
 
@@ -54,14 +55,6 @@ export class DisciplinaCurricularUpdateComponent implements OnInit {
       if (disciplinaCurricular) {
         this.updateForm(disciplinaCurricular);
       } else {
-        const planoCurricularID = Number(this.activatedRoute.snapshot.queryParamMap.get('plano_curricular_id'));
-
-        this.planoCurricularService.find(planoCurricularID).subscribe(res => {
-          this.editForm.patchValue({
-            planosCurriculars: res.body?.disciplinasCurriculars,
-          });
-        });
-
         this.editForm.patchValue({
           descricao: '1010',
           mediaParaDespensar: 0,
@@ -117,11 +110,11 @@ export class DisciplinaCurricularUpdateComponent implements OnInit {
         this.disciplinaCurricularsSharedCollection,
         disciplinaCurricular.referencia
       );
-    this.lookupItemsSharedCollection = this.lookupItemService.addLookupItemToCollectionIfMissing<ILookupItem>(
-      this.lookupItemsSharedCollection,
-      disciplinaCurricular.componente,
-      disciplinaCurricular.regime
-    );
+    // this.lookupItemsSharedCollection = this.lookupItemService.addLookupItemToCollectionIfMissing<ILookupItem>(
+    //   this.lookupItemsSharedCollection,
+    //   disciplinaCurricular.componente,
+    //   disciplinaCurricular.regime
+    // );
     this.planoCurricularsSharedCollection = this.planoCurricularService.addPlanoCurricularToCollectionIfMissing<IPlanoCurricular>(
       this.planoCurricularsSharedCollection,
       ...(disciplinaCurricular.planosCurriculars ?? [])
@@ -146,22 +139,31 @@ export class DisciplinaCurricularUpdateComponent implements OnInit {
       )
       .subscribe((disciplinaCurriculars: IDisciplinaCurricular[]) => (this.disciplinaCurricularsSharedCollection = disciplinaCurriculars));
 
-    this.lookupItemService
-      .query()
-      .pipe(map((res: HttpResponse<ILookupItem[]>) => res.body ?? []))
-      .pipe(
-        map((lookupItems: ILookupItem[]) =>
-          this.lookupItemService.addLookupItemToCollectionIfMissing<ILookupItem>(
-            lookupItems,
-            this.disciplinaCurricular?.componente,
-            this.disciplinaCurricular?.regime
-          )
-        )
-      )
-      .subscribe((lookupItems: ILookupItem[]) => (this.lookupItemsSharedCollection = lookupItems));
+    // this.lookupItemService
+    //   .query()
+    //   .pipe(map((res: HttpResponse<ILookupItem[]>) => res.body ?? []))
+    //   .pipe(
+    //     map((lookupItems: ILookupItem[]) =>
+    //       this.lookupItemService.addLookupItemToCollectionIfMissing<ILookupItem>(
+    //         lookupItems,
+    //         this.disciplinaCurricular?.componente,
+    //         this.disciplinaCurricular?.regime
+    //       )
+    //     )
+    //   )
+    //   .subscribe((lookupItems: ILookupItem[]) => (this.lookupItemsSharedCollection = lookupItems));
+
+    // componente disciplina
+    this.lookupItemService.query({ 'lookupId.equals': 4 }).subscribe(res => {
+      this.componenteCollection = res.body ?? [];
+    });
+    // estadoregime disciplinaCivil
+    this.lookupItemService.query({ 'lookupId.equals': 5 }).subscribe(res => {
+      this.regimeCollection = res.body ?? [];
+    });
 
     this.planoCurricularService
-      .query()
+      .query({ size: 10000 })
       .pipe(map((res: HttpResponse<IPlanoCurricular[]>) => res.body ?? []))
       .pipe(
         map((planoCurriculars: IPlanoCurricular[]) =>
@@ -174,7 +176,7 @@ export class DisciplinaCurricularUpdateComponent implements OnInit {
       .subscribe((planoCurriculars: IPlanoCurricular[]) => (this.planoCurricularsSharedCollection = planoCurriculars));
 
     this.disciplinaService
-      .query()
+      .query({ size: 10000 })
       .pipe(map((res: HttpResponse<IDisciplina[]>) => res.body ?? []))
       .pipe(
         map((disciplinas: IDisciplina[]) =>

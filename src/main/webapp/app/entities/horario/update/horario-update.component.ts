@@ -147,13 +147,13 @@ export class HorarioUpdateComponent implements OnInit {
       .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
 
     this.turmaService
-      .query()
+      .query({ size: 10000 })
       .pipe(map((res: HttpResponse<ITurma[]>) => res.body ?? []))
       .pipe(map((turmas: ITurma[]) => this.turmaService.addTurmaToCollectionIfMissing<ITurma>(turmas, this.horario?.turma)))
       .subscribe((turmas: ITurma[]) => (this.turmasSharedCollection = turmas));
 
     this.periodoHorarioService
-      .query()
+      .query({ size: 10000 })
       .pipe(map((res: HttpResponse<IPeriodoHorario[]>) => res.body ?? []))
       .pipe(
         map((periodoHorarios: IPeriodoHorario[]) =>
@@ -163,13 +163,13 @@ export class HorarioUpdateComponent implements OnInit {
       .subscribe((periodoHorarios: IPeriodoHorario[]) => (this.periodoHorariosSharedCollection = periodoHorarios));
 
     this.docenteService
-      .query()
+      .query({ size: 10000 })
       .pipe(map((res: HttpResponse<IDocente[]>) => res.body ?? []))
       .pipe(map((docentes: IDocente[]) => this.docenteService.addDocenteToCollectionIfMissing<IDocente>(docentes, this.horario?.docente)))
       .subscribe((docentes: IDocente[]) => (this.docentesSharedCollection = docentes));
 
     this.disciplinaCurricularService
-      .query()
+      .query({ size: 10000 })
       .pipe(map((res: HttpResponse<IDisciplinaCurricular[]>) => res.body ?? []))
       .pipe(
         map((disciplinaCurriculars: IDisciplinaCurricular[]) =>

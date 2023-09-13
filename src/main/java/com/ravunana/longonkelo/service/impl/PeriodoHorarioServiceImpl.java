@@ -54,8 +54,9 @@ public class PeriodoHorarioServiceImpl implements PeriodoHorarioService {
         //            throw new LongokeloException("Formato da Hora final incorreta, formato certo: HH:mm");
         //        }
 
-        var instituicao = instituicaoEnsinoService.getInstituicao(SecurityUtils.getCurrentUserLogin().get());
-        //        periodoHorarioDTO.setInstituicao(instituicao);
+        periodoHorarioDTO.setInicio(inicio);
+        periodoHorarioDTO.setFim(fim);
+
         String descricao =
             periodoHorarioDTO.getTempo() +
             "º Tempo, " +
@@ -65,7 +66,6 @@ public class PeriodoHorarioServiceImpl implements PeriodoHorarioService {
             " as " +
             periodoHorarioDTO.getFim();
         periodoHorarioDTO.setDescricao(descricao);
-        //        periodoHorarioDTO.setUniquePeriodo(descricao + periodoHorarioDTO.getInstituicao().getId());
 
         PeriodoHorario periodoHorario = periodoHorarioMapper.toEntity(periodoHorarioDTO);
         periodoHorario = periodoHorarioRepository.save(periodoHorario);

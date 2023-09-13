@@ -127,7 +127,7 @@
               [compareWith]="compareLookupItem"
             >
               <option *ngIf="!editForm.get('estadoCivil')!.value" [ngValue]="null" selected></option>
-              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of estadoCivilCollection">
                 {{ lookupItemOption.descricao }}
               </option>
             </select>
@@ -156,7 +156,7 @@
               [compareWith]="compareLookupItem"
             >
               <option *ngIf="!editForm.get('nacionalidade')!.value" [ngValue]="null" selected></option>
-              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of nacionalidadeCollection">
                 {{ lookupItemOption.descricao }}
               </option>
             </select>
@@ -187,7 +187,7 @@
               [compareWith]="compareLookupItem"
             >
               <option *ngIf="!editForm.get('naturalidade')!.value" [ngValue]="null" selected></option>
-              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of naturalidadeCollection">
                 {{ lookupItemOption.descricao }}
               </option>
             </select>
@@ -257,7 +257,7 @@
               [compareWith]="compareLookupItem"
             >
               <option *ngIf="!editForm.get('tipoDocumento')!.value" [ngValue]="null" selected></option>
-              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of tipoDocumentoCollection">
                 {{ lookupItemOption.descricao }}
               </option>
             </select>
@@ -517,7 +517,7 @@
               [compareWith]="compareLookupItem"
             >
               <option [ngValue]="null"></option>
-              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of categoriaProfissionalCollection">
                 {{ lookupItemOption.descricao }}
               </option>
             </select>
@@ -551,7 +551,7 @@
               [compareWith]="compareLookupItem"
             >
               <option *ngIf="!editForm.get('grauAcademico')!.value" [ngValue]="null" selected></option>
-              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of grauAcademicoCollection">
                 {{ lookupItemOption.descricao }}
               </option>
             </select>
@@ -584,7 +584,7 @@
               [compareWith]="compareLookupItem"
             >
               <option [ngValue]="null"></option>
-              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              <option [ngValue]="lookupItemOption" *ngFor="let lookupItemOption of unidadeOrganicaCollection">
                 {{ lookupItemOption.descricao }}
               </option>
             </select>

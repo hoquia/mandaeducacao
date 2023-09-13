@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import dayjs from 'dayjs/esm';
@@ -102,6 +102,14 @@ export class DocenteService {
       return [...docentesToAdd, ...docenteCollection];
     }
     return docenteCollection;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  downloadHorarioDocentePdf(docenteID: number) {
+    let headers = new HttpHeaders();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    headers = headers.set('Accept', 'application/pdf');
+    return this.http.get(`${this.resourceUrl}/horario-docente/${docenteID}`, { headers, responseType: 'blob' });
   }
 
   protected convertDateFromClient<T extends IDocente | NewDocente | PartialUpdateDocente>(docente: T): RestOf<T> {

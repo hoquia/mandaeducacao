@@ -357,21 +357,21 @@
                   >Show Ocorrencia</span
                 >
               </button> -->
-              <button
+              <!-- <button
                 type="submit"
                 [routerLink]="['/horario']"
                 [queryParams]="{ 'filter[docenteId.in]': docente.id }"
                 class="btn btn-warning btn-sm"
                 data-cy="filterOtherEntityButton"
               >
-                <!-- <fa-icon icon="eye"></fa-icon> -->
+                 <fa-icon icon="eye"></fa-icon>
                 <span
                   class="d-none d-md-inline"
                   appTranslate="entity.action.show"
                   [translateValues]="{ otherEntity: ('longonkeloApp.docente.horarios' | translate) }"
                   >Horario</span
                 >
-              </button>
+              </button> -->
               <!-- <button
                 type="submit"
                 [routerLink]="['/plano-aula']"
@@ -462,6 +462,16 @@
                   >Show Formacao Docente</span
                 >
               </button> -->
+
+              <button
+                type="submit"
+                class="btn btn-secondary btn-sm"
+                data-cy="entityDetailsButton"
+                (click)="gerarHorarioDocente(docente.id)"
+              >
+                <!-- <fa-icon icon="eye"></fa-icon> -->
+                <span class="d-none d-md-inline">Horário</span>
+              </button>
               <button
                 type="submit"
                 [routerLink]="['/docente', docente.id, 'view']"

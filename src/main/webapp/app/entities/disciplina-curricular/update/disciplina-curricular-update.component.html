@@ -78,7 +78,7 @@
               [compareWith]="compareLookupItem"
             >
               <ng-option [value]="null"></ng-option>
-              <ng-option [value]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              <ng-option [value]="lookupItemOption" *ngFor="let lookupItemOption of componenteCollection">
                 {{ lookupItemOption.descricao }}
               </ng-option>
             </ng-select>
@@ -95,7 +95,7 @@
               [compareWith]="compareLookupItem"
             >
               <ng-option [value]="null"></ng-option>
-              <ng-option [value]="lookupItemOption" *ngFor="let lookupItemOption of lookupItemsSharedCollection">
+              <ng-option [value]="lookupItemOption" *ngFor="let lookupItemOption of regimeCollection">
                 {{ lookupItemOption.descricao }}
               </ng-option>
             </ng-select>
@@ -172,6 +172,7 @@
             name="planosCurriculars"
             formControlName="planosCurriculars"
             [compareWith]="comparePlanoCurricular"
+            [multiple]="true"
           >
             <ng-option [value]="planoCurricularOption" *ngFor="let planoCurricularOption of planoCurricularsSharedCollection">
               {{ planoCurricularOption.descricao }}

@@ -163,18 +163,6 @@
                 <span appTranslate="global.menu.entities.medidaDisciplinar">Medida Disciplinar</span>
               </a>
             </li>
-            <li *appHasAnyAuthority="['SUB_DIRECTOR_PEDAGOGICO']">
-              <a
-                class="dropdown-item"
-                routerLink="docente"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.docente">Docente</span>
-              </a>
-            </li>
 
             <li *appHasAnyAuthority="['SUB_DIRECTOR_PEDAGOGICO']">
               <a
@@ -186,19 +174,6 @@
               >
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                 <span appTranslate="global.menu.entities.periodoLancamentoNota">Periodo Lancamento Nota</span>
-              </a>
-            </li>
-
-            <li *appHasAnyAuthority="['SUB_DIRECTOR_PEDAGOGICO']">
-              <a
-                class="dropdown-item"
-                routerLink="disciplina-curricular"
-                routerLinkActive="active"
-                [routerLinkActiveOptions]="{ exact: true }"
-                (click)="collapseNavbar()"
-              >
-                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
-                <span appTranslate="global.menu.entities.disciplinaCurricular">Disciplina Curricular</span>
               </a>
             </li>
 
@@ -253,6 +228,19 @@
                 <span appTranslate="global.menu.entities.planoCurricular">Plano Curricular</span>
               </a>
             </li>
+
+            <li *appHasAnyAuthority="['SUB_DIRECTOR_PEDAGOGICO']">
+              <a
+                class="dropdown-item"
+                routerLink="disciplina-curricular"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.disciplinaCurricular">Disciplina Curricular</span>
+              </a>
+            </li>
             <!-- <li>
               <a
                 class="dropdown-item"
@@ -275,6 +263,18 @@
               >
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                 <span appTranslate="global.menu.entities.turma">Turma</span>
+              </a>
+            </li>
+            <li *appHasAnyAuthority="['SUB_DIRECTOR_PEDAGOGICO']">
+              <a
+                class="dropdown-item"
+                routerLink="docente"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.docente">Docente</span>
               </a>
             </li>
             <li *appHasAnyAuthority="['DIRECTOR_GERAL', 'SUB_DIRECTOR_PEDAGOGICO']">
