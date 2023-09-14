@@ -55,6 +55,10 @@ export class LicaoUpdateComponent implements OnInit {
       this.licao = licao;
       if (licao) {
         this.updateForm(licao);
+      } else {
+        this.editForm.patchValue({
+          numero: 1,
+        });
       }
 
       this.loadRelationshipsOptions();
@@ -132,7 +136,7 @@ export class LicaoUpdateComponent implements OnInit {
       .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
 
     this.planoAulaService
-      .query()
+      .query({ size: 10000 })
       .pipe(map((res: HttpResponse<IPlanoAula[]>) => res.body ?? []))
       .pipe(
         map((planoAulas: IPlanoAula[]) =>
@@ -142,7 +146,7 @@ export class LicaoUpdateComponent implements OnInit {
       .subscribe((planoAulas: IPlanoAula[]) => (this.planoAulasSharedCollection = planoAulas));
 
     this.horarioService
-      .query()
+      .query({ size: 10000 })
       .pipe(map((res: HttpResponse<IHorario[]>) => res.body ?? []))
       .pipe(map((horarios: IHorario[]) => this.horarioService.addHorarioToCollectionIfMissing<IHorario>(horarios, this.licao?.horario)))
       .subscribe((horarios: IHorario[]) => (this.horariosSharedCollection = horarios));

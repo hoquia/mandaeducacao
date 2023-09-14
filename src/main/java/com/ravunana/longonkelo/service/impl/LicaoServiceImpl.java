@@ -1,11 +1,18 @@
 package com.ravunana.longonkelo.service.impl;
 
 import com.ravunana.longonkelo.domain.Licao;
+import com.ravunana.longonkelo.domain.enumeration.EstadoLicao;
 import com.ravunana.longonkelo.repository.LicaoRepository;
+import com.ravunana.longonkelo.security.SecurityUtils;
 import com.ravunana.longonkelo.service.LicaoService;
+import com.ravunana.longonkelo.service.TurmaService;
+import com.ravunana.longonkelo.service.UserService;
 import com.ravunana.longonkelo.service.dto.LicaoDTO;
 import com.ravunana.longonkelo.service.mapper.LicaoMapper;
+import com.ravunana.longonkelo.service.mapper.UserMapper;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -26,14 +33,28 @@ public class LicaoServiceImpl implements LicaoService {
 
     private final LicaoMapper licaoMapper;
 
-    public LicaoServiceImpl(LicaoRepository licaoRepository, LicaoMapper licaoMapper) {
+    private final UserService userService;
+    private final UserMapper userMapper;
+
+    public LicaoServiceImpl(LicaoRepository licaoRepository, LicaoMapper licaoMapper, UserService userService, UserMapper userMapper) {
         this.licaoRepository = licaoRepository;
         this.licaoMapper = licaoMapper;
+        this.userService = userService;
+        this.userMapper = userMapper;
     }
 
     @Override
     public LicaoDTO save(LicaoDTO licaoDTO) {
         log.debug("Request to save Licao : {}", licaoDTO);
+        var numeroLicao = gerarNumeroLicao(licaoDTO);
+        licaoDTO.setNumero(numeroLicao);
+
+        var chaveComposta = getChaveComposta(licaoDTO);
+        licaoDTO.setChaveComposta(chaveComposta);
+
+        var utilizador = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
+        licaoDTO.setUtilizador(userMapper.toDtoLogin(utilizador));
+
         Licao licao = licaoMapper.toEntity(licaoDTO);
         licao = licaoRepository.save(licao);
         return licaoMapper.toDto(licao);
@@ -84,5 +105,40 @@ public class LicaoServiceImpl implements LicaoService {
     public void delete(Long id) {
         log.debug("Request to delete Licao : {}", id);
         licaoRepository.deleteById(id);
+    }
+
+    @Override
+    public String getChaveComposta(LicaoDTO licaoDTO) {
+        // numero + turma + disciplina
+        var horario = licaoDTO.getHorario();
+        var turmaId = horario.getTurma().getId();
+        var disciplinaId = horario.getDisciplinaCurricular().getId();
+        int numero = licaoDTO.getNumero();
+        StringBuilder sb = new StringBuilder();
+        sb.append(numero).append(turmaId).append(disciplinaId);
+        return sb.toString();
+    }
+
+    @Override
+    public Integer gerarNumeroLicao(LicaoDTO licaoDTO) {
+        int count = 0;
+        var horario = licaoDTO.getHorario();
+        var turmaId = horario.getTurma().getId();
+        var disciplina = horario.getDisciplinaCurricular().getId();
+        var estado = licaoDTO.getEstado();
+
+        var t = licaoRepository.findAll().stream().filter(l -> l.getHorario().getTurma().getId().equals(turmaId)).findFirst();
+
+        var d = licaoRepository
+            .findAll()
+            .stream()
+            .filter(di -> di.getHorario().getDisciplinaCurricular().getId().equals(disciplina))
+            .findFirst();
+
+        var licoes = licaoRepository.findAll().stream().toArray().length;
+        for (int i = 0; i < licoes; i++) {
+            if (t.isPresent() && d.isPresent() && estado.equals(EstadoLicao.DADA)) {}
+        }
+        return null;
     }
 }

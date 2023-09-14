@@ -63,4 +63,9 @@ public interface NotasGeralDisciplinaService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    // matricula-periodoLectivo-disciplina
+    String getChaveComposta(NotasGeralDisciplinaDTO notasGeralDisciplinaDTO);
+
+    Double calcularMediaFinalDisciplina(NotasGeralDisciplinaDTO notasGeralDisciplinaDTO);
 }

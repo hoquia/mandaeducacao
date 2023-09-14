@@ -34,7 +34,7 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -45,14 +45,14 @@
               <span appTranslate="longonkeloApp.notasGeralDisciplina.chaveComposta">Chave Composta</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="periodoLancamento">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.notasGeralDisciplina.periodoLancamento">Periodo Lancamento</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="media1">
+          <!-- <th scope="col" appSortBy="media1">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.notasGeralDisciplina.media1">Media 1</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -69,8 +69,8 @@
               <span appTranslate="longonkeloApp.notasGeralDisciplina.media3">Media 3</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="exame">
+          </th> -->
+          <!-- <th scope="col" appSortBy="exame">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.notasGeralDisciplina.exame">Exame</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -93,14 +93,14 @@
               <span appTranslate="longonkeloApp.notasGeralDisciplina.notaConselho">Nota Conselho</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="mediaFinalDisciplina">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.notasGeralDisciplina.mediaFinalDisciplina">Media Final Disciplina</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="timestamp">
+          <!-- <th scope="col" appSortBy="timestamp">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.notasGeralDisciplina.timestamp">Timestamp</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -111,8 +111,8 @@
               <span appTranslate="longonkeloApp.notasGeralDisciplina.hash">Hash</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="faltaJusticada">
+          </th> -->
+          <!-- <th scope="col" appSortBy="faltaJusticada">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.notasGeralDisciplina.faltaJusticada">Falta Justicada</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -123,13 +123,13 @@
               <span appTranslate="longonkeloApp.notasGeralDisciplina.faltaInjustificada">Falta Injustificada</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="utilizador.login">
+          </th> -->
+          <!-- <th scope="col" appSortBy="utilizador.login">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.notasGeralDisciplina.utilizador">Utilizador</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="docente.nome">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.notasGeralDisciplina.docente">Docente</span>
@@ -159,26 +159,26 @@
       </thead>
       <tbody>
         <tr *ngFor="let notasGeralDisciplina of notasGeralDisciplinas; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/notas-geral-disciplina', notasGeralDisciplina.id, 'view']">{{ notasGeralDisciplina.id }}</a>
           </td>
-          <td>{{ notasGeralDisciplina.chaveComposta }}</td>
-          <td>{{ notasGeralDisciplina.periodoLancamento }}</td>
-          <td>{{ notasGeralDisciplina.media1 }}</td>
-          <td>{{ notasGeralDisciplina.media2 }}</td>
-          <td>{{ notasGeralDisciplina.media3 }}</td>
-          <td>{{ notasGeralDisciplina.exame }}</td>
-          <td>{{ notasGeralDisciplina.recurso }}</td>
-          <td>{{ notasGeralDisciplina.exameEspecial }}</td>
-          <td>{{ notasGeralDisciplina.notaConselho }}</td>
-          <td>{{ notasGeralDisciplina.mediaFinalDisciplina }}</td>
-          <td>{{ notasGeralDisciplina.timestamp | formatMediumDatetime }}</td>
-          <td>{{ notasGeralDisciplina.hash }}</td>
-          <td>{{ notasGeralDisciplina.faltaJusticada }}</td>
-          <td>{{ notasGeralDisciplina.faltaInjustificada }}</td>
-          <td>
+          <td>{{ notasGeralDisciplina.chaveComposta }}</td> -->
+          <td>{{ notasGeralDisciplina.periodoLancamento }} º Trimestre</td>
+          <!-- <td>{{ notasGeralDisciplina.media1 | number}} Valor</td>
+          <td>{{ notasGeralDisciplina.media2 | number}} Valor</td>
+          <td>{{ notasGeralDisciplina.media3 | number}} Valor</td> -->
+          <!-- <td>{{ notasGeralDisciplina.exame | number}} Valor</td>
+          <td>{{ notasGeralDisciplina.recurso | number}} Valor</td>
+          <td>{{ notasGeralDisciplina.exameEspecial | number}} Valor</td>
+          <td>{{ notasGeralDisciplina.notaConselho | number}} Valor</td> -->
+          <td>{{ notasGeralDisciplina.mediaFinalDisciplina | number }} Valor</td>
+          <!-- <td>{{ notasGeralDisciplina.timestamp | formatMediumDatetime }}</td>
+          <td>{{ notasGeralDisciplina.hash }}</td> -->
+          <!-- <td>{{ notasGeralDisciplina.faltaJusticada }}</td>
+          <td>{{ notasGeralDisciplina.faltaInjustificada }}</td> -->
+          <!-- <td>
             {{ notasGeralDisciplina.utilizador?.login }}
-          </td>
+          </td> -->
           <td>
             <div *ngIf="notasGeralDisciplina.docente">
               <a [routerLink]="['/docente', notasGeralDisciplina.docente.id, 'view']">{{ notasGeralDisciplina.docente.nome }}</a>

@@ -63,4 +63,8 @@ public interface LicaoService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Integer gerarNumeroLicao(LicaoDTO licaoDTO);
+
+    String getChaveComposta(LicaoDTO licaoDTO);
 }

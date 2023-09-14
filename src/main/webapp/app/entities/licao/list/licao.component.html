@@ -34,18 +34,18 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="chaveComposta">
+          </th> -->
+          <!-- <th scope="col" appSortBy="chaveComposta">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.licao.chaveComposta">Chave Composta</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="numero">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.licao.numero">Numero</span>
@@ -64,12 +64,12 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="utilizador.login">
+          <!-- <th scope="col" appSortBy="utilizador.login">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.licao.utilizador">Utilizador</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="planoAula.assunto">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.licao.planoAula">Plano Aula</span>
@@ -87,16 +87,16 @@
       </thead>
       <tbody>
         <tr *ngFor="let licao of licaos; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/licao', licao.id, 'view']">{{ licao.id }}</a>
-          </td>
-          <td>{{ licao.chaveComposta }}</td>
+          </td> -->
+          <!-- <td>{{ licao.chaveComposta }}</td> -->
           <td>{{ licao.numero }}</td>
           <td appTranslate="{{ 'longonkeloApp.EstadoLicao.' + licao.estado }}">{{ licao.estado }}</td>
           <td>{{ licao.descricao }}</td>
-          <td>
+          <!-- <td>
             {{ licao.utilizador?.login }}
-          </td>
+          </td> -->
           <td>
             <div *ngIf="licao.planoAula">
               <a [routerLink]="['/plano-aula', licao.planoAula.id, 'view']">{{ licao.planoAula.assunto }}</a>
