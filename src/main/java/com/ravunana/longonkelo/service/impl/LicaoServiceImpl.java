@@ -109,24 +109,37 @@ public class LicaoServiceImpl implements LicaoService {
 
     @Override
     public String getChaveComposta(LicaoDTO licaoDTO) {
-        // numero + turma + disciplina
+        // numero + turma + disciplina + docente + temaAula
         var horario = licaoDTO.getHorario();
         var turmaId = horario.getTurma().getId();
         var disciplinaId = horario.getDisciplinaCurricular().getId();
         int numero = licaoDTO.getNumero();
+        var temaAula = licaoDTO.getPlanoAula().getAssunto();
+        var docenteId = licaoDTO.getPlanoAula().getDocente().getId();
         StringBuilder sb = new StringBuilder();
-        sb.append(numero).append(turmaId).append(disciplinaId);
+        sb.append(numero).append(turmaId).append(disciplinaId).append(temaAula).append(docenteId);
         return sb.toString();
     }
 
     @Override
     public Integer gerarNumeroLicao(LicaoDTO licaoDTO) {
-        int count = 0;
+        long count = 0;
         var horario = licaoDTO.getHorario();
         var turmaId = horario.getTurma().getId();
-        var disciplina = horario.getDisciplinaCurricular().getId();
+        var disciplinaID = horario.getDisciplinaCurricular().getId();
         var estado = licaoDTO.getEstado();
 
+        count =
+            licaoRepository
+                .findAll()
+                .stream()
+                .filter(x ->
+                    x.getHorario().getTurma().getId().equals(turmaId) &&
+                    x.getHorario().getDisciplinaCurricular().getId().equals(disciplinaID)
+                )
+                .count();
+        count++;
+        /*
         var t = licaoRepository.findAll().stream().filter(l -> l.getHorario().getTurma().getId().equals(turmaId)).findFirst();
 
         var d = licaoRepository
@@ -139,6 +152,7 @@ public class LicaoServiceImpl implements LicaoService {
         for (int i = 0; i < licoes; i++) {
             if (t.isPresent() && d.isPresent() && estado.equals(EstadoLicao.DADA)) {}
         }
-        return null;
+        */
+        return (int) count;
     }
 }

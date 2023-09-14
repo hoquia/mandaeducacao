@@ -63,7 +63,9 @@
               [compareWith]="compareHorario"
             >
               <option *ngIf="editForm.get(['horario'])!.value == null" [ngValue]="null" selected></option>
-              <option [ngValue]="horarioOption" *ngFor="let horarioOption of horariosSharedCollection">{{ horarioOption.id }}</option>
+              <option [ngValue]="horarioOption" *ngFor="let horarioOption of horariosSharedCollection">
+                {{ horarioOption.id }} - {{ horarioOption.turma?.descricao }} - {{ horarioOption.disciplinaCurricular?.descricao }}
+              </option>
             </select>
           </div>
           <div *ngIf="editForm.get(['horario'])!.invalid && (editForm.get(['horario'])!.dirty || editForm.get(['horario'])!.touched)">

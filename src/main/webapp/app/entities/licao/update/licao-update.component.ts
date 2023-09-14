@@ -58,6 +58,7 @@ export class LicaoUpdateComponent implements OnInit {
       } else {
         this.editForm.patchValue({
           numero: 1,
+          estado: EstadoLicao.PENDENTE,
         });
       }
 
