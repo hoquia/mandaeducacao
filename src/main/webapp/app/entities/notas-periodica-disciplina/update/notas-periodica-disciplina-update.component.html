@@ -12,12 +12,12 @@
       <div>
         <app-alert-error></app-alert-error>
 
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+        <div class="mb-3" *ngIf="editForm.controls.id.value !== null">
           <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div>
 
-        <div class="row mb-3">
+        <!-- <div class=" mb-3">
           <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.chaveComposta" for="field_chaveComposta"
             >Chave Composta</label
           >
@@ -34,9 +34,85 @@
               editForm.get('chaveComposta')!.invalid && (editForm.get('chaveComposta')!.dirty || editForm.get('chaveComposta')!.touched)
             "
           ></div>
+        </div> -->
+
+        <div class="mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.matricula" for="field_matricula">Matricula</label>
+          <ng-select id="field_matricula" data-cy="matricula" name="matricula" formControlName="matricula" [compareWith]="compareMatricula">
+            <ng-option *ngIf="editForm.get(['matricula'])!.value == null" [value]="null" selected></ng-option>
+            <ng-option [value]="matriculaOption" *ngFor="let matriculaOption of matriculasSharedCollection">
+              {{ matriculaOption.numeroMatricula }} - {{ matriculaOption.discente?.nome }}
+            </ng-option>
+          </ng-select>
+          <div *ngIf="editForm.get(['matricula'])!.invalid && (editForm.get(['matricula'])!.dirty || editForm.get(['matricula'])!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get(['matricula'])?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
         </div>
 
-        <div class="row mb-3">
+        <div class="row">
+          <div class="col mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.turma" for="field_turma">Turma</label>
+            <ng-select id="field_turma" data-cy="turma" name="turma" formControlName="turma" [compareWith]="compareTurma">
+              <ng-option *ngIf="editForm.get(['turma'])!.value == null" [value]="null" selected></ng-option>
+              <ng-option [value]="turmaOption" *ngFor="let turmaOption of turmasSharedCollection">{{ turmaOption.descricao }}</ng-option>
+            </ng-select>
+          </div>
+          <div *ngIf="editForm.get(['turma'])!.invalid && (editForm.get(['turma'])!.dirty || editForm.get(['turma'])!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get(['turma'])?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+
+          <div class="col mb-3">
+            <label
+              class="form-label"
+              appTranslate="longonkeloApp.notasPeriodicaDisciplina.disciplinaCurricular"
+              for="field_disciplinaCurricular"
+              >Disciplina Curricular</label
+            >
+            <ng-select
+              id="field_disciplinaCurricular"
+              data-cy="disciplinaCurricular"
+              name="disciplinaCurricular"
+              formControlName="disciplinaCurricular"
+              [compareWith]="compareDisciplinaCurricular"
+            >
+              <ng-option *ngIf="editForm.get(['disciplinaCurricular'])!.value == null" [value]="null" selected></ng-option>
+              <ng-option
+                [value]="disciplinaCurricularOption"
+                *ngFor="let disciplinaCurricularOption of disciplinaCurricularsSharedCollection"
+              >
+                {{ disciplinaCurricularOption.descricao }}
+              </ng-option>
+            </ng-select>
+          </div>
+          <div
+            *ngIf="
+              editForm.get(['disciplinaCurricular'])!.invalid &&
+              (editForm.get(['disciplinaCurricular'])!.dirty || editForm.get(['disciplinaCurricular'])!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get(['disciplinaCurricular'])?.errors?.required"
+              appTranslate="entity.validation.required"
+            >
+              O campo é obrigatório.
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.periodoLancamento" for="field_periodoLancamento"
             >Periodo Lancamento</label
           >
@@ -80,176 +156,216 @@
           </div>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.nota1" for="field_nota1">Nota 1</label>
-          <input type="number" class="form-control" name="nota1" id="field_nota1" data-cy="nota1" formControlName="nota1" />
-          <div *ngIf="editForm.get('nota1')!.invalid && (editForm.get('nota1')!.dirty || editForm.get('nota1')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('nota1')?.errors?.min"
-              appTranslate="entity.validation.min"
-              [translateValues]="{ min: 0 }"
-            >
-              Este campo deve ser maior que 0.
-            </small>
-            <small class="form-text text-danger" [hidden]="!editForm.get('nota1')?.errors?.number" appTranslate="entity.validation.number">
-              Este campo é do tipo número.
-            </small>
+        <legend>Notas e Média</legend>
+
+        <div class="row">
+          <div class="col-md-3 col-sm-12 mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.nota1" for="field_nota1">Nota 1</label>
+            <input type="number" class="form-control" name="nota1" id="field_nota1" data-cy="nota1" formControlName="nota1" />
+            <div *ngIf="editForm.get('nota1')!.invalid && (editForm.get('nota1')!.dirty || editForm.get('nota1')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('nota1')?.errors?.min"
+                appTranslate="entity.validation.min"
+                [translateValues]="{ min: 0 }"
+              >
+                Este campo deve ser maior que 0.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('nota1')?.errors?.number"
+                appTranslate="entity.validation.number"
+              >
+                Este campo é do tipo número.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-sm-12 mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.nota2" for="field_nota2">Nota 2</label>
+            <input type="number" class="form-control" name="nota2" id="field_nota2" data-cy="nota2" formControlName="nota2" />
+            <div *ngIf="editForm.get('nota2')!.invalid && (editForm.get('nota2')!.dirty || editForm.get('nota2')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('nota2')?.errors?.min"
+                appTranslate="entity.validation.min"
+                [translateValues]="{ min: 0 }"
+              >
+                Este campo deve ser maior que 0.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('nota2')?.errors?.number"
+                appTranslate="entity.validation.number"
+              >
+                Este campo é do tipo número.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-sm-12 mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.nota3" for="field_nota3">Nota 3</label>
+            <input type="number" class="form-control" name="nota3" id="field_nota3" data-cy="nota3" formControlName="nota3" />
+            <div *ngIf="editForm.get('nota3')!.invalid && (editForm.get('nota3')!.dirty || editForm.get('nota3')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('nota3')?.errors?.min"
+                appTranslate="entity.validation.min"
+                [translateValues]="{ min: 0 }"
+              >
+                Este campo deve ser maior que 0.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('nota3')?.errors?.number"
+                appTranslate="entity.validation.number"
+              >
+                Este campo é do tipo número.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-sm-12 mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.media" for="field_media">Media</label>
+            <input
+              [readOnly]="true"
+              type="number"
+              class="form-control"
+              name="media"
+              id="field_media"
+              data-cy="media"
+              formControlName="media"
+            />
+            <div *ngIf="editForm.get('media')!.invalid && (editForm.get('media')!.dirty || editForm.get('media')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('media')?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                O campo é obrigatório.
+              </small>
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('media')?.errors?.min"
+                appTranslate="entity.validation.min"
+                [translateValues]="{ min: 0 }"
+              >
+                Este campo deve ser maior que 0.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('media')?.errors?.number"
+                appTranslate="entity.validation.number"
+              >
+                Este campo é do tipo número.
+              </small>
+            </div>
           </div>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.nota2" for="field_nota2">Nota 2</label>
-          <input type="number" class="form-control" name="nota2" id="field_nota2" data-cy="nota2" formControlName="nota2" />
-          <div *ngIf="editForm.get('nota2')!.invalid && (editForm.get('nota2')!.dirty || editForm.get('nota2')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('nota2')?.errors?.min"
-              appTranslate="entity.validation.min"
-              [translateValues]="{ min: 0 }"
+        <legend>Faltas e Comportamento</legend>
+
+        <div class="row">
+          <div class="col-md-4 col-sm-12 mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.faltaJusticada" for="field_faltaJusticada"
+              >Falta Justicada</label
             >
-              Este campo deve ser maior que 0.
-            </small>
-            <small class="form-text text-danger" [hidden]="!editForm.get('nota2')?.errors?.number" appTranslate="entity.validation.number">
-              Este campo é do tipo número.
-            </small>
+            <input
+              type="number"
+              class="form-control"
+              name="faltaJusticada"
+              id="field_faltaJusticada"
+              data-cy="faltaJusticada"
+              formControlName="faltaJusticada"
+            />
+            <div
+              *ngIf="
+                editForm.get('faltaJusticada')!.invalid &&
+                (editForm.get('faltaJusticada')!.dirty || editForm.get('faltaJusticada')!.touched)
+              "
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('faltaJusticada')?.errors?.min"
+                appTranslate="entity.validation.min"
+                [translateValues]="{ min: 0 }"
+              >
+                Este campo deve ser maior que 0.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('faltaJusticada')?.errors?.number"
+                appTranslate="entity.validation.number"
+              >
+                Este campo é do tipo número.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-12 mb-3">
+            <label
+              class="form-label"
+              appTranslate="longonkeloApp.notasPeriodicaDisciplina.faltaInjustificada"
+              for="field_faltaInjustificada"
+              >Falta Injustificada</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              name="faltaInjustificada"
+              id="field_faltaInjustificada"
+              data-cy="faltaInjustificada"
+              formControlName="faltaInjustificada"
+            />
+            <div
+              *ngIf="
+                editForm.get('faltaInjustificada')!.invalid &&
+                (editForm.get('faltaInjustificada')!.dirty || editForm.get('faltaInjustificada')!.touched)
+              "
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('faltaInjustificada')?.errors?.min"
+                appTranslate="entity.validation.min"
+                [translateValues]="{ min: 0 }"
+              >
+                Este campo deve ser maior que 0.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('faltaInjustificada')?.errors?.number"
+                appTranslate="entity.validation.number"
+              >
+                Este campo é do tipo número.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-sm-12 mb-3">
+            <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.comportamento" for="field_comportamento"
+              >Comportamento</label
+            >
+            <select
+              class="form-control"
+              name="comportamento"
+              formControlName="comportamento"
+              id="field_comportamento"
+              data-cy="comportamento"
+            >
+              <option [ngValue]="null">{{ 'longonkeloApp.Comporamento.null' | translate }}</option>
+              <option *ngFor="let comporamento of comporamentoValues" [value]="comporamento">
+                {{ 'longonkeloApp.Comporamento.' + comporamento | translate }}
+              </option>
+            </select>
           </div>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.nota3" for="field_nota3">Nota 3</label>
-          <input type="number" class="form-control" name="nota3" id="field_nota3" data-cy="nota3" formControlName="nota3" />
-          <div *ngIf="editForm.get('nota3')!.invalid && (editForm.get('nota3')!.dirty || editForm.get('nota3')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('nota3')?.errors?.min"
-              appTranslate="entity.validation.min"
-              [translateValues]="{ min: 0 }"
-            >
-              Este campo deve ser maior que 0.
-            </small>
-            <small class="form-text text-danger" [hidden]="!editForm.get('nota3')?.errors?.number" appTranslate="entity.validation.number">
-              Este campo é do tipo número.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.media" for="field_media">Media</label>
-          <input type="number" class="form-control" name="media" id="field_media" data-cy="media" formControlName="media" />
-          <div *ngIf="editForm.get('media')!.invalid && (editForm.get('media')!.dirty || editForm.get('media')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('media')?.errors?.required" appTranslate="entity.validation.required">
-              O campo é obrigatório.
-            </small>
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('media')?.errors?.min"
-              appTranslate="entity.validation.min"
-              [translateValues]="{ min: 0 }"
-            >
-              Este campo deve ser maior que 0.
-            </small>
-            <small class="form-text text-danger" [hidden]="!editForm.get('media')?.errors?.number" appTranslate="entity.validation.number">
-              Este campo é do tipo número.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.faltaJusticada" for="field_faltaJusticada"
-            >Falta Justicada</label
-          >
-          <input
-            type="number"
-            class="form-control"
-            name="faltaJusticada"
-            id="field_faltaJusticada"
-            data-cy="faltaJusticada"
-            formControlName="faltaJusticada"
-          />
-          <div
-            *ngIf="
-              editForm.get('faltaJusticada')!.invalid && (editForm.get('faltaJusticada')!.dirty || editForm.get('faltaJusticada')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('faltaJusticada')?.errors?.min"
-              appTranslate="entity.validation.min"
-              [translateValues]="{ min: 0 }"
-            >
-              Este campo deve ser maior que 0.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('faltaJusticada')?.errors?.number"
-              appTranslate="entity.validation.number"
-            >
-              Este campo é do tipo número.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.faltaInjustificada" for="field_faltaInjustificada"
-            >Falta Injustificada</label
-          >
-          <input
-            type="number"
-            class="form-control"
-            name="faltaInjustificada"
-            id="field_faltaInjustificada"
-            data-cy="faltaInjustificada"
-            formControlName="faltaInjustificada"
-          />
-          <div
-            *ngIf="
-              editForm.get('faltaInjustificada')!.invalid &&
-              (editForm.get('faltaInjustificada')!.dirty || editForm.get('faltaInjustificada')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('faltaInjustificada')?.errors?.min"
-              appTranslate="entity.validation.min"
-              [translateValues]="{ min: 0 }"
-            >
-              Este campo deve ser maior que 0.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('faltaInjustificada')?.errors?.number"
-              appTranslate="entity.validation.number"
-            >
-              Este campo é do tipo número.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.comportamento" for="field_comportamento"
-            >Comportamento</label
-          >
-          <select
-            class="form-control"
-            name="comportamento"
-            formControlName="comportamento"
-            id="field_comportamento"
-            data-cy="comportamento"
-          >
-            <option [ngValue]="null">{{ 'longonkeloApp.Comporamento.null' | translate }}</option>
-            <option *ngFor="let comporamento of comporamentoValues" [value]="comporamento">
-              {{ 'longonkeloApp.Comporamento.' + comporamento | translate }}
-            </option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
+        <!-- <div class=" mb-3">
           <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.hash" for="field_hash">Hash</label>
           <input type="text" class="form-control" name="hash" id="field_hash" data-cy="hash" formControlName="hash" />
-        </div>
+        </div> -->
 
-        <div class="row mb-3">
+        <!-- <div class=" mb-3">
           <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.timestamp" for="field_timestamp">Timestamp</label>
           <div class="d-flex">
             <input
@@ -278,9 +394,9 @@
               Este campo é do tipo data/hora.
             </small>
           </div>
-        </div>
+        </div> -->
 
-        <div class="row mb-3">
+        <!-- <div class=" mb-3">
           <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.utilizador" for="field_utilizador"
             >Utilizador</label
           >
@@ -295,34 +411,14 @@
             <option [ngValue]="null"></option>
             <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
           </select>
-        </div>
+        </div> -->
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.turma" for="field_turma">Turma</label>
-          <select class="form-control" id="field_turma" data-cy="turma" name="turma" formControlName="turma" [compareWith]="compareTurma">
-            <option *ngIf="editForm.get(['turma'])!.value == null" [ngValue]="null" selected></option>
-            <option [ngValue]="turmaOption" *ngFor="let turmaOption of turmasSharedCollection">{{ turmaOption.descricao }}</option>
-          </select>
-        </div>
-        <div *ngIf="editForm.get(['turma'])!.invalid && (editForm.get(['turma'])!.dirty || editForm.get(['turma'])!.touched)">
-          <small class="form-text text-danger" *ngIf="editForm.get(['turma'])?.errors?.required" appTranslate="entity.validation.required">
-            O campo é obrigatório.
-          </small>
-        </div>
-
-        <div class="row mb-3">
+        <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.docente" for="field_docente">Docente</label>
-          <select
-            class="form-control"
-            id="field_docente"
-            data-cy="docente"
-            name="docente"
-            formControlName="docente"
-            [compareWith]="compareDocente"
-          >
-            <option *ngIf="editForm.get(['docente'])!.value == null" [ngValue]="null" selected></option>
-            <option [ngValue]="docenteOption" *ngFor="let docenteOption of docentesSharedCollection">{{ docenteOption.nome }}</option>
-          </select>
+          <ng-select id="field_docente" data-cy="docente" name="docente" formControlName="docente" [compareWith]="compareDocente">
+            <ng-option *ngIf="editForm.get(['docente'])!.value == null" [value]="null" selected></ng-option>
+            <ng-option [value]="docenteOption" *ngFor="let docenteOption of docentesSharedCollection">{{ docenteOption.nome }}</ng-option>
+          </ng-select>
         </div>
         <div *ngIf="editForm.get(['docente'])!.invalid && (editForm.get(['docente'])!.dirty || editForm.get(['docente'])!.touched)">
           <small
@@ -334,71 +430,10 @@
           </small>
         </div>
 
-        <div class="row mb-3">
-          <label
-            class="form-label"
-            appTranslate="longonkeloApp.notasPeriodicaDisciplina.disciplinaCurricular"
-            for="field_disciplinaCurricular"
-            >Disciplina Curricular</label
-          >
-          <select
-            class="form-control"
-            id="field_disciplinaCurricular"
-            data-cy="disciplinaCurricular"
-            name="disciplinaCurricular"
-            formControlName="disciplinaCurricular"
-            [compareWith]="compareDisciplinaCurricular"
-          >
-            <option *ngIf="editForm.get(['disciplinaCurricular'])!.value == null" [ngValue]="null" selected></option>
-            <option [ngValue]="disciplinaCurricularOption" *ngFor="let disciplinaCurricularOption of disciplinaCurricularsSharedCollection">
-              {{ disciplinaCurricularOption.descricao }}
-            </option>
-          </select>
-        </div>
-        <div
-          *ngIf="
-            editForm.get(['disciplinaCurricular'])!.invalid &&
-            (editForm.get(['disciplinaCurricular'])!.dirty || editForm.get(['disciplinaCurricular'])!.touched)
-          "
-        >
-          <small
-            class="form-text text-danger"
-            *ngIf="editForm.get(['disciplinaCurricular'])?.errors?.required"
-            appTranslate="entity.validation.required"
-          >
-            O campo é obrigatório.
-          </small>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.matricula" for="field_matricula">Matricula</label>
-          <select
-            class="form-control"
-            id="field_matricula"
-            data-cy="matricula"
-            name="matricula"
-            formControlName="matricula"
-            [compareWith]="compareMatricula"
-          >
-            <option *ngIf="editForm.get(['matricula'])!.value == null" [ngValue]="null" selected></option>
-            <option [ngValue]="matriculaOption" *ngFor="let matriculaOption of matriculasSharedCollection">
-              {{ matriculaOption.numeroMatricula }}
-            </option>
-          </select>
-        </div>
-        <div *ngIf="editForm.get(['matricula'])!.invalid && (editForm.get(['matricula'])!.dirty || editForm.get(['matricula'])!.touched)">
-          <small
-            class="form-text text-danger"
-            *ngIf="editForm.get(['matricula'])?.errors?.required"
-            appTranslate="entity.validation.required"
-          >
-            O campo é obrigatório.
-          </small>
-        </div>
-
-        <div class="row mb-3">
+        <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.estado" for="field_estado">Estado</label>
           <select
+            [disabled]="true"
             class="form-control"
             id="field_estado"
             data-cy="estado"

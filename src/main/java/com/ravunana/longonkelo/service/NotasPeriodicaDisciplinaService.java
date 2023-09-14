@@ -63,4 +63,8 @@ public interface NotasPeriodicaDisciplinaService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    String getChaveComposta(NotasPeriodicaDisciplinaDTO notasPeriodicaDisciplinaDTO);
+
+    Double calcularMedia(NotasPeriodicaDisciplinaDTO notasPeriodicaDisciplinaDTO);
 }

@@ -34,7 +34,7 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -45,7 +45,7 @@
               <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.chaveComposta">Chave Composta</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="periodoLancamento">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.periodoLancamento">Periodo Lancamento</span>
@@ -94,13 +94,13 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="hash">
+          <!-- <th scope="col" appSortBy="hash">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.hash">Hash</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="timestamp">
+          </th> -->
+          <!-- <th scope="col" appSortBy="timestamp">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.timestamp">Timestamp</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -111,7 +111,7 @@
               <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.utilizador">Utilizador</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="turma.descricao">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.notasPeriodicaDisciplina.turma">Turma</span>
@@ -147,25 +147,25 @@
       </thead>
       <tbody>
         <tr *ngFor="let notasPeriodicaDisciplina of notasPeriodicaDisciplinas; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/notas-periodica-disciplina', notasPeriodicaDisciplina.id, 'view']">{{ notasPeriodicaDisciplina.id }}</a>
           </td>
-          <td>{{ notasPeriodicaDisciplina.chaveComposta }}</td>
-          <td>{{ notasPeriodicaDisciplina.periodoLancamento }}</td>
-          <td>{{ notasPeriodicaDisciplina.nota1 }}</td>
-          <td>{{ notasPeriodicaDisciplina.nota2 }}</td>
-          <td>{{ notasPeriodicaDisciplina.nota3 }}</td>
-          <td>{{ notasPeriodicaDisciplina.media }}</td>
+          <td>{{ notasPeriodicaDisciplina.chaveComposta }}</td> -->
+          <td>{{ notasPeriodicaDisciplina.periodoLancamento }}º Trimestre</td>
+          <td>{{ notasPeriodicaDisciplina.nota1 | number }} Valor</td>
+          <td>{{ notasPeriodicaDisciplina.nota2 | number }} Valor</td>
+          <td>{{ notasPeriodicaDisciplina.nota3 | number }} Valor</td>
+          <td>{{ notasPeriodicaDisciplina.media | number }} Valor</td>
           <td>{{ notasPeriodicaDisciplina.faltaJusticada }}</td>
           <td>{{ notasPeriodicaDisciplina.faltaInjustificada }}</td>
           <td appTranslate="{{ 'longonkeloApp.Comporamento.' + notasPeriodicaDisciplina.comportamento }}">
             {{ notasPeriodicaDisciplina.comportamento }}
           </td>
-          <td>{{ notasPeriodicaDisciplina.hash }}</td>
+          <!-- <td>{{ notasPeriodicaDisciplina.hash }}</td>
           <td>{{ notasPeriodicaDisciplina.timestamp | formatMediumDatetime }}</td>
           <td>
             {{ notasPeriodicaDisciplina.utilizador?.login }}
-          </td>
+          </td> -->
           <td>
             <div *ngIf="notasPeriodicaDisciplina.turma">
               <a [routerLink]="['/turma', notasPeriodicaDisciplina.turma.id, 'view']">{{ notasPeriodicaDisciplina.turma.descricao }}</a>

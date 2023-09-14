@@ -70,6 +70,17 @@ export class NotasPeriodicaDisciplinaUpdateComponent implements OnInit {
       this.notasPeriodicaDisciplina = notasPeriodicaDisciplina;
       if (notasPeriodicaDisciplina) {
         this.updateForm(notasPeriodicaDisciplina);
+      } else {
+        this.editForm.patchValue({
+          nota1: 0,
+          nota2: 0,
+          nota3: 0,
+          media: 0,
+          faltaInjustificada: 0,
+          faltaJusticada: 0,
+          comportamento: Comporamento.NORMAL,
+          periodoLancamento: 1,
+        });
       }
 
       this.loadRelationshipsOptions();
@@ -149,7 +160,7 @@ export class NotasPeriodicaDisciplinaUpdateComponent implements OnInit {
       .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
 
     this.turmaService
-      .query()
+      .query({ size: 10000 })
       .pipe(map((res: HttpResponse<ITurma[]>) => res.body ?? []))
       .pipe(
         map((turmas: ITurma[]) => this.turmaService.addTurmaToCollectionIfMissing<ITurma>(turmas, this.notasPeriodicaDisciplina?.turma))
@@ -157,7 +168,7 @@ export class NotasPeriodicaDisciplinaUpdateComponent implements OnInit {
       .subscribe((turmas: ITurma[]) => (this.turmasSharedCollection = turmas));
 
     this.docenteService
-      .query()
+      .query({ size: 10000 })
       .pipe(map((res: HttpResponse<IDocente[]>) => res.body ?? []))
       .pipe(
         map((docentes: IDocente[]) =>
@@ -167,7 +178,7 @@ export class NotasPeriodicaDisciplinaUpdateComponent implements OnInit {
       .subscribe((docentes: IDocente[]) => (this.docentesSharedCollection = docentes));
 
     this.disciplinaCurricularService
-      .query()
+      .query({ size: 10000 })
       .pipe(map((res: HttpResponse<IDisciplinaCurricular[]>) => res.body ?? []))
       .pipe(
         map((disciplinaCurriculars: IDisciplinaCurricular[]) =>
@@ -180,7 +191,7 @@ export class NotasPeriodicaDisciplinaUpdateComponent implements OnInit {
       .subscribe((disciplinaCurriculars: IDisciplinaCurricular[]) => (this.disciplinaCurricularsSharedCollection = disciplinaCurriculars));
 
     this.matriculaService
-      .query()
+      .query({ size: 10000 })
       .pipe(map((res: HttpResponse<IMatricula[]>) => res.body ?? []))
       .pipe(
         map((matriculas: IMatricula[]) =>
@@ -190,7 +201,7 @@ export class NotasPeriodicaDisciplinaUpdateComponent implements OnInit {
       .subscribe((matriculas: IMatricula[]) => (this.matriculasSharedCollection = matriculas));
 
     this.estadoDisciplinaCurricularService
-      .query()
+      .query({ size: 10000 })
       .pipe(map((res: HttpResponse<IEstadoDisciplinaCurricular[]>) => res.body ?? []))
       .pipe(
         map((estadoDisciplinaCurriculars: IEstadoDisciplinaCurricular[]) =>

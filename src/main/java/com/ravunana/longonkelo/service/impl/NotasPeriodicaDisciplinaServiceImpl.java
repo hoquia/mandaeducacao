@@ -2,9 +2,12 @@ package com.ravunana.longonkelo.service.impl;
 
 import com.ravunana.longonkelo.domain.NotasPeriodicaDisciplina;
 import com.ravunana.longonkelo.repository.NotasPeriodicaDisciplinaRepository;
+import com.ravunana.longonkelo.security.SecurityUtils;
 import com.ravunana.longonkelo.service.NotasPeriodicaDisciplinaService;
+import com.ravunana.longonkelo.service.UserService;
 import com.ravunana.longonkelo.service.dto.NotasPeriodicaDisciplinaDTO;
 import com.ravunana.longonkelo.service.mapper.NotasPeriodicaDisciplinaMapper;
+import com.ravunana.longonkelo.service.mapper.UserMapper;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,17 +29,38 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
 
     private final NotasPeriodicaDisciplinaMapper notasPeriodicaDisciplinaMapper;
 
+    private final UserService userService;
+    private final UserMapper userMapper;
+
     public NotasPeriodicaDisciplinaServiceImpl(
         NotasPeriodicaDisciplinaRepository notasPeriodicaDisciplinaRepository,
-        NotasPeriodicaDisciplinaMapper notasPeriodicaDisciplinaMapper
+        NotasPeriodicaDisciplinaMapper notasPeriodicaDisciplinaMapper,
+        UserService userService,
+        UserMapper userMapper
     ) {
         this.notasPeriodicaDisciplinaRepository = notasPeriodicaDisciplinaRepository;
         this.notasPeriodicaDisciplinaMapper = notasPeriodicaDisciplinaMapper;
+        this.userService = userService;
+        this.userMapper = userMapper;
     }
 
     @Override
     public NotasPeriodicaDisciplinaDTO save(NotasPeriodicaDisciplinaDTO notasPeriodicaDisciplinaDTO) {
         log.debug("Request to save NotasPeriodicaDisciplina : {}", notasPeriodicaDisciplinaDTO);
+
+        var chaveComposta = getChaveComposta(notasPeriodicaDisciplinaDTO);
+        notasPeriodicaDisciplinaDTO.setChaveComposta(chaveComposta);
+
+        var media = calcularMedia(notasPeriodicaDisciplinaDTO);
+        notasPeriodicaDisciplinaDTO.setMedia(media);
+
+        var utilizador = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
+        notasPeriodicaDisciplinaDTO.setUtilizador(userMapper.toDtoLogin(utilizador));
+
+        // TODO.RC: Atribuir o estado pela media do aluno
+
+        // TODO: Pegar o docente pelo utilizador logado no sistema
+
         NotasPeriodicaDisciplina notasPeriodicaDisciplina = notasPeriodicaDisciplinaMapper.toEntity(notasPeriodicaDisciplinaDTO);
         notasPeriodicaDisciplina = notasPeriodicaDisciplinaRepository.save(notasPeriodicaDisciplina);
         return notasPeriodicaDisciplinaMapper.toDto(notasPeriodicaDisciplina);
@@ -45,6 +69,10 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
     @Override
     public NotasPeriodicaDisciplinaDTO update(NotasPeriodicaDisciplinaDTO notasPeriodicaDisciplinaDTO) {
         log.debug("Request to update NotasPeriodicaDisciplina : {}", notasPeriodicaDisciplinaDTO);
+
+        var media = calcularMedia(notasPeriodicaDisciplinaDTO);
+        notasPeriodicaDisciplinaDTO.setMedia(media);
+
         NotasPeriodicaDisciplina notasPeriodicaDisciplina = notasPeriodicaDisciplinaMapper.toEntity(notasPeriodicaDisciplinaDTO);
         notasPeriodicaDisciplina = notasPeriodicaDisciplinaRepository.save(notasPeriodicaDisciplina);
         return notasPeriodicaDisciplinaMapper.toDto(notasPeriodicaDisciplina);
@@ -53,6 +81,9 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
     @Override
     public Optional<NotasPeriodicaDisciplinaDTO> partialUpdate(NotasPeriodicaDisciplinaDTO notasPeriodicaDisciplinaDTO) {
         log.debug("Request to partially update NotasPeriodicaDisciplina : {}", notasPeriodicaDisciplinaDTO);
+
+        var media = calcularMedia(notasPeriodicaDisciplinaDTO);
+        notasPeriodicaDisciplinaDTO.setMedia(media);
 
         return notasPeriodicaDisciplinaRepository
             .findById(notasPeriodicaDisciplinaDTO.getId())
@@ -87,5 +118,42 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
     public void delete(Long id) {
         log.debug("Request to delete NotasPeriodicaDisciplina : {}", id);
         notasPeriodicaDisciplinaRepository.deleteById(id);
+    }
+
+    @Override
+    public String getChaveComposta(NotasPeriodicaDisciplinaDTO notasPeriodicaDisciplinaDTO) {
+        // periodolectivo-matricula-disciplina-turma
+        var turma = notasPeriodicaDisciplinaDTO.getTurma();
+        int periodoLectivo = notasPeriodicaDisciplinaDTO.getPeriodoLancamento();
+        Long matriculaID = notasPeriodicaDisciplinaDTO.getMatricula().getId();
+        Long disciplinaID = notasPeriodicaDisciplinaDTO.getDisciplinaCurricular().getId();
+        StringBuilder sb = new StringBuilder();
+        sb.append(periodoLectivo).append(matriculaID).append(disciplinaID).append(turma.getId());
+        return sb.toString();
+    }
+
+    @Override
+    public Double calcularMedia(NotasPeriodicaDisciplinaDTO notasPeriodicaDisciplinaDTO) {
+        // nota1 + nota2 + nota3 / 3
+
+        Double nota1 = notasPeriodicaDisciplinaDTO.getNota1();
+        Double nota2 = notasPeriodicaDisciplinaDTO.getNota2();
+        Double nota3 = notasPeriodicaDisciplinaDTO.getNota3();
+
+        if (nota1 == null) {
+            nota1 = 0.0;
+        }
+
+        if (nota2 == null) {
+            nota2 = 0.0;
+        }
+
+        if (nota3 == null) {
+            nota3 = 0.0;
+        }
+
+        Double media = (nota1 + nota2 + nota3) / 3;
+
+        return media;
     }
 }
