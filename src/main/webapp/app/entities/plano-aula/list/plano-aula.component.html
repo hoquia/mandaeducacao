@@ -34,19 +34,19 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="tipoAula">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.planoAula.tipoAula">Tipo Aula</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="semanaLectiva">
+          <!-- <th scope="col" appSortBy="semanaLectiva">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.planoAula.semanaLectiva">Semana Lectiva</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -63,6 +63,12 @@
               <span appTranslate="longonkeloApp.planoAula.perfilSaida">Perfil Saida</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
+          </th> -->
+          <th scope="col" appSortBy="unidadeTematica.descricao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoAula.unidadeTematica">Unidade Tematica</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
           </th>
           <th scope="col" appSortBy="assunto">
             <div class="d-flex">
@@ -70,7 +76,7 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="objectivoGeral">
+          <!-- <th scope="col" appSortBy="objectivoGeral">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.planoAula.objectivoGeral">Objectivo Geral</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -81,37 +87,27 @@
               <span appTranslate="longonkeloApp.planoAula.objectivosEspecificos">Objectivos Especificos</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="tempoTotalLicao">
-            <div class="d-flex">
-              <span appTranslate="longonkeloApp.planoAula.tempoTotalLicao">Tempo Total Licao</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" appSortBy="estado">
+          </th> -->
+
+          <!-- <th scope="col" appSortBy="estado">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.planoAula.estado">Estado</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="utilizador.login">
+          </th> -->
+          <!-- <th scope="col" appSortBy="utilizador.login">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.planoAula.utilizador">Utilizador</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="unidadeTematica.descricao">
-            <div class="d-flex">
-              <span appTranslate="longonkeloApp.planoAula.unidadeTematica">Unidade Tematica</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" appSortBy="subUnidadeTematica.descricao">
+          </th> -->
+
+          <!-- <th scope="col" appSortBy="subUnidadeTematica.descricao">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.planoAula.subUnidadeTematica">Sub Unidade Tematica</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="turma.descricao">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.planoAula.turma">Turma</span>
@@ -130,36 +126,42 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
+          <th scope="col" appSortBy="tempoTotalLicao">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.planoAula.tempoTotalLicao">Tempo Total Licao</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let planoAula of planoAulas; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/plano-aula', planoAula.id, 'view']">{{ planoAula.id }}</a>
-          </td>
+          </td> -->
           <td appTranslate="{{ 'longonkeloApp.TipoAula.' + planoAula.tipoAula }}">{{ planoAula.tipoAula }}</td>
-          <td>{{ planoAula.semanaLectiva }}</td>
+          <!-- <td>{{ planoAula.semanaLectiva }}</td>
           <td>{{ planoAula.perfilEntrada }}</td>
-          <td>{{ planoAula.perfilSaida }}</td>
-          <td>{{ planoAula.assunto }}</td>
-          <td>{{ planoAula.objectivoGeral }}</td>
-          <td>{{ planoAula.objectivosEspecificos }}</td>
-          <td>{{ planoAula.tempoTotalLicao }}</td>
-          <td appTranslate="{{ 'longonkeloApp.EstadoLicao.' + planoAula.estado }}">{{ planoAula.estado }}</td>
-          <td>
-            {{ planoAula.utilizador?.login }}
-          </td>
+          <td>{{ planoAula.perfilSaida }}</td>  -->
           <td>
             <div *ngIf="planoAula.unidadeTematica">
               <a [routerLink]="['/lookup-item', planoAula.unidadeTematica.id, 'view']">{{ planoAula.unidadeTematica.descricao }}</a>
             </div>
           </td>
-          <td>
+          <td>{{ planoAula.assunto }}</td>
+          <!-- <td>{{ planoAula.objectivoGeral }}</td>
+          <td>{{ planoAula.objectivosEspecificos }}</td> -->
+          <!-- <td appTranslate="{{ 'longonkeloApp.EstadoLicao.' + planoAula.estado }}">{{ planoAula.estado }}</td> -->
+          <!-- <td>
+            {{ planoAula.utilizador?.login }}
+          </td> -->
+
+          <!-- <td>
             <div *ngIf="planoAula.subUnidadeTematica">
               <a [routerLink]="['/lookup-item', planoAula.subUnidadeTematica.id, 'view']">{{ planoAula.subUnidadeTematica.descricao }}</a>
             </div>
-          </td>
+          </td> -->
           <td>
             <div *ngIf="planoAula.turma">
               <a [routerLink]="['/turma', planoAula.turma.id, 'view']">{{ planoAula.turma.descricao }}</a>
@@ -177,9 +179,10 @@
               }}</a>
             </div>
           </td>
+          <td>{{ planoAula.tempoTotalLicao }} min</td>
           <td class="text-end">
             <div class="btn-group">
-              <button
+              <!-- <button
                 type="submit"
                 [routerLink]="['/detalhe-plano-aula']"
                 [queryParams]="{ 'filter[planoAulaId.in]': planoAula.id }"
@@ -193,8 +196,8 @@
                   [translateValues]="{ otherEntity: ('longonkeloApp.planoAula.detalhes' | translate) }"
                   >Show Detalhe Plano Aula</span
                 >
-              </button>
-              <button
+              </button> -->
+              <!-- <button
                 type="submit"
                 [routerLink]="['/licao']"
                 [queryParams]="{ 'filter[planoAulaId.in]': planoAula.id }"
@@ -208,6 +211,10 @@
                   [translateValues]="{ otherEntity: ('longonkeloApp.planoAula.licao' | translate) }"
                   >Show Licao</span
                 >
+              </button> -->
+              <button type="submit" class="btn btn-warning btn-sm" data-cy="entityDetailsButton" (click)="gerarListaPresenca(planoAula.id)">
+                <!-- <fa-icon icon="eye"></fa-icon> -->
+                <span class="d-none d-md-inline">Gerar Pdf</span>
               </button>
               <button
                 type="submit"
@@ -216,7 +223,7 @@
                 data-cy="entityDetailsButton"
               >
                 <fa-icon icon="eye"></fa-icon>
-                <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>
+                <!-- <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span> -->
               </button>
 
               <button
@@ -226,12 +233,12 @@
                 data-cy="entityEditButton"
               >
                 <fa-icon icon="pencil-alt"></fa-icon>
-                <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span>
+                <!-- <span class="d-none d-md-inline" appTranslate="entity.action.edit">Editar</span> -->
               </button>
 
               <button type="submit" (click)="delete(planoAula)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
                 <fa-icon icon="times"></fa-icon>
-                <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span>
+                <!-- <span class="d-none d-md-inline" appTranslate="entity.action.delete">Eliminar</span> -->
               </button>
             </div>
           </td>

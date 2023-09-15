@@ -70,6 +70,11 @@ export class PlanoAulaUpdateComponent implements OnInit {
       this.planoAula = planoAula;
       if (planoAula) {
         this.updateForm(planoAula);
+      } else {
+        this.editForm.patchValue({
+          estado: EstadoLicao.PENDENTE,
+          tempoTotalLicao: 0,
+        });
       }
 
       this.loadRelationshipsOptions();
@@ -168,19 +173,19 @@ export class PlanoAulaUpdateComponent implements OnInit {
       .subscribe((lookupItems: ILookupItem[]) => (this.lookupItemsSharedCollection = lookupItems));
 
     this.turmaService
-      .query()
+      .query({ size: 10000 })
       .pipe(map((res: HttpResponse<ITurma[]>) => res.body ?? []))
       .pipe(map((turmas: ITurma[]) => this.turmaService.addTurmaToCollectionIfMissing<ITurma>(turmas, this.planoAula?.turma)))
       .subscribe((turmas: ITurma[]) => (this.turmasSharedCollection = turmas));
 
     this.docenteService
-      .query()
+      .query({ size: 10000 })
       .pipe(map((res: HttpResponse<IDocente[]>) => res.body ?? []))
       .pipe(map((docentes: IDocente[]) => this.docenteService.addDocenteToCollectionIfMissing<IDocente>(docentes, this.planoAula?.docente)))
       .subscribe((docentes: IDocente[]) => (this.docentesSharedCollection = docentes));
 
     this.disciplinaCurricularService
-      .query()
+      .query({ size: 10000 })
       .pipe(map((res: HttpResponse<IDisciplinaCurricular[]>) => res.body ?? []))
       .pipe(
         map((disciplinaCurriculars: IDisciplinaCurricular[]) =>

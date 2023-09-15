@@ -160,4 +160,19 @@ export class PlanoAulaComponent implements OnInit {
       return [predicate + ',' + ascendingQueryParam];
     }
   }
+
+  protected gerarListaPresenca(planoAulaId: number): void {
+    this.planoAulaService.downloadPlanoAulaPdf(planoAulaId).subscribe(res => {
+      const url = window.URL.createObjectURL(res);
+      const a = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      a.target = `plano-aulas-${planoAulaId}`;
+      a.rel = 'noopener noreferrer';
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    });
+  }
 }

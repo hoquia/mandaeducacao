@@ -5,9 +5,15 @@ import com.ravunana.longonkelo.service.PlanoAulaQueryService;
 import com.ravunana.longonkelo.service.PlanoAulaService;
 import com.ravunana.longonkelo.service.criteria.PlanoAulaCriteria;
 import com.ravunana.longonkelo.service.dto.PlanoAulaDTO;
+import com.ravunana.longonkelo.service.report.PdfPlanoAulaServiceImpl;
 import com.ravunana.longonkelo.web.rest.errors.BadRequestAlertException;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -16,9 +22,12 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -46,14 +55,18 @@ public class PlanoAulaResource {
 
     private final PlanoAulaQueryService planoAulaQueryService;
 
+    private final PdfPlanoAulaServiceImpl pdfPlanoAulaService;
+
     public PlanoAulaResource(
         PlanoAulaService planoAulaService,
         PlanoAulaRepository planoAulaRepository,
-        PlanoAulaQueryService planoAulaQueryService
+        PlanoAulaQueryService planoAulaQueryService,
+        PdfPlanoAulaServiceImpl pdfPlanoAulaService
     ) {
         this.planoAulaService = planoAulaService;
         this.planoAulaRepository = planoAulaRepository;
         this.planoAulaQueryService = planoAulaQueryService;
+        this.pdfPlanoAulaService = pdfPlanoAulaService;
     }
 
     /**
@@ -203,5 +216,21 @@ public class PlanoAulaResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @GetMapping("/plano-aulas/plano-aulas/{planoAulaId}")
+    public ResponseEntity<Resource> getReciboSalario(@PathVariable Long planoAulaId) throws IOException {
+        var filePath = pdfPlanoAulaService.gerarPdf(planoAulaId);
+        File file = new File(filePath);
+
+        Path path = Paths.get(file.getAbsolutePath());
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(resource);
     }
 }

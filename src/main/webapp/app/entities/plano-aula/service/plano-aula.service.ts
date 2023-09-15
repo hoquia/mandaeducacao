@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { isPresent } from 'app/core/util/operators';
@@ -69,5 +69,13 @@ export class PlanoAulaService {
       return [...planoAulasToAdd, ...planoAulaCollection];
     }
     return planoAulaCollection;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  downloadPlanoAulaPdf(planoAulaId: number) {
+    let headers = new HttpHeaders();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    headers = headers.set('Accept', 'application/pdf');
+    return this.http.get(`${this.resourceUrl}/plano-aulas/${planoAulaId}`, { headers, responseType: 'blob' });
   }
 }
