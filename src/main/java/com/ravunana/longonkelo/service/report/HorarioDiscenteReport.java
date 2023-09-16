@@ -26,7 +26,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
-public class HorarioDiscenteServiceImpl {
+public class HorarioDiscenteReport {
 
     private final ReportServiceImpl reportService;
     private final InstituicaoEnsinoServiceImpl instituicaoEnsinoService;
@@ -35,7 +35,7 @@ public class HorarioDiscenteServiceImpl {
     private final float FONT_ZIZE_NORMAL = 7;
     private final float FONT_SIZE_TITLE = 7;
 
-    public HorarioDiscenteServiceImpl(
+    public HorarioDiscenteReport(
         ReportServiceImpl reportService,
         InstituicaoEnsinoServiceImpl instituicaoEnsinoService,
         MatriculaServiceImpl matriculaService,

@@ -5,7 +5,7 @@ import com.ravunana.longonkelo.service.PlanoAulaQueryService;
 import com.ravunana.longonkelo.service.PlanoAulaService;
 import com.ravunana.longonkelo.service.criteria.PlanoAulaCriteria;
 import com.ravunana.longonkelo.service.dto.PlanoAulaDTO;
-import com.ravunana.longonkelo.service.report.PdfPlanoAulaServiceImpl;
+import com.ravunana.longonkelo.service.report.PlanoAulaReport;
 import com.ravunana.longonkelo.web.rest.errors.BadRequestAlertException;
 import java.io.File;
 import java.io.IOException;
@@ -55,13 +55,13 @@ public class PlanoAulaResource {
 
     private final PlanoAulaQueryService planoAulaQueryService;
 
-    private final PdfPlanoAulaServiceImpl pdfPlanoAulaService;
+    private final PlanoAulaReport pdfPlanoAulaService;
 
     public PlanoAulaResource(
         PlanoAulaService planoAulaService,
         PlanoAulaRepository planoAulaRepository,
         PlanoAulaQueryService planoAulaQueryService,
-        PdfPlanoAulaServiceImpl pdfPlanoAulaService
+        PlanoAulaReport pdfPlanoAulaService
     ) {
         this.planoAulaService = planoAulaService;
         this.planoAulaRepository = planoAulaRepository;
@@ -218,7 +218,7 @@ public class PlanoAulaResource {
             .build();
     }
 
-    @GetMapping("/plano-aulas/plano-aulas/{planoAulaId}")
+    @GetMapping("/plano-aulas/diario/{planoAulaId}")
     public ResponseEntity<Resource> getReciboSalario(@PathVariable Long planoAulaId) throws IOException {
         var filePath = pdfPlanoAulaService.gerarPdf(planoAulaId);
         File file = new File(filePath);

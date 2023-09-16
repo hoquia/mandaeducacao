@@ -5,7 +5,7 @@ import com.ravunana.longonkelo.service.DocenteQueryService;
 import com.ravunana.longonkelo.service.DocenteService;
 import com.ravunana.longonkelo.service.criteria.DocenteCriteria;
 import com.ravunana.longonkelo.service.dto.DocenteDTO;
-import com.ravunana.longonkelo.service.report.HorarioDocenteServiceImpl;
+import com.ravunana.longonkelo.service.report.HorarioDocenteReport;
 import com.ravunana.longonkelo.web.rest.errors.BadRequestAlertException;
 import java.io.File;
 import java.io.IOException;
@@ -54,13 +54,13 @@ public class DocenteResource {
     private final DocenteRepository docenteRepository;
 
     private final DocenteQueryService docenteQueryService;
-    private final HorarioDocenteServiceImpl horarioDocenteService;
+    private final HorarioDocenteReport horarioDocenteService;
 
     public DocenteResource(
         DocenteService docenteService,
         DocenteRepository docenteRepository,
         DocenteQueryService docenteQueryService,
-        HorarioDocenteServiceImpl horarioDocenteService
+        HorarioDocenteReport horarioDocenteService
     ) {
         this.docenteService = docenteService;
         this.docenteRepository = docenteRepository;

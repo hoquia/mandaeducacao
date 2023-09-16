@@ -168,7 +168,7 @@ export class DocenteComponent implements OnInit {
       a.href = url;
       a.target = '_blank';
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      a.target = `horario-docente-${docenteID}`;
+      a.title = `horario-docente-${docenteID}`;
       a.rel = 'noopener noreferrer';
       a.click();
       window.URL.revokeObjectURL(url);

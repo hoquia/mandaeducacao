@@ -169,7 +169,7 @@ export class FacturaComponent implements OnInit {
       a.href = url;
       a.target = '_blank';
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      a.target = `recibo-pagamento-${facturaID}`;
+      a.title = `factura-pagamento-${facturaID}`;
       a.rel = 'noopener noreferrer';
       a.click();
       window.URL.revokeObjectURL(url);

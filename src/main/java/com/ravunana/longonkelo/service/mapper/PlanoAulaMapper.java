@@ -22,7 +22,7 @@ public interface PlanoAulaMapper extends EntityMapper<PlanoAulaDTO, PlanoAula> {
     @Mapping(target = "utilizador", source = "utilizador", qualifiedByName = "userLogin")
     @Mapping(target = "unidadeTematica", source = "unidadeTematica", qualifiedByName = "lookupItemDescricao")
     @Mapping(target = "subUnidadeTematica", source = "subUnidadeTematica", qualifiedByName = "lookupItemDescricao")
-    @Mapping(target = "turma", source = "turma", qualifiedByName = "turmaDescricao")
+    @Mapping(target = "turma", source = "turma")
     @Mapping(target = "docente", source = "docente", qualifiedByName = "docenteNome")
     @Mapping(target = "disciplinaCurricular", source = "disciplinaCurricular", qualifiedByName = "disciplinaCurricularDescricao")
     PlanoAulaDTO toDto(PlanoAula s);

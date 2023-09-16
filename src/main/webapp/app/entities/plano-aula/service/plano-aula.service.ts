@@ -76,6 +76,6 @@ export class PlanoAulaService {
     let headers = new HttpHeaders();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     headers = headers.set('Accept', 'application/pdf');
-    return this.http.get(`${this.resourceUrl}/plano-aulas/${planoAulaId}`, { headers, responseType: 'blob' });
+    return this.http.get(`${this.resourceUrl}/diario/${planoAulaId}`, { headers, responseType: 'blob' });
   }
 }

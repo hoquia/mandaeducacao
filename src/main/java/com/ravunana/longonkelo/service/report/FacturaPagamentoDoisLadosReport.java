@@ -20,7 +20,7 @@ import java.time.LocalDate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ReciboPagamentoEmolumentoServiceImpl {
+public class FacturaPagamentoDoisLadosReport {
 
     private final ReportService reportService;
     private final InstituicaoEnsinoServiceImpl instituicaoEnsinoService;
@@ -30,7 +30,7 @@ public class ReciboPagamentoEmolumentoServiceImpl {
 
     private final ItemFacturaServiceImpl itemFacturaService;
 
-    public ReciboPagamentoEmolumentoServiceImpl(
+    public FacturaPagamentoDoisLadosReport(
         ReportService reportService,
         InstituicaoEnsinoServiceImpl instituicaoEnsinoService,
         MatriculaServiceImpl matriculaService,

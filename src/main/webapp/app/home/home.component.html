@@ -5,11 +5,11 @@
   </div>
 
   <div class="col-md-6">
-    <h1 class="display-4"><span appTranslate="home.title">Bem-vindo, Java Hipster!</span></h1>
+    <h1><span appTranslate="home.title">Bem-vindo, Java Hipster!</span></h1>
 
     <!-- <p class="lead" appTranslate="home.subtitle">Esta é a página principal</p> -->
 
-    <div [ngSwitch]="account !== null">
+    <div class="mt-4" [ngSwitch]="account !== null">
       <div class="alert alert-success" *ngSwitchCase="true">
         <span id="home-logged-message" *ngIf="account" appTranslate="home.logged.message" [translateValues]="{ username: account.login }"
           >Está autenticado como "{{ account.login }}".</span
@@ -49,12 +49,12 @@
       </div>
     </div>
 
-    <!-- <p appTranslate="home.question">Em caso de dúvida sobre o JHipster:</p>
+    <!-- <p>Contactos de Apoio e Suporte</p>
 
     <ul>
       <li>
-        <a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer" appTranslate="home.link.homepage"
-          >Página do JHipster</a
+        <a href="https://www.ravunana.com/" target="_blank" rel="noopener noreferrer" appTranslate="home.link.homepage"
+          >Página da Ravunanar</a
         >
       </li>
       <li>
@@ -82,7 +82,7 @@
       </li>
       <li>
         <a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer" appTranslate="home.link.follow"
-          >Contacte @jhipster no Twitter</a
+          >931 926436r</a
         >
       </li>
     </ul>

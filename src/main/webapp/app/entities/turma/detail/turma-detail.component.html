@@ -1,7 +1,21 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <div *ngIf="turma">
-      <h2 data-cy="turmaDetailsHeading"><span appTranslate="longonkeloApp.turma.detail.title">Turma</span></h2>
+      <h2 data-cy="turmaDetailsHeading">
+        <span appTranslate="longonkeloApp.turma.detail.title">Turma</span> [<span>{{ turma.descricao }}</span
+        >]
+      </h2>
+
+      <div class="btn-group mr-3">
+        <button type="button" class="btn btn-warning">Imprimir</button>
+        <div class="btn-group" ngbDropdown role="group" aria-label="Grupo Imprimir">
+          <button class="btn btn-warning dropdown-toggle-split" ngbDropdownToggle></button>
+          <div class="dropdown-menu" ngbDropdownMenu>
+            <button ngbDropdownItem (click)="gerarHorarioDiscente(turma.id)">Horário</button>
+            <button ngbDropdownItem (click)="gerarListaPresenca(turma.id)">Lista de presença</button>
+          </div>
+        </div>
+      </div>
 
       <hr />
 
@@ -10,14 +24,6 @@
       <app-alert></app-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span appTranslate="global.field.id">Código</span></dt>
-        <dd>
-          <span>{{ turma.id }}</span>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.turma.chaveComposta">Chave Composta</span></dt>
-        <dd>
-          <span>{{ turma.chaveComposta }}</span>
-        </dd>
         <dt><span appTranslate="longonkeloApp.turma.tipoTurma">Tipo Turma</span></dt>
         <dd>
           <span appTranslate="{{ 'longonkeloApp.TipoTurma.' + turma.tipoTurma }}">{{ turma.tipoTurma }}</span>
@@ -25,10 +31,6 @@
         <dt><span appTranslate="longonkeloApp.turma.sala">Sala</span></dt>
         <dd>
           <span>{{ turma.sala }}</span>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.turma.descricao">Descricao</span></dt>
-        <dd>
-          <span>{{ turma.descricao }}</span>
         </dd>
         <dt><span appTranslate="longonkeloApp.turma.lotacao">Lotacao</span></dt>
         <dd>
@@ -46,7 +48,7 @@
         <dd>
           <span>{{ turma.encerramento | formatMediumDate }}</span>
         </dd>
-        <dt><span appTranslate="longonkeloApp.turma.criterioDescricao">Criterio Descricao</span></dt>
+        <!-- <dt><span appTranslate="longonkeloApp.turma.criterioDescricao">Criterio Descricao</span></dt>
         <dd>
           <span appTranslate="{{ 'longonkeloApp.CriterioDescricaoTurma.' + turma.criterioDescricao }}">{{ turma.criterioDescricao }}</span>
         </dd>
@@ -55,7 +57,7 @@
           <span appTranslate="{{ 'longonkeloApp.CriterioNumeroChamada.' + turma.criterioOrdenacaoNumero }}">{{
             turma.criterioOrdenacaoNumero
           }}</span>
-        </dd>
+        </dd> -->
         <dt><span appTranslate="longonkeloApp.turma.fazInscricaoDepoisMatricula">Faz Inscricao Depois Matricula</span></dt>
         <dd>
           <span>{{ turma.fazInscricaoDepoisMatricula }}</span>
@@ -67,12 +69,6 @@
         <dt><span appTranslate="longonkeloApp.turma.utilizador">Utilizador</span></dt>
         <dd>
           <span>{{ turma.utilizador?.login }}</span>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.turma.referencia">Referencia</span></dt>
-        <dd>
-          <div *ngIf="turma.referencia">
-            <a [routerLink]="['/turma', turma.referencia.id, 'view']">{{ turma.referencia.descricao }}</a>
-          </div>
         </dd>
         <dt><span appTranslate="longonkeloApp.turma.planoCurricular">Plano Curricular</span></dt>
         <dd>

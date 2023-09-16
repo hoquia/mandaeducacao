@@ -19,8 +19,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import org.springframework.stereotype.Service;
 
-public class PdfPlanoAulaServiceImpl {
+@Service
+public class PlanoAulaReport {
 
     private final ReportServiceImpl reportService;
     private final InstituicaoEnsinoServiceImpl instituicaoEnsinoService;
@@ -30,7 +32,7 @@ public class PdfPlanoAulaServiceImpl {
     private final float FONT_ZIZE_NORMAL = 7;
     private final float FONT_SIZE_TITLE = 7;
 
-    public PdfPlanoAulaServiceImpl(
+    public PlanoAulaReport(
         ReportServiceImpl reportService,
         InstituicaoEnsinoServiceImpl instituicaoEnsinoService,
         MatriculaServiceImpl matriculaService,
@@ -49,7 +51,7 @@ public class PdfPlanoAulaServiceImpl {
         String pdfName;
         FileOutputStream file;
         pdfName = "Plano de Aula " + planoAulaId;
-        pdfDocument = new Document(PageSize.A4, 3, 3, 20, 3);
+        pdfDocument = new Document(PageSize.A4.rotate(), 3, 3, 20, 3);
         String tempFileName;
 
         try {
@@ -209,9 +211,9 @@ public class PdfPlanoAulaServiceImpl {
             false
         );
 
-        //        tableHeader.addCell(vistoCell);
+        tableHeader.addCell(vistoCell);
         tableHeader.addCell(infoEmpresaCell);
-        //        tableHeader.addCell(dataCell);
+        tableHeader.addCell(dataCell);
 
         return tableHeader;
     }

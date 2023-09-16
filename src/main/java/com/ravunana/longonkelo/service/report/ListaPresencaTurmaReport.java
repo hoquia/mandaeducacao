@@ -21,7 +21,7 @@ import java.time.format.DateTimeFormatter;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ListaPresencaTurmaServiceImpl {
+public class ListaPresencaTurmaReport {
 
     private final ReportServiceImpl reportService;
     private final InstituicaoEnsinoServiceImpl instituicaoEnsinoService;
@@ -30,7 +30,7 @@ public class ListaPresencaTurmaServiceImpl {
     private final float FONT_ZIZE_NORMAL = 7;
     private final float FONT_SIZE_TITLE = 7;
 
-    public ListaPresencaTurmaServiceImpl(
+    public ListaPresencaTurmaReport(
         ReportServiceImpl reportService,
         InstituicaoEnsinoServiceImpl instituicaoEnsinoService,
         MatriculaServiceImpl matriculaService,

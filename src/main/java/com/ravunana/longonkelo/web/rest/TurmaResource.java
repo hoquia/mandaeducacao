@@ -5,8 +5,8 @@ import com.ravunana.longonkelo.service.TurmaQueryService;
 import com.ravunana.longonkelo.service.TurmaService;
 import com.ravunana.longonkelo.service.criteria.TurmaCriteria;
 import com.ravunana.longonkelo.service.dto.TurmaDTO;
-import com.ravunana.longonkelo.service.report.HorarioDiscenteServiceImpl;
-import com.ravunana.longonkelo.service.report.ListaPresencaTurmaServiceImpl;
+import com.ravunana.longonkelo.service.report.HorarioDiscenteReport;
+import com.ravunana.longonkelo.service.report.ListaPresencaTurmaReport;
 import com.ravunana.longonkelo.web.rest.errors.BadRequestAlertException;
 import java.io.File;
 import java.io.IOException;
@@ -56,15 +56,15 @@ public class TurmaResource {
 
     private final TurmaQueryService turmaQueryService;
 
-    private final ListaPresencaTurmaServiceImpl listaPresencaTurmaService;
-    private final HorarioDiscenteServiceImpl horarioDiscenteService;
+    private final ListaPresencaTurmaReport listaPresencaTurmaService;
+    private final HorarioDiscenteReport horarioDiscenteService;
 
     public TurmaResource(
         TurmaService turmaService,
         TurmaRepository turmaRepository,
         TurmaQueryService turmaQueryService,
-        ListaPresencaTurmaServiceImpl listaPresencaTurmaService,
-        HorarioDiscenteServiceImpl horarioDiscenteService
+        ListaPresencaTurmaReport listaPresencaTurmaService,
+        HorarioDiscenteReport horarioDiscenteService
     ) {
         this.turmaService = turmaService;
         this.turmaRepository = turmaRepository;

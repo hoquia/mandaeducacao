@@ -5,7 +5,7 @@ import com.ravunana.longonkelo.service.FacturaQueryService;
 import com.ravunana.longonkelo.service.FacturaService;
 import com.ravunana.longonkelo.service.criteria.FacturaCriteria;
 import com.ravunana.longonkelo.service.dto.FacturaDTO;
-import com.ravunana.longonkelo.service.report.ReciboPagamentoEmolumentoServiceImpl;
+import com.ravunana.longonkelo.service.report.FacturaPagamentoDoisLadosReport;
 import com.ravunana.longonkelo.web.rest.errors.BadRequestAlertException;
 import java.io.File;
 import java.io.IOException;
@@ -55,13 +55,13 @@ public class FacturaResource {
 
     private final FacturaQueryService facturaQueryService;
 
-    private final ReciboPagamentoEmolumentoServiceImpl reciboPagamentoEmolumentoService;
+    private final FacturaPagamentoDoisLadosReport reciboPagamentoEmolumentoService;
 
     public FacturaResource(
         FacturaService facturaService,
         FacturaRepository facturaRepository,
         FacturaQueryService facturaQueryService,
-        ReciboPagamentoEmolumentoServiceImpl reciboPagamentoEmolumentoService
+        FacturaPagamentoDoisLadosReport reciboPagamentoEmolumentoService
     ) {
         this.facturaService = facturaService;
         this.facturaRepository = facturaRepository;
