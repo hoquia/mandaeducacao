@@ -3,6 +3,8 @@
     <div *ngIf="detalhePlanoAula">
       <h2 data-cy="detalhePlanoAulaDetailsHeading">
         <span appTranslate="longonkeloApp.detalhePlanoAula.detail.title">Detalhe Plano Aula</span>
+        [<span>{{ detalhePlanoAula.tituloActividade }}</span
+        >]
       </h2>
 
       <hr />
@@ -12,9 +14,16 @@
       <app-alert></app-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <!-- <dt><span appTranslate="global.field.id">Código</span></dt>
         <dd>
           <span>{{ detalhePlanoAula.id }}</span>
+        </dd> -->
+
+        <dt><span appTranslate="longonkeloApp.detalhePlanoAula.planoAula">Plano Aula</span></dt>
+        <dd>
+          <div *ngIf="detalhePlanoAula.planoAula">
+            <a [routerLink]="['/plano-aula', detalhePlanoAula.planoAula.id, 'view']">{{ detalhePlanoAula.planoAula.assunto }}</a>
+          </div>
         </dd>
         <dt><span appTranslate="longonkeloApp.detalhePlanoAula.estrategiaAula">Estrategia Aula</span></dt>
         <dd>
@@ -22,16 +31,16 @@
         </dd>
         <dt><span appTranslate="longonkeloApp.detalhePlanoAula.tempoActividade">Tempo Actividade</span></dt>
         <dd>
-          <span>{{ detalhePlanoAula.tempoActividade }}</span>
+          <span>{{ detalhePlanoAula.tempoActividade | number }} minutos</span>
         </dd>
         <dt><span appTranslate="longonkeloApp.detalhePlanoAula.recursosEnsino">Recursos Ensino</span></dt>
         <dd>
           <span>{{ detalhePlanoAula.recursosEnsino }}</span>
         </dd>
-        <dt><span appTranslate="longonkeloApp.detalhePlanoAula.tituloActividade">Titulo Actividade</span></dt>
+        <!-- <dt><span appTranslate="longonkeloApp.detalhePlanoAula.tituloActividade">Titulo Actividade</span></dt>
         <dd>
           <span>{{ detalhePlanoAula.tituloActividade }}</span>
-        </dd>
+        </dd> -->
         <dt><span appTranslate="longonkeloApp.detalhePlanoAula.actividadesDocente">Actividades Docente</span></dt>
         <dd>
           <span>{{ detalhePlanoAula.actividadesDocente }}</span>
@@ -62,21 +71,23 @@
         <dt><span appTranslate="longonkeloApp.detalhePlanoAula.video">Video</span></dt>
         <dd>
           <div *ngIf="detalhePlanoAula.video">
-            <a (click)="openFile(detalhePlanoAula.video, detalhePlanoAula.videoContentType)" appTranslate="entity.action.open">Abrir</a>
-            {{ detalhePlanoAula.videoContentType }}, {{ byteSize(detalhePlanoAula.video) }}
+            <video controls width="250">
+              <source
+                [src]="'data:' + detalhePlanoAula.videoContentType + ';base64,' + detalhePlanoAula.video"
+                [type]="detalhePlanoAula.videoContentType"
+              />
+            </video>
           </div>
         </dd>
         <dt><span appTranslate="longonkeloApp.detalhePlanoAula.audio">Audio</span></dt>
         <dd>
           <div *ngIf="detalhePlanoAula.audio">
-            <a (click)="openFile(detalhePlanoAula.audio, detalhePlanoAula.audioContentType)" appTranslate="entity.action.open">Abrir</a>
-            {{ detalhePlanoAula.audioContentType }}, {{ byteSize(detalhePlanoAula.audio) }}
-          </div>
-        </dd>
-        <dt><span appTranslate="longonkeloApp.detalhePlanoAula.planoAula">Plano Aula</span></dt>
-        <dd>
-          <div *ngIf="detalhePlanoAula.planoAula">
-            <a [routerLink]="['/plano-aula', detalhePlanoAula.planoAula.id, 'view']">{{ detalhePlanoAula.planoAula.assunto }}</a>
+            <audio controls width="250">
+              <source
+                [src]="'data:' + detalhePlanoAula.audioContentType + ';base64,' + detalhePlanoAula.audio"
+                [type]="detalhePlanoAula.audioContentType"
+              />
+            </audio>
           </div>
         </dd>
       </dl>

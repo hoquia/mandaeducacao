@@ -85,10 +85,8 @@ public class PlanoAulaReport {
             pdfDocument.add(getTituloMapa(curso, classe, sala, turno, turma.getDescricao()));
             pdfDocument.add(addNewLine());
 
-            // contentLeft
-            pdfDocument.add(getContentLeft(planoAulaDTO));
-            // contentRigth
-            pdfDocument.add(getContentRight(planoAulaDTO));
+            pdfDocument.add(getContenTabletLeft(planoAulaDTO));
+            pdfDocument.add(getContenTableRight(planoAulaDTO));
 
             pdfDocument.add(addNewLine());
 
@@ -168,43 +166,6 @@ public class PlanoAulaReport {
         return (nome + "\n" + nif + "\n" + tituloMapa);
     }
 
-    private Paragraph getContentLeft(PlanoAulaDTO planoAulaDTO) {
-        var docente = "Docente: " + planoAulaDTO.getDocente().getNome() + "\n";
-        var disciplina = "Disciplina: " + planoAulaDTO.getDisciplinaCurricular().getDisciplina().getNome() + "\n";
-        var unidadeTematica = "Unidade: " + planoAulaDTO.getUnidadeTematica().getDescricao() + "\n";
-        // var subUnidade = "Sub unidade: " + planoAulaDTO.getSubUnidadeTematica().getDescricao() + "\n";
-        var assunto = "Assunto: " + planoAulaDTO.getAssunto() + "\n";
-        var tipoAula = "Tipo de aula: " + planoAulaDTO.getDocente().getNome() + "\n";
-        var duracao = "Duração: " + planoAulaDTO.getTempoTotalLicao() + " minutos" + "\n";
-
-        Paragraph p = new Paragraph(docente + disciplina + unidadeTematica + assunto + tipoAula + duracao);
-        Font font = FontFactory.getFont("Helvetica", 6, Font.BOLD, Color.BLACK);
-        p.setFont(font);
-
-        p.setAlignment(Element.ALIGN_LEFT);
-        p.setSpacingAfter(4f);
-        p.setSpacingBefore(4f);
-
-        return p;
-    }
-
-    private Paragraph getContentRight(PlanoAulaDTO planoAulaDTO) {
-        var objectivoGeral = "Objectivo Geral: " + planoAulaDTO.getObjectivoGeral() + "\n";
-        var objectivoEspecifico = "Objectivos Especificos: " + planoAulaDTO.getObjectivosEspecificos() + "\n";
-        var perfilEntrada = "Perfil de entrada: " + planoAulaDTO.getPerfilEntrada() + "\n";
-        var perfilSaida = "Perfil de saída: " + planoAulaDTO.getPerfilSaida() + "\n";
-
-        Paragraph p = new Paragraph(objectivoGeral + objectivoEspecifico + perfilEntrada + perfilSaida);
-        Font font = FontFactory.getFont("Helvetica", 6, Font.BOLD, Color.BLACK);
-        p.setFont(font);
-
-        p.setAlignment(Element.ALIGN_RIGHT);
-        p.setSpacingAfter(4f);
-        p.setSpacingBefore(4f);
-
-        return p;
-    }
-
     private PdfPTable getHeader() {
         Font tableFont = FontFactory.getFont("Helvetica", FONT_SIZE_TITLE, Font.NORMAL, Color.BLACK);
         float padding = 2f;
@@ -261,6 +222,196 @@ public class PlanoAulaReport {
         tableHeader.addCell(dataCell);
 
         return tableHeader;
+    }
+
+    private PdfPTable getContenTabletLeft(PlanoAulaDTO planoAulaDTO) {
+        Font tableFont = FontFactory.getFont("Helvetica", FONT_SIZE_TITLE, Font.NORMAL, Color.BLACK);
+        Font fontBold = FontFactory.getFont("Helvetica", FONT_SIZE_TITLE, Font.BOLD, Color.BLACK);
+        float padding = 2f;
+        float leading = tableFont.getSize() * 1.1f;
+        Rectangle border = new Rectangle(0f, 0f);
+        border.setBorderWidthLeft(0f);
+        border.setBorderWidthBottom(0f);
+        border.setBorderWidthRight(0f);
+        border.setBorderWidthTop(0f);
+
+        PdfPTable table = new PdfPTable(2);
+        table.setHorizontalAlignment(Element.ALIGN_LEFT);
+        table.setWidthPercentage(25);
+
+        // Docente
+        table.addCell(makeCell("Docente", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBold, leading, padding, border, true, false));
+
+        table.addCell(
+            makeCell(
+                planoAulaDTO.getDocente().getNome(),
+                Element.ALIGN_TOP,
+                Element.ALIGN_LEFT,
+                tableFont,
+                leading,
+                padding,
+                border,
+                true,
+                false
+            )
+        );
+
+        // Disciplina
+        table.addCell(makeCell("Disciplina", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBold, leading, padding, border, true, false));
+
+        table.addCell(
+            makeCell(
+                planoAulaDTO.getDisciplinaCurricular().getDisciplina().getNome(),
+                Element.ALIGN_TOP,
+                Element.ALIGN_LEFT,
+                tableFont,
+                leading,
+                padding,
+                border,
+                true,
+                false
+            )
+        );
+
+        // Unidade
+        table.addCell(makeCell("Unidade", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBold, leading, padding, border, true, false));
+
+        table.addCell(
+            makeCell(
+                planoAulaDTO.getUnidadeTematica().getDescricao(),
+                Element.ALIGN_TOP,
+                Element.ALIGN_LEFT,
+                tableFont,
+                leading,
+                padding,
+                border,
+                true,
+                false
+            )
+        );
+
+        // Assunto
+        table.addCell(makeCell("Assunto", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBold, leading, padding, border, true, false));
+
+        table.addCell(
+            makeCell(planoAulaDTO.getAssunto(), Element.ALIGN_TOP, Element.ALIGN_LEFT, tableFont, leading, padding, border, true, false)
+        );
+
+        // Tipo de aula
+        table.addCell(makeCell("Tipo de aula", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBold, leading, padding, border, true, false));
+
+        table.addCell(
+            makeCell(
+                planoAulaDTO.getTipoAula().name(),
+                Element.ALIGN_TOP,
+                Element.ALIGN_LEFT,
+                tableFont,
+                leading,
+                padding,
+                border,
+                true,
+                false
+            )
+        );
+
+        // Duração
+        table.addCell(makeCell("Duração", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBold, leading, padding, border, true, false));
+
+        table.addCell(
+            makeCell(
+                planoAulaDTO.getTempoTotalLicao() + " minutos",
+                Element.ALIGN_TOP,
+                Element.ALIGN_LEFT,
+                tableFont,
+                leading,
+                padding,
+                border,
+                true,
+                false
+            )
+        );
+
+        return table;
+    }
+
+    private PdfPTable getContenTableRight(PlanoAulaDTO planoAulaDTO) {
+        Font tableFont = FontFactory.getFont("Helvetica", FONT_SIZE_TITLE, Font.NORMAL, Color.BLACK);
+        Font fontBold = FontFactory.getFont("Helvetica", FONT_SIZE_TITLE, Font.BOLD, Color.BLACK);
+        float padding = 2f;
+        float leading = tableFont.getSize() * 1.1f;
+        Rectangle border = new Rectangle(0f, 0f);
+        border.setBorderWidthLeft(0f);
+        border.setBorderWidthBottom(0f);
+        border.setBorderWidthRight(0f);
+        border.setBorderWidthTop(0f);
+
+        PdfPTable table = new PdfPTable(2);
+        table.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        table.setWidthPercentage(25);
+
+        // Objectivo geral
+        table.addCell(makeCell("Objectivo geral", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBold, leading, padding, border, true, false));
+
+        table.addCell(
+            makeCell(
+                planoAulaDTO.getObjectivoGeral(),
+                Element.ALIGN_TOP,
+                Element.ALIGN_LEFT,
+                tableFont,
+                leading,
+                padding,
+                border,
+                true,
+                false
+            )
+        );
+
+        // Objectivos especificos
+        table.addCell(
+            makeCell("Objectivos especificos", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBold, leading, padding, border, true, false)
+        );
+
+        table.addCell(
+            makeCell(
+                planoAulaDTO.getObjectivosEspecificos(),
+                Element.ALIGN_TOP,
+                Element.ALIGN_LEFT,
+                tableFont,
+                leading,
+                padding,
+                border,
+                true,
+                false
+            )
+        );
+
+        // Perfil de entrada
+        table.addCell(
+            makeCell("Perfil de entrada", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBold, leading, padding, border, true, false)
+        );
+
+        table.addCell(
+            makeCell(
+                planoAulaDTO.getPerfilEntrada(),
+                Element.ALIGN_TOP,
+                Element.ALIGN_LEFT,
+                tableFont,
+                leading,
+                padding,
+                border,
+                true,
+                false
+            )
+        );
+
+        // Perfil Saida
+        table.addCell(makeCell("Perfil de saída", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBold, leading, padding, border, true, false));
+
+        table.addCell(
+            makeCell(planoAulaDTO.getPerfilSaida(), Element.ALIGN_TOP, Element.ALIGN_LEFT, fontBold, leading, padding, border, true, false)
+        );
+
+        return table;
     }
 
     private PdfPTable getDetalhe(Long planoAulaId) {
@@ -344,20 +495,6 @@ public class PlanoAulaReport {
 
         tableDetalhe.addCell(
             makeCellBackgroudColor(
-                "Tempo".toUpperCase(),
-                Element.ALIGN_TOP,
-                Element.ALIGN_CENTER,
-                tableFontHeader,
-                leading,
-                padding,
-                border,
-                true,
-                false
-            )
-        );
-
-        tableDetalhe.addCell(
-            makeCellBackgroudColor(
                 "Recursos de Ensino".toUpperCase(),
                 Element.ALIGN_TOP,
                 Element.ALIGN_CENTER,
@@ -373,6 +510,20 @@ public class PlanoAulaReport {
         tableDetalhe.addCell(
             makeCellBackgroudColor(
                 "Avaliação".toUpperCase(),
+                Element.ALIGN_TOP,
+                Element.ALIGN_CENTER,
+                tableFontHeader,
+                leading,
+                padding,
+                border,
+                true,
+                false
+            )
+        );
+
+        tableDetalhe.addCell(
+            makeCellBackgroudColor(
+                "Tempo".toUpperCase(),
                 Element.ALIGN_TOP,
                 Element.ALIGN_CENTER,
                 tableFontHeader,
@@ -415,9 +566,6 @@ public class PlanoAulaReport {
         // Content
 
         for (var detalhe : detalhePlanoAulaCOllection) {
-            //            int idade = Constants.ANO - matricula.getDiscente().getNascimento().getYear();
-
-            // Titulo Actividade
             tableDetalhe.addCell(
                 makeCell(
                     detalhe.getTituloActividade(),
@@ -477,21 +625,6 @@ public class PlanoAulaReport {
                 )
             );
 
-            // Tempo
-            tableDetalhe.addCell(
-                makeCell(
-                    detalhe.getTempoActividade() + " min.",
-                    Element.ALIGN_TOP,
-                    Element.ALIGN_CENTER,
-                    tableFontNormal,
-                    leading,
-                    padding,
-                    border,
-                    true,
-                    false
-                )
-            );
-
             // Recurso de Ensino
             tableDetalhe.addCell(
                 makeCell(
@@ -511,6 +644,21 @@ public class PlanoAulaReport {
             tableDetalhe.addCell(
                 makeCell(
                     detalhe.getAvaliacao(),
+                    Element.ALIGN_TOP,
+                    Element.ALIGN_CENTER,
+                    tableFontNormal,
+                    leading,
+                    padding,
+                    border,
+                    true,
+                    false
+                )
+            );
+
+            // Tempo
+            tableDetalhe.addCell(
+                makeCell(
+                    detalhe.getTempoActividade().intValue() + " min.",
                     Element.ALIGN_TOP,
                     Element.ALIGN_CENTER,
                     tableFontNormal,
