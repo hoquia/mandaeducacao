@@ -141,4 +141,5 @@
     <include file="config/liquibase/changelog/2023090421380000_inserts_padrao.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/2023090516010000_add_columns_item_factura.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/2023091306280000_inserts_lookups.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/2023091622240000_inserts_lookups_plano_aula.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

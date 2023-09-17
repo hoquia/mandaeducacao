@@ -1,7 +1,15 @@
 <div class="d-flex justify-content-center">
   <div class="col-8">
     <div *ngIf="planoAula">
-      <h2 data-cy="planoAulaDetailsHeading"><span appTranslate="longonkeloApp.planoAula.detail.title">Plano Aula</span></h2>
+      <h2 data-cy="planoAulaDetailsHeading">
+        <span appTranslate="longonkeloApp.planoAula.detail.title">Plano Aula</span> [<span>{{ planoAula.assunto }}</span
+        >]
+      </h2>
+
+      <button type="submit" class="btn btn-warning btn-lg" data-cy="entityDetailsButton" (click)="printPlanoDiarioAula(planoAula.id)">
+        <!-- <fa-icon icon="eye"></fa-icon> -->
+        <span class="d-none d-md-inline">Imprimir</span>
+      </button>
 
       <hr />
 
@@ -10,10 +18,10 @@
       <app-alert></app-alert>
 
       <dl class="row-md jh-entity-details">
-        <dt><span appTranslate="global.field.id">Código</span></dt>
+        <!-- <dt><span appTranslate="global.field.id">Código</span></dt>
         <dd>
           <span>{{ planoAula.id }}</span>
-        </dd>
+        </dd> -->
         <dt><span appTranslate="longonkeloApp.planoAula.tipoAula">Tipo Aula</span></dt>
         <dd>
           <span appTranslate="{{ 'longonkeloApp.TipoAula.' + planoAula.tipoAula }}">{{ planoAula.tipoAula }}</span>
@@ -30,10 +38,10 @@
         <dd>
           <span>{{ planoAula.perfilSaida }}</span>
         </dd>
-        <dt><span appTranslate="longonkeloApp.planoAula.assunto">Assunto</span></dt>
+        <!-- <dt><span appTranslate="longonkeloApp.planoAula.assunto">Assunto</span></dt>
         <dd>
           <span>{{ planoAula.assunto }}</span>
-        </dd>
+        </dd> -->
         <dt><span appTranslate="longonkeloApp.planoAula.objectivoGeral">Objectivo Geral</span></dt>
         <dd>
           <span>{{ planoAula.objectivoGeral }}</span>
@@ -44,7 +52,7 @@
         </dd>
         <dt><span appTranslate="longonkeloApp.planoAula.tempoTotalLicao">Tempo Total Licao</span></dt>
         <dd>
-          <span>{{ planoAula.tempoTotalLicao }}</span>
+          <span>{{ planoAula.tempoTotalLicao | number }} minutos</span>
         </dd>
         <dt><span appTranslate="longonkeloApp.planoAula.estado">Estado</span></dt>
         <dd>
@@ -87,6 +95,8 @@
           </div>
         </dd>
       </dl>
+
+      <app-detalhe-plano-aula [detalhePlanoAulas]="detalhePlanoAulas" [planoAulaID]="planoAula.id"></app-detalhe-plano-aula>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
         <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span appTranslate="entity.action.back">Voltar</span>

@@ -5,7 +5,9 @@ import com.ravunana.longonkelo.repository.DetalhePlanoAulaRepository;
 import com.ravunana.longonkelo.service.DetalhePlanoAulaService;
 import com.ravunana.longonkelo.service.dto.DetalhePlanoAulaDTO;
 import com.ravunana.longonkelo.service.mapper.DetalhePlanoAulaMapper;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -26,19 +28,32 @@ public class DetalhePlanoAulaServiceImpl implements DetalhePlanoAulaService {
 
     private final DetalhePlanoAulaMapper detalhePlanoAulaMapper;
 
+    private final PlanoAulaServiceImpl planoAulaService;
+
     public DetalhePlanoAulaServiceImpl(
         DetalhePlanoAulaRepository detalhePlanoAulaRepository,
-        DetalhePlanoAulaMapper detalhePlanoAulaMapper
+        DetalhePlanoAulaMapper detalhePlanoAulaMapper,
+        PlanoAulaServiceImpl planoAulaService
     ) {
         this.detalhePlanoAulaRepository = detalhePlanoAulaRepository;
         this.detalhePlanoAulaMapper = detalhePlanoAulaMapper;
+        this.planoAulaService = planoAulaService;
     }
 
     @Override
     public DetalhePlanoAulaDTO save(DetalhePlanoAulaDTO detalhePlanoAulaDTO) {
         log.debug("Request to save DetalhePlanoAula : {}", detalhePlanoAulaDTO);
+
+        var planoAulaResult = planoAulaService.findOne(detalhePlanoAulaDTO.getPlanoAula().getId()).get();
+
         DetalhePlanoAula detalhePlanoAula = detalhePlanoAulaMapper.toEntity(detalhePlanoAulaDTO);
         detalhePlanoAula = detalhePlanoAulaRepository.save(detalhePlanoAula);
+
+        // Actualizar o tempo total da aula
+        planoAulaResult.setTempoTotalLicao(
+            planoAulaResult.getTempoTotalLicao().intValue() + detalhePlanoAulaDTO.getTempoActividade().intValue()
+        );
+        planoAulaService.partialUpdate(planoAulaResult);
         return detalhePlanoAulaMapper.toDto(detalhePlanoAula);
     }
 
@@ -87,5 +102,16 @@ public class DetalhePlanoAulaServiceImpl implements DetalhePlanoAulaService {
     public void delete(Long id) {
         log.debug("Request to delete DetalhePlanoAula : {}", id);
         detalhePlanoAulaRepository.deleteById(id);
+    }
+
+    @Override
+    public List<DetalhePlanoAula> getDetalhePlanoAula(Long planoAulaID) {
+        var detalhePlanoAulaCollection = detalhePlanoAulaRepository
+            .findAll()
+            .stream()
+            .filter(x -> x.getPlanoAula().getId().equals(planoAulaID))
+            .collect(Collectors.toList());
+
+        return detalhePlanoAulaCollection;
     }
 }

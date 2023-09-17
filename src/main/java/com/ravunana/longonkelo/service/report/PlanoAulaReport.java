@@ -10,6 +10,8 @@ import com.lowagie.text.pdf.PdfWriter;
 import com.ravunana.longonkelo.config.Constants;
 import com.ravunana.longonkelo.security.SecurityUtils;
 import com.ravunana.longonkelo.service.PlanoAulaService;
+import com.ravunana.longonkelo.service.dto.PlanoAulaDTO;
+import com.ravunana.longonkelo.service.impl.DetalhePlanoAulaServiceImpl;
 import com.ravunana.longonkelo.service.impl.InstituicaoEnsinoServiceImpl;
 import com.ravunana.longonkelo.service.impl.MatriculaServiceImpl;
 import com.ravunana.longonkelo.service.impl.TurmaServiceImpl;
@@ -19,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,23 +29,20 @@ public class PlanoAulaReport {
 
     private final ReportServiceImpl reportService;
     private final InstituicaoEnsinoServiceImpl instituicaoEnsinoService;
-    private final MatriculaServiceImpl matriculaService;
-    private final TurmaServiceImpl turmaService;
     private final PlanoAulaService planoAulaService;
+    private final DetalhePlanoAulaServiceImpl detalhePlanoAulaService;
     private final float FONT_ZIZE_NORMAL = 7;
     private final float FONT_SIZE_TITLE = 7;
 
     public PlanoAulaReport(
         ReportServiceImpl reportService,
         InstituicaoEnsinoServiceImpl instituicaoEnsinoService,
-        MatriculaServiceImpl matriculaService,
-        TurmaServiceImpl turmaService,
-        PlanoAulaService planoAulaService
+        PlanoAulaService planoAulaService,
+        DetalhePlanoAulaServiceImpl detalhePlanoAulaService
     ) {
         this.reportService = reportService;
         this.instituicaoEnsinoService = instituicaoEnsinoService;
-        this.matriculaService = matriculaService;
-        this.turmaService = turmaService;
+        this.detalhePlanoAulaService = detalhePlanoAulaService;
         this.planoAulaService = planoAulaService;
     }
 
@@ -84,6 +84,14 @@ public class PlanoAulaReport {
             pdfDocument.add(header);
             pdfDocument.add(getTituloMapa(curso, classe, sala, turno, turma.getDescricao()));
             pdfDocument.add(addNewLine());
+
+            // contentLeft
+            pdfDocument.add(getContentLeft(planoAulaDTO));
+            // contentRigth
+            pdfDocument.add(getContentRight(planoAulaDTO));
+
+            pdfDocument.add(addNewLine());
+
             var detalhe = getDetalhe(planoAulaId);
             pdfDocument.add(detalhe);
             pdfDocument.add(addNewLine());
@@ -160,6 +168,43 @@ public class PlanoAulaReport {
         return (nome + "\n" + nif + "\n" + tituloMapa);
     }
 
+    private Paragraph getContentLeft(PlanoAulaDTO planoAulaDTO) {
+        var docente = "Docente: " + planoAulaDTO.getDocente().getNome() + "\n";
+        var disciplina = "Disciplina: " + planoAulaDTO.getDisciplinaCurricular().getDisciplina().getNome() + "\n";
+        var unidadeTematica = "Unidade: " + planoAulaDTO.getUnidadeTematica().getDescricao() + "\n";
+        // var subUnidade = "Sub unidade: " + planoAulaDTO.getSubUnidadeTematica().getDescricao() + "\n";
+        var assunto = "Assunto: " + planoAulaDTO.getAssunto() + "\n";
+        var tipoAula = "Tipo de aula: " + planoAulaDTO.getDocente().getNome() + "\n";
+        var duracao = "Duração: " + planoAulaDTO.getTempoTotalLicao() + " minutos" + "\n";
+
+        Paragraph p = new Paragraph(docente + disciplina + unidadeTematica + assunto + tipoAula + duracao);
+        Font font = FontFactory.getFont("Helvetica", 6, Font.BOLD, Color.BLACK);
+        p.setFont(font);
+
+        p.setAlignment(Element.ALIGN_LEFT);
+        p.setSpacingAfter(4f);
+        p.setSpacingBefore(4f);
+
+        return p;
+    }
+
+    private Paragraph getContentRight(PlanoAulaDTO planoAulaDTO) {
+        var objectivoGeral = "Objectivo Geral: " + planoAulaDTO.getObjectivoGeral() + "\n";
+        var objectivoEspecifico = "Objectivos Especificos: " + planoAulaDTO.getObjectivosEspecificos() + "\n";
+        var perfilEntrada = "Perfil de entrada: " + planoAulaDTO.getPerfilEntrada() + "\n";
+        var perfilSaida = "Perfil de saída: " + planoAulaDTO.getPerfilSaida() + "\n";
+
+        Paragraph p = new Paragraph(objectivoGeral + objectivoEspecifico + perfilEntrada + perfilSaida);
+        Font font = FontFactory.getFont("Helvetica", 6, Font.BOLD, Color.BLACK);
+        p.setFont(font);
+
+        p.setAlignment(Element.ALIGN_RIGHT);
+        p.setSpacingAfter(4f);
+        p.setSpacingBefore(4f);
+
+        return p;
+    }
+
     private PdfPTable getHeader() {
         Font tableFont = FontFactory.getFont("Helvetica", FONT_SIZE_TITLE, Font.NORMAL, Color.BLACK);
         float padding = 2f;
@@ -219,8 +264,8 @@ public class PlanoAulaReport {
     }
 
     private PdfPTable getDetalhe(Long planoAulaId) {
-        //        var matriculas = matriculaService.getMatriculas(turmaID);
         var planoAula = planoAulaService.findOne(planoAulaId).get();
+        var detalhePlanoAulaCOllection = detalhePlanoAulaService.getDetalhePlanoAula(planoAulaId);
 
         int contador = 1;
 
@@ -236,17 +281,14 @@ public class PlanoAulaReport {
 
         float[] widths = { 0.1f, 0.3f, 0.6f, 0.2f, 0.2f, 0.6f };
         // Nº chamada, Nº processo, Nome completo, idade, sexo, observacoes
-        PdfPTable tableDetalhe = new PdfPTable(widths);
+        PdfPTable tableDetalhe = new PdfPTable(9);
         tableDetalhe.setWidthPercentage(100);
 
         // Headers
-        tableDetalhe.addCell(
-            makeCellBackgroudColor("Tema", Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontHeader, leading, padding, border, true, false)
-        );
 
         tableDetalhe.addCell(
             makeCellBackgroudColor(
-                "Tipo de Aula".toUpperCase(),
+                "Título Actividade".toUpperCase(),
                 Element.ALIGN_TOP,
                 Element.ALIGN_CENTER,
                 tableFontHeader,
@@ -260,7 +302,7 @@ public class PlanoAulaReport {
 
         tableDetalhe.addCell(
             makeCellBackgroudColor(
-                "Tempo Lectivo".toUpperCase(),
+                "Estratégia".toUpperCase(),
                 Element.ALIGN_TOP,
                 Element.ALIGN_CENTER,
                 tableFontHeader,
@@ -274,7 +316,7 @@ public class PlanoAulaReport {
 
         tableDetalhe.addCell(
             makeCellBackgroudColor(
-                "Onjectivos Gerais".toUpperCase(),
+                "Actvidade Docente".toUpperCase(),
                 Element.ALIGN_TOP,
                 Element.ALIGN_CENTER,
                 tableFontHeader,
@@ -288,7 +330,7 @@ public class PlanoAulaReport {
 
         tableDetalhe.addCell(
             makeCellBackgroudColor(
-                "Objectivos Especificos".toUpperCase(),
+                "Actividade Discente".toUpperCase(),
                 Element.ALIGN_TOP,
                 Element.ALIGN_CENTER,
                 tableFontHeader,
@@ -300,74 +342,216 @@ public class PlanoAulaReport {
             )
         );
 
-        //        tableDetalhe.addCell(
-        //                makeCellBackgroudColor(
-        //                        "Observação".toUpperCase(),
-        //                        Element.ALIGN_TOP,
-        //                        Element.ALIGN_CENTER,
-        //                        tableFontHeader,
-        //                        leading,
-        //                        padding,
-        //                        border,
-        //                        true,
-        //                        false
-        //                )
-        //        );
+        tableDetalhe.addCell(
+            makeCellBackgroudColor(
+                "Tempo".toUpperCase(),
+                Element.ALIGN_TOP,
+                Element.ALIGN_CENTER,
+                tableFontHeader,
+                leading,
+                padding,
+                border,
+                true,
+                false
+            )
+        );
+
+        tableDetalhe.addCell(
+            makeCellBackgroudColor(
+                "Recursos de Ensino".toUpperCase(),
+                Element.ALIGN_TOP,
+                Element.ALIGN_CENTER,
+                tableFontHeader,
+                leading,
+                padding,
+                border,
+                true,
+                false
+            )
+        );
+
+        tableDetalhe.addCell(
+            makeCellBackgroudColor(
+                "Avaliação".toUpperCase(),
+                Element.ALIGN_TOP,
+                Element.ALIGN_CENTER,
+                tableFontHeader,
+                leading,
+                padding,
+                border,
+                true,
+                false
+            )
+        );
+
+        tableDetalhe.addCell(
+            makeCellBackgroudColor(
+                "Bibliografia".toUpperCase(),
+                Element.ALIGN_TOP,
+                Element.ALIGN_CENTER,
+                tableFontHeader,
+                leading,
+                padding,
+                border,
+                true,
+                false
+            )
+        );
+
+        tableDetalhe.addCell(
+            makeCellBackgroudColor(
+                "Observação".toUpperCase(),
+                Element.ALIGN_TOP,
+                Element.ALIGN_CENTER,
+                tableFontHeader,
+                leading,
+                padding,
+                border,
+                true,
+                false
+            )
+        );
 
         // Content
 
-        //        for (var matricula : matriculas) {
-        //            var discente = matricula.getDiscente();
-        var tema = planoAula.getAssunto();
-        var tipoAula = planoAula.getTipoAula();
-        var tempoLectivo = planoAula.getSemanaLectiva();
-        var objectivoGerais = planoAula.getObjectivoGeral();
-        var objectivosEspecificos = planoAula.getObjectivosEspecificos();
+        for (var detalhe : detalhePlanoAulaCOllection) {
+            //            int idade = Constants.ANO - matricula.getDiscente().getNascimento().getYear();
 
-        //            int idade = Constants.ANO - matricula.getDiscente().getNascimento().getYear();
+            // Titulo Actividade
+            tableDetalhe.addCell(
+                makeCell(
+                    detalhe.getTituloActividade(),
+                    Element.ALIGN_TOP,
+                    Element.ALIGN_LEFT,
+                    tableFontNormal,
+                    leading,
+                    padding,
+                    border,
+                    true,
+                    false
+                )
+            );
 
-        // Nº Chamada
-        tableDetalhe.addCell(
-            makeCell(tema, Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
-        );
+            // Estrategia
+            tableDetalhe.addCell(
+                makeCell(
+                    detalhe.getEstrategiaAula(),
+                    Element.ALIGN_TOP,
+                    Element.ALIGN_LEFT,
+                    tableFontNormal,
+                    leading,
+                    padding,
+                    border,
+                    true,
+                    false
+                )
+            );
 
-        // Nº processo
-        tableDetalhe.addCell(
-            makeCell(tipoAula.toString(), Element.ALIGN_TOP, Element.ALIGN_LEFT, tableFontNormal, leading, padding, border, true, false)
-        );
+            // Actividade Docente
+            tableDetalhe.addCell(
+                makeCell(
+                    detalhe.getActividadesDocente(),
+                    Element.ALIGN_TOP,
+                    Element.ALIGN_CENTER,
+                    tableFontNormal,
+                    leading,
+                    padding,
+                    border,
+                    true,
+                    false
+                )
+            );
 
-        // Nome Completo
-        tableDetalhe.addCell(
-            makeCell(tempoLectivo.toString(), Element.ALIGN_TOP, Element.ALIGN_LEFT, tableFontNormal, leading, padding, border, true, false)
-        );
+            // Actividade Discente
+            tableDetalhe.addCell(
+                makeCell(
+                    detalhe.getActividadesDiscentes(),
+                    Element.ALIGN_TOP,
+                    Element.ALIGN_CENTER,
+                    tableFontNormal,
+                    leading,
+                    padding,
+                    border,
+                    true,
+                    false
+                )
+            );
 
-        // Sexo
-        tableDetalhe.addCell(
-            makeCell(objectivoGerais, Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
-        );
+            // Tempo
+            tableDetalhe.addCell(
+                makeCell(
+                    detalhe.getTempoActividade() + " min.",
+                    Element.ALIGN_TOP,
+                    Element.ALIGN_CENTER,
+                    tableFontNormal,
+                    leading,
+                    padding,
+                    border,
+                    true,
+                    false
+                )
+            );
 
-        // Idade
-        tableDetalhe.addCell(
-            makeCell(objectivosEspecificos, Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
-        );
+            // Recurso de Ensino
+            tableDetalhe.addCell(
+                makeCell(
+                    detalhe.getRecursosEnsino(),
+                    Element.ALIGN_TOP,
+                    Element.ALIGN_CENTER,
+                    tableFontNormal,
+                    leading,
+                    padding,
+                    border,
+                    true,
+                    false
+                )
+            );
 
-        // Observações
-        //            tableDetalhe.addCell(
-        //                    makeCell(
-        //                            matricula.getDescricao(),
-        //                            Element.ALIGN_TOP,
-        //                            Element.ALIGN_CENTER,
-        //                            tableFontNormal,
-        //                            leading,
-        //                            padding,
-        //                            border,
-        //                            true,
-        //                            false
-        //                    )
-        //            );
+            // Avaliação
+            tableDetalhe.addCell(
+                makeCell(
+                    detalhe.getAvaliacao(),
+                    Element.ALIGN_TOP,
+                    Element.ALIGN_CENTER,
+                    tableFontNormal,
+                    leading,
+                    padding,
+                    border,
+                    true,
+                    false
+                )
+            );
 
-        contador++;
-        //        }
+            // Bibliografia
+            tableDetalhe.addCell(
+                makeCell(
+                    detalhe.getBibliografia(),
+                    Element.ALIGN_TOP,
+                    Element.ALIGN_CENTER,
+                    tableFontNormal,
+                    leading,
+                    padding,
+                    border,
+                    true,
+                    false
+                )
+            );
+
+            // Observacao
+            tableDetalhe.addCell(
+                makeCell(
+                    detalhe.getObservacao(),
+                    Element.ALIGN_TOP,
+                    Element.ALIGN_CENTER,
+                    tableFontNormal,
+                    leading,
+                    padding,
+                    border,
+                    true,
+                    false
+                )
+            );
+        }
 
         return tableDetalhe;
     }

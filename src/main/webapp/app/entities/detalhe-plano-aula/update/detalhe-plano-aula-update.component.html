@@ -12,25 +12,12 @@
       <div>
         <app-alert-error></app-alert-error>
 
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+        <div class="mb-3" *ngIf="editForm.controls.id.value !== null">
           <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.estrategiaAula" for="field_estrategiaAula"
-            >Estrategia Aula</label
-          >
-          <textarea
-            class="form-control"
-            name="estrategiaAula"
-            id="field_estrategiaAula"
-            data-cy="estrategiaAula"
-            formControlName="estrategiaAula"
-          ></textarea>
-        </div>
-
-        <div class="row mb-3">
+        <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.tempoActividade" for="field_tempoActividade"
             >Tempo Actividade</label
           >
@@ -73,20 +60,7 @@
           </div>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.recursosEnsino" for="field_recursosEnsino"
-            >Recursos Ensino</label
-          >
-          <textarea
-            class="form-control"
-            name="recursosEnsino"
-            id="field_recursosEnsino"
-            data-cy="recursosEnsino"
-            formControlName="recursosEnsino"
-          ></textarea>
-        </div>
-
-        <div class="row mb-3">
+        <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.tituloActividade" for="field_tituloActividade"
             >Titulo Actividade</label
           >
@@ -114,7 +88,7 @@
           </div>
         </div>
 
-        <div class="row mb-3">
+        <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.actividadesDocente" for="field_actividadesDocente"
             >Actividades Docente</label
           >
@@ -141,7 +115,7 @@
           </div>
         </div>
 
-        <div class="row mb-3">
+        <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.actividadesDiscentes" for="field_actividadesDiscentes"
             >Actividades Discentes</label
           >
@@ -168,7 +142,7 @@
           </div>
         </div>
 
-        <div class="row mb-3">
+        <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.avaliacao" for="field_avaliacao">Avaliacao</label>
           <textarea class="form-control" name="avaliacao" id="field_avaliacao" data-cy="avaliacao" formControlName="avaliacao"></textarea>
           <div *ngIf="editForm.get('avaliacao')!.invalid && (editForm.get('avaliacao')!.dirty || editForm.get('avaliacao')!.touched)">
@@ -182,7 +156,7 @@
           </div>
         </div>
 
-        <div class="row mb-3">
+        <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.bibliografia" for="field_bibliografia">Bibliografia</label>
           <textarea
             class="form-control"
@@ -204,7 +178,33 @@
           </div>
         </div>
 
-        <div class="row mb-3">
+        <div class="mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.recursosEnsino" for="field_recursosEnsino"
+            >Recursos Ensino</label
+          >
+          <textarea
+            class="form-control"
+            name="recursosEnsino"
+            id="field_recursosEnsino"
+            data-cy="recursosEnsino"
+            formControlName="recursosEnsino"
+          ></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.estrategiaAula" for="field_estrategiaAula"
+            >Estrategia Aula</label
+          >
+          <textarea
+            class="form-control"
+            name="estrategiaAula"
+            id="field_estrategiaAula"
+            data-cy="estrategiaAula"
+            formControlName="estrategiaAula"
+          ></textarea>
+        </div>
+
+        <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.observacao" for="field_observacao">Observacao</label>
           <textarea
             class="form-control"
@@ -215,7 +215,7 @@
           ></textarea>
         </div>
 
-        <div class="row mb-3">
+        <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.pdf" for="field_pdf">Pdf</label>
           <div>
             <div *ngIf="editForm.get('pdf')!.value" class="form-text text-danger clearfix">
@@ -246,7 +246,7 @@
           <input type="hidden" class="form-control" name="pdfContentType" id="field_pdfContentType" formControlName="pdfContentType" />
         </div>
 
-        <div class="row mb-3">
+        <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.video" for="field_video">Video</label>
           <div>
             <div *ngIf="editForm.get('video')!.value" class="form-text text-danger clearfix">
@@ -283,7 +283,7 @@
           />
         </div>
 
-        <div class="row mb-3">
+        <div class="mb-3">
           <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.audio" for="field_audio">Audio</label>
           <div>
             <div *ngIf="editForm.get('audio')!.value" class="form-text text-danger clearfix">
@@ -320,7 +320,7 @@
           />
         </div>
 
-        <div class="row mb-3">
+        <!-- <div class=" mb-3">
           <label class="form-label" appTranslate="longonkeloApp.detalhePlanoAula.planoAula" for="field_planoAula">Plano Aula</label>
           <select
             class="form-control"
@@ -344,7 +344,7 @@
           >
             O campo é obrigatório.
           </small>
-        </div>
+        </div> -->
       </div>
 
       <div>

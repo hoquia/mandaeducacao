@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
@@ -34,7 +34,8 @@ export class PlanoAulaUpdateComponent implements OnInit {
   estadoLicaoValues = Object.keys(EstadoLicao);
 
   usersSharedCollection: IUser[] = [];
-  lookupItemsSharedCollection: ILookupItem[] = [];
+  unidadeTematicaCollection: ILookupItem[] = [];
+  subUnidadeTematicaCollection: ILookupItem[] = [];
   turmasSharedCollection: ITurma[] = [];
   docentesSharedCollection: IDocente[] = [];
   disciplinaCurricularsSharedCollection: IDisciplinaCurricular[] = [];
@@ -51,7 +52,8 @@ export class PlanoAulaUpdateComponent implements OnInit {
     protected turmaService: TurmaService,
     protected docenteService: DocenteService,
     protected disciplinaCurricularService: DisciplinaCurricularService,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router
   ) {}
 
   compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
@@ -112,13 +114,14 @@ export class PlanoAulaUpdateComponent implements OnInit {
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IPlanoAula>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
-      next: () => this.onSaveSuccess(),
+      next: e => this.onSaveSuccess(e.body!.id),
       error: () => this.onSaveError(),
     });
   }
 
-  protected onSaveSuccess(): void {
-    this.previousState();
+  protected onSaveSuccess(id: number): void {
+    this.router.navigate(['/plano-aula', id, 'view']);
+    // this.previousState();
   }
 
   protected onSaveError(): void {
@@ -134,11 +137,11 @@ export class PlanoAulaUpdateComponent implements OnInit {
     this.planoAulaFormService.resetForm(this.editForm, planoAula);
 
     this.usersSharedCollection = this.userService.addUserToCollectionIfMissing<IUser>(this.usersSharedCollection, planoAula.utilizador);
-    this.lookupItemsSharedCollection = this.lookupItemService.addLookupItemToCollectionIfMissing<ILookupItem>(
-      this.lookupItemsSharedCollection,
-      planoAula.unidadeTematica,
-      planoAula.subUnidadeTematica
-    );
+    // this.lookupItemsSharedCollection = this.lookupItemService.addLookupItemToCollectionIfMissing<ILookupItem>(
+    //   this.lookupItemsSharedCollection,
+    //   planoAula.unidadeTematica,
+    //   planoAula.subUnidadeTematica
+    // );
     this.turmasSharedCollection = this.turmaService.addTurmaToCollectionIfMissing<ITurma>(this.turmasSharedCollection, planoAula.turma);
     this.docentesSharedCollection = this.docenteService.addDocenteToCollectionIfMissing<IDocente>(
       this.docentesSharedCollection,
@@ -158,19 +161,28 @@ export class PlanoAulaUpdateComponent implements OnInit {
       .pipe(map((users: IUser[]) => this.userService.addUserToCollectionIfMissing<IUser>(users, this.planoAula?.utilizador)))
       .subscribe((users: IUser[]) => (this.usersSharedCollection = users));
 
-    this.lookupItemService
-      .query()
-      .pipe(map((res: HttpResponse<ILookupItem[]>) => res.body ?? []))
-      .pipe(
-        map((lookupItems: ILookupItem[]) =>
-          this.lookupItemService.addLookupItemToCollectionIfMissing<ILookupItem>(
-            lookupItems,
-            this.planoAula?.unidadeTematica,
-            this.planoAula?.subUnidadeTematica
-          )
-        )
-      )
-      .subscribe((lookupItems: ILookupItem[]) => (this.lookupItemsSharedCollection = lookupItems));
+    // this.lookupItemService
+    //   .query()
+    //   .pipe(map((res: HttpResponse<ILookupItem[]>) => res.body ?? []))
+    //   .pipe(
+    //     map((lookupItems: ILookupItem[]) =>
+    //       this.lookupItemService.addLookupItemToCollectionIfMissing<ILookupItem>(
+    //         lookupItems,
+    //         this.planoAula?.unidadeTematica,
+    //         this.planoAula?.subUnidadeTematica
+    //       )
+    //     )
+    //   )
+    //   .subscribe((lookupItems: ILookupItem[]) => (this.lookupItemsSharedCollection = lookupItems));
+
+    // unidadeTematica
+    this.lookupItemService.query({ 'lookupId.equals': 6 }).subscribe(res => {
+      this.unidadeTematicaCollection = res.body ?? [];
+    });
+    // sub-unidade-tematica
+    this.lookupItemService.query({ 'lookupId.equals': 7 }).subscribe(res => {
+      this.subUnidadeTematicaCollection = res.body ?? [];
+    });
 
     this.turmaService
       .query({ size: 10000 })

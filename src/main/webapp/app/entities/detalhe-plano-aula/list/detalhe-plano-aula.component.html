@@ -13,6 +13,7 @@
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-detalhe-plano-aula"
         [routerLink]="['/detalhe-plano-aula/new']"
+        [queryParams]="{ plano_aula_id: planoAulaID }"
       >
         <fa-icon icon="plus"></fa-icon>
         <span appTranslate="longonkeloApp.detalhePlanoAula.home.createLabel"> Criar novo(a) Detalhe Plano Aula </span>
@@ -34,15 +35,21 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="estrategiaAula">
+          </th> -->
+          <!-- <th scope="col" appSortBy="estrategiaAula">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.detalhePlanoAula.estrategiaAula">Estrategia Aula</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th> -->
+          <th scope="col" appSortBy="tituloActividade">
+            <div class="d-flex">
+              <span appTranslate="longonkeloApp.detalhePlanoAula.tituloActividade">Titulo Actividade</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -58,12 +65,6 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="tituloActividade">
-            <div class="d-flex">
-              <span appTranslate="longonkeloApp.detalhePlanoAula.tituloActividade">Titulo Actividade</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" appSortBy="actividadesDocente">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.detalhePlanoAula.actividadesDocente">Actividades Docente</span>
@@ -76,19 +77,19 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="avaliacao">
+          <!-- <th scope="col" appSortBy="avaliacao">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.detalhePlanoAula.avaliacao">Avaliacao</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="bibliografia">
+          </th> -->
+          <!-- <th scope="col" appSortBy="bibliografia">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.detalhePlanoAula.bibliografia">Bibliografia</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
-          <th scope="col" appSortBy="observacao">
+          </th> -->
+          <!-- <th scope="col" appSortBy="observacao">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.detalhePlanoAula.observacao">Observacao</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -117,22 +118,22 @@
               <span appTranslate="longonkeloApp.detalhePlanoAula.planoAula">Plano Aula</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let detalhePlanoAula of detalhePlanoAulas; trackBy: trackId" data-cy="entityTable">
-          <td>
+          <!-- <td>
             <a [routerLink]="['/detalhe-plano-aula', detalhePlanoAula.id, 'view']">{{ detalhePlanoAula.id }}</a>
-          </td>
-          <td>{{ detalhePlanoAula.estrategiaAula }}</td>
-          <td>{{ detalhePlanoAula.tempoActividade }}</td>
-          <td>{{ detalhePlanoAula.recursosEnsino }}</td>
+          </td> -->
           <td>{{ detalhePlanoAula.tituloActividade }}</td>
+          <!-- <td>{{ detalhePlanoAula.estrategiaAula }}</td> -->
+          <td>{{ detalhePlanoAula.tempoActividade | number }} minutos</td>
+          <td>{{ detalhePlanoAula.recursosEnsino }}</td>
           <td>{{ detalhePlanoAula.actividadesDocente }}</td>
           <td>{{ detalhePlanoAula.actividadesDiscentes }}</td>
-          <td>{{ detalhePlanoAula.avaliacao }}</td>
+          <!-- <td>{{ detalhePlanoAula.avaliacao }}</td>
           <td>{{ detalhePlanoAula.bibliografia }}</td>
           <td>{{ detalhePlanoAula.observacao }}</td>
           <td>
@@ -166,7 +167,7 @@
             <div *ngIf="detalhePlanoAula.planoAula">
               <a [routerLink]="['/plano-aula', detalhePlanoAula.planoAula.id, 'view']">{{ detalhePlanoAula.planoAula.assunto }}</a>
             </div>
-          </td>
+          </td> -->
           <td class="text-end">
             <div class="btn-group">
               <button
@@ -200,7 +201,7 @@
     </table>
   </div>
 
-  <div *ngIf="detalhePlanoAulas && detalhePlanoAulas.length > 0">
+  <!-- <div *ngIf="detalhePlanoAulas && detalhePlanoAulas.length > 0">
     <div class="d-flex justify-content-center">
       <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
     </div>
@@ -216,5 +217,5 @@
         (pageChange)="navigateToPage($event)"
       ></ngb-pagination>
     </div>
-  </div>
+  </div> -->
 </div>

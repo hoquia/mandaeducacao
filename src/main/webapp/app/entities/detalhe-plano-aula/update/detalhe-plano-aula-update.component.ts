@@ -41,6 +41,13 @@ export class DetalhePlanoAulaUpdateComponent implements OnInit {
       this.detalhePlanoAula = detalhePlanoAula;
       if (detalhePlanoAula) {
         this.updateForm(detalhePlanoAula);
+      } else {
+        const id = Number(this.activatedRoute.snapshot.queryParamMap.get('plano_aula_id'));
+        this.planoAulaService.find(id).subscribe(res => {
+          this.editForm.patchValue({
+            planoAula: res.body,
+          });
+        });
       }
 
       this.loadRelationshipsOptions();

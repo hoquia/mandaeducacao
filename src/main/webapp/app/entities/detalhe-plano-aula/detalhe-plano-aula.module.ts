@@ -14,5 +14,6 @@ import { DetalhePlanoAulaRoutingModule } from './route/detalhe-plano-aula-routin
     DetalhePlanoAulaUpdateComponent,
     DetalhePlanoAulaDeleteDialogComponent,
   ],
+  exports: [DetalhePlanoAulaComponent],
 })
 export class DetalhePlanoAulaModule {}

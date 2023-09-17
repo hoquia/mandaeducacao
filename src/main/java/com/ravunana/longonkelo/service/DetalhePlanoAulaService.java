@@ -1,6 +1,8 @@
 package com.ravunana.longonkelo.service;
 
+import com.ravunana.longonkelo.domain.DetalhePlanoAula;
 import com.ravunana.longonkelo.service.dto.DetalhePlanoAulaDTO;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -63,4 +65,6 @@ public interface DetalhePlanoAulaService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    List<DetalhePlanoAula> getDetalhePlanoAula(Long planoAulaID);
 }

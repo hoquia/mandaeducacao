@@ -20,11 +20,11 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface PlanoAulaMapper extends EntityMapper<PlanoAulaDTO, PlanoAula> {
     @Mapping(target = "utilizador", source = "utilizador", qualifiedByName = "userLogin")
-    @Mapping(target = "unidadeTematica", source = "unidadeTematica", qualifiedByName = "lookupItemDescricao")
-    @Mapping(target = "subUnidadeTematica", source = "subUnidadeTematica", qualifiedByName = "lookupItemDescricao")
+    @Mapping(target = "unidadeTematica", source = "unidadeTematica")
+    @Mapping(target = "subUnidadeTematica", source = "subUnidadeTematica")
     @Mapping(target = "turma", source = "turma")
     @Mapping(target = "docente", source = "docente", qualifiedByName = "docenteNome")
-    @Mapping(target = "disciplinaCurricular", source = "disciplinaCurricular", qualifiedByName = "disciplinaCurricularDescricao")
+    @Mapping(target = "disciplinaCurricular", source = "disciplinaCurricular")
     PlanoAulaDTO toDto(PlanoAula s);
 
     @Named("userLogin")
