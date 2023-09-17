@@ -6,14 +6,21 @@
         >]
       </h2>
 
-      <div class="btn-group mr-3">
+      <!-- <div class="btn-group mr-3">
         <button type="button" class="btn btn-warning">Imprimir</button>
         <div class="btn-group" ngbDropdown role="group" aria-label="Grupo Imprimir">
           <button class="btn btn-warning dropdown-toggle-split" ngbDropdownToggle></button>
           <div class="dropdown-menu" ngbDropdownMenu>
-            <button ngbDropdownItem (click)="gerarHorarioDiscente(turma.id)">Horário</button>
-            <button ngbDropdownItem (click)="gerarListaPresenca(turma.id)">Lista de presença</button>
           </div>
+        </div>
+      </div> -->
+
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-warning" (click)="gerarHorarioDiscente(turma.id)">Imprimir Horário</button>
+        </div>
+        <div class="col">
+          <button class="btn btn-warning" (click)="gerarListaPresenca(turma.id)">Imprimir Lista de presença</button>
         </div>
       </div>
 
