@@ -160,4 +160,10 @@ export class LicaoComponent implements OnInit {
       return [predicate + ',' + ascendingQueryParam];
     }
   }
+
+  protected searchLicao(tag: any): void {
+    this.licaoService.query({ 'numero.contains': tag }).subscribe(res => {
+      this.licaos = res.body ?? [];
+    });
+  }
 }

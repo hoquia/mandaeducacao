@@ -150,4 +150,10 @@ export class TurmaComponent implements OnInit {
       return [predicate + ',' + ascendingQueryParam];
     }
   }
+
+  protected searchTurma(tag: any): void {
+    this.turmaService.query({ 'descricao.contains': tag }).subscribe(res => {
+      this.turmas = res.body ?? [];
+    });
+  }
 }

@@ -160,4 +160,10 @@ export class EncarregadoEducacaoComponent implements OnInit {
       return [predicate + ',' + ascendingQueryParam];
     }
   }
+
+  protected searchEncarregadoEducacao(tag: any): void {
+    this.encarregadoEducacaoService.query({ 'nome.contains': tag }).subscribe(res => {
+      this.encarregadoEducacaos = res.body ?? [];
+    });
+  }
 }

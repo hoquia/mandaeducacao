@@ -26,6 +26,16 @@
 
   <app-filter [filters]="filters"></app-filter>
 
+  <div class="row mb-4">
+    <input
+      class="form-control"
+      placeholder="Número do processo do discente"
+      #tagVal
+      type="search"
+      (change)="searchMatricula(tagVal.value)"
+    />
+  </div>
+
   <div class="alert alert-warning" id="no-result" *ngIf="matriculas?.length === 0">
     <span appTranslate="longonkeloApp.matricula.home.notFound">Nenhum Matriculas encontrado</span>
   </div>

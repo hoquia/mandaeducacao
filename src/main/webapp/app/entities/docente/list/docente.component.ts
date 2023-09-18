@@ -175,4 +175,10 @@ export class DocenteComponent implements OnInit {
       a.remove();
     });
   }
+
+  protected searchDocente(tag: any): void {
+    this.docenteService.query({ 'nome.contains': tag }).subscribe(res => {
+      this.docentes = res.body ?? [];
+    });
+  }
 }

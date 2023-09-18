@@ -160,4 +160,10 @@ export class DiscenteComponent implements OnInit {
       return [predicate + ',' + ascendingQueryParam];
     }
   }
+
+  protected searchDiscente(tag: any): void {
+    this.discenteService.query({ 'nome.contains': tag }).subscribe(res => {
+      this.discentes = res.body ?? [];
+    });
+  }
 }

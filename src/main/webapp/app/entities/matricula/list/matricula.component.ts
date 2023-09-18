@@ -160,4 +160,10 @@ export class MatriculaComponent implements OnInit {
       return [predicate + ',' + ascendingQueryParam];
     }
   }
+
+  protected searchMatricula(tag: any): void {
+    this.matriculaService.query({ 'numeroMatricula.contains': tag }).subscribe(res => {
+      this.matriculas = res.body ?? [];
+    });
+  }
 }

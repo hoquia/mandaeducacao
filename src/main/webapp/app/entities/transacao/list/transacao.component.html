@@ -26,6 +26,10 @@
 
   <app-filter [filters]="filters"></app-filter>
 
+  <div class="row mb-4">
+    <input class="form-control" placeholder="Referência da Transação" #tagVal type="search" (change)="searchTransacao(tagVal.value)" />
+  </div>
+
   <div class="alert alert-warning" id="no-result" *ngIf="transacaos?.length === 0">
     <span appTranslate="longonkeloApp.transacao.home.notFound">Nenhum Transacaos encontrado</span>
   </div>

@@ -151,4 +151,10 @@ export class DisciplinaCurricularComponent implements OnInit {
       return [predicate + ',' + ascendingQueryParam];
     }
   }
+
+  protected searchDisciplinaCurricular(tag: any): void {
+    this.disciplinaCurricularService.query({ 'descricao.contains': tag }).subscribe(res => {
+      this.disciplinaCurriculars = res.body ?? [];
+    });
+  }
 }

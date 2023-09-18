@@ -26,6 +26,10 @@
 
   <app-filter [filters]="filters"></app-filter>
 
+  <div class="row mb-4">
+    <input class="form-control" placeholder="Nome Discente" #tagVal type="search" (change)="searchDiscente(tagVal.value)" />
+  </div>
+
   <div class="alert alert-warning" id="no-result" *ngIf="discentes?.length === 0">
     <span appTranslate="longonkeloApp.discente.home.notFound">Nenhum Discentes encontrado</span>
   </div>

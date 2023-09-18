@@ -26,6 +26,10 @@
 
   <app-filter [filters]="filters"></app-filter>
 
+  <div class="row mb-4">
+    <input class="form-control" placeholder="Número da Lição" #tagVal type="search" (change)="searchLicao(tagVal.value)" />
+  </div>
+
   <div class="alert alert-warning" id="no-result" *ngIf="licaos?.length === 0">
     <span appTranslate="longonkeloApp.licao.home.notFound">Nenhum Licaos encontrado</span>
   </div>

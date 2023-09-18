@@ -160,4 +160,10 @@ export class EmolumentoComponent implements OnInit {
       return [predicate + ',' + ascendingQueryParam];
     }
   }
+
+  protected searchEmolumento(tag: any): void {
+    this.emolumentoService.query({ 'nome.contains': tag }).subscribe(res => {
+      this.emolumentos = res.body ?? [];
+    });
+  }
 }

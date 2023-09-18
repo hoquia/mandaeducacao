@@ -27,6 +27,10 @@
 
   <app-filter [filters]="filters"></app-filter>
 
+  <div class="row mb-4">
+    <input class="form-control" placeholder="Número Factura" #tagVal type="search" (change)="searchFactura(tagVal.value)" />
+  </div>
+
   <div class="alert alert-warning" id="no-result" *ngIf="facturas?.length === 0">
     <span appTranslate="longonkeloApp.factura.home.notFound">Nenhum Facturas encontrado</span>
   </div>

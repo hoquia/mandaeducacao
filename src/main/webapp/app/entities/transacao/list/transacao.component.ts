@@ -160,4 +160,10 @@ export class TransacaoComponent implements OnInit {
       return [predicate + ',' + ascendingQueryParam];
     }
   }
+
+  protected searchTransacao(tag: any): void {
+    this.transacaoService.query({ 'referencia.contains': tag }).subscribe(res => {
+      this.transacaos = res.body ?? [];
+    });
+  }
 }

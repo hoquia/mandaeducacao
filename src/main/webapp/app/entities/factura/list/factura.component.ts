@@ -176,4 +176,10 @@ export class FacturaComponent implements OnInit {
       a.remove();
     });
   }
+
+  protected searchFactura(tag: any): void {
+    this.facturaService.query({ 'numero.contains': tag }).subscribe(res => {
+      this.facturas = res.body ?? [];
+    });
+  }
 }

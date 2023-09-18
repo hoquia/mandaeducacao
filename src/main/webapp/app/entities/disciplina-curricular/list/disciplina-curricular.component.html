@@ -26,6 +26,16 @@
 
   <app-filter [filters]="filters"></app-filter>
 
+  <div class="row mb-4">
+    <input
+      class="form-control"
+      placeholder="Descrição Disciplina Curricular"
+      #tagVal
+      type="search"
+      (change)="searchDisciplinaCurricular(tagVal.value)"
+    />
+  </div>
+
   <div class="alert alert-warning" id="no-result" *ngIf="disciplinaCurriculars?.length === 0">
     <span appTranslate="longonkeloApp.disciplinaCurricular.home.notFound">Nenhum Disciplina Curriculars encontrado</span>
   </div>

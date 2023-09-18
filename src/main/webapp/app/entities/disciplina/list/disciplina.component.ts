@@ -159,4 +159,10 @@ export class DisciplinaComponent implements OnInit {
       return [predicate + ',' + ascendingQueryParam];
     }
   }
+
+  protected searchDisciplina(tag: any): void {
+    this.disciplinaService.query({ 'nome.contains': tag }).subscribe(res => {
+      this.disciplinas = res.body ?? [];
+    });
+  }
 }

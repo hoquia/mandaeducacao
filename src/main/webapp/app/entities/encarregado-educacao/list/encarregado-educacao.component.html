@@ -26,6 +26,16 @@
 
   <app-filter [filters]="filters"></app-filter>
 
+  <div class="row mb-4">
+    <input
+      class="form-control"
+      placeholder="Nome Encarregado Educação"
+      #tagVal
+      type="search"
+      (change)="searchEncarregadoEducacao(tagVal.value)"
+    />
+  </div>
+
   <div class="alert alert-warning" id="no-result" *ngIf="encarregadoEducacaos?.length === 0">
     <span appTranslate="longonkeloApp.encarregadoEducacao.home.notFound">Nenhum Encarregado Educacaos encontrado</span>
   </div>

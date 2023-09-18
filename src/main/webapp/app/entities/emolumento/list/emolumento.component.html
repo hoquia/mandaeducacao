@@ -26,6 +26,10 @@
 
   <app-filter [filters]="filters"></app-filter>
 
+  <div class="row mb-4">
+    <input class="form-control" placeholder="Nome Emolumento" #tagVal type="search" (change)="searchEmolumento(tagVal.value)" />
+  </div>
+
   <div class="alert alert-warning" id="no-result" *ngIf="emolumentos?.length === 0">
     <span appTranslate="longonkeloApp.emolumento.home.notFound">Nenhum Emolumentos encontrado</span>
   </div>

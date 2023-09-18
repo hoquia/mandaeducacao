@@ -27,6 +27,10 @@
 
   <app-filter [filters]="filters"></app-filter>
 
+  <div class="row mb-4">
+    <input class="form-control" placeholder="Nome Disciplina" #tagVal type="search" (change)="searchDisciplina(tagVal.value)" />
+  </div>
+
   <div class="alert alert-warning" id="no-result" *ngIf="disciplinas?.length === 0">
     <span appTranslate="longonkeloApp.disciplina.home.notFound">Nenhum Disciplinas encontrado</span>
   </div>
