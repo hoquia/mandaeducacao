@@ -354,199 +354,200 @@ public class FluxoCaixaCategoriaEmolumentoReport {
         return 0;
     }
 
-    private PdfPTable getHorarioTempo(
-        List<HorarioDTO> horarios,
-        PeriodoHorarioDTO tempo,
-        PdfPTable tableDetalhe,
-        Font tableFontNormal,
-        float leading,
-        float padding,
-        Rectangle border
-    ) {
-        var segunda = horarios
-            .stream()
-            .filter(x -> x.getPeriodo().getId().equals(tempo.getId()) && x.getDiaSemana().equals(DiaSemana.SEGUNDA))
-            .findFirst();
-        var terca = horarios
-            .stream()
-            .filter(x -> x.getPeriodo().getId().equals(tempo.getId()) && x.getDiaSemana().equals(DiaSemana.TERCA))
-            .findFirst();
-        var quarta = horarios
-            .stream()
-            .filter(x -> x.getPeriodo().getId().equals(tempo.getId()) && x.getDiaSemana().equals(DiaSemana.QUARTA))
-            .findFirst();
-        var quinta = horarios
-            .stream()
-            .filter(x -> x.getPeriodo().getId().equals(tempo.getId()) && x.getDiaSemana().equals(DiaSemana.QUINTA))
-            .findFirst();
-        var sexta = horarios
-            .stream()
-            .filter(x -> x.getPeriodo().getId().equals(tempo.getId()) && x.getDiaSemana().equals(DiaSemana.SEXTA))
-            .findFirst();
-        var sabado = horarios
-            .stream()
-            .filter(x -> x.getPeriodo().getId().equals(tempo.getId()) && x.getDiaSemana().equals(DiaSemana.SABADO))
-            .findFirst();
-
-        // Tempos
-        tableDetalhe.addCell(
-            makeCell(
-                tempo.getTempo().toString() + "º",
-                Element.ALIGN_TOP,
-                Element.ALIGN_CENTER,
-                tableFontNormal,
-                leading,
-                padding,
-                border,
-                true,
-                false
-            )
-        );
-
-        // Horas
-        tableDetalhe.addCell(
-            makeCell(
-                tempo.getInicio() + " - " + tempo.getFim(),
-                Element.ALIGN_TOP,
-                Element.ALIGN_CENTER,
-                tableFontNormal,
-                leading,
-                padding,
-                border,
-                true,
-                false
-            )
-        );
-
-        // Seunda-feira
-
-        if (segunda.isPresent()) {
-            tableDetalhe.addCell(
-                makeCell(
-                    segunda.get().getDisciplinaCurricular().getDisciplina().getNome() + "\n" + segunda.get().getTurma().getDescricao(),
-                    Element.ALIGN_CENTER,
-                    Element.ALIGN_CENTER,
-                    tableFontNormal,
-                    leading,
-                    padding,
-                    border,
-                    true,
-                    false
-                )
-            );
-        } else {
-            tableDetalhe.addCell(
-                makeCell("", Element.ALIGN_TOP, Element.ALIGN_LEFT, tableFontNormal, leading, padding, border, true, false)
-            );
-        }
-
-        // Terça-feira
-        if (terca.isPresent()) {
-            tableDetalhe.addCell(
-                makeCell(
-                    terca.get().getDisciplinaCurricular().getDisciplina().getNome() + "\n" + terca.get().getTurma().getDescricao(),
-                    Element.ALIGN_CENTER,
-                    Element.ALIGN_CENTER,
-                    tableFontNormal,
-                    leading,
-                    padding,
-                    border,
-                    true,
-                    false
-                )
-            );
-        } else {
-            tableDetalhe.addCell(
-                makeCell("", Element.ALIGN_TOP, Element.ALIGN_LEFT, tableFontNormal, leading, padding, border, true, false)
-            );
-        }
-
-        // Quarta-feira
-        if (quarta.isPresent()) {
-            tableDetalhe.addCell(
-                makeCell(
-                    quarta.get().getDisciplinaCurricular().getDisciplina().getNome() + "\n" + quarta.get().getTurma().getDescricao(),
-                    Element.ALIGN_CENTER,
-                    Element.ALIGN_CENTER,
-                    tableFontNormal,
-                    leading,
-                    padding,
-                    border,
-                    true,
-                    false
-                )
-            );
-        } else {
-            tableDetalhe.addCell(
-                makeCell("", Element.ALIGN_TOP, Element.ALIGN_LEFT, tableFontNormal, leading, padding, border, true, false)
-            );
-        }
-
-        // Quinta-feira
-        if (quinta.isPresent()) {
-            tableDetalhe.addCell(
-                makeCell(
-                    quinta.get().getDisciplinaCurricular().getDisciplina().getNome() + "\n" + quinta.get().getTurma().getDescricao(),
-                    Element.ALIGN_CENTER,
-                    Element.ALIGN_CENTER,
-                    tableFontNormal,
-                    leading,
-                    padding,
-                    border,
-                    true,
-                    false
-                )
-            );
-        } else {
-            tableDetalhe.addCell(
-                makeCell("", Element.ALIGN_TOP, Element.ALIGN_LEFT, tableFontNormal, leading, padding, border, true, false)
-            );
-        }
-
-        // Sexa-feira
-        if (sexta.isPresent()) {
-            tableDetalhe.addCell(
-                makeCell(
-                    sexta.get().getDisciplinaCurricular().getDisciplina().getNome() + "\n" + sexta.get().getTurma().getDescricao(),
-                    Element.ALIGN_CENTER,
-                    Element.ALIGN_CENTER,
-                    tableFontNormal,
-                    leading,
-                    padding,
-                    border,
-                    true,
-                    false
-                )
-            );
-        } else {
-            tableDetalhe.addCell(
-                makeCell("", Element.ALIGN_TOP, Element.ALIGN_LEFT, tableFontNormal, leading, padding, border, true, false)
-            );
-        }
-
-        // Sabado
-        if (sabado.isPresent()) {
-            tableDetalhe.addCell(
-                makeCell(
-                    sabado.get().getDisciplinaCurricular().getDisciplina().getNome() + "\n" + sabado.get().getTurma().getDescricao(),
-                    Element.ALIGN_CENTER,
-                    Element.ALIGN_CENTER,
-                    tableFontNormal,
-                    leading,
-                    padding,
-                    border,
-                    true,
-                    false
-                )
-            );
-        } else {
-            tableDetalhe.addCell(
-                makeCell("", Element.ALIGN_TOP, Element.ALIGN_LEFT, tableFontNormal, leading, padding, border, true, false)
-            );
-        }
-
-        return tableDetalhe;
-    }
+    //
+    //    private PdfPTable getHorarioTempo(
+    //        List<HorarioDTO> horarios,
+    //        PeriodoHorarioDTO tempo,
+    //        PdfPTable tableDetalhe,
+    //        Font tableFontNormal,
+    //        float leading,
+    //        float padding,
+    //        Rectangle border
+    //    ) {
+    //        var segunda = horarios
+    //            .stream()
+    //            .filter(x -> x.getPeriodo().getId().equals(tempo.getId()) && x.getDiaSemana().equals(DiaSemana.SEGUNDA))
+    //            .findFirst();
+    //        var terca = horarios
+    //            .stream()
+    //            .filter(x -> x.getPeriodo().getId().equals(tempo.getId()) && x.getDiaSemana().equals(DiaSemana.TERCA))
+    //            .findFirst();
+    //        var quarta = horarios
+    //            .stream()
+    //            .filter(x -> x.getPeriodo().getId().equals(tempo.getId()) && x.getDiaSemana().equals(DiaSemana.QUARTA))
+    //            .findFirst();
+    //        var quinta = horarios
+    //            .stream()
+    //            .filter(x -> x.getPeriodo().getId().equals(tempo.getId()) && x.getDiaSemana().equals(DiaSemana.QUINTA))
+    //            .findFirst();
+    //        var sexta = horarios
+    //            .stream()
+    //            .filter(x -> x.getPeriodo().getId().equals(tempo.getId()) && x.getDiaSemana().equals(DiaSemana.SEXTA))
+    //            .findFirst();
+    //        var sabado = horarios
+    //            .stream()
+    //            .filter(x -> x.getPeriodo().getId().equals(tempo.getId()) && x.getDiaSemana().equals(DiaSemana.SABADO))
+    //            .findFirst();
+    //
+    //        // Tempos
+    //        tableDetalhe.addCell(
+    //            makeCell(
+    //                tempo.getTempo().toString() + "º",
+    //                Element.ALIGN_TOP,
+    //                Element.ALIGN_CENTER,
+    //                tableFontNormal,
+    //                leading,
+    //                padding,
+    //                border,
+    //                true,
+    //                false
+    //            )
+    //        );
+    //
+    //        // Horas
+    //        tableDetalhe.addCell(
+    //            makeCell(
+    //                tempo.getInicio() + " - " + tempo.getFim(),
+    //                Element.ALIGN_TOP,
+    //                Element.ALIGN_CENTER,
+    //                tableFontNormal,
+    //                leading,
+    //                padding,
+    //                border,
+    //                true,
+    //                false
+    //            )
+    //        );
+    //
+    //        // Seunda-feira
+    //
+    //        if (segunda.isPresent()) {
+    //            tableDetalhe.addCell(
+    //                makeCell(
+    //                    segunda.get().getDisciplinaCurricular().getDisciplina().getNome() + "\n" + segunda.get().getTurma().getDescricao(),
+    //                    Element.ALIGN_CENTER,
+    //                    Element.ALIGN_CENTER,
+    //                    tableFontNormal,
+    //                    leading,
+    //                    padding,
+    //                    border,
+    //                    true,
+    //                    false
+    //                )
+    //            );
+    //        } else {
+    //            tableDetalhe.addCell(
+    //                makeCell("", Element.ALIGN_TOP, Element.ALIGN_LEFT, tableFontNormal, leading, padding, border, true, false)
+    //            );
+    //        }
+    //
+    //        // Terça-feira
+    //        if (terca.isPresent()) {
+    //            tableDetalhe.addCell(
+    //                makeCell(
+    //                    terca.get().getDisciplinaCurricular().getDisciplina().getNome() + "\n" + terca.get().getTurma().getDescricao(),
+    //                    Element.ALIGN_CENTER,
+    //                    Element.ALIGN_CENTER,
+    //                    tableFontNormal,
+    //                    leading,
+    //                    padding,
+    //                    border,
+    //                    true,
+    //                    false
+    //                )
+    //            );
+    //        } else {
+    //            tableDetalhe.addCell(
+    //                makeCell("", Element.ALIGN_TOP, Element.ALIGN_LEFT, tableFontNormal, leading, padding, border, true, false)
+    //            );
+    //        }
+    //
+    //        // Quarta-feira
+    //        if (quarta.isPresent()) {
+    //            tableDetalhe.addCell(
+    //                makeCell(
+    //                    quarta.get().getDisciplinaCurricular().getDisciplina().getNome() + "\n" + quarta.get().getTurma().getDescricao(),
+    //                    Element.ALIGN_CENTER,
+    //                    Element.ALIGN_CENTER,
+    //                    tableFontNormal,
+    //                    leading,
+    //                    padding,
+    //                    border,
+    //                    true,
+    //                    false
+    //                )
+    //            );
+    //        } else {
+    //            tableDetalhe.addCell(
+    //                makeCell("", Element.ALIGN_TOP, Element.ALIGN_LEFT, tableFontNormal, leading, padding, border, true, false)
+    //            );
+    //        }
+    //
+    //        // Quinta-feira
+    //        if (quinta.isPresent()) {
+    //            tableDetalhe.addCell(
+    //                makeCell(
+    //                    quinta.get().getDisciplinaCurricular().getDisciplina().getNome() + "\n" + quinta.get().getTurma().getDescricao(),
+    //                    Element.ALIGN_CENTER,
+    //                    Element.ALIGN_CENTER,
+    //                    tableFontNormal,
+    //                    leading,
+    //                    padding,
+    //                    border,
+    //                    true,
+    //                    false
+    //                )
+    //            );
+    //        } else {
+    //            tableDetalhe.addCell(
+    //                makeCell("", Element.ALIGN_TOP, Element.ALIGN_LEFT, tableFontNormal, leading, padding, border, true, false)
+    //            );
+    //        }
+    //
+    //        // Sexa-feira
+    //        if (sexta.isPresent()) {
+    //            tableDetalhe.addCell(
+    //                makeCell(
+    //                    sexta.get().getDisciplinaCurricular().getDisciplina().getNome() + "\n" + sexta.get().getTurma().getDescricao(),
+    //                    Element.ALIGN_CENTER,
+    //                    Element.ALIGN_CENTER,
+    //                    tableFontNormal,
+    //                    leading,
+    //                    padding,
+    //                    border,
+    //                    true,
+    //                    false
+    //                )
+    //            );
+    //        } else {
+    //            tableDetalhe.addCell(
+    //                makeCell("", Element.ALIGN_TOP, Element.ALIGN_LEFT, tableFontNormal, leading, padding, border, true, false)
+    //            );
+    //        }
+    //
+    //        // Sabado
+    //        if (sabado.isPresent()) {
+    //            tableDetalhe.addCell(
+    //                makeCell(
+    //                    sabado.get().getDisciplinaCurricular().getDisciplina().getNome() + "\n" + sabado.get().getTurma().getDescricao(),
+    //                    Element.ALIGN_CENTER,
+    //                    Element.ALIGN_CENTER,
+    //                    tableFontNormal,
+    //                    leading,
+    //                    padding,
+    //                    border,
+    //                    true,
+    //                    false
+    //                )
+    //            );
+    //        } else {
+    //            tableDetalhe.addCell(
+    //                makeCell("", Element.ALIGN_TOP, Element.ALIGN_LEFT, tableFontNormal, leading, padding, border, true, false)
+    //            );
+    //        }
+    //
+    //        return tableDetalhe;
+    //    }
 
     private Paragraph getTituloMapa(String nomeDocente) {
         String titulo = "\n\nDocente: " + nomeDocente;
