@@ -5,7 +5,9 @@ import com.ravunana.longonkelo.service.TurmaQueryService;
 import com.ravunana.longonkelo.service.TurmaService;
 import com.ravunana.longonkelo.service.criteria.TurmaCriteria;
 import com.ravunana.longonkelo.service.dto.TurmaDTO;
+import com.ravunana.longonkelo.service.report.EstratoFinanceiroReport;
 import com.ravunana.longonkelo.service.report.HorarioDiscenteReport;
+import com.ravunana.longonkelo.service.report.ListaPagoNaoPagoReport;
 import com.ravunana.longonkelo.service.report.ListaPresencaTurmaReport;
 import com.ravunana.longonkelo.web.rest.errors.BadRequestAlertException;
 import java.io.File;
@@ -58,19 +60,25 @@ public class TurmaResource {
 
     private final ListaPresencaTurmaReport listaPresencaTurmaService;
     private final HorarioDiscenteReport horarioDiscenteService;
+    private final ListaPagoNaoPagoReport listaPagoNaoPagoReport;
+    private final EstratoFinanceiroReport estratoFinanceiroReport;
 
     public TurmaResource(
         TurmaService turmaService,
         TurmaRepository turmaRepository,
         TurmaQueryService turmaQueryService,
         ListaPresencaTurmaReport listaPresencaTurmaService,
-        HorarioDiscenteReport horarioDiscenteService
+        HorarioDiscenteReport horarioDiscenteService,
+        ListaPagoNaoPagoReport listaPagoNaoPagoReport,
+        EstratoFinanceiroReport estratoFinanceiroReport
     ) {
         this.turmaService = turmaService;
         this.turmaRepository = turmaRepository;
         this.turmaQueryService = turmaQueryService;
         this.listaPresencaTurmaService = listaPresencaTurmaService;
         this.horarioDiscenteService = horarioDiscenteService;
+        this.listaPagoNaoPagoReport = listaPagoNaoPagoReport;
+        this.estratoFinanceiroReport = estratoFinanceiroReport;
     }
 
     /**
@@ -241,6 +249,38 @@ public class TurmaResource {
     @GetMapping("/turmas/horario-discente/{turmaID}")
     public ResponseEntity<Resource> getHorarioDiscente(@PathVariable Long turmaID) throws IOException {
         var filePath = horarioDiscenteService.gerarPdf(turmaID);
+        File file = new File(filePath);
+
+        Path path = Paths.get(file.getAbsolutePath());
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(resource);
+    }
+
+    @GetMapping("/turmas/lista-pago-nao-pago/{turmaID}/{emolumentoID}")
+    public ResponseEntity<Resource> getListaPagoNaoPago(@PathVariable Long turmaID, Long emolumentoID) throws IOException {
+        var filePath = listaPagoNaoPagoReport.gerarPdf(turmaID, 16L);
+        File file = new File(filePath);
+
+        Path path = Paths.get(file.getAbsolutePath());
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(resource);
+    }
+
+    @GetMapping("/turmas/estrato-financeiro/{turmaID}")
+    public ResponseEntity<Resource> getEstratoFinanceiro(@PathVariable Long turmaID) throws IOException {
+        var filePath = estratoFinanceiroReport.gerarPdf(turmaID);
         File file = new File(filePath);
 
         Path path = Paths.get(file.getAbsolutePath());

@@ -8,7 +8,9 @@ import com.ravunana.longonkelo.service.dto.CursoDTO;
 import com.ravunana.longonkelo.service.dto.PlanoCurricularDTO;
 import com.ravunana.longonkelo.service.dto.TurmaDTO;
 import com.ravunana.longonkelo.service.mapper.TurmaMapper;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -142,5 +144,16 @@ public class TurmaServiceImpl implements TurmaService {
     public String getChaveComposta(TurmaDTO turmaDTO) {
         // sala-turno-anoLectivo-instituicaoID
         return (turmaDTO.getSala() + " " + turmaDTO.getTurno().getCodigo() + " " + anoLectivoService.getAnoLectivoActual().getDescricao());
+    }
+
+    @Override
+    public List<Turma> getTurmasClasse(Long classeID) {
+        var result = turmaRepository
+            .findAll()
+            .stream()
+            .filter(t -> t.getPlanoCurricular().getClasse().getId().equals(classeID))
+            .collect(Collectors.toList());
+
+        return result;
     }
 }

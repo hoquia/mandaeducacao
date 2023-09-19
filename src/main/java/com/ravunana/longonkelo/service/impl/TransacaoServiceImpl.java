@@ -5,6 +5,7 @@ import com.ravunana.longonkelo.repository.TransacaoRepository;
 import com.ravunana.longonkelo.service.TransacaoService;
 import com.ravunana.longonkelo.service.dto.TransacaoDTO;
 import com.ravunana.longonkelo.service.mapper.TransacaoMapper;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

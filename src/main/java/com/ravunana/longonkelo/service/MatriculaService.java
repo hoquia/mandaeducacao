@@ -73,4 +73,6 @@ public interface MatriculaService {
     int atribuirNumeroChamada(MatriculaDTO matriculaDTO);
 
     List<MatriculaDTO> getMatriculas(Long turmaID);
+    //
+    //    List<MatriculaDTO> getMatroculaWithClasse(Long classeID);
 }

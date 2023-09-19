@@ -89,6 +89,17 @@ public class ItemFacturaServiceImpl implements ItemFacturaService {
         itemFacturaRepository.deleteById(id);
     }
 
+    @Override
+    public List<ItemFacturaDTO> getItemsFacturaByTurmaAndEmolumento(Long turmaID, Long emolumentoID) {
+        var result = itemFacturaRepository
+            .findAll()
+            .stream()
+            .filter(x -> x.getFactura().getMatricula().getTurma().getId().equals(turmaID) && x.getEmolumento().getId().equals(emolumentoID))
+            .collect(Collectors.toList());
+
+        return itemFacturaMapper.toDto(result);
+    }
+
     public List<ItemFacturaDTO> getItemsFactura(Long facturaID) {
         var result = itemFacturaRepository
             .findAll()

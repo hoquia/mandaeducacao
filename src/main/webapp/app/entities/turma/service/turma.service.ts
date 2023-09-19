@@ -140,4 +140,20 @@ export class TurmaService {
     headers = headers.set('Accept', 'application/pdf');
     return this.http.get(`${this.resourceUrl}/horario-discente/${turmaID}`, { headers, responseType: 'blob' });
   }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  downloadListaPagoNaoPagoPdf(turmaID: number, emolumentoID: number) {
+    let headers = new HttpHeaders();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    headers = headers.set('Accept', 'application/pdf');
+    return this.http.get(`${this.resourceUrl}/lista-pago-nao-pago/${turmaID}/${emolumentoID}`, { headers, responseType: 'blob' });
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  downloadEstratoFinanceiro(turmaID: number) {
+    let headers = new HttpHeaders();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    headers = headers.set('Accept', 'application/pdf');
+    return this.http.get(`${this.resourceUrl}/estrato-financeiro/${turmaID}`, { headers, responseType: 'blob' });
+  }
 }

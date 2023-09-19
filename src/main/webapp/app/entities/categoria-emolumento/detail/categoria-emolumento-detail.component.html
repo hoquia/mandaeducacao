@@ -5,6 +5,12 @@
         <span appTranslate="longonkeloApp.categoriaEmolumento.detail.title">Categoria Emolumento</span>
       </h2>
 
+      <div class="row">
+        <div class="col">
+          <button class="btn btn-warning" (click)="gerarFluxoCaixa(categoriaEmolumento.id)">Imprimir Fluxo de Caixa</button>
+        </div>
+      </div>
+
       <hr />
 
       <app-alert-error></app-alert-error>

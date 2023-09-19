@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { isPresent } from 'app/core/util/operators';
@@ -79,5 +79,13 @@ export class CategoriaEmolumentoService {
       return [...categoriaEmolumentosToAdd, ...categoriaEmolumentoCollection];
     }
     return categoriaEmolumentoCollection;
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  downloadFluxoCaixa(categoriEmolumentoID: number) {
+    let headers = new HttpHeaders();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    headers = headers.set('Accept', 'application/pdf');
+    return this.http.get(`${this.resourceUrl}/categoria-emolumentos/${categoriEmolumentoID}`, { headers, responseType: 'blob' });
   }
 }

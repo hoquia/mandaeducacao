@@ -22,6 +22,25 @@
         <div class="col">
           <button class="btn btn-warning" (click)="gerarListaPresenca(turma.id)">Imprimir Lista de presença</button>
         </div>
+
+        <div class="col">
+          <button class="btn btn-warning" (click)="gerarEstratoFinanceiro(turma.id)">Imprimir Estrato Financeiro</button>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.itemFactura.emolumento" for="field_emolumento">Emolumento</label>
+          <ng-select id="field_emolumento" data-cy="emolumento" name="emolumento" #emolumentoVar [(ngModel)]="emolumentoSelecionadoID">
+            <ng-option [value]="emolumentoOption.id" *ngFor="let emolumentoOption of emolumentosSharedCollection">
+              {{ emolumentoOption.nome }}
+            </ng-option>
+          </ng-select>
+        </div>
+
+        <div class="col">
+          <button [disabled]="emolumentoSelecionadoID === 0" class="btn btn-warning" (click)="gerarListaPagoNaoPago(turma.id)">
+            Imprimir Lista de Devedores
+          </button>
+        </div>
       </div>
 
       <hr />
