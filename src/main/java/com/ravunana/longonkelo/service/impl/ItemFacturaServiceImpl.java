@@ -102,24 +102,14 @@ public class ItemFacturaServiceImpl implements ItemFacturaService {
     }
 
     @Override
-    public List<ItemFacturaDTO> getItensFacturaWithCategoria(Long catregoriaEmolumentoID, Long classeID) {
-        var itens = itemFacturaRepository
+    public List<ItemFactura> getItensFacturaWithCategoria(Long catregoriaEmolumentoID) {
+        var itensCategoria = itemFacturaRepository
             .findAll()
             .stream()
             .filter(i -> i.getEmolumento().getCategoria().getId().equals(catregoriaEmolumentoID))
             .collect(Collectors.toList());
 
-        for (var it : itens) {
-            var emolumentoClasse = it
-                .getEmolumento()
-                .getPrecosEmolumentos()
-                .stream()
-                .filter(p -> p.getClasse().getId().equals(classeID))
-                .findFirst()
-                .get();
-        }
-
-        return null;
+        return itensCategoria;
     }
 
     public List<ItemFacturaDTO> getItemsFactura(Long facturaID) {

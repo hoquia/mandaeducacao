@@ -219,6 +219,17 @@ public class MatriculaServiceImpl implements MatriculaService {
         return matriculaMapper.toDto(result);
     }
 
+    @Override
+    public List<MatriculaDTO> getMatroculaWithClasse(Long classeID) {
+        var result = matriculaRepository
+            .findAll()
+            .stream()
+            .filter(m -> m.getTurma().getPlanoCurricular().getClasse().getId().equals(classeID))
+            .collect(Collectors.toList());
+
+        return matriculaMapper.toDto(result);
+    }
+
     private void criarFacturaActoMatricula(MatriculaDTO matriculaDTO) {
         var anoLectivo = anoLectivoService.getAnoLectivoActual();
         var serieDocumentoComercial = documentoComercialService.getSerieDocumentoComercialActivoByTipoFiscal(

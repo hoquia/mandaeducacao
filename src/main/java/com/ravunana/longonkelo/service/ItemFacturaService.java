@@ -1,5 +1,6 @@
 package com.ravunana.longonkelo.service;
 
+import com.ravunana.longonkelo.domain.ItemFactura;
 import com.ravunana.longonkelo.service.dto.ItemFacturaDTO;
 import java.util.List;
 import java.util.Optional;
@@ -67,5 +68,5 @@ public interface ItemFacturaService {
 
     List<ItemFacturaDTO> getItemsFacturaByTurmaAndEmolumento(Long turmaID, Long emolumentoID);
 
-    List<ItemFacturaDTO> getItensFacturaWithCategoria(Long catregoriaEmolumentoID, Long classeID);
+    List<ItemFactura> getItensFacturaWithCategoria(Long catregoriaEmolumentoID);
 }

@@ -25,8 +25,8 @@ public class FluxoCaixaCategoriaEmolumentoReport {
     private final InstituicaoEnsinoServiceImpl instituicaoEnsinoService;
     private final HorarioServiceImpl horarioService;
     private final DocenteServiceImpl docenteService;
-    private final TurmaServiceImpl turmaService;
     private final ItemFacturaServiceImpl itemFacturaService;
+    private final MatriculaServiceImpl matriculaService;
     private final float FONT_ZIZE_NORMAL = 7;
     private final float FONT_SIZE_TITLE = 7;
 
@@ -34,23 +34,23 @@ public class FluxoCaixaCategoriaEmolumentoReport {
         ReportServiceImpl reportService,
         InstituicaoEnsinoServiceImpl instituicaoEnsinoService,
         HorarioServiceImpl horarioService,
-        TurmaServiceImpl turmaService,
         DocenteServiceImpl docenteService,
-        ItemFacturaServiceImpl itemFacturaService
+        ItemFacturaServiceImpl itemFacturaService,
+        MatriculaServiceImpl matriculaService
     ) {
         this.reportService = reportService;
         this.instituicaoEnsinoService = instituicaoEnsinoService;
         this.horarioService = horarioService;
         this.docenteService = docenteService;
-        this.turmaService = turmaService;
+        this.matriculaService = matriculaService;
         this.itemFacturaService = itemFacturaService;
     }
 
-    public String gerarPdf(Long docenteID) {
+    public String gerarPdf(Long emolumentoID) {
         Document pdfDocument;
         String pdfName;
         FileOutputStream file;
-        pdfName = "horario-docente " + docenteID;
+        pdfName = "fluxo-caixa " + emolumentoID;
         pdfDocument = new Document(PageSize.A4.rotate(), 3, 3, 20, 3);
         String tempFileName;
 
@@ -62,10 +62,10 @@ public class FluxoCaixaCategoriaEmolumentoReport {
 
             pdfDocument.open();
 
-            var docente = docenteService.findOne(docenteID).get();
+            //          var docente = itemFacturaService.getItemsFactura()
 
             // Pdf Metadatas
-            pdfDocument.addTitle(getPdfTitulo(docente.getNome()));
+            pdfDocument.addTitle(getPdfTitulo("fluxo caixa"));
             pdfDocument.addSubject(getPdfSubTitulo());
             pdfDocument.addKeywords(getPdfPalavrasChaves());
             pdfDocument.addCreator(getPdfCriador());
@@ -75,9 +75,9 @@ public class FluxoCaixaCategoriaEmolumentoReport {
 
             var header = getHeader();
             pdfDocument.add(header);
-            pdfDocument.add(getTituloMapa(docente.getNome()));
+            pdfDocument.add(getTituloMapa("docente.getNome()"));
             pdfDocument.add(addNewLine());
-            var detalhe = getDetalhe(docenteID);
+            var detalhe = getDetalhe(emolumentoID);
             pdfDocument.add(detalhe);
             pdfDocument.add(addNewLine());
             pdfDocument.add(addNewLine());
@@ -211,16 +211,8 @@ public class FluxoCaixaCategoriaEmolumentoReport {
         return tableHeader;
     }
 
-    private PdfPTable getDetalhe(Long docenteID) {
-        var horarios = horarioService.getHorarioDocente(docenteID);
-
-        // Segunda-feira
-        var primeiroTempo = horarios.stream().filter(x -> x.getPeriodo().getTempo() == 1).findFirst();
-        var segundoTempo = horarios.stream().filter(x -> x.getPeriodo().getTempo() == 2).findFirst();
-        var terceiroTempo = horarios.stream().filter(x -> x.getPeriodo().getTempo() == 3).findFirst();
-        var quartoTempo = horarios.stream().filter(x -> x.getPeriodo().getTempo() == 4).findFirst();
-        var quintoTempo = horarios.stream().filter(x -> x.getPeriodo().getTempo() == 5).findFirst();
-        var sextoTempo = horarios.stream().filter(x -> x.getPeriodo().getTempo() == 6).findFirst();
+    private PdfPTable getDetalhe(Long emolumentoID) {
+        //        var horarios = horarioService.getHorarioDocente(docenteID);
 
         Font tableFontNormal = FontFactory.getFont("Helvetica", FONT_ZIZE_NORMAL, Font.NORMAL, Color.BLACK);
         Font tableFontHeader = FontFactory.getFont("Helvetica", FONT_ZIZE_NORMAL, Font.BOLD, Color.BLACK);
@@ -337,13 +329,57 @@ public class FluxoCaixaCategoriaEmolumentoReport {
             )
         );
 
-        // Content
-
         return tableDetalhe;
     }
 
-    private void detalhe(Long classeID) {
-        //        var itens = itemFacturaService.
+    private void detalhe(
+        Long emolumentoID,
+        Long classeID,
+        Font tableFontNormal,
+        float leading,
+        float padding,
+        Rectangle border,
+        PdfPTable tableDetalhe
+    ) {
+        var itensCategoria = itemFacturaService.getItensFacturaWithCategoria(emolumentoID);
+        var discentesClasse = matriculaService.getMatroculaWithClasse(classeID).size();
+        var preco = 0;
+        var multa = 0;
+        var juro = 0;
+
+        var ex = 0;
+        for (var item : itensCategoria) {
+            var itemClasse = item
+                .getEmolumento()
+                .getPrecosEmolumentos()
+                .stream()
+                .filter(pe -> pe.getClasse().getId().equals(classeID))
+                .findFirst()
+                .get();
+            var p = preco + itemClasse.getPreco();
+
+            tableDetalhe.addCell(
+                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+            );
+            tableDetalhe.addCell(
+                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+            );
+            tableDetalhe.addCell(
+                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+            );
+            tableDetalhe.addCell(
+                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+            );
+            tableDetalhe.addCell(
+                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+            );
+            tableDetalhe.addCell(
+                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+            );
+            tableDetalhe.addCell(
+                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+            );
+        }
     }
 
     //
