@@ -8,10 +8,7 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.ravunana.longonkelo.config.Constants;
-import com.ravunana.longonkelo.domain.enumeration.DiaSemana;
 import com.ravunana.longonkelo.security.SecurityUtils;
-import com.ravunana.longonkelo.service.dto.HorarioDTO;
-import com.ravunana.longonkelo.service.dto.PeriodoHorarioDTO;
 import com.ravunana.longonkelo.service.impl.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
@@ -19,7 +16,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,6 +26,7 @@ public class FluxoCaixaCategoriaEmolumentoReport {
     private final HorarioServiceImpl horarioService;
     private final DocenteServiceImpl docenteService;
     private final TurmaServiceImpl turmaService;
+    private final ItemFacturaServiceImpl itemFacturaService;
     private final float FONT_ZIZE_NORMAL = 7;
     private final float FONT_SIZE_TITLE = 7;
 
@@ -37,16 +34,16 @@ public class FluxoCaixaCategoriaEmolumentoReport {
         ReportServiceImpl reportService,
         InstituicaoEnsinoServiceImpl instituicaoEnsinoService,
         HorarioServiceImpl horarioService,
-        TurmaServiceImpl turmaService1,
+        TurmaServiceImpl turmaService,
         DocenteServiceImpl docenteService,
-        MatriculaServiceImpl matriculaService,
-        TurmaServiceImpl turmaService
+        ItemFacturaServiceImpl itemFacturaService
     ) {
         this.reportService = reportService;
         this.instituicaoEnsinoService = instituicaoEnsinoService;
         this.horarioService = horarioService;
         this.docenteService = docenteService;
         this.turmaService = turmaService;
+        this.itemFacturaService = itemFacturaService;
     }
 
     public String gerarPdf(Long docenteID) {
@@ -345,13 +342,8 @@ public class FluxoCaixaCategoriaEmolumentoReport {
         return tableDetalhe;
     }
 
-    private int detalhe(Long classeID) {
-        var turmas = turmaService.getTurmasClasse(classeID);
-        for (var t : turmas) {
-            var matriculas = t.getMatriculas();
-            return matriculas.size();
-        }
-        return 0;
+    private void detalhe(Long classeID) {
+        //        var itens = itemFacturaService.
     }
 
     //

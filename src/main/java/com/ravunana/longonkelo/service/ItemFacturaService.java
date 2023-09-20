@@ -66,4 +66,6 @@ public interface ItemFacturaService {
     void delete(Long id);
 
     List<ItemFacturaDTO> getItemsFacturaByTurmaAndEmolumento(Long turmaID, Long emolumentoID);
+
+    List<ItemFacturaDTO> getItensFacturaWithCategoria(Long catregoriaEmolumentoID, Long classeID);
 }

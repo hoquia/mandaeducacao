@@ -1,6 +1,7 @@
 package com.ravunana.longonkelo.service.impl;
 
 import com.ravunana.longonkelo.domain.ItemFactura;
+import com.ravunana.longonkelo.domain.PrecoEmolumento;
 import com.ravunana.longonkelo.domain.enumeration.EstadoItemFactura;
 import com.ravunana.longonkelo.repository.ItemFacturaRepository;
 import com.ravunana.longonkelo.service.ItemFacturaService;
@@ -98,6 +99,27 @@ public class ItemFacturaServiceImpl implements ItemFacturaService {
             .collect(Collectors.toList());
 
         return itemFacturaMapper.toDto(result);
+    }
+
+    @Override
+    public List<ItemFacturaDTO> getItensFacturaWithCategoria(Long catregoriaEmolumentoID, Long classeID) {
+        var itens = itemFacturaRepository
+            .findAll()
+            .stream()
+            .filter(i -> i.getEmolumento().getCategoria().getId().equals(catregoriaEmolumentoID))
+            .collect(Collectors.toList());
+
+        for (var it : itens) {
+            var emolumentoClasse = it
+                .getEmolumento()
+                .getPrecosEmolumentos()
+                .stream()
+                .filter(p -> p.getClasse().getId().equals(classeID))
+                .findFirst()
+                .get();
+        }
+
+        return null;
     }
 
     public List<ItemFacturaDTO> getItemsFactura(Long facturaID) {
