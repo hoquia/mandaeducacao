@@ -36,7 +36,7 @@ export class TurmaDetailComponent implements OnInit {
   }
 
   protected gerarListaPresenca(turmaID: number): void {
-    this.turmaService.downloadEstratoFinanceiro(turmaID).subscribe(res => {
+    this.turmaService.downloadListaPresencaPdf(turmaID).subscribe(res => {
       const url = window.URL.createObjectURL(res);
       const a = document.createElement('a');
       a.href = url;

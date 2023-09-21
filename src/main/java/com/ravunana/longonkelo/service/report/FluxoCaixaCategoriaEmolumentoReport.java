@@ -332,55 +332,55 @@ public class FluxoCaixaCategoriaEmolumentoReport {
         return tableDetalhe;
     }
 
-    private void detalhe(
-        Long emolumentoID,
-        Long classeID,
-        Font tableFontNormal,
-        float leading,
-        float padding,
-        Rectangle border,
-        PdfPTable tableDetalhe
-    ) {
-        var itensCategoria = itemFacturaService.getItensFacturaWithCategoria(emolumentoID);
-        var discentesClasse = matriculaService.getMatroculaWithClasse(classeID).size();
-        var preco = 0;
-        var multa = 0;
-        var juro = 0;
-
-        var ex = 0;
-        for (var item : itensCategoria) {
-            var itemClasse = item
-                .getEmolumento()
-                .getPrecosEmolumentos()
-                .stream()
-                .filter(pe -> pe.getClasse().getId().equals(classeID))
-                .findFirst()
-                .get();
-            var p = preco + itemClasse.getPreco();
-
-            tableDetalhe.addCell(
-                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
-            );
-            tableDetalhe.addCell(
-                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
-            );
-            tableDetalhe.addCell(
-                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
-            );
-            tableDetalhe.addCell(
-                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
-            );
-            tableDetalhe.addCell(
-                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
-            );
-            tableDetalhe.addCell(
-                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
-            );
-            tableDetalhe.addCell(
-                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
-            );
-        }
-    }
+    //    private void detalhe(
+    //        Long emolumentoID,
+    //        Long classeID,
+    //        Font tableFontNormal,
+    //        float leading,
+    //        float padding,
+    //        Rectangle border,
+    //        PdfPTable tableDetalhe
+    //    ) {
+    //        var itensCategoria = itemFacturaService.getItensFacturaWithCategoria(emolumentoID);
+    //        var discentesClasse = matriculaService.getMatroculaWithClasse(classeID).size();
+    //        var preco = 0;
+    //        var multa = 0;
+    //        var juro = 0;
+    //
+    //        var ex = 0;
+    //        for (var item : itensCategoria) {
+    //            var itemClasse = item
+    //                .getEmolumento()
+    //                .getPrecosEmolumentos()
+    //                .stream()
+    //                .filter(pe -> pe.getClasse().getId().equals(classeID))
+    //                .findFirst()
+    //                .get();
+    //            var p = preco + itemClasse.getPreco();
+    //
+    //            tableDetalhe.addCell(
+    //                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+    //            );
+    //            tableDetalhe.addCell(
+    //                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+    //            );
+    //            tableDetalhe.addCell(
+    //                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+    //            );
+    //            tableDetalhe.addCell(
+    //                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+    //            );
+    //            tableDetalhe.addCell(
+    //                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+    //            );
+    //            tableDetalhe.addCell(
+    //                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+    //            );
+    //            tableDetalhe.addCell(
+    //                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+    //            );
+    //        }
+    //    }
 
     //
     //    private PdfPTable getHorarioTempo(
