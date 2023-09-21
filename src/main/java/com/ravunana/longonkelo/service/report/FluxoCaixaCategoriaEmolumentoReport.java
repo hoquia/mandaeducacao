@@ -356,29 +356,29 @@ public class FluxoCaixaCategoriaEmolumentoReport {
                 .filter(pe -> pe.getClasse().getId().equals(classeID))
                 .findFirst()
                 .get();
-            var p = preco + itemClasse.getPreco();
+            // var p = preco + itemClasse.getPreco();
 
-            tableDetalhe.addCell(
-                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
-            );
-            tableDetalhe.addCell(
-                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
-            );
-            tableDetalhe.addCell(
-                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
-            );
-            tableDetalhe.addCell(
-                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
-            );
-            tableDetalhe.addCell(
-                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
-            );
-            tableDetalhe.addCell(
-                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
-            );
-            tableDetalhe.addCell(
-                makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
-            );
+            // tableDetalhe.addCell(
+            //     makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+            // );
+            // tableDetalhe.addCell(
+            //     makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+            // );
+            // tableDetalhe.addCell(
+            //     makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+            // );
+            // tableDetalhe.addCell(
+            //     makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+            // );
+            // tableDetalhe.addCell(
+            //     makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+            // );
+            // tableDetalhe.addCell(
+            //     makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+            // );
+            // tableDetalhe.addCell(
+            //     makeCell(preco.toString(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+            // );
         }
     }
 
