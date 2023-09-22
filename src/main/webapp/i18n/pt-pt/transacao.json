@@ -2,25 +2,25 @@
   "longonkeloApp": {
     "transacao": {
       "home": {
-        "title": "Transacaos",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Transacao",
-        "createOrEditLabel": "Criar ou editar Transacao",
-        "notFound": "Nenhum Transacaos encontrado"
+        "title": "Transações",
+        "refreshListLabel": "",
+        "createLabel": "Nova",
+        "createOrEditLabel": "Transação",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Transacao foi criado com o identificador {{ param }}",
-      "updated": "Transacao com identificador {{ param }} foi actualizado",
-      "deleted": "Transacao com identificador {{ param }} foi eliminado",
+      "created": "Transação foi criado com o identificador {{ param }}",
+      "updated": "Transação com identificador {{ param }} foi actualizado",
+      "deleted": "Transação com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Transacao {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Transação {{ id }}?"
       },
       "detail": {
-        "title": "Transacao"
+        "title": "Transação"
       },
       "id": "ID",
       "montante": "Montante",
       "data": "Data",
-      "referencia": "Referencia",
+      "referencia": "Referência",
       "estado": "Estado",
       "saldo": "Saldo",
       "anexo": "Anexo",
@@ -29,9 +29,9 @@
       "utilizador": "Utilizador",
       "moeda": "Moeda",
       "matricula": "Matricula",
-      "meioPagamento": "Meio Pagamento",
+      "meioPagamento": "Meio de Pagamento",
       "conta": "Conta",
-      "transferenciaSaldo": "Transferencia Saldo"
+      "transferenciaSaldo": "Transferência de Saldo"
     }
   }
 }

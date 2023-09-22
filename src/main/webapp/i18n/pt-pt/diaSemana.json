@@ -3,11 +3,11 @@
     "DiaSemana": {
       "null": "",
       "SEGUNDA": "SEGUNDA",
-      "TERCA": "TERCA",
+      "TERCA": "TERÇA",
       "QUARTA": "QUARTA",
       "QUINTA": "QUINTA",
       "SEXTA": "SEXTA",
-      "SABADO": "SABADO",
+      "SABADO": "SÁBADO",
       "DOMINGO": "DOMINGO"
     }
   }

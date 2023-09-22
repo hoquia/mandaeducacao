@@ -3,25 +3,24 @@
     "disciplina": {
       "home": {
         "title": "Disciplinas",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Disciplina",
-        "createOrEditLabel": "Criar ou editar Disciplina",
-        "notFound": "Nenhum Disciplinas encontrado"
+        "refreshListLabel": "",
+        "createLabel": "Nova",
+        "createOrEditLabel": "Disciplina",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Disciplina foi criado com o identificador {{ param }}",
+      "created": "Disciplina foi criado com o identificador {{ param }}",
       "updated": "Disciplina com identificador {{ param }} foi actualizado",
       "deleted": "Disciplina com identificador {{ param }} foi eliminado",
       "delete": {
         "question": "Tem a certeza que pretende eliminar o(a) Disciplina {{ id }}?"
       },
       "detail": {
-        "title": "Disciplina"
+        "title": "Disciplinas"
       },
       "id": "ID",
-      "codigo": "Codigo",
+      "codigo": "Código",
       "nome": "Nome",
-      "descricao": "Descricao",
-      "responsaveis": "Responsaveis",
+      "descricao": "Descrição",
       "disciplinaCurricular": "Disciplina Curricular"
     }
   }

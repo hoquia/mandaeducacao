@@ -2,40 +2,40 @@
   "longonkeloApp": {
     "dissertacaoFinalCurso": {
       "home": {
-        "title": "Dissertacao Final Cursos",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Dissertacao Final Curso",
-        "createOrEditLabel": "Criar ou editar Dissertacao Final Curso",
-        "notFound": "Nenhum Dissertacao Final Cursos encontrado"
+        "title": "Dissertações de Final de Curso",
+        "refreshListLabel": "",
+        "createLabel": "Nova",
+        "createOrEditLabel": "Dissertação de Final de Curso",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Dissertacao Final Curso foi criado com o identificador {{ param }}",
-      "updated": "Dissertacao Final Curso com identificador {{ param }} foi actualizado",
-      "deleted": "Dissertacao Final Curso com identificador {{ param }} foi eliminado",
+      "created": "Dissertação de Final de Curso foi criado com o identificador {{ param }}",
+      "updated": "Dissertação de Final de Curso com identificador {{ param }} foi actualizado",
+      "deleted": "Dissertação de Final de Curso com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Dissertacao Final Curso {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Dissertação de Final de Curso {{ id }}?"
       },
       "detail": {
-        "title": "Dissertacao Final Curso"
+        "title": "Dissertação de Final de Curso"
       },
       "id": "ID",
-      "numero": "Numero",
+      "numero": "Número",
       "timestamp": "Timestamp",
       "data": "Data",
       "tema": "Tema",
       "objectivoGeral": "Objectivo Geral",
       "objectivosEspecificos": "Objectivos Especificos",
-      "introducao": "Introducao",
+      "introducao": "Introdução",
       "resumo": "Resumo",
       "problema": "Problema",
       "resultado": "Resultado",
       "metodologia": "Metodologia",
-      "referenciasBibliograficas": "Referencias Bibliograficas",
-      "observacaoOrientador": "Observacao Orientador",
-      "observacaoAreaFormacao": "Observacao Area Formacao",
-      "observacaoInstituicao": "Observacao Instituicao",
+      "referenciasBibliograficas": "Referências Bibliograficas",
+      "observacaoOrientador": "Observação do Orientador",
+      "observacaoAreaFormacao": "Observação da Área de Formação",
+      "observacaoInstituicao": "Observação da Instituição",
       "hash": "Hash",
-      "termosCompromissos": "Termos Compromissos",
-      "isAceiteTermosCompromisso": "Is Aceite Termos Compromisso",
+      "termosCompromissos": "Termos e Compromissos",
+      "isAceiteTermosCompromisso": "Aceita Termos e Compromissos ?",
       "anoLectivo": "Ano Lectivo",
       "utilizador": "Utilizador",
       "turma": "Turma",

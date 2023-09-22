@@ -2,30 +2,30 @@
   "longonkeloApp": {
     "responsavelAreaFormacao": {
       "home": {
-        "title": "Responsavel Area Formacaos",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Responsavel Area Formacao",
-        "createOrEditLabel": "Criar ou editar Responsavel Area Formacao",
-        "notFound": "Nenhum Responsavel Area Formacaos encontrado"
+        "title": "Responsaveis das Áreas de Formação",
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Responsável da Area de Formação",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Responsavel Area Formacao foi criado com o identificador {{ param }}",
-      "updated": "Responsavel Area Formacao com identificador {{ param }} foi actualizado",
-      "deleted": "Responsavel Area Formacao com identificador {{ param }} foi eliminado",
+      "created": "Responsável da Area de Formação foi criado com o identificador {{ param }}",
+      "updated": "Responsável da Area de Formação com identificador {{ param }} foi actualizado",
+      "deleted": "Responsável da Area de Formação com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Responsavel Area Formacao {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Responsável da Area de Formação {{ id }}?"
       },
       "detail": {
-        "title": "Responsavel Area Formacao"
+        "title": "Responsável da Area de Formação"
       },
       "id": "ID",
       "de": "De",
-      "ate": "Ate",
-      "descricao": "Descricao",
+      "ate": "Até",
+      "descricao": "Descrição",
       "timestamp": "Timestamp",
-      "responsavel": "Responsavel",
+      "responsavel": "Responsável",
       "anoLectivo": "Ano Lectivo",
       "utilizador": "Utilizador",
-      "areaFormacao": "Area Formacao"
+      "areaFormacao": "Área de Formação"
     }
   }
 }

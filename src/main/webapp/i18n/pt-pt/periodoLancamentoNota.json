@@ -2,25 +2,25 @@
   "longonkeloApp": {
     "periodoLancamentoNota": {
       "home": {
-        "title": "Periodo Lancamento Notas",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Periodo Lancamento Nota",
-        "createOrEditLabel": "Criar ou editar Periodo Lancamento Nota",
-        "notFound": "Nenhum Periodo Lancamento Notas encontrado"
+        "title": "Periodos de Lançamento de Notas",
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Periodo de Lançamento de Notas",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Periodo Lancamento Nota foi criado com o identificador {{ param }}",
-      "updated": "Periodo Lancamento Nota com identificador {{ param }} foi actualizado",
-      "deleted": "Periodo Lancamento Nota com identificador {{ param }} foi eliminado",
+      "created": "Periodo de Lançamento de Notas foi criado com o identificador {{ param }}",
+      "updated": "Periodo de Lançamento de Notas com identificador {{ param }} foi actualizado",
+      "deleted": "Periodo de Lançamento de Notas com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Periodo Lancamento Nota {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Periodo de Lançamento de Notas {{ id }}?"
       },
       "detail": {
-        "title": "Periodo Lancamento Nota"
+        "title": "Periodo de Lançamento de Notas"
       },
       "id": "ID",
-      "tipoAvaliacao": "Tipo Avaliacao",
+      "tipoAvaliacao": "Tipo de Avaliação",
       "de": "De",
-      "ate": "Ate",
+      "ate": "Até",
       "timestamp": "Timestamp",
       "utilizador": "Utilizador",
       "classe": "Classe"

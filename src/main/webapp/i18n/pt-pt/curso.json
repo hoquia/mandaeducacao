@@ -3,12 +3,12 @@
     "curso": {
       "home": {
         "title": "Cursos",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Curso",
-        "createOrEditLabel": "Criar ou editar Curso",
-        "notFound": "Nenhum Cursos encontrado"
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Curso",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Curso foi criado com o identificador {{ param }}",
+      "created": "Curso foi criado com o identificador {{ param }}",
       "updated": "Curso com identificador {{ param }} foi actualizado",
       "deleted": "Curso com identificador {{ param }} foi eliminado",
       "delete": {
@@ -19,14 +19,14 @@
       },
       "id": "ID",
       "imagem": "Imagem",
-      "codigo": "Codigo",
+      "codigo": "Código",
       "nome": "Nome",
-      "descricao": "Descricao",
+      "descricao": "Descrição",
       "planoCurricular": "Plano Curricular",
       "responsaveis": "Responsaveis",
-      "precoEmolumento": "Preco Emolumento",
-      "areaFormacao": "Area Formacao",
-      "camposActuacao": "Campos Actuacao"
+      "precoEmolumento": "Preço do Emolumento",
+      "areaFormacao": "Área de Formação",
+      "camposActuacao": "Campos de Actuaçao"
     }
   }
 }

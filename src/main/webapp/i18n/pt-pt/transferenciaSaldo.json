@@ -2,31 +2,31 @@
   "longonkeloApp": {
     "transferenciaSaldo": {
       "home": {
-        "title": "Transferencia Saldos",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Transferencia Saldo",
-        "createOrEditLabel": "Criar ou editar Transferencia Saldo",
-        "notFound": "Nenhum Transferencia Saldos encontrado"
+        "title": "Transferências de Saldo",
+        "refreshListLabel": "",
+        "createLabel": "Nova",
+        "createOrEditLabel": "Transferência de Saldo",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Transferencia Saldo foi criado com o identificador {{ param }}",
-      "updated": "Transferencia Saldo com identificador {{ param }} foi actualizado",
-      "deleted": "Transferencia Saldo com identificador {{ param }} foi eliminado",
+      "created": "Transferência de Saldo foi criado com o identificador {{ param }}",
+      "updated": "Transferência de Saldo com identificador {{ param }} foi actualizado",
+      "deleted": "Transferência de Saldo com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Transferencia Saldo {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Transferência de Saldo {{ id }}?"
       },
       "detail": {
-        "title": "Transferencia Saldo"
+        "title": "Transferência de Saldo"
       },
       "id": "ID",
       "montante": "Montante",
-      "isMesmaConta": "Is Mesma Conta",
-      "descricao": "Descricao",
+      "isMesmaConta": "Mesma Conta ?",
+      "descricao": "Descrição",
       "timestamp": "Timestamp",
       "de": "De",
       "para": "Para",
       "utilizador": "Utilizador",
-      "motivoTransferencia": "Motivo Transferencia",
-      "transacoes": "Transacoes"
+      "motivoTransferencia": "Motivo da Transferência",
+      "transacoes": "Transações"
     }
   }
 }

@@ -2,37 +2,37 @@
   "longonkeloApp": {
     "planoAula": {
       "home": {
-        "title": "Plano Aulas",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Plano Aula",
-        "createOrEditLabel": "Criar ou editar Plano Aula",
-        "notFound": "Nenhum Plano Aulas encontrado"
+        "title": "Planos de Aula",
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Plano de Aula",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Plano Aula foi criado com o identificador {{ param }}",
-      "updated": "Plano Aula com identificador {{ param }} foi actualizado",
-      "deleted": "Plano Aula com identificador {{ param }} foi eliminado",
+      "created": "Plano de Aula foi criado com o identificador {{ param }}",
+      "updated": "Plano de Aula com identificador {{ param }} foi actualizado",
+      "deleted": "Plano de Aula com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Plano Aula {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Plano de Aula {{ id }}?"
       },
       "detail": {
-        "title": "Plano Aula"
+        "title": "Plano de Aula"
       },
       "id": "ID",
-      "tipoAula": "Tipo Aula",
+      "tipoAula": "Tipo de Aula",
       "semanaLectiva": "Semana Lectiva",
-      "perfilEntrada": "Perfil Entrada",
-      "perfilSaida": "Perfil Saida",
+      "perfilEntrada": "Perfil de Entrada",
+      "perfilSaida": "Perfil de Saída",
       "assunto": "Assunto",
       "objectivoGeral": "Objectivo Geral",
-      "objectivosEspecificos": "Objectivos Especificos",
-      "tempoTotalLicao": "Tempo Total Licao",
+      "objectivosEspecificos": "Objectivos Específicos",
+      "tempoTotalLicao": "Tempo Total da Lição",
       "estado": "Estado",
       "detalhes": "Detalhes",
-      "licao": "Licao",
+      "licao": "Lição",
       "anoLectivo": "Ano Lectivo",
       "utilizador": "Utilizador",
-      "unidadeTematica": "Unidade Tematica",
-      "subUnidadeTematica": "Sub Unidade Tematica",
+      "unidadeTematica": "Unidade Temática",
+      "subUnidadeTematica": "Sub Unidade Temática",
       "turma": "Turma",
       "docente": "Docente",
       "disciplinaCurricular": "Disciplina Curricular"

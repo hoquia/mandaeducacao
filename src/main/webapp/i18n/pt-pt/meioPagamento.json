@@ -2,34 +2,34 @@
   "longonkeloApp": {
     "meioPagamento": {
       "home": {
-        "title": "Meio Pagamentos",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Meio Pagamento",
-        "createOrEditLabel": "Criar ou editar Meio Pagamento",
-        "notFound": "Nenhum Meio Pagamentos encontrado"
+        "title": "Meios de Pagamento",
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Meio de Pagamento",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Meio Pagamento foi criado com o identificador {{ param }}",
-      "updated": "Meio Pagamento com identificador {{ param }} foi actualizado",
-      "deleted": "Meio Pagamento com identificador {{ param }} foi eliminado",
+      "created": "Meio de Pagamento foi criado com o identificador {{ param }}",
+      "updated": "Meio de Pagamento com identificador {{ param }} foi actualizado",
+      "deleted": "Meio de Pagamento com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Meio Pagamento {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Meio de Pagamento {{ id }}?"
       },
       "detail": {
-        "title": "Meio Pagamento"
+        "title": "Meio de Pagamento"
       },
       "id": "ID",
       "imagem": "Imagem",
-      "codigo": "Codigo",
+      "codigo": "Código",
       "nome": "Nome",
-      "numeroDigitoReferencia": "Numero Digito Referencia",
-      "isPagamentoInstantanio": "Is Pagamento Instantanio",
+      "numeroDigitoReferencia": "Número de Digitos da Referência",
+      "isPagamentoInstantanio": "Pagamento Instantâneo ?",
       "hash": "Hash",
       "link": "Link",
       "token": "Token",
       "username": "Username",
       "password": "Password",
-      "formatoReferencia": "Formato Referencia",
-      "transacao": "Transacao"
+      "formatoReferencia": "Formato da Referência",
+      "transacao": "Transação"
     }
   }
 }

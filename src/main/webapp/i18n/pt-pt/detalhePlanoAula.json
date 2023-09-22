@@ -2,35 +2,35 @@
   "longonkeloApp": {
     "detalhePlanoAula": {
       "home": {
-        "title": "Detalhe Plano Aulas",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Detalhe Plano Aula",
-        "createOrEditLabel": "Criar ou editar Detalhe Plano Aula",
-        "notFound": "Nenhum Detalhe Plano Aulas encontrado"
+        "title": "Detalhes do Plano Aula",
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Detalhe do Plano Aula",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Detalhe Plano Aula foi criado com o identificador {{ param }}",
+      "created": "Detalhe Plano Aula foi criado com o identificador {{ param }}",
       "updated": "Detalhe Plano Aula com identificador {{ param }} foi actualizado",
       "deleted": "Detalhe Plano Aula com identificador {{ param }} foi eliminado",
       "delete": {
         "question": "Tem a certeza que pretende eliminar o(a) Detalhe Plano Aula {{ id }}?"
       },
       "detail": {
-        "title": "Detalhe Plano Aula"
+        "title": "Detalhes do Plano Aula"
       },
       "id": "ID",
-      "estrategiaAula": "Estrategia Aula",
-      "tempoActividade": "Tempo Actividade",
-      "recursosEnsino": "Recursos Ensino",
-      "tituloActividade": "Titulo Actividade",
-      "actividadesDocente": "Actividades Docente",
-      "actividadesDiscentes": "Actividades Discentes",
-      "avaliacao": "Avaliacao",
+      "estrategiaAula": "Estratégia de Aula",
+      "tempoActividade": "Tempo de Actividade",
+      "recursosEnsino": "Recursos de Ensino",
+      "tituloActividade": "Titulo da Actividade",
+      "actividadesDocente": "Actividades do Docente",
+      "actividadesDiscentes": "Actividades do Discentes",
+      "avaliacao": "Avaliação",
       "bibliografia": "Bibliografia",
-      "observacao": "Observacao",
+      "observacao": "Observação",
       "pdf": "Pdf",
-      "video": "Video",
+      "video": "Vídeo",
       "audio": "Audio",
-      "planoAula": "Plano Aula"
+      "planoAula": "Plano de Aula"
     }
   }
 }

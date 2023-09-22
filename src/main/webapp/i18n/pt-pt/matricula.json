@@ -3,12 +3,12 @@
     "matricula": {
       "home": {
         "title": "Matriculas",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Matricula",
-        "createOrEditLabel": "Criar ou editar Matricula",
-        "notFound": "Nenhum Matriculas encontrado"
+        "refreshListLabel": "",
+        "createLabel": "Nova",
+        "createOrEditLabel": "Matricula",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Matricula foi criado com o identificador {{ param }}",
+      "created": "Matricula foi criado com o identificador {{ param }}",
       "updated": "Matricula com identificador {{ param }} foi actualizado",
       "deleted": "Matricula com identificador {{ param }} foi eliminado",
       "delete": {
@@ -20,27 +20,27 @@
       "id": "ID",
       "chaveComposta1": "Chave Composta 1",
       "chaveComposta2": "Chave Composta 2",
-      "numeroMatricula": "Numero Matricula",
-      "numeroChamada": "Numero Chamada",
+      "numeroMatricula": "Número da Matricula",
+      "numeroChamada": "Número da Chamada",
       "estado": "Estado",
       "timestamp": "Timestamp",
-      "descricao": "Descricao",
-      "termosCompromissos": "Termos Compromissos",
-      "isAceiteTermosCompromisso": "Is Aceite Termos Compromisso",
+      "descricao": "Descrição",
+      "termosCompromissos": "Termos e Compromissos",
+      "isAceiteTermosCompromisso": "Aceita os Termos e Compromissos ?",
       "matricula": "Matricula",
       "facturas": "Facturas",
-      "transacoes": "Transacoes",
+      "transacoes": "Transações",
       "recibos": "Recibos",
       "notasPeriodicaDisciplina": "Notas Periodica Disciplina",
       "notasGeralDisciplina": "Notas Geral Disciplina",
-      "transferenciaTurma": "Transferencia Turma",
-      "ocorrencia": "Ocorrencia",
+      "transferenciaTurma": "Transferência de Turma",
+      "ocorrencia": "Ocorrência",
       "utilizador": "Utilizador",
-      "categoriasMatriculas": "Categorias Matriculas",
+      "categoriasMatriculas": "Categoria da Matricula",
       "turma": "Turma",
-      "responsavelFinanceiro": "Responsavel Financeiro",
+      "responsavelFinanceiro": "Responsável Financeiro",
       "discente": "Discente",
-      "referencia": "Referencia"
+      "referencia": "Referência"
     }
   }
 }

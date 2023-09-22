@@ -2,13 +2,13 @@
   "longonkeloApp": {
     "disciplinaCurricular": {
       "home": {
-        "title": "Disciplina Curriculars",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Disciplina Curricular",
-        "createOrEditLabel": "Criar ou editar Disciplina Curricular",
-        "notFound": "Nenhum Disciplina Curriculars encontrado"
+        "title": "Disciplinas Curriculares",
+        "refreshListLabel": "",
+        "createLabel": "Nova",
+        "createOrEditLabel": "Disciplina Curricular",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Disciplina Curricular foi criado com o identificador {{ param }}",
+      "created": "Disciplina Curricular foi criado com o identificador {{ param }}",
       "updated": "Disciplina Curricular com identificador {{ param }} foi actualizado",
       "deleted": "Disciplina Curricular com identificador {{ param }} foi eliminado",
       "delete": {
@@ -19,23 +19,23 @@
       },
       "id": "ID",
       "uniqueDisciplinaCurricular": "Unique Disciplina Curricular",
-      "descricao": "Descricao",
+      "descricao": "Descrição",
       "cargaSemanal": "Carga Semanal",
-      "isTerminal": "Is Terminal",
-      "mediaParaExame": "Media Para Exame",
-      "mediaParaRecurso": "Media Para Recurso",
-      "mediaParaExameEspecial": "Media Para Exame Especial",
-      "mediaParaDespensar": "Media Para Despensar",
+      "isTerminal": "Terminal ?",
+      "mediaParaExame": "Média Para o Exame",
+      "mediaParaRecurso": "Média Para o Recurso",
+      "mediaParaExameEspecial": "Média Para o Exame Especial",
+      "mediaParaDespensar": "Média Para Despensar",
       "disciplinaCurricular": "Disciplina Curricular",
-      "horario": "Horario",
-      "planoAula": "Plano Aula",
+      "horario": "Horário",
+      "planoAula": "Plano de Aula",
       "notasGeralDisciplina": "Notas Geral Disciplina",
       "notasPeriodicaDisciplina": "Notas Periodica Disciplina",
       "componente": "Componente",
       "regime": "Regime",
-      "planosCurricular": "Planos Curricular",
+      "planosCurricular": "Planos Curriculares",
       "disciplina": "Disciplina",
-      "referencia": "Referencia",
+      "referencia": "Referência",
       "estados": "Estados"
     }
   }

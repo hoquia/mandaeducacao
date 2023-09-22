@@ -2,28 +2,28 @@
   "longonkeloApp": {
     "planoDesconto": {
       "home": {
-        "title": "Plano Descontos",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Plano Desconto",
-        "createOrEditLabel": "Criar ou editar Plano Desconto",
-        "notFound": "Nenhum Plano Descontos encontrado"
+        "title": "Planos de Desconto",
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Plano de Desconto",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Plano Desconto foi criado com o identificador {{ param }}",
-      "updated": "Plano Desconto com identificador {{ param }} foi actualizado",
-      "deleted": "Plano Desconto com identificador {{ param }} foi eliminado",
+      "created": "Plano de Desconto foi criado com o identificador {{ param }}",
+      "updated": "Plano de Desconto com identificador {{ param }} foi actualizado",
+      "deleted": "Plano de Desconto com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Plano Desconto {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Plano de Desconto {{ id }}?"
       },
       "detail": {
-        "title": "Plano Desconto"
+        "title": "Plano de Desconto"
       },
       "id": "ID",
-      "codigo": "Codigo",
+      "codigo": "Código",
       "nome": "Nome",
-      "isIsentoMulta": "Is Isento Multa",
-      "isIsentoJuro": "Is Isento Juro",
+      "isIsentoMulta": "Isento de Multa ?",
+      "isIsentoJuro": "Isento de Juros ?",
       "desconto": "Desconto",
-      "categoriasEmolumento": "Categorias Emolumento",
+      "categoriasEmolumento": "Categorias de Emolumento",
       "matriculas": "Matriculas"
     }
   }

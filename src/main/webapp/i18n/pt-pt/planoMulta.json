@@ -2,36 +2,36 @@
   "longonkeloApp": {
     "planoMulta": {
       "home": {
-        "title": "Plano Multas",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Plano Multa",
-        "createOrEditLabel": "Criar ou editar Plano Multa",
-        "notFound": "Nenhum Plano Multas encontrado"
+        "title": "Planos de Multa",
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Plano de Multa",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Plano Multa foi criado com o identificador {{ param }}",
-      "updated": "Plano Multa com identificador {{ param }} foi actualizado",
-      "deleted": "Plano Multa com identificador {{ param }} foi eliminado",
+      "created": "Plano de Multa foi criado com o identificador {{ param }}",
+      "updated": "Plano de Multa com identificador {{ param }} foi actualizado",
+      "deleted": "Plano de Multa com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Plano Multa {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Plano de Multa {{ id }}?"
       },
       "detail": {
-        "title": "Plano Multa"
+        "title": "Plano de Multa"
       },
       "id": "ID",
-      "descricao": "Descricao",
-      "diaAplicacaoMulta": "Dia Aplicacao Multa",
-      "metodoAplicacaoMulta": "Metodo Aplicacao Multa",
-      "taxaMulta": "Taxa Multa",
-      "isTaxaMultaPercentual": "Is Taxa Multa Percentual",
-      "diaAplicacaoJuro": "Dia Aplicacao Juro",
-      "metodoAplicacaoJuro": "Metodo Aplicacao Juro",
-      "taxaJuro": "Taxa Juro",
-      "isTaxaJuroPercentual": "Is Taxa Juro Percentual",
-      "aumentarJuroEmDias": "Aumentar Juro Em Dias",
-      "isAtivo": "Is Ativo",
-      "categoriaEmolumento": "Categoria Emolumento",
+      "descricao": "Descrição",
+      "diaAplicacaoMulta": "Dia de Aplicação de Multa",
+      "metodoAplicacaoMulta": "Metódo de Aplicação de Multa",
+      "taxaMulta": "Taxa da Multa",
+      "isTaxaMultaPercentual": "A Taxa da Multa é Percentual ?",
+      "diaAplicacaoJuro": "Dia de Aplicação de Juros ?",
+      "metodoAplicacaoJuro": "Metódo de Aplicação de Juro",
+      "taxaJuro": "Taxa de Juros",
+      "isTaxaJuroPercentual": "A Taxa de Juros é Percentual ?",
+      "aumentarJuroEmDias": "Aumentar Juros Em Dias",
+      "isAtivo": "Ativo ?",
+      "categoriaEmolumento": "Categoria do Emolumento",
       "emolumento": "Emolumento",
-      "precoEmolumento": "Preco Emolumento",
+      "precoEmolumento": "Preço do Emolumento",
       "utilizador": "Utilizador"
     }
   }

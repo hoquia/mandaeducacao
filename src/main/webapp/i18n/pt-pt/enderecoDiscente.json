@@ -2,32 +2,32 @@
   "longonkeloApp": {
     "enderecoDiscente": {
       "home": {
-        "title": "Endereco Discentes",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Endereco Discente",
-        "createOrEditLabel": "Criar ou editar Endereco Discente",
-        "notFound": "Nenhum Endereco Discentes encontrado"
+        "title": "Endereços dos Discentes",
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Endereço do Discente",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Endereco Discente foi criado com o identificador {{ param }}",
-      "updated": "Endereco Discente com identificador {{ param }} foi actualizado",
-      "deleted": "Endereco Discente com identificador {{ param }} foi eliminado",
+      "created": "Endereço do Discente foi criado com o identificador {{ param }}",
+      "updated": "Endereço do Discente com identificador {{ param }} foi actualizado",
+      "deleted": "Endereço do Discente com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Endereco Discente {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Endereço do Discente {{ id }}?"
       },
       "detail": {
-        "title": "Endereco Discente"
+        "title": "Endereço do Discente"
       },
       "id": "ID",
       "tipo": "Tipo",
       "bairro": "Bairro",
       "rua": "Rua",
-      "numeroCasa": "Numero Casa",
-      "codigoPostal": "Codigo Postal",
+      "numeroCasa": "Número da Casa",
+      "codigoPostal": "Código Postal",
       "latitude": "Latitude",
       "longitude": "Longitude",
-      "pais": "Pais",
-      "provincia": "Provincia",
-      "municipio": "Municipio",
+      "pais": "País",
+      "provincia": "Província",
+      "municipio": "Município",
       "discente": "Discente"
     }
   }

@@ -2,45 +2,45 @@
   "longonkeloApp": {
     "resumoAcademico": {
       "home": {
-        "title": "Resumo Academicos",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Resumo Academico",
-        "createOrEditLabel": "Criar ou editar Resumo Academico",
-        "notFound": "Nenhum Resumo Academicos encontrado"
+        "title": "Resumos Académicos",
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Resumo Académico",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Resumo Academico foi criado com o identificador {{ param }}",
-      "updated": "Resumo Academico com identificador {{ param }} foi actualizado",
-      "deleted": "Resumo Academico com identificador {{ param }} foi eliminado",
+      "created": "Resumo Académico foi criado com o identificador {{ param }}",
+      "updated": "Resumo Académico com identificador {{ param }} foi actualizado",
+      "deleted": "Resumo Académico com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Resumo Academico {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Resumo Académico {{ id }}?"
       },
       "detail": {
-        "title": "Resumo Academico"
+        "title": "Resumo Académico"
       },
       "id": "ID",
-      "temaProjecto": "Tema Projecto",
-      "notaProjecto": "Nota Projecto",
-      "observacao": "Observacao",
-      "localEstagio": "Local Estagio",
-      "notaEstagio": "Nota Estagio",
-      "mediaFinalDisciplina": "Media Final Disciplina",
-      "classificacaoFinal": "Classificacao Final",
-      "numeroGrupo": "Numero Grupo",
-      "mesaDefesa": "Mesa Defesa",
-      "livroRegistro": "Livro Registro",
-      "numeroFolha": "Numero Folha",
-      "chefeSecretariaPedagogica": "Chefe Secretaria Pedagogica",
+      "temaProjecto": "Tema do Projecto",
+      "notaProjecto": "Nota do Projecto",
+      "observacao": "Observação",
+      "localEstagio": "Local de Estágio",
+      "notaEstagio": "Nota do Estágio",
+      "mediaFinalDisciplina": "Média Final da Disciplina",
+      "classificacaoFinal": "Classificação Final",
+      "numeroGrupo": "Número do Grupo",
+      "mesaDefesa": "Mesa da Defesa",
+      "livroRegistro": "Livro de Registro",
+      "numeroFolha": "Número da Folha",
+      "chefeSecretariaPedagogica": "Chefe da Secretaria Pedagogica",
       "subDirectorPedagogico": "Sub Director Pedagogico",
       "directorGeral": "Director Geral",
-      "tutorProjecto": "Tutor Projecto",
-      "juriMesa": "Juri Mesa",
-      "empresaEstagio": "Empresa Estagio",
+      "tutorProjecto": "Tutor doProjecto",
+      "juriMesa": "Juri da Mesa",
+      "empresaEstagio": "Empresa de Estágio",
       "assinaturaDigital": "Assinatura Digital",
       "hash": "Hash",
       "utilizador": "Utilizador",
       "ultimaTurmaMatriculada": "Ultima Turma Matriculada",
       "discente": "Discente",
-      "situacao": "Situacao"
+      "situacao": "Situação"
     }
   }
 }

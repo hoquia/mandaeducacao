@@ -2,41 +2,41 @@
   "longonkeloApp": {
     "encarregadoEducacao": {
       "home": {
-        "title": "Encarregado Educacaos",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Encarregado Educacao",
-        "createOrEditLabel": "Criar ou editar Encarregado Educacao",
-        "notFound": "Nenhum Encarregado Educacaos encontrado"
+        "title": "Encarregados de Educação",
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Encarregado de Educação",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Encarregado Educacao foi criado com o identificador {{ param }}",
-      "updated": "Encarregado Educacao com identificador {{ param }} foi actualizado",
-      "deleted": "Encarregado Educacao com identificador {{ param }} foi eliminado",
+      "created": "Encarregado de Educação foi criado com o identificador {{ param }}",
+      "updated": "Encarregado de Educação com identificador {{ param }} foi actualizado",
+      "deleted": "Encarregado de Educação com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Encarregado Educacao {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Encarregado de Educação {{ id }}?"
       },
       "detail": {
-        "title": "Encarregado Educacao"
+        "title": "Encarregado de Educação"
       },
       "id": "ID",
       "fotografia": "Fotografia",
       "nome": "Nome",
       "nascimento": "Nascimento",
-      "nif": "Nif",
+      "nif": "NIF",
       "sexo": "Sexo",
-      "documentoNumero": "Documento Numero",
+      "documentoNumero": "Número do Documento",
       "telefonePrincipal": "Telefone Principal",
       "telefoneAlternativo": "Telefone Alternativo",
       "email": "Email",
-      "residencia": "Residencia",
-      "enderecoTrabalho": "Endereco Trabalho",
+      "residencia": "Residência",
+      "enderecoTrabalho": "Endereço do Trabalho",
       "rendaMensal": "Renda Mensal",
-      "empresaTrabalho": "Empresa Trabalho",
+      "empresaTrabalho": "Empresa onde Trabalha",
       "hash": "Hash",
       "discentes": "Discentes",
       "matricula": "Matricula",
       "grauParentesco": "Grau Parentesco",
-      "tipoDocumento": "Tipo Documento",
-      "profissao": "Profissao"
+      "tipoDocumento": "Tipo de Documento",
+      "profissao": "Profissão"
     }
   }
 }

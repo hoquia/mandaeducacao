@@ -2,27 +2,27 @@
   "longonkeloApp": {
     "historicoSaude": {
       "home": {
-        "title": "Historico Saudes",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Historico Saude",
-        "createOrEditLabel": "Criar ou editar Historico Saude",
-        "notFound": "Nenhum Historico Saudes encontrado"
+        "title": "Históricos de Saúde",
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Histórico de Saúde",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Historico Saude foi criado com o identificador {{ param }}",
-      "updated": "Historico Saude com identificador {{ param }} foi actualizado",
-      "deleted": "Historico Saude com identificador {{ param }} foi eliminado",
+      "created": "Histórico de Saúde foi criado com o identificador {{ param }}",
+      "updated": "Histórico de Saúde com identificador {{ param }} foi actualizado",
+      "deleted": "Histórico de Saúde com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Historico Saude {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Histórico de Saúde {{ id }}?"
       },
       "detail": {
-        "title": "Historico Saude"
+        "title": "Histórico de Saúde"
       },
       "id": "ID",
       "nome": "Nome",
-      "descricao": "Descricao",
-      "inicio": "Inicio",
+      "descricao": "Descrição",
+      "inicio": "Início",
       "fim": "Fim",
-      "situacaoPrescricao": "Situacao Prescricao",
+      "situacaoPrescricao": "Situação da Prescrição",
       "timestamp": "Timestamp",
       "hash": "Hash",
       "utilizador": "Utilizador",

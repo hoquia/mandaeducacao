@@ -2,26 +2,26 @@
   "longonkeloApp": {
     "lookupItem": {
       "home": {
-        "title": "Lookup Items",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Lookup Item",
-        "createOrEditLabel": "Criar ou editar Lookup Item",
-        "notFound": "Nenhum Lookup Items encontrado"
+        "title": "Itens de Lookupes",
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Item de Lookup",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Lookup Item foi criado com o identificador {{ param }}",
-      "updated": "Lookup Item com identificador {{ param }} foi actualizado",
-      "deleted": "Lookup Item com identificador {{ param }} foi eliminado",
+      "created": "Item de Lookup foi criado com o identificador {{ param }}",
+      "updated": "Item de Lookup com identificador {{ param }} foi actualizado",
+      "deleted": "Item de Lookup com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Lookup Item {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Item de Lookup {{ id }}?"
       },
       "detail": {
-        "title": "Lookup Item"
+        "title": "Item de Lookup"
       },
       "id": "ID",
-      "codigo": "Codigo",
+      "codigo": "Código",
       "ordem": "Ordem",
-      "isSistema": "Is Sistema",
-      "descricao": "Descricao",
+      "isSistema": "Sistema ?",
+      "descricao": "Descrição",
       "lookup": "Lookup"
     }
   }

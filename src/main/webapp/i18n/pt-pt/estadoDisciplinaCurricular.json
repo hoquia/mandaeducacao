@@ -2,34 +2,34 @@
   "longonkeloApp": {
     "estadoDisciplinaCurricular": {
       "home": {
-        "title": "Estado Disciplina Curriculars",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Estado Disciplina Curricular",
-        "createOrEditLabel": "Criar ou editar Estado Disciplina Curricular",
-        "notFound": "Nenhum Estado Disciplina Curriculars encontrado"
+        "title": "Estados das Disciplinas Curriculares",
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Estado de Disciplina Curricular",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Estado Disciplina Curricular foi criado com o identificador {{ param }}",
-      "updated": "Estado Disciplina Curricular com identificador {{ param }} foi actualizado",
-      "deleted": "Estado Disciplina Curricular com identificador {{ param }} foi eliminado",
+      "created": "Estado de Disciplina Curricular foi criado com o identificador {{ param }}",
+      "updated": "Estado de Disciplina Curricular com identificador {{ param }} foi actualizado",
+      "deleted": "Estado de Disciplina Curricular com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Estado Disciplina Curricular {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Estado de Disciplina Curricular {{ id }}?"
       },
       "detail": {
-        "title": "Estado Disciplina Curricular"
+        "title": "Estado de Disciplina Curricular"
       },
       "id": "ID",
       "uniqueSituacaoDisciplina": "Unique Situacao Disciplina",
-      "classificacao": "Classificacao",
-      "codigo": "Codigo",
-      "descricao": "Descricao",
+      "classificacao": "Classificação",
+      "codigo": "Código",
+      "descricao": "Descrição",
       "cor": "Cor",
       "valor": "Valor",
-      "estadoDisciplinaCurricular": "Estado Disciplina Curricular",
+      "estadoDisciplinaCurricular": "Estado da Disciplina Curricular",
       "notasPeriodicaDisciplina": "Notas Periodica Disciplina",
       "notasGeralDisciplina": "Notas Geral Disciplina",
-      "resumoAcademico": "Resumo Academico",
-      "disciplinasCurriculars": "Disciplinas Curriculars",
-      "referencia": "Referencia"
+      "resumoAcademico": "Resumo Académico",
+      "disciplinasCurriculars": "Disciplinas Curriculares",
+      "referencia": "Referência"
     }
   }
 }

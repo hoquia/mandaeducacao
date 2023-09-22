@@ -3,12 +3,12 @@
     "classe": {
       "home": {
         "title": "Classes",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Classe",
-        "createOrEditLabel": "Criar ou editar Classe",
-        "notFound": "Nenhum Classes encontrado"
+        "refreshListLabel": "",
+        "createLabel": "Nova",
+        "createOrEditLabel": "Classe",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Classe foi criado com o identificador {{ param }}",
+      "created": "Classe foi criado com o identificador {{ param }}",
       "updated": "Classe com identificador {{ param }} foi actualizado",
       "deleted": "Classe com identificador {{ param }} foi eliminado",
       "delete": {
@@ -18,11 +18,11 @@
         "title": "Classe"
       },
       "id": "ID",
-      "descricao": "Descricao",
+      "descricao": "Descrição",
       "planoCurricular": "Plano Curricular",
-      "precoEmolumento": "Preco Emolumento",
-      "nivesEnsino": "Nives Ensino",
-      "periodosLancamentoNota": "Periodos Lancamento Nota"
+      "precoEmolumento": "Preço do Emolumento",
+      "nivesEnsino": "Níves de Ensíno",
+      "periodosLancamentoNota": "Períodos de Lançamento de Notas"
     }
   }
 }

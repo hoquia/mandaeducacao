@@ -2,26 +2,26 @@
   "longonkeloApp": {
     "naturezaTrabalho": {
       "home": {
-        "title": "Natureza Trabalhos",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Natureza Trabalho",
-        "createOrEditLabel": "Criar ou editar Natureza Trabalho",
-        "notFound": "Nenhum Natureza Trabalhos encontrado"
+        "title": "Natureza do Trabalho",
+        "refreshListLabel": "",
+        "createLabel": "Nova",
+        "createOrEditLabel": "Natureza do Trabalho",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Natureza Trabalho foi criado com o identificador {{ param }}",
-      "updated": "Natureza Trabalho com identificador {{ param }} foi actualizado",
-      "deleted": "Natureza Trabalho com identificador {{ param }} foi eliminado",
+      "created": "Natureza do Trabalho foi criado com o identificador {{ param }}",
+      "updated": "Natureza do Trabalho com identificador {{ param }} foi actualizado",
+      "deleted": "Natureza do Trabalho com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Natureza Trabalho {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Natureza do Trabalho {{ id }}?"
       },
       "detail": {
-        "title": "Natureza Trabalho"
+        "title": "Natureza do Trabalho"
       },
       "id": "ID",
       "nome": "Nome",
-      "descricao": "Descricao",
-      "isActivo": "Is Activo",
-      "dissertacaoFinalCurso": "Dissertacao Final Curso"
+      "descricao": "Descrição",
+      "isActivo": "Activo ?",
+      "dissertacaoFinalCurso": "Dissertação de Final de Curso"
     }
   }
 }

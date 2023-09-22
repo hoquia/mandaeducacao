@@ -3,12 +3,12 @@
     "imposto": {
       "home": {
         "title": "Impostos",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Imposto",
-        "createOrEditLabel": "Criar ou editar Imposto",
-        "notFound": "Nenhum Impostos encontrado"
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Imposto",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Imposto foi criado com o identificador {{ param }}",
+      "created": "Imposto foi criado com o identificador {{ param }}",
       "updated": "Imposto com identificador {{ param }} foi actualizado",
       "deleted": "Imposto com identificador {{ param }} foi eliminado",
       "delete": {
@@ -18,17 +18,17 @@
         "title": "Imposto"
       },
       "id": "ID",
-      "descricao": "Descricao",
-      "pais": "Pais",
+      "descricao": "Descrição",
+      "pais": "País",
       "taxa": "Taxa",
-      "isRetencao": "Is Retencao",
-      "motivoDescricao": "Motivo Descricao",
-      "motivoCodigo": "Motivo Codigo",
+      "isRetencao": "Retenção",
+      "motivoDescricao": "Motivo de Descrição",
+      "motivoCodigo": "Motivo de Código",
       "emolumento": "Emolumento",
-      "tipoImposto": "Tipo Imposto",
-      "codigoImposto": "Codigo Imposto",
-      "motivoIsencaoCodigo": "Motivo Isencao Codigo",
-      "motivoIsencaoDescricao": "Motivo Isencao Descricao"
+      "tipoImposto": "Tipo de Imposto",
+      "codigoImposto": "Código do Imposto",
+      "motivoIsencaoCodigo": "Motivo de Isenção do Código",
+      "motivoIsencaoDescricao": "Motivo de Isenção da Descrição"
     }
   }
 }

@@ -2,28 +2,28 @@
   "longonkeloApp": {
     "itemFactura": {
       "home": {
-        "title": "Item Facturas",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Item Factura",
-        "createOrEditLabel": "Criar ou editar Item Factura",
-        "notFound": "Nenhum Item Facturas encontrado"
+        "title": "Ites da Factura",
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Item da Factura",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Item Factura foi criado com o identificador {{ param }}",
-      "updated": "Item Factura com identificador {{ param }} foi actualizado",
-      "deleted": "Item Factura com identificador {{ param }} foi eliminado",
+      "created": "Item da Factura foi criado com o identificador {{ param }}",
+      "updated": "Item da Factura com identificador {{ param }} foi actualizado",
+      "deleted": "Item da Factura com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Item Factura {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Item da Factura {{ id }}?"
       },
       "detail": {
-        "title": "Item Factura"
+        "title": "Item da Factura"
       },
       "id": "ID",
       "quantidade": "Quantidade",
-      "precoUnitario": "Preco Unitario",
+      "precoUnitario": "Preço Unitário",
       "desconto": "Desconto",
       "multa": "Multa",
-      "juro": "Juro",
-      "precoTotal": "Preco Total",
+      "juro": "Juros",
+      "precoTotal": "Preço Total",
       "estado": "Estado",
       "taxType": "Tax Type",
       "taxCountryRegion": "Tax Country Region",
@@ -31,10 +31,10 @@
       "taxPercentage": "Tax Percentage",
       "taxExemptionReason": "Tax Exemption Reason",
       "taxExemptionCode": "Tax Exemption Code",
-      "emissao": "Emissao",
-      "expiracao": "Expiracao",
-      "periodo": "Periodo",
-      "descricao": "Descricao",
+      "emissao": "Emissão",
+      "expiracao": "Expiração",
+      "periodo": "Período",
+      "descricao": "Descrição",
       "factura": "Factura",
       "emolumento": "Emolumento"
     }

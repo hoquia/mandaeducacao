@@ -2,13 +2,13 @@
   "longonkeloApp": {
     "lookup": {
       "home": {
-        "title": "Lookups",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Lookup",
-        "createOrEditLabel": "Criar ou editar Lookup",
-        "notFound": "Nenhum Lookups encontrado"
+        "title": "Lookupes",
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Lookup",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Lookup foi criado com o identificador {{ param }}",
+      "created": "Lookup foi criado com o identificador {{ param }}",
       "updated": "Lookup com identificador {{ param }} foi actualizado",
       "deleted": "Lookup com identificador {{ param }} foi eliminado",
       "delete": {
@@ -18,11 +18,11 @@
         "title": "Lookup"
       },
       "id": "ID",
-      "codigo": "Codigo",
+      "codigo": "Código",
       "nome": "Nome",
-      "descricao": "Descricao",
-      "isSistema": "Is Sistema",
-      "isModificavel": "Is Modificavel",
+      "descricao": "Descrição",
+      "isSistema": "Sistema ?",
+      "isModificavel": "Modificável ?",
       "lookupItems": "Lookup Items"
     }
   }

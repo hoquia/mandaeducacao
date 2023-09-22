@@ -2,24 +2,24 @@
   "longonkeloApp": {
     "notasPeriodicaDisciplina": {
       "home": {
-        "title": "Notas Periodica Disciplinas",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Notas Periodica Disciplina",
-        "createOrEditLabel": "Criar ou editar Notas Periodica Disciplina",
-        "notFound": "Nenhum Notas Periodica Disciplinas encontrado"
+        "title": "Notas Periodica das Disciplinas",
+        "refreshListLabel": "",
+        "createLabel": "Nova",
+        "createOrEditLabel": "Notas Periodicas da Disciplina",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Notas Periodica Disciplina foi criado com o identificador {{ param }}",
-      "updated": "Notas Periodica Disciplina com identificador {{ param }} foi actualizado",
-      "deleted": "Notas Periodica Disciplina com identificador {{ param }} foi eliminado",
+      "created": "Notas Periodicas da Disciplina foi criado com o identificador {{ param }}",
+      "updated": "Notas Periodicas da Disciplina com identificador {{ param }} foi actualizado",
+      "deleted": "Notas Periodicas da Disciplina com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Notas Periodica Disciplina {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Notas Periodicas da Disciplina {{ id }}?"
       },
       "detail": {
-        "title": "Notas Periodica Disciplina"
+        "title": "Notas Periodicas da Disciplina"
       },
       "id": "ID",
       "chaveComposta": "Chave Composta",
-      "periodoLancamento": "Periodo Lancamento",
+      "periodoLancamento": "Período de Lançamento",
       "nota1": "Nota 1",
       "nota2": "Nota 2",
       "nota3": "Nota 3",

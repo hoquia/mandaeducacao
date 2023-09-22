@@ -2,31 +2,31 @@
   "longonkeloApp": {
     "licao": {
       "home": {
-        "title": "Licaos",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Licao",
-        "createOrEditLabel": "Criar ou editar Licao",
-        "notFound": "Nenhum Licaos encontrado"
+        "title": "Lições",
+        "refreshListLabel": "",
+        "createLabel": "Nova",
+        "createOrEditLabel": "Lição",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Licao foi criado com o identificador {{ param }}",
-      "updated": "Licao com identificador {{ param }} foi actualizado",
-      "deleted": "Licao com identificador {{ param }} foi eliminado",
+      "created": "Lição foi criado com o identificador {{ param }}",
+      "updated": "Lição com identificador {{ param }} foi actualizado",
+      "deleted": "Lição com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Licao {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Lição {{ id }}?"
       },
       "detail": {
-        "title": "Licao"
+        "title": "Lição"
       },
       "id": "ID",
       "chaveComposta": "Chave Composta",
-      "numero": "Numero",
+      "numero": "Número",
       "estado": "Estado",
-      "descricao": "Descricao",
-      "ocorrencias": "Ocorrencias",
+      "descricao": "Descrição",
+      "ocorrencias": "Ocorrências",
       "anoLectivo": "Ano Lectivo",
       "utilizador": "Utilizador",
-      "planoAula": "Plano Aula",
-      "horario": "Horario"
+      "planoAula": "Plano de Aula",
+      "horario": "Horário"
     }
   }
 }

@@ -2,27 +2,27 @@
   "longonkeloApp": {
     "estadoDissertacao": {
       "home": {
-        "title": "Estado Dissertacaos",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Estado Dissertacao",
-        "createOrEditLabel": "Criar ou editar Estado Dissertacao",
-        "notFound": "Nenhum Estado Dissertacaos encontrado"
+        "title": "Estados das Dissertacões",
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Estado de Dissertação",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Estado Dissertacao foi criado com o identificador {{ param }}",
-      "updated": "Estado Dissertacao com identificador {{ param }} foi actualizado",
-      "deleted": "Estado Dissertacao com identificador {{ param }} foi eliminado",
+      "created": "Estado de Dissertação foi criado com o identificador {{ param }}",
+      "updated": "Estado de Dissertação com identificador {{ param }} foi actualizado",
+      "deleted": "Estado de Dissertação com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Estado Dissertacao {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Estado de Dissertação {{ id }}?"
       },
       "detail": {
-        "title": "Estado Dissertacao"
+        "title": "Estado de Dissertação"
       },
       "id": "ID",
-      "codigo": "Codigo",
+      "codigo": "Código",
       "nome": "Nome",
       "etapa": "Etapa",
-      "descricao": "Descricao",
-      "dissertacaoFinalCurso": "Dissertacao Final Curso"
+      "descricao": "Descrição",
+      "dissertacaoFinalCurso": "Dissertação de Final de Curso"
     }
   }
 }

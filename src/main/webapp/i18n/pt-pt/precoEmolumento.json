@@ -2,34 +2,34 @@
   "longonkeloApp": {
     "precoEmolumento": {
       "home": {
-        "title": "Preco Emolumentos",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Preco Emolumento",
-        "createOrEditLabel": "Criar ou editar Preco Emolumento",
-        "notFound": "Nenhum Preco Emolumentos encontrado"
+        "title": "Preços do Emolumento",
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Preço do Emolumento",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Preco Emolumento foi criado com o identificador {{ param }}",
-      "updated": "Preco Emolumento com identificador {{ param }} foi actualizado",
-      "deleted": "Preco Emolumento com identificador {{ param }} foi eliminado",
+      "created": "Preço do Emolumento foi criado com o identificador {{ param }}",
+      "updated": "Preço do Emolumento com identificador {{ param }} foi actualizado",
+      "deleted": "Preço do Emolumento com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Preco Emolumento {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Preço do Emolumento {{ id }}?"
       },
       "detail": {
-        "title": "Preco Emolumento"
+        "title": "Preço do Emolumento"
       },
       "id": "ID",
-      "preco": "Preco",
-      "isEspecificoCurso": "Is Especifico Curso",
-      "isEspecificoAreaFormacao": "Is Especifico Area Formacao",
-      "isEspecificoClasse": "Is Especifico Classe",
-      "isEspecificoTurno": "Is Especifico Turno",
+      "preco": "Preço",
+      "isEspecificoCurso": "Específico para o Curso ?",
+      "isEspecificoAreaFormacao": "Específico para a Área de Formação",
+      "isEspecificoClasse": "Específico para a Classe ?",
+      "isEspecificoTurno": "Específico para o Turno ?",
       "utilizador": "Utilizador",
       "emolumento": "Emolumento",
-      "areaFormacao": "Area Formacao",
+      "areaFormacao": "Área de Formação",
       "curso": "Curso",
       "classe": "Classe",
       "turno": "Turno",
-      "planoMulta": "Plano Multa"
+      "planoMulta": "Plano de Multa"
     }
   }
 }

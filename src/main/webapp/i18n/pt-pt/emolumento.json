@@ -3,12 +3,12 @@
     "emolumento": {
       "home": {
         "title": "Emolumentos",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Emolumento",
-        "createOrEditLabel": "Criar ou editar Emolumento",
-        "notFound": "Nenhum Emolumentos encontrado"
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Emolumento",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Emolumento foi criado com o identificador {{ param }}",
+      "created": "Emolumento foi criado com o identificador {{ param }}",
       "updated": "Emolumento com identificador {{ param }} foi actualizado",
       "deleted": "Emolumento com identificador {{ param }} foi eliminado",
       "delete": {
@@ -19,22 +19,22 @@
       },
       "id": "ID",
       "imagem": "Imagem",
-      "numero": "Numero",
+      "numero": "Número",
       "nome": "Nome",
-      "preco": "Preco",
+      "preco": "Preço",
       "quantidade": "Quantidade",
-      "periodo": "Periodo",
-      "inicioPeriodo": "Inicio Periodo",
-      "fimPeriodo": "Fim Periodo",
-      "isObrigatorioMatricula": "Is Obrigatorio Matricula",
-      "isObrigatorioConfirmacao": "Is Obrigatorio Confirmacao",
-      "itemFactura": "Item Factura",
+      "periodo": "Período",
+      "inicioPeriodo": "Início de Período",
+      "fimPeriodo": "Fim de Período",
+      "isObrigatorioMatricula": "Obrigatório na Matricula ?",
+      "isObrigatorioConfirmacao": "Obrigatório na Confirmação ?",
+      "itemFactura": "Item da Factura",
       "emolumento": "Emolumento",
-      "precosEmolumento": "Precos Emolumento",
+      "precosEmolumento": "Preços do Emolumento",
       "categoria": "Categoria",
       "imposto": "Imposto",
-      "referencia": "Referencia",
-      "planoMulta": "Plano Multa"
+      "referencia": "Referência",
+      "planoMulta": "Plano de Multa"
     }
   }
 }

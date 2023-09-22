@@ -2,8 +2,8 @@
   "longonkeloApp": {
     "MetodoAplicacaoMulta": {
       "null": "",
-      "DEPOIS_MES_EMOLUMENTO": "DEPOIS_MES_EMOLUMENTO",
-      "EXACTO_MES_EMOLUMENTO": "EXACTO_MES_EMOLUMENTO"
+      "DEPOIS_MES_EMOLUMENTO": "DEPOIS_MÊS_EMOLUMENTO",
+      "EXACTO_MES_EMOLUMENTO": "EXACTO_MÊS_EMOLUMENTO"
     }
   }
 }

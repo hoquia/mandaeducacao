@@ -2,35 +2,35 @@
   "longonkeloApp": {
     "ocorrencia": {
       "home": {
-        "title": "Ocorrencias",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Ocorrencia",
-        "createOrEditLabel": "Criar ou editar Ocorrencia",
-        "notFound": "Nenhum Ocorrencias encontrado"
+        "title": "Ocorrências",
+        "refreshListLabel": "",
+        "createLabel": "Nova",
+        "createOrEditLabel": "Ocorrência",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Ocorrencia foi criado com o identificador {{ param }}",
-      "updated": "Ocorrencia com identificador {{ param }} foi actualizado",
-      "deleted": "Ocorrencia com identificador {{ param }} foi eliminado",
+      "created": "Ocorrência foi criado com o identificador {{ param }}",
+      "updated": "Ocorrência com identificador {{ param }} foi actualizado",
+      "deleted": "Ocorrência com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Ocorrencia {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Ocorrência {{ id }}?"
       },
       "detail": {
-        "title": "Ocorrencia"
+        "title": "Ocorrência"
       },
       "id": "ID",
       "uniqueOcorrencia": "Unique Ocorrencia",
-      "descricao": "Descricao",
-      "evidencia": "Evidencia",
+      "descricao": "Descrição",
+      "evidencia": "Evidência",
       "hash": "Hash",
       "timestamp": "Timestamp",
-      "ocorrencia": "Ocorrencia",
+      "ocorrencia": "Ocorrência",
       "anoLectivo": "Ano Lectivo",
       "utilizador": "Utilizador",
-      "referencia": "Referencia",
+      "referencia": "Referência",
       "docente": "Docente",
       "matricula": "Matricula",
       "estado": "Estado",
-      "licao": "Licao"
+      "licao": "Lição"
     }
   }
 }

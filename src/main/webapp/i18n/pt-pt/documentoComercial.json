@@ -2,13 +2,13 @@
   "longonkeloApp": {
     "documentoComercial": {
       "home": {
-        "title": "Documento Comercials",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Documento Comercial",
-        "createOrEditLabel": "Criar ou editar Documento Comercial",
-        "notFound": "Nenhum Documento Comercials encontrado"
+        "title": "Documentos Comercias",
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Documento Comercial",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Documento Comercial foi criado com o identificador {{ param }}",
+      "created": "Documento Comercial foi criado com o identificador {{ param }}",
       "updated": "Documento Comercial com identificador {{ param }} foi actualizado",
       "deleted": "Documento Comercial com identificador {{ param }} foi eliminado",
       "delete": {
@@ -18,23 +18,23 @@
         "title": "Documento Comercial"
       },
       "id": "ID",
-      "modulo": "Modulo",
+      "modulo": "Módulo",
       "origem": "Origem",
       "siglaInterna": "Sigla Interna",
-      "descricao": "Descricao",
+      "descricao": "Descrição",
       "siglaFiscal": "Sigla Fiscal",
-      "isMovimentaEstoque": "Is Movimenta Estoque",
-      "isMovimentaCaixa": "Is Movimenta Caixa",
-      "isNotificaEntidade": "Is Notifica Entidade",
-      "isNotificaGerente": "Is Notifica Gerente",
-      "isEnviaSMS": "Is Envia SMS",
-      "isEnviaEmail": "Is Envia Email",
-      "isEnviaPush": "Is Envia Push",
-      "validaCreditoDisponivel": "Valida Credito Disponivel",
-      "serieDocumento": "Serie Documento",
+      "isMovimentaEstoque": "Movimenta Estoque ?",
+      "isMovimentaCaixa": "Movimenta Caixa ?",
+      "isNotificaEntidade": "Notifica Entidade ?",
+      "isNotificaGerente": "Notifica Gerente ?",
+      "isEnviaSMS": "Envia SMS ?",
+      "isEnviaEmail": "Envia Email ?",
+      "isEnviaPush": "Envia Push ?",
+      "validaCreditoDisponivel": "Valida Credito Disponivel ?",
+      "serieDocumento": "Serie do Documento",
       "factura": "Factura",
       "recibo": "Recibo",
-      "transformaEm": "Transforma Em"
+      "transformaEm": "Transforma Em ?"
     }
   }
 }

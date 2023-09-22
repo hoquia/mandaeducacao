@@ -2,31 +2,32 @@
   "longonkeloApp": {
     "areaFormacao": {
       "home": {
-        "title": "Area Formacaos",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Area Formacao",
-        "createOrEditLabel": "Criar ou editar Area Formacao",
-        "notFound": "Nenhum Area Formacaos encontrado"
+        "title": "Áreas de Formacão",
+        "refreshListLabel": "",
+        "createLabel": "Nova",
+        "createOrEditLabel": "Área de Formação",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Area Formacao foi criado com o identificador {{ param }}",
+      "created": "Area Formacao foi criado com o identificador {{ param }}",
       "updated": "Area Formacao com identificador {{ param }} foi actualizado",
       "deleted": "Area Formacao com identificador {{ param }} foi eliminado",
       "delete": {
         "question": "Tem a certeza que pretende eliminar o(a) Area Formacao {{ id }}?"
       },
       "detail": {
-        "title": "Area Formacao"
+        "title": "Áreas de Formacão"
       },
       "id": "ID",
+      "uniqueCodigo": "Unique Codigo",
+      "uniqueNome": "Unique Nome",
       "imagem": "Imagem",
-      "codigo": "Codigo",
+      "codigo": "Código",
       "nome": "Nome",
-      "descricao": "Descricao",
+      "descricao": "Descrição",
       "cursos": "Cursos",
-      "dissertacaoFinalCurso": "Dissertacao Final Curso",
-      "responsaveis": "Responsaveis",
-      "precoEmolumento": "Preco Emolumento",
-      "nivelEnsino": "Nivel Ensino"
+      "categoriaEmolumento": "Categoria de Emolumento",
+      "dissertacaoFinalCurso": "Dissertação de Final do Curso",
+      "nivelEnsino": "Nível de Ensino"
     }
   }
 }

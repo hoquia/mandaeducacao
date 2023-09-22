@@ -2,25 +2,25 @@
   "longonkeloApp": {
     "campoActuacaoDissertacao": {
       "home": {
-        "title": "Campo Actuacao Dissertacaos",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Campo Actuacao Dissertacao",
-        "createOrEditLabel": "Criar ou editar Campo Actuacao Dissertacao",
-        "notFound": "Nenhum Campo Actuacao Dissertacaos encontrado"
+        "title": "Campos de Actuação das Dissertações",
+        "refreshListLabel": "",
+        "createLabel": "Novo",
+        "createOrEditLabel": "Campo de Actuação de Dissertação",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Campo Actuacao Dissertacao foi criado com o identificador {{ param }}",
-      "updated": "Campo Actuacao Dissertacao com identificador {{ param }} foi actualizado",
-      "deleted": "Campo Actuacao Dissertacao com identificador {{ param }} foi eliminado",
+      "created": "Campo de Actuação de Dissertação foi criado com o identificador {{ param }}",
+      "updated": "Campo de Actuação de Dissertação com identificador {{ param }} foi actualizado",
+      "deleted": "Campo de Actuação de Dissertação com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Campo Actuacao Dissertacao {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Campo de Actuação de Dissertação {{ id }}?"
       },
       "detail": {
-        "title": "Campo Actuacao Dissertacao"
+        "title": "Campo de Actuação de Dissertação"
       },
       "id": "ID",
       "nome": "Nome",
-      "descricao": "Descricao",
-      "isActivo": "Is Activo",
+      "descricao": "Descrição",
+      "isActivo": "Activo ?",
       "cursos": "Cursos"
     }
   }

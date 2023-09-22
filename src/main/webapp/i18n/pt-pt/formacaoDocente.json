@@ -2,31 +2,31 @@
   "longonkeloApp": {
     "formacaoDocente": {
       "home": {
-        "title": "Formacao Docentes",
-        "refreshListLabel": "Refresh list",
-        "createLabel": "Criar novo(a) Formacao Docente",
-        "createOrEditLabel": "Criar ou editar Formacao Docente",
-        "notFound": "Nenhum Formacao Docentes encontrado"
+        "title": "Formações dos Docentes",
+        "refreshListLabel": "",
+        "createLabel": "Nova",
+        "createOrEditLabel": "Formação do Docente",
+        "notFound": "Nenhum resultado encontrado"
       },
-      "created": "Um novo Formacao Docente foi criado com o identificador {{ param }}",
-      "updated": "Formacao Docente com identificador {{ param }} foi actualizado",
-      "deleted": "Formacao Docente com identificador {{ param }} foi eliminado",
+      "created": "Formação do Docente foi criado com o identificador {{ param }}",
+      "updated": "Formação do Docente com identificador {{ param }} foi actualizado",
+      "deleted": "Formação do Docente com identificador {{ param }} foi eliminado",
       "delete": {
-        "question": "Tem a certeza que pretende eliminar o(a) Formacao Docente {{ id }}?"
+        "question": "Tem a certeza que pretende eliminar o(a) Formação do Docente {{ id }}?"
       },
       "detail": {
-        "title": "Formacao Docente"
+        "title": "Formação do Docente"
       },
       "id": "ID",
-      "instituicaoEnsino": "Instituicao Ensino",
-      "areaFormacao": "Area Formacao",
+      "instituicaoEnsino": "Instituição de Ensino",
+      "areaFormacao": "Área de Formação",
       "curso": "Curso",
       "especialidade": "Especialidade",
       "grau": "Grau",
-      "inicio": "Inicio",
+      "inicio": "Início",
       "fim": "Fim",
       "anexo": "Anexo",
-      "grauAcademico": "Grau Academico",
+      "grauAcademico": "Grau Académico",
       "docente": "Docente"
     }
   }
