@@ -11,7 +11,7 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface CursoMapper extends EntityMapper<CursoDTO, Curso> {
-    @Mapping(target = "areaFormacao", source = "areaFormacao", qualifiedByName = "areaFormacaoNome")
+    @Mapping(target = "areaFormacao", source = "areaFormacao")
     CursoDTO toDto(Curso s);
 
     @Named("areaFormacaoNome")

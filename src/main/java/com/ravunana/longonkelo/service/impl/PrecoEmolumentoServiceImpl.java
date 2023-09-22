@@ -158,187 +158,210 @@ public class PrecoEmolumentoServiceImpl implements PrecoEmolumentoService {
         return precoEmolumentoMapper.toDto(result);
     }
 
-    public PrecoEmolumentoDTO getPrecoEmolumento(TurmaDTO turmaDTO, Long emolumentoID) {
+    public PrecoEmolumentoDTO getPrecoEmolumento(TurmaDTO turmaDTO, PrecoEmolumentoDTO precoEmolumentoDTO) {
         var planoCurricular = turmaDTO.getPlanoCurricular();
         var curso = planoCurricular.getCurso();
         var areaFormacaoID = curso.getAreaFormacao().getId();
         var turnoID = turmaDTO.getTurno().getId();
         var classeID = planoCurricular.getClasse().getId();
+        Optional<PrecoEmolumento> precoResult = null;
+        var emolumentoID = precoEmolumentoDTO.getEmolumento().getId();
+
+        // 1ª Condicao
+        if (precoEmolumentoDTO.getAreaFormacao() != null) {
+            // somente areaformacao
+            precoResult =
+                precoEmolumentoRepository
+                    .findAll()
+                    .stream()
+                    .filter(x ->
+                        x.getAreaFormacao().getId().equals(areaFormacaoID) && // areaformacao
+                        x.getEmolumento().getId().equals(emolumentoID) // emolumento
+                    )
+                    .findFirst();
+            if (precoResult.isPresent()) {
+                return precoEmolumentoMapper.toDto(precoResult.get());
+            }
+        }
+
+        if (precoEmolumentoDTO.getAreaFormacao() != null && precoEmolumentoDTO.getClasse() != null) {
+            // 2ª Condição
+            // classe e areaformacao
+            precoResult =
+                precoEmolumentoRepository
+                    .findAll()
+                    .stream()
+                    .filter(x ->
+                        x.getAreaFormacao().getId().equals(areaFormacaoID) && // areaformacao
+                        x.getClasse().getId().equals(classeID) && // classe
+                        x.getEmolumento().getId().equals(emolumentoID) // emolumento
+                    )
+                    .findFirst();
+            if (precoResult.isPresent()) {
+                return precoEmolumentoMapper.toDto(precoResult.get());
+            }
+        }
+
+        if (precoEmolumentoDTO.getAreaFormacao() != null && precoEmolumentoDTO.getCurso() != null) {
+            // 3ª Condição
+            // curso e areaformacao
+            precoResult =
+                precoEmolumentoRepository
+                    .findAll()
+                    .stream()
+                    .filter(x ->
+                        x.getAreaFormacao().getId().equals(areaFormacaoID) && // areaformacao
+                        x.getCurso().getId().equals(curso.getId()) && // curso
+                        x.getEmolumento().getId().equals(emolumentoID) // emolumento
+                    )
+                    .findFirst();
+            if (precoResult.isPresent()) {
+                return precoEmolumentoMapper.toDto(precoResult.get());
+            }
+        }
 
         // 1ª Condicao
 
-        // somente areaformacao
-        var precoResult = precoEmolumentoRepository
-            .findAll()
-            .stream()
-            .filter(x ->
-                x.getAreaFormacao().getId().equals(areaFormacaoID) && // areaformacao
-                x.getEmolumento().getId().equals(emolumentoID) // emolumento
-            )
-            .findFirst();
-        if (precoResult.isPresent()) {
-            return precoEmolumentoMapper.toDto(precoResult.get());
+        if (precoEmolumentoDTO.getClasse() != null) {
+            // somente classe
+            precoResult =
+                precoEmolumentoRepository
+                    .findAll()
+                    .stream()
+                    .filter(x ->
+                        x.getClasse().getId().equals(classeID) && // classe
+                        x.getEmolumento().getId().equals(emolumentoID) // emolumento
+                    )
+                    .findFirst();
+            if (precoResult.isPresent()) {
+                return precoEmolumentoMapper.toDto(precoResult.get());
+            }
         }
 
-        // somente classe
-        precoResult =
-            precoEmolumentoRepository
-                .findAll()
-                .stream()
-                .filter(x ->
-                    x.getClasse().getId().equals(classeID) && // classe
-                    x.getEmolumento().getId().equals(emolumentoID) // emolumento
-                )
-                .findFirst();
-        if (precoResult.isPresent()) {
-            return precoEmolumentoMapper.toDto(precoResult.get());
+        if (precoEmolumentoDTO.getCurso() != null) {
+            // somente curso
+            precoResult =
+                precoEmolumentoRepository
+                    .findAll()
+                    .stream()
+                    .filter(x ->
+                        x.getCurso().getId().equals(curso.getId()) && // curso
+                        x.getEmolumento().getId().equals(emolumentoID)
+                    )
+                    .findFirst();
+            if (precoResult.isPresent()) {
+                return precoEmolumentoMapper.toDto(precoResult.get());
+            }
         }
+        if (precoEmolumentoDTO.getTurno() != null) {
+            // somente turno
 
-        // somente curso
-
-        precoResult =
-            precoEmolumentoRepository
-                .findAll()
-                .stream()
-                .filter(x ->
-                    x.getCurso().getId().equals(curso.getId()) && // curso
-                    x.getEmolumento().getId().equals(emolumentoID)
-                )
-                .findFirst();
-        if (precoResult.isPresent()) {
-            return precoEmolumentoMapper.toDto(precoResult.get());
-        }
-
-        // somente turno
-
-        precoResult =
-            precoEmolumentoRepository
-                .findAll()
-                .stream()
-                .filter(x ->
-                    x.getTurno().getId().equals(turnoID) && // turno
-                    x.getEmolumento().getId().equals(emolumentoID)
-                )
-                .findFirst();
-        if (precoResult.isPresent()) {
-            return precoEmolumentoMapper.toDto(precoResult.get());
+            precoResult =
+                precoEmolumentoRepository
+                    .findAll()
+                    .stream()
+                    .filter(x ->
+                        x.getTurno().getId().equals(turnoID) && // turno
+                        x.getEmolumento().getId().equals(emolumentoID)
+                    )
+                    .findFirst();
+            if (precoResult.isPresent()) {
+                return precoEmolumentoMapper.toDto(precoResult.get());
+            }
         }
 
         // 2ª Condição
+        if (precoEmolumentoDTO.getCurso() != null && precoEmolumentoDTO.getClasse() != null) {
+            // classe e curso
 
-        // classe e areaformacao
-        precoResult =
-            precoEmolumentoRepository
-                .findAll()
-                .stream()
-                .filter(x ->
-                    x.getAreaFormacao().getId().equals(areaFormacaoID) && // areaformacao
-                    x.getClasse().getId().equals(classeID) && // classe
-                    x.getEmolumento().getId().equals(emolumentoID) // emolumento
-                )
-                .findFirst();
-        if (precoResult.isPresent()) {
-            return precoEmolumentoMapper.toDto(precoResult.get());
+            precoResult =
+                precoEmolumentoRepository
+                    .findAll()
+                    .stream()
+                    .filter(x ->
+                        x.getCurso().getId().equals(curso.getId()) && // curso
+                        x.getClasse().getId().equals(classeID) && // classe
+                        x.getEmolumento().getId().equals(emolumentoID)
+                    )
+                    .findFirst();
+            if (precoResult.isPresent()) {
+                return precoEmolumentoMapper.toDto(precoResult.get());
+            }
         }
 
-        // classe e curso
+        if (precoEmolumentoDTO.getClasse() != null && precoEmolumentoDTO.getCurso() != null) {
+            // classe e turno
 
-        precoResult =
-            precoEmolumentoRepository
-                .findAll()
-                .stream()
-                .filter(x ->
-                    x.getCurso().getId().equals(curso.getId()) && // curso
-                    x.getClasse().getId().equals(classeID) && // classe
-                    x.getEmolumento().getId().equals(emolumentoID)
-                )
-                .findFirst();
-        if (precoResult.isPresent()) {
-            return precoEmolumentoMapper.toDto(precoResult.get());
-        }
-
-        // classe e turno
-
-        precoResult =
-            precoEmolumentoRepository
-                .findAll()
-                .stream()
-                .filter(x ->
-                    x.getTurno().getId().equals(turnoID) && // turno
-                    x.getClasse().getId().equals(classeID) && // classe
-                    x.getEmolumento().getId().equals(emolumentoID)
-                )
-                .findFirst();
-        if (precoResult.isPresent()) {
-            return precoEmolumentoMapper.toDto(precoResult.get());
+            precoResult =
+                precoEmolumentoRepository
+                    .findAll()
+                    .stream()
+                    .filter(x ->
+                        x.getTurno().getId().equals(turnoID) && // turno
+                        x.getClasse().getId().equals(classeID) && // classe
+                        x.getEmolumento().getId().equals(emolumentoID)
+                    )
+                    .findFirst();
+            if (precoResult.isPresent()) {
+                return precoEmolumentoMapper.toDto(precoResult.get());
+            }
         }
 
         // 3ª Condição
+        if (precoEmolumentoDTO.getCurso() != null && precoEmolumentoDTO.getTurno() != null) {
+            // curso e turno
 
-        // curso e areaformacao
-        precoResult =
-            precoEmolumentoRepository
-                .findAll()
-                .stream()
-                .filter(x ->
-                    x.getAreaFormacao().getId().equals(areaFormacaoID) && // areaformacao
-                    x.getCurso().getId().equals(curso.getId()) && // curso
-                    x.getEmolumento().getId().equals(emolumentoID) // emolumento
-                )
-                .findFirst();
-        if (precoResult.isPresent()) {
-            return precoEmolumentoMapper.toDto(precoResult.get());
+            precoResult =
+                precoEmolumentoRepository
+                    .findAll()
+                    .stream()
+                    .filter(x ->
+                        x.getTurno().getId().equals(turnoID) && // turno
+                        x.getCurso().getId().equals(curso.getId()) && // curso
+                        x.getEmolumento().getId().equals(emolumentoID)
+                    )
+                    .findFirst();
+            if (precoResult.isPresent()) {
+                return precoEmolumentoMapper.toDto(precoResult.get());
+            }
         }
 
-        // curso e turno
+        if (precoEmolumentoDTO.getCurso() != null && precoEmolumentoDTO.getClasse() != null) {
+            // curso e classe
 
-        precoResult =
-            precoEmolumentoRepository
-                .findAll()
-                .stream()
-                .filter(x ->
-                    x.getTurno().getId().equals(turnoID) && // turno
-                    x.getCurso().getId().equals(curso.getId()) && // curso
-                    x.getEmolumento().getId().equals(emolumentoID)
-                )
-                .findFirst();
-        if (precoResult.isPresent()) {
-            return precoEmolumentoMapper.toDto(precoResult.get());
-        }
-
-        // curso e classe
-
-        precoResult =
-            precoEmolumentoRepository
-                .findAll()
-                .stream()
-                .filter(x ->
-                    x.getClasse().getId().equals(classeID) && // classe
-                    x.getCurso().getId().equals(curso.getId()) && // curso
-                    x.getEmolumento().getId().equals(emolumentoID)
-                )
-                .findFirst();
-        if (precoResult.isPresent()) {
-            return precoEmolumentoMapper.toDto(precoResult.get());
+            precoResult =
+                precoEmolumentoRepository
+                    .findAll()
+                    .stream()
+                    .filter(x ->
+                        x.getClasse().getId().equals(classeID) && // classe
+                        x.getCurso().getId().equals(curso.getId()) && // curso
+                        x.getEmolumento().getId().equals(emolumentoID)
+                    )
+                    .findFirst();
+            if (precoResult.isPresent()) {
+                return precoEmolumentoMapper.toDto(precoResult.get());
+            }
         }
 
         // 4ª Condição
+        if (precoEmolumentoDTO.getCurso() != null & precoEmolumentoDTO.getClasse() != null & precoEmolumentoDTO.getTurno() != null) {
+            // curso, classe e turno
 
-        // curso, classe e turno
-
-        precoResult =
-            precoEmolumentoRepository
-                .findAll()
-                .stream()
-                .filter(x ->
-                    x.getClasse().getId().equals(classeID) && // classe
-                    x.getCurso().getId().equals(curso.getId()) && // curso
-                    x.getTurno().getId().equals(turnoID) && // turno
-                    x.getEmolumento().getId().equals(emolumentoID)
-                )
-                .findFirst();
-        if (precoResult.isPresent()) {
-            return precoEmolumentoMapper.toDto(precoResult.get());
+            precoResult =
+                precoEmolumentoRepository
+                    .findAll()
+                    .stream()
+                    .filter(x ->
+                        x.getClasse().getId().equals(classeID) && // classe
+                        x.getCurso().getId().equals(curso.getId()) && // curso
+                        x.getTurno().getId().equals(turnoID) && // turno
+                        x.getEmolumento().getId().equals(emolumentoID)
+                    )
+                    .findFirst();
+            if (precoResult.isPresent()) {
+                return precoEmolumentoMapper.toDto(precoResult.get());
+            }
         }
 
         return null;

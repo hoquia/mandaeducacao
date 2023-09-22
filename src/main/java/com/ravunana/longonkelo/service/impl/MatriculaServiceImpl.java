@@ -299,7 +299,7 @@ public class MatriculaServiceImpl implements MatriculaService {
             var imposto = emolumento.getImposto();
             var precoUnitario = p.getPreco();
 
-            var precoEspecifico = precoEmolumentoService.getPrecoEmolumento(matriculaDTO.getTurma(), emolumento.getId());
+            var precoEspecifico = precoEmolumentoService.getPrecoEmolumento(matriculaDTO.getTurma(), p);
 
             if (precoEspecifico != null) {
                 precoUnitario = precoEspecifico.getPreco();
