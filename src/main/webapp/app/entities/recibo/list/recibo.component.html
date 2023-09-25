@@ -35,7 +35,7 @@
     <table class="table table-striped" aria-describedby="page-heading">
       <thead>
         <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
-          <th scope="col" appSortBy="id">
+          <!-- <th scope="col" appSortBy="id">
             <div class="d-flex">
               <span appTranslate="global.field.id">Código</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -52,14 +52,14 @@
               <span appTranslate="longonkeloApp.recibo.vencimento">Vencimento</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="numero">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.recibo.numero">Numero</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="totalSemImposto">
+          <!-- <th scope="col" appSortBy="totalSemImposto">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.recibo.totalSemImposto">Total Sem Imposto</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -112,7 +112,7 @@
               <span appTranslate="longonkeloApp.recibo.totalMoedaEstrangeira">Total Moeda Estrangeira</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="totalPagar">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.recibo.totalPagar">Total Pagar</span>
@@ -125,7 +125,7 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="totalFalta">
+          <!-- <th scope="col" appSortBy="totalFalta">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.recibo.totalFalta">Total Falta</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -202,14 +202,14 @@
               <span appTranslate="longonkeloApp.recibo.keyVersion">Key Version</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="estado">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.recibo.estado">Estado</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" appSortBy="origem">
+          <!-- <th scope="col" appSortBy="origem">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.recibo.origem">Origem</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
@@ -226,7 +226,7 @@
               <span appTranslate="longonkeloApp.recibo.matricula">Matricula</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
-          </th>
+          </th> -->
           <th scope="col" appSortBy="documentoComercial.siglaInterna">
             <div class="d-flex">
               <span appTranslate="longonkeloApp.recibo.documentoComercial">Documento Comercial</span>
@@ -247,7 +247,7 @@
           <td>
             <a [routerLink]="['/recibo', recibo.id, 'view']">{{ recibo.id }}</a>
           </td>
-          <td>{{ recibo.data | formatMediumDate }}</td>
+          <!-- <td>{{ recibo.data | formatMediumDate }}</td>
           <td>{{ recibo.vencimento | formatMediumDate }}</td>
           <td>{{ recibo.numero }}</td>
           <td>{{ recibo.totalSemImposto }}</td>
@@ -258,10 +258,10 @@
           <td>{{ recibo.totalRetencao }}</td>
           <td>{{ recibo.totalJuro }}</td>
           <td>{{ recibo.cambio }}</td>
-          <td>{{ recibo.totalMoedaEstrangeira }}</td>
+          <td>{{ recibo.totalMoedaEstrangeira }}</td> -->
           <td>{{ recibo.totalPagar }}</td>
           <td>{{ recibo.totalPago }}</td>
-          <td>{{ recibo.totalFalta }}</td>
+          <!-- <td>{{ recibo.totalFalta }}</td>
           <td>{{ recibo.totalTroco }}</td>
           <td>{{ recibo.isNovo }}</td>
           <td>{{ recibo.timestamp | formatMediumDatetime }}</td>
@@ -273,17 +273,17 @@
           <td>{{ recibo.hash }}</td>
           <td>{{ recibo.hashShort }}</td>
           <td>{{ recibo.hashControl }}</td>
-          <td>{{ recibo.keyVersion }}</td>
+          <td>{{ recibo.keyVersion }}</td> -->
           <td appTranslate="{{ 'longonkeloApp.EstadoDocumentoComercial.' + recibo.estado }}">{{ recibo.estado }}</td>
-          <td>{{ recibo.origem }}</td>
-          <td>
+          <!-- <td>{{ recibo.origem }}</td> -->
+          <!-- <td>
             {{ recibo.utilizador?.login }}
-          </td>
-          <td>
+          </td> -->
+          <!-- <td>
             <div *ngIf="recibo.matricula">
               <a [routerLink]="['/matricula', recibo.matricula.id, 'view']">{{ recibo.matricula.numeroMatricula }}</a>
             </div>
-          </td>
+          </td> -->
           <td>
             <div *ngIf="recibo.documentoComercial">
               <a [routerLink]="['/documento-comercial', recibo.documentoComercial.id, 'view']">{{
@@ -298,6 +298,15 @@
           </td>
           <td class="text-end">
             <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/recibo', recibo.id, 'view']"
+                class="btn btn-warning btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <!-- <fa-icon icon="eye"></fa-icon> -->
+                <span class="d-none d-md-inline">Recibo</span>
+              </button>
               <button type="submit" [routerLink]="['/recibo', recibo.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
                 <fa-icon icon="eye"></fa-icon>
                 <span class="d-none d-md-inline" appTranslate="entity.action.view">Visualizar</span>

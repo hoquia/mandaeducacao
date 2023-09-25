@@ -48,6 +48,18 @@ export class AplicacaoReciboUpdateComponent implements OnInit {
       this.aplicacaoRecibo = aplicacaoRecibo;
       if (aplicacaoRecibo) {
         this.updateForm(aplicacaoRecibo);
+      } else {
+        const reciboID = Number(this.activatedRoute.snapshot.queryParamMap.get('recibo_id'));
+        this.reciboService.find(reciboID).subscribe(res => {
+          this.editForm.patchValue({
+            recibo: res.body,
+          });
+        });
+
+        this.editForm.patchValue({
+          totalFactura: 0,
+          totalPago: 0,
+        });
       }
 
       this.loadRelationshipsOptions();

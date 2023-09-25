@@ -82,6 +82,7 @@ export class TransacaoUpdateComponent implements OnInit {
 
         this.editForm.patchValue({
           saldo: 0,
+          estado: EstadoPagamento.VALIDO,
         });
       }
 
