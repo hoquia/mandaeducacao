@@ -62,6 +62,26 @@ export class ReciboUpdateComponent implements OnInit {
       this.recibo = recibo;
       if (recibo) {
         this.updateForm(recibo);
+      } else {
+        this.editForm.patchValue({
+          origem: 'P',
+          estado: EstadoDocumentoComercial.N,
+          numero: '1010',
+        });
+
+        const matriculaID = this.activatedRoute.snapshot.queryParamMap.get('matricula_id');
+        this.matriculaService.find(Number(matriculaID)).subscribe(res => {
+          this.editForm.patchValue({
+            matricula: res.body,
+          });
+        });
+
+        this.documentoComercialService.query().subscribe(res => {
+          const documento = res.body?.filter(x => x.siglaFiscal === 'RC').shift();
+          this.editForm.patchValue({
+            documentoComercial: documento,
+          });
+        });
       }
 
       this.loadRelationshipsOptions();

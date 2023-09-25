@@ -1,11 +1,12 @@
 package com.ravunana.longonkelo.service.impl;
 
 import com.ravunana.longonkelo.domain.Transacao;
+import com.ravunana.longonkelo.domain.enumeration.EstadoPagamento;
 import com.ravunana.longonkelo.repository.TransacaoRepository;
 import com.ravunana.longonkelo.service.TransacaoService;
+import com.ravunana.longonkelo.service.dto.ReciboDTO;
 import com.ravunana.longonkelo.service.dto.TransacaoDTO;
 import com.ravunana.longonkelo.service.mapper.TransacaoMapper;
-import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,10 +27,19 @@ public class TransacaoServiceImpl implements TransacaoService {
     private final TransacaoRepository transacaoRepository;
 
     private final TransacaoMapper transacaoMapper;
+    private final ReciboServiceImpl reciboService;
+    private final DocumentoComercialServiceImpl documentoComercialService;
 
-    public TransacaoServiceImpl(TransacaoRepository transacaoRepository, TransacaoMapper transacaoMapper) {
+    public TransacaoServiceImpl(
+        TransacaoRepository transacaoRepository,
+        TransacaoMapper transacaoMapper,
+        ReciboServiceImpl reciboService,
+        DocumentoComercialServiceImpl documentoComercialService
+    ) {
         this.transacaoRepository = transacaoRepository;
         this.transacaoMapper = transacaoMapper;
+        this.reciboService = reciboService;
+        this.documentoComercialService = documentoComercialService;
     }
 
     @Override
@@ -37,6 +47,17 @@ public class TransacaoServiceImpl implements TransacaoService {
         log.debug("Request to save Transacao : {}", transacaoDTO);
         Transacao transacao = transacaoMapper.toEntity(transacaoDTO);
         transacao = transacaoRepository.save(transacao);
+
+        if (transacao.getEstado().equals(EstadoPagamento.VALIDO)) {
+            var recibo = new ReciboDTO();
+            recibo.setMatricula(transacaoDTO.getMatricula());
+            recibo.setTransacao(transacaoMapper.toDto(transacao));
+            var docRecibo = documentoComercialService.getDocumentoComercialReciboPadrao();
+            recibo.setDocumentoComercial(docRecibo);
+
+            reciboService.save(recibo);
+        }
+
         return transacaoMapper.toDto(transacao);
     }
 

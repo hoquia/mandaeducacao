@@ -232,11 +232,11 @@ public class MatriculaServiceImpl implements MatriculaService {
 
     private void criarFacturaActoMatricula(MatriculaDTO matriculaDTO) {
         var anoLectivo = anoLectivoService.getAnoLectivoActual();
+        var totalFactura = BigDecimal.ZERO;
         var serieDocumentoComercial = documentoComercialService.getSerieDocumentoComercialActivoByTipoFiscal(
             anoLectivo.getAno(),
             DocumentoFiscal.FT
         );
-        var totalFactura = BigDecimal.ZERO;
         var sequenciaResult = documentoComercialService.getSequenciaDocumento(serieDocumentoComercial.getId());
         Long sequencia = 1L;
 

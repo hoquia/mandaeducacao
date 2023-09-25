@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
@@ -21,6 +21,7 @@ import { MeioPagamentoService } from 'app/entities/meio-pagamento/service/meio-p
 import { IConta } from 'app/entities/conta/conta.model';
 import { ContaService } from 'app/entities/conta/service/conta.service';
 import { EstadoPagamento } from 'app/entities/enumerations/estado-pagamento.model';
+import { ReciboService } from 'app/entities/recibo/service/recibo.service';
 
 @Component({
   selector: 'app-transacao-update',
@@ -49,7 +50,9 @@ export class TransacaoUpdateComponent implements OnInit {
     protected matriculaService: MatriculaService,
     protected meioPagamentoService: MeioPagamentoService,
     protected contaService: ContaService,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router,
+    protected reciboService: ReciboService
   ) {}
 
   compareUser = (o1: IUser | null, o2: IUser | null): boolean => this.userService.compareUser(o1, o2);
@@ -117,13 +120,18 @@ export class TransacaoUpdateComponent implements OnInit {
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ITransacao>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
-      next: () => this.onSaveSuccess(),
+      next: e => this.onSaveSuccess(e.body?.id),
       error: () => this.onSaveError(),
     });
   }
 
-  protected onSaveSuccess(): void {
-    this.previousState();
+  protected onSaveSuccess(transacaoID: any): void {
+    this.reciboService.query().subscribe(res => {
+      const id = res.body?.filter(x => x.transacao?.id === Number(transacaoID)).shift()?.id;
+      this.router.navigate(['/aplicacao-recibo/new'], { queryParams: { recibo_id: id } });
+    });
+
+    // this.previousState();
   }
 
   protected onSaveError(): void {

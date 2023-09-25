@@ -383,7 +383,7 @@
               </a>
             </li>
             <hr />
-            <li *appHasAnyAuthority="['RESPONSAVEL_SECRETARIA_ADMINISTRATIVA', 'GERENTE', 'SECRETARIO_ADMINISTRATIVO']">
+            <!-- <li *appHasAnyAuthority="['RESPONSAVEL_SECRETARIA_ADMINISTRATIVA', 'GERENTE', 'SECRETARIO_ADMINISTRATIVO']">
               <a
                 class="dropdown-item"
                 routerLink="transacao"
@@ -394,7 +394,7 @@
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                 <span appTranslate="global.menu.entities.transacao">Transacao</span>
               </a>
-            </li>
+            </li> -->
             <li *appHasAnyAuthority="['RESPONSAVEL_SECRETARIA_ADMINISTRATIVA', 'GERENTE', 'SECRETARIO_ADMINISTRATIVO']">
               <a
                 class="dropdown-item"
@@ -405,6 +405,18 @@
               >
                 <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
                 <span appTranslate="global.menu.entities.factura">Factura</span>
+              </a>
+            </li>
+            <li *appHasAnyAuthority="['RESPONSAVEL_SECRETARIA_ADMINISTRATIVA', 'GERENTE', 'SECRETARIO_ADMINISTRATIVO']">
+              <a
+                class="dropdown-item"
+                routerLink="recibo"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                (click)="collapseNavbar()"
+              >
+                <fa-icon icon="asterisk" [fixedWidth]="true"></fa-icon>
+                <span appTranslate="global.menu.entities.recibo">Recibo</span>
               </a>
             </li>
             <li *appHasAnyAuthority="['RESPONSAVEL_SECRETARIA_ADMINISTRATIVA', 'GERENTE']">

@@ -5,7 +5,9 @@ import com.ravunana.longonkelo.repository.ResumoImpostoFacturaRepository;
 import com.ravunana.longonkelo.service.ResumoImpostoFacturaService;
 import com.ravunana.longonkelo.service.dto.ResumoImpostoFacturaDTO;
 import com.ravunana.longonkelo.service.mapper.ResumoImpostoFacturaMapper;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -87,5 +89,16 @@ public class ResumoImpostoFacturaServiceImpl implements ResumoImpostoFacturaServ
     public void delete(Long id) {
         log.debug("Request to delete ResumoImpostoFactura : {}", id);
         resumoImpostoFacturaRepository.deleteById(id);
+    }
+
+    @Override
+    public List<ResumoImpostoFacturaDTO> getResumoImpostoFactura(Long facturaID) {
+        var result = resumoImpostoFacturaRepository
+            .findAll()
+            .stream()
+            .filter(x -> x.getFactura().getId().equals(facturaID))
+            .collect(Collectors.toList());
+
+        return resumoImpostoFacturaMapper.toDto(result);
     }
 }

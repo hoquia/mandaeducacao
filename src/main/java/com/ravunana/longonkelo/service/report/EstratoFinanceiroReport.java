@@ -17,6 +17,8 @@ import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -54,7 +56,7 @@ public class EstratoFinanceiroReport {
         this.transacaoService = transacaoService;
     }
 
-    public String gerarPdf(Long turmaID) {
+    public String gerarPdf(Long turmaID, Long emolumentoID) {
         Document pdfDocument;
         String pdfName;
         FileOutputStream file;
@@ -91,7 +93,7 @@ public class EstratoFinanceiroReport {
             pdfDocument.add(header);
             pdfDocument.add(getTituloMapa(curso, classe, sala, turno, turmaDTO.getDescricao()));
             pdfDocument.add(addNewLine());
-            var detalhe = getDetalhe(turmaID);
+            var detalhe = getDetalhe(turmaID, emolumentoID);
             pdfDocument.add(detalhe);
             pdfDocument.add(addNewLine());
             pdfDocument.add(addNewLine());
@@ -225,8 +227,8 @@ public class EstratoFinanceiroReport {
         return tableHeader;
     }
 
-    private PdfPTable getDetalhe(Long turmaID) {
-        var itemsFactura = itemFacturaService.getItemsFacturaByTurmaAndEmolumento(turmaID, 6L);
+    private PdfPTable getDetalhe(Long turmaID, Long emolumentoID) {
+        var itemsFactura = itemFacturaService.getItemsFacturaByTurmaAndEmolumento(turmaID, emolumentoID);
 
         int contador = 1;
 
@@ -351,33 +353,41 @@ public class EstratoFinanceiroReport {
         // o for será de todos os alunos da turma
         for (var matricula : matriculaService.getMatriculas(turmaID)) {
             var discente = matricula.getDiscente();
+            var factura = itemsFactura
+                .stream()
+                .filter(x -> x.getFactura().getMatricula().getId().equals(matricula.getId()))
+                .findFirst()
+                .get()
+                .getFactura();
+            // var item = itemsFactura.stream().filter( x -> x.getFactura().getMatricula().getId().equals(matricula.getId()) ).findFirst();
+            // var transacao =
 
-            getLinhaPagoNaoPago(matricula.getId(), tableDetalhe, tableFontNormal, leading, padding, border);
+            // getLinhaPagoNaoPago(tableDetalhe, tableFontNormal, leading, padding, border, matricula.getNumeroChamada(), matricula.getNumeroMatricula(), discente.getNome(), item. );
         }
 
         return tableDetalhe;
     }
 
     private void getLinhaPagoNaoPago(
-        Long matricula,
         PdfPTable tableDetalhe,
         Font tableFontNormal,
         float leading,
         float padding,
-        Rectangle border
+        Rectangle border,
+        int numeroChamada,
+        String numeroProcesso,
+        String nomeCompleto,
+        String conta,
+        String referenciaTransacao,
+        LocalDate dataTransacao,
+        LocalDate dataPagamento,
+        BigDecimal total,
+        String utilizador
     ) {
-        var utilizador = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
-        var matriculaTra = transacaoService.getUltimaTransacaoMatricula(matricula).getMatricula();
-        var conta = transacaoService.getUltimaTransacaoMatricula(matricula).getConta().getTitulo();
-        var referencia = transacaoService.getUltimaTransacaoMatricula(matricula).getReferencia().toString();
-        var dataTransacao = transacaoService.getUltimaTransacaoMatricula(matricula).getTimestamp().toLocalDate().toString();
-        var dataPagamento = transacaoService.getUltimaTransacaoMatricula(matricula).getData().toString();
-        //        var user = transacaoService.getUltimaTransacaoMatricula(matricula).getUtilizador();
-
         // Nº Chamada
         tableDetalhe.addCell(
             makeCell(
-                matriculaTra.getNumeroChamada().toString(),
+                String.valueOf(numeroChamada),
                 Element.ALIGN_TOP,
                 Element.ALIGN_CENTER,
                 tableFontNormal,
@@ -392,7 +402,7 @@ public class EstratoFinanceiroReport {
         // Nº processo
         tableDetalhe.addCell(
             makeCell(
-                matriculaTra.getNumeroMatricula(),
+                String.valueOf(numeroProcesso),
                 Element.ALIGN_TOP,
                 Element.ALIGN_LEFT,
                 tableFontNormal,
@@ -406,17 +416,7 @@ public class EstratoFinanceiroReport {
 
         // Nome Completo
         tableDetalhe.addCell(
-            makeCell(
-                matriculaTra.getDiscente().getNome(),
-                Element.ALIGN_TOP,
-                Element.ALIGN_LEFT,
-                tableFontNormal,
-                leading,
-                padding,
-                border,
-                true,
-                false
-            )
+            makeCell(nomeCompleto, Element.ALIGN_TOP, Element.ALIGN_LEFT, tableFontNormal, leading, padding, border, true, false)
         );
 
         // CONTA
@@ -426,22 +426,57 @@ public class EstratoFinanceiroReport {
 
         // REF
         tableDetalhe.addCell(
-            makeCell(referencia, Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+            makeCell(referenciaTransacao, Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
         );
 
         // DATA TRANSACAO
         tableDetalhe.addCell(
-            makeCell(dataTransacao, Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+            makeCell(
+                Constants.getDateFormat(dataTransacao),
+                Element.ALIGN_TOP,
+                Element.ALIGN_CENTER,
+                tableFontNormal,
+                leading,
+                padding,
+                border,
+                true,
+                false
+            )
         );
 
         // DATA PAGAMENTO
         tableDetalhe.addCell(
-            makeCell(dataPagamento, Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+            makeCell(
+                Constants.getDateFormat(dataPagamento),
+                Element.ALIGN_TOP,
+                Element.ALIGN_CENTER,
+                tableFontNormal,
+                leading,
+                padding,
+                border,
+                true,
+                false
+            )
+        );
+
+        // Total
+        tableDetalhe.addCell(
+            makeCell(
+                Constants.getMoneyFormat(total),
+                Element.ALIGN_TOP,
+                Element.ALIGN_CENTER,
+                tableFontNormal,
+                leading,
+                padding,
+                border,
+                true,
+                false
+            )
         );
 
         // UTILIZADOR
         tableDetalhe.addCell(
-            makeCell(utilizador.getLogin(), Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+            makeCell(utilizador, Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
         );
     }
 

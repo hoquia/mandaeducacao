@@ -279,8 +279,8 @@ public class TurmaResource {
     }
 
     @GetMapping("/turmas/estrato-financeiro/{turmaID}")
-    public ResponseEntity<Resource> getEstratoFinanceiro(@PathVariable Long turmaID) throws IOException {
-        var filePath = estratoFinanceiroReport.gerarPdf(turmaID);
+    public ResponseEntity<Resource> getEstratoFinanceiro(@PathVariable Long turmaID, @PathVariable Long emolumentoID) throws IOException {
+        var filePath = estratoFinanceiroReport.gerarPdf(turmaID, emolumentoID);
         File file = new File(filePath);
 
         Path path = Paths.get(file.getAbsolutePath());

@@ -9,5 +9,6 @@ import { ReciboRoutingModule } from './route/recibo-routing.module';
 @NgModule({
   imports: [SharedModule, ReciboRoutingModule],
   declarations: [ReciboComponent, ReciboDetailComponent, ReciboUpdateComponent, ReciboDeleteDialogComponent],
+  exports: [ReciboComponent],
 })
 export class ReciboModule {}

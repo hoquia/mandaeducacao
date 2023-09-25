@@ -27,8 +27,9 @@ public class FacturaPagamentoDoisLadosReport {
     private final MatriculaServiceImpl matriculaService;
     private final FacturaServiceImpl facturaService;
     private final TransacaoServiceImpl transacaoService;
-
+    private final EnderecoDiscenteServiceImpl enderecoDiscenteService;
     private final ItemFacturaServiceImpl itemFacturaService;
+    private final ResumoImpostoFacturaServiceImpl resumoImpostoFacturaService;
 
     public FacturaPagamentoDoisLadosReport(
         ReportService reportService,
@@ -36,14 +37,18 @@ public class FacturaPagamentoDoisLadosReport {
         MatriculaServiceImpl matriculaService,
         FacturaServiceImpl facturaService,
         TransacaoServiceImpl transacaoService,
-        ItemFacturaServiceImpl itemFacturaService
+        EnderecoDiscenteServiceImpl enderecoDiscenteService,
+        ItemFacturaServiceImpl itemFacturaService,
+        ResumoImpostoFacturaServiceImpl resumoImpostoFacturaService
     ) {
         this.reportService = reportService;
         this.instituicaoEnsinoService = instituicaoEnsinoService;
         this.matriculaService = matriculaService;
         this.facturaService = facturaService;
         this.transacaoService = transacaoService;
+        this.enderecoDiscenteService = enderecoDiscenteService;
         this.itemFacturaService = itemFacturaService;
+        this.resumoImpostoFacturaService = resumoImpostoFacturaService;
     }
 
     public String gerarReciboPdf(Long facturaId) {
@@ -60,10 +65,10 @@ public class FacturaPagamentoDoisLadosReport {
             float padding = 2f;
             float leading = fontNormal.getSize() * 1.2f;
             Rectangle border = new Rectangle(0f, 0f);
-            border.setBorderWidthLeft(1f);
-            border.setBorderWidthBottom(0.5f);
-            border.setBorderWidthRight(0.5f);
-            border.setBorderWidthTop(1f);
+            border.setBorderWidthLeft(0f);
+            border.setBorderWidthBottom(0f);
+            border.setBorderWidthRight(0f);
+            border.setBorderWidthTop(0f);
 
             tempFileName = reportService.createTempFile(pdfName, ".pdf");
             file = new FileOutputStream(tempFileName);
@@ -152,7 +157,10 @@ public class FacturaPagamentoDoisLadosReport {
         var empresa = instituicaoEnsinoService.getInstituicao(SecurityUtils.getCurrentUserLogin().get()); // TODO: Pesquisar pelo id da empresa do usuario logado
         var nome = empresa.getUnidadeOrganica();
         var departamento = "Secretária-geral";
-        var nif = "Nif nº " + empresa.getNif();
+        String nif = "NIF nº ";
+        if (empresa.getNif() != null) {
+            nif = "NIF nº " + empresa.getNif();
+        }
 
         return (nome + "\n" + departamento + "\n" + nif);
     }
@@ -181,16 +189,23 @@ public class FacturaPagamentoDoisLadosReport {
         var factura = facturaService.findOne(facturaID).get();
         var itemsFactura = itemFacturaService.getItemsFactura(facturaID);
 
+        int NUM_LINHA_ATE_FIM_PAGINA = 30;
+        int NUM_LINHA_FACTURA = itemsFactura.size();
+        int NUM_LINHA_BRANCA_ADICIONAR = NUM_LINHA_ATE_FIM_PAGINA - NUM_LINHA_FACTURA;
+
         var matricula = matriculaService.findOne(factura.getMatricula().getId()).get();
         var discente = matricula.getDiscente();
         var turma = matricula.getTurma();
         var planoCurricular = turma.getPlanoCurricular();
         var contas = transacaoService.getUltimaTransacaoMatricula(matricula.getId());
-
-        BigDecimal totalContrato = BigDecimal.ZERO;
+        String anoLectivo = turma.getDescricao().split("/")[1];
+        String morada = enderecoDiscenteService.getEnderecoPadrao(matricula.getDiscente().getId());
+        BigDecimal totalMulta = BigDecimal.ZERO;
+        BigDecimal totalJuro = BigDecimal.ZERO;
+        BigDecimal saldoAnterior = BigDecimal.ZERO;
+        BigDecimal saldoActual = BigDecimal.ZERO;
         BigDecimal totalPago = BigDecimal.ZERO;
-        // BigDecimal saldo = contas.getSaldo();
-        BigDecimal saldo = BigDecimal.ZERO;
+        BigDecimal totalFactura = BigDecimal.ZERO;
 
         /*
         for (var conta : contas) {
@@ -251,11 +266,12 @@ public class FacturaPagamentoDoisLadosReport {
         PdfPTable detalheTable = new PdfPTable(2);
         detalheTable.setWidthPercentage(100f);
 
-        // Detalhes do DIscente
+        // Detalhes do Discente
         PdfPTable detalheMatricula = new PdfPTable(2);
         detalheMatricula.setWidthPercentage(100f);
+
         detalheMatricula.addCell(
-            makeCellText("Discente", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+            makeCellText("Nome", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
         detalheMatricula.addCell(
             makeCellText(
@@ -269,6 +285,13 @@ public class FacturaPagamentoDoisLadosReport {
                 true,
                 false
             )
+        );
+
+        detalheMatricula.addCell(
+            makeCellText("Morada", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+        );
+        detalheMatricula.addCell(
+            makeCellText(morada, Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
         );
 
         detalheMatricula.addCell(
@@ -306,12 +329,11 @@ public class FacturaPagamentoDoisLadosReport {
         );
 
         detalheMatricula.addCell(
-            makeCellText("Classe", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+            makeCellText("", Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
         );
-
         detalheMatricula.addCell(
             makeCellText(
-                planoCurricular.getClasse().getDescricao(),
+                planoCurricular.getClasse().getDescricao() + "Sala: " + turma.getSala() + " " + turma.getTurno().getNome(),
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_LEFT,
                 fontNormal,
@@ -324,48 +346,11 @@ public class FacturaPagamentoDoisLadosReport {
         );
 
         detalheMatricula.addCell(
-            makeCellText("Sala", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        );
-        detalheMatricula.addCell(
-            makeCellText(
-                turma.getSala().toString(),
-                Element.ALIGN_MIDDLE,
-                Element.ALIGN_LEFT,
-                fontNormal,
-                leading,
-                padding,
-                borderNone,
-                true,
-                false
-            )
-        );
-
-        detalheMatricula.addCell(
-            makeCellText("Turno", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        );
-        detalheMatricula.addCell(
-            makeCellText(
-                turma.getTurno().getNome(),
-                Element.ALIGN_MIDDLE,
-                Element.ALIGN_LEFT,
-                fontNormal,
-                leading,
-                padding,
-                borderNone,
-                true,
-                false
-            )
-        );
-
-        // Detalhes do Salario
-        PdfPTable detalheSalario = new PdfPTable(2);
-        detalheSalario.setWidthPercentage(100f);
-        detalheSalario.addCell(
             makeCellText("Turma", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
-        detalheSalario.addCell(
+        detalheMatricula.addCell(
             makeCellText(
-                turma.getDescricao(),
+                turma.getDescricao().split("/")[0],
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_LEFT,
                 fontNormal,
@@ -377,52 +362,128 @@ public class FacturaPagamentoDoisLadosReport {
             )
         );
 
-        detalheSalario.addCell(
-            makeCellText("", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+        // Detalhes da factura
+        PdfPTable detalheFactura = new PdfPTable(2);
+        detalheFactura.setWidthPercentage(100f);
+        detalheFactura.addCell(
+            makeCellText("Factura/Recibo", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
-        detalheSalario.addCell(
-            makeCellText("", Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
-        );
-
-        detalheSalario.addCell(
-            makeCellText("", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        );
-        detalheSalario.addCell(
-            makeCellText("", Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
-        );
-
-        detalheSalario.addCell(
-            makeCellText("", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        );
-        detalheSalario.addCell(
-            makeCellText("", Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
-        );
-
-        detalheSalario.addCell(
-            makeCellText("", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        );
-        detalheSalario.addCell(
-            makeCellText("", Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
-        );
-
-        detalheSalario.addCell(
-            makeCellText("", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        );
-        detalheSalario.addCell(
-            makeCellText("", Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
+        detalheFactura.addCell(
+            makeCellText(
+                factura.getNumero(),
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_LEFT,
+                fontNormal,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
         );
 
         detalheTable.addCell(
             makeCellTable(detalheMatricula, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
         );
         detalheTable.addCell(
-            makeCellTable(detalheSalario, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
+            makeCellTable(detalheFactura, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
+        );
+
+        detalheFactura.addCell(
+            makeCellText("Data emissão", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+        );
+        detalheFactura.addCell(
+            makeCellText(
+                Constants.getDateFormat(factura.getDataEmissao()),
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_LEFT,
+                fontNormal,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
+
+        detalheFactura.addCell(
+            makeCellText("Data vencimento", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+        );
+        detalheFactura.addCell(
+            makeCellText(
+                Constants.getDateFormat(factura.getDataVencimento()),
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_LEFT,
+                fontNormal,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
+
+        detalheFactura.addCell(
+            makeCellText("Data", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+        );
+        detalheFactura.addCell(
+            makeCellText(
+                factura.getTimestamp().toLocalDateTime().toString(),
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_LEFT,
+                fontNormal,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
+
+        detalheFactura.addCell(
+            makeCellText("Moeda", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+        );
+        detalheFactura.addCell(
+            makeCellText(
+                factura.getMoeda(),
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_LEFT,
+                fontNormal,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
+
+        detalheFactura.addCell(
+            makeCellText("Ano lectivo", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+        );
+        detalheFactura.addCell(
+            makeCellText(anoLectivo, Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
         );
 
         // Items
-        PdfPTable ajustesTable = new PdfPTable(6);
+        float[] widths = { 0.2f, 0.6f, 0.2f, 0.3f, 0.2f, 0.2f, 0.3f };
+        // Descricao, Qtde, Preco unit, Desc, IVA, Total
+        PdfPTable ajustesTable = new PdfPTable(widths);
         ajustesTable.setWidthPercentage(100f);
         // Calculo Header
+
+        ajustesTable.addCell(
+            makeCellBackgroudColor(
+                "Código",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontBold,
+                leading,
+                padding,
+                borderNormal,
+                true,
+                false
+            )
+        );
 
         ajustesTable.addCell(
             makeCellBackgroudColor(
@@ -437,9 +498,10 @@ public class FacturaPagamentoDoisLadosReport {
                 false
             )
         );
+
         ajustesTable.addCell(
             makeCellBackgroudColor(
-                "Qtde.",
+                "Qtd.",
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontBold,
@@ -452,7 +514,7 @@ public class FacturaPagamentoDoisLadosReport {
         );
         ajustesTable.addCell(
             makeCellBackgroudColor(
-                "Preço Unit.",
+                "Preço unit.",
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontBold,
@@ -465,7 +527,7 @@ public class FacturaPagamentoDoisLadosReport {
         );
         ajustesTable.addCell(
             makeCellBackgroudColor(
-                "Desc.",
+                "Desc.(%)",
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontBold,
@@ -478,7 +540,7 @@ public class FacturaPagamentoDoisLadosReport {
         );
         ajustesTable.addCell(
             makeCellBackgroudColor(
-                "Multa+Juro",
+                "Taxa(%)",
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontBold,
@@ -503,18 +565,14 @@ public class FacturaPagamentoDoisLadosReport {
             )
         );
 
-        int NUM_LINHA_ATE_FIM_PAGINA = 46;
-        int NUM_LINHA_FACTURA = itemsFactura.size();
-        int NUM_LINHA_BRANCA_ADICIONAR = NUM_LINHA_ATE_FIM_PAGINA - NUM_LINHA_FACTURA;
-
-        for (var pagamento : itemsFactura) {
-            var emolumento = pagamento.getEmolumento();
+        for (var item : itemsFactura) {
+            var emolumento = item.getEmolumento();
 
             // Total do contrato incluido as multas e juros
 
-            if (pagamento.getEstado().equals(EstadoItemFactura.PAGO)) {
-                totalPago = totalPago.add(pagamento.getPrecoTotal());
-                totalContrato = totalPago;
+            if (item.getEstado().equals(EstadoItemFactura.PAGO)) {
+                totalPago = totalPago.add(item.getPrecoTotal());
+                totalFactura = totalPago;
             }
 
             // LinhasDocumento
@@ -524,12 +582,13 @@ public class FacturaPagamentoDoisLadosReport {
                 leading,
                 padding,
                 borderSmaller,
-                emolumento.getNome(),
-                pagamento.getQuantidade().toString(),
-                Constants.getMoneyFormat(pagamento.getPrecoUnitario()),
-                Constants.getMoneyFormat(pagamento.getDesconto()),
-                Constants.getMoneyFormat(pagamento.getJuro()),
-                Constants.getMoneyFormat(pagamento.getPrecoTotal())
+                emolumento.getNumero(), // Codigo
+                emolumento.getNome(), // descricao
+                item.getQuantidade().toString(), // Quantidade
+                Constants.getMoneyFormat(item.getPrecoUnitario()), // Preco unitario
+                Constants.getMoneyFormat(item.getDesconto()), // Desconto
+                item.getTaxPercentage().toString(), // Taxa
+                Constants.getMoneyFormat(item.getPrecoTotal()) // Total
             );
         }
 
@@ -539,108 +598,102 @@ public class FacturaPagamentoDoisLadosReport {
         noBorder.setBorderWidthRight(0f);
         noBorder.setBorderWidthTop(0f);
 
+        // Linhas Documento em branco para o resumo estar no rodapé
         for (int i = 0; i <= NUM_LINHA_BRANCA_ADICIONAR; i++) {
-            // LinhasDocumento em branco
-            getLinhasDocumento(ajustesTable, fontNormal, leading, padding, noBorder, "", "", "", "", "", "");
+            getLinhasDocumento(ajustesTable, fontNormal, leading, padding, noBorder, "", "", "", "", "", "", "");
         }
 
-        // Resumo do Pagamento
-        PdfPTable resumoPagamentoTable = new PdfPTable(2);
-        resumoPagamentoTable.setWidthPercentage(100f);
+        // Resumo de imposto
+        float[] withResumoImposto = { 0.4f, 0.1f, 0.2f, 0.2f };
+        PdfPTable resumoImpostoTable = new PdfPTable(withResumoImposto);
+        resumoImpostoTable.setWidthPercentage(50f);
+        resumoImpostoTable.setHorizontalAlignment(Element.ALIGN_LEFT);
+        // Descricao
+        resumoImpostoTable.addCell(
+            makeCellText("Descrição", Element.ALIGN_TOP, Element.ALIGN_LEFT, fontBold, leading, padding, borderSmaller, true, false)
+        );
+        resumoImpostoTable.addCell(
+            makeCellText("Taxa", Element.ALIGN_TOP, Element.ALIGN_LEFT, fontBold, leading, padding, borderSmaller, true, false)
+        );
+        resumoImpostoTable.addCell(
+            makeCellText("Incidencia", Element.ALIGN_TOP, Element.ALIGN_LEFT, fontBold, leading, padding, borderSmaller, true, false)
+        );
+        resumoImpostoTable.addCell(
+            makeCellText("Imposto", Element.ALIGN_TOP, Element.ALIGN_LEFT, fontBold, leading, padding, borderSmaller, true, false)
+        );
 
-        // Forma de Pagamento
-        PdfPTable formaPagamentoTable = new PdfPTable(2);
-        formaPagamentoTable.setWidthPercentage(100f);
-        formaPagamentoTable.addCell(
-            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        );
-        formaPagamentoTable.addCell(
-            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        );
-        formaPagamentoTable.addCell(
-            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontNormal, leading, padding, borderNone, true, false)
-        );
-        formaPagamentoTable.addCell(
-            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontNormal, leading, padding, borderNone, true, false)
-        );
-        formaPagamentoTable.addCell(
-            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
-        );
-        formaPagamentoTable.addCell(
-            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
-        );
-        formaPagamentoTable.addCell(
-            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
-        );
-        formaPagamentoTable.addCell(
-            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
-        );
-        formaPagamentoTable.addCell(
-            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
-        );
-        formaPagamentoTable.addCell(
-            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
-        );
+        for (var resumo : resumoImpostoFacturaService.getResumoImpostoFactura(facturaID)) {
+            resumoImpostoTable.addCell(
+                makeCellText(
+                    resumo.getDescricao(),
+                    Element.ALIGN_TOP,
+                    Element.ALIGN_LEFT,
+                    fontNormal,
+                    leading,
+                    padding,
+                    borderSmaller,
+                    true,
+                    false
+                )
+            );
+            resumoImpostoTable.addCell(
+                makeCellText(
+                    resumo.getTaxa().toString(),
+                    Element.ALIGN_TOP,
+                    Element.ALIGN_LEFT,
+                    fontNormal,
+                    leading,
+                    padding,
+                    borderSmaller,
+                    true,
+                    false
+                )
+            );
+            resumoImpostoTable.addCell(
+                makeCellText(
+                    Constants.getMoneyFormat(resumo.getIncidencia()),
+                    Element.ALIGN_TOP,
+                    Element.ALIGN_LEFT,
+                    fontNormal,
+                    leading,
+                    padding,
+                    borderSmaller,
+                    true,
+                    false
+                )
+            );
+            resumoImpostoTable.addCell(
+                makeCellText(
+                    Constants.getMoneyFormat(resumo.getMontante()),
+                    Element.ALIGN_TOP,
+                    Element.ALIGN_LEFT,
+                    fontNormal,
+                    leading,
+                    padding,
+                    borderSmaller,
+                    true,
+                    false
+                )
+            );
+        }
 
         // Totais
-        PdfPTable totaisTable = new PdfPTable(2);
-        totaisTable.setWidthPercentage(100f);
-        totaisTable.addCell(
-            makeCellText("Total Contrato", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+        PdfPTable totalTable = new PdfPTable(2);
+        totalTable.setWidthPercentage(100f);
+
+        // Detalhes do Discente
+        PdfPTable totalSaldoTable = new PdfPTable(2);
+        totalSaldoTable.setWidthPercentage(100f);
+
+        totalSaldoTable.addCell(
+            makeCellText("Multa", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
-        totaisTable.addCell(
+
+        totalSaldoTable.addCell(
             makeCellText(
-                Constants.getMoneyFormat(totalContrato),
-                Element.ALIGN_TOP,
-                Element.ALIGN_RIGHT,
-                fontNormal,
-                leading,
-                padding,
-                borderNone,
-                true,
-                false
-            )
-        );
-        totaisTable.addCell(
-            makeCellText("Total Pago", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        );
-        totaisTable.addCell(
-            makeCellText(
-                Constants.getMoneyFormat(totalPago),
-                Element.ALIGN_TOP,
-                Element.ALIGN_RIGHT,
-                fontNormal,
-                leading,
-                padding,
-                borderNone,
-                true,
-                false
-            )
-        );
-        totaisTable.addCell(
-            makeCellText("Falta", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        );
-        totaisTable.addCell(
-            makeCellText(
-                Constants.getMoneyFormat(totalContrato.subtract(totalPago)),
-                Element.ALIGN_TOP,
-                Element.ALIGN_RIGHT,
-                fontNormal,
-                leading,
-                padding,
-                borderNone,
-                true,
-                false
-            )
-        );
-        totaisTable.addCell(
-            makeCellText("Saldo", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        );
-        totaisTable.addCell(
-            makeCellText(
-                Constants.getMoneyFormat(saldo),
-                Element.ALIGN_TOP,
-                Element.ALIGN_RIGHT,
+                Constants.getMoneyFormat(totalMulta),
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_LEFT,
                 fontNormal,
                 leading,
                 padding,
@@ -650,35 +703,201 @@ public class FacturaPagamentoDoisLadosReport {
             )
         );
 
-        resumoPagamentoTable.addCell(
-            makeCellTable(formaPagamentoTable, Element.ALIGN_TOP, Element.ALIGN_LEFT, leading, padding, borderNone, true, false)
+        totalSaldoTable.addCell(
+            makeCellText("Juro", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
-        resumoPagamentoTable.addCell(
-            makeCellTable(totaisTable, Element.ALIGN_TOP, Element.ALIGN_RIGHT, leading, padding, borderNone, true, false)
+        totalSaldoTable.addCell(
+            makeCellText(
+                Constants.getMoneyFormat(totalJuro),
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_LEFT,
+                fontNormal,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
+        totalSaldoTable.addCell(
+            makeCellText("Saldo anterior", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+        );
+        totalSaldoTable.addCell(
+            makeCellText(
+                Constants.getMoneyFormat(saldoAnterior),
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_LEFT,
+                fontNormal,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
+        totalSaldoTable.addCell(
+            makeCellText("Saldo actual", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+        );
+        totalSaldoTable.addCell(
+            makeCellText(
+                Constants.getMoneyFormat(saldoActual),
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_LEFT,
+                fontNormal,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
+
+        // Total pagamento
+        PdfPTable totalPagamentoTable = new PdfPTable(2);
+        totalPagamentoTable.setWidthPercentage(25f);
+        totalPagamentoTable.setHorizontalAlignment(Element.ALIGN_RIGHT);
+
+        totalPagamentoTable.addCell(
+            makeCellText("Total Iliquido", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+        );
+        totalPagamentoTable.addCell(
+            makeCellText(
+                Constants.getMoneyFormat(totalFactura),
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_LEFT,
+                fontNormal,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
+
+        totalPagamentoTable.addCell(
+            makeCellText(
+                "Desconto comercial",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_RIGHT,
+                fontBold,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
+        totalPagamentoTable.addCell(
+            makeCellText(
+                Constants.getMoneyFormat(factura.getTotalDescontoComercial()),
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_LEFT,
+                fontNormal,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
+
+        totalPagamentoTable.addCell(
+            makeCellText(
+                "Desconto financeiro",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_RIGHT,
+                fontBold,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
+        totalPagamentoTable.addCell(
+            makeCellText(
+                Constants.getMoneyFormat(factura.getTotalDescontoFinanceiro()),
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_LEFT,
+                fontNormal,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
+
+        totalPagamentoTable.addCell(
+            makeCellText("Total IVA", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+        );
+        totalPagamentoTable.addCell(
+            makeCellText(
+                Constants.getMoneyFormat(factura.getTotalImpostoIVA()),
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_LEFT,
+                fontNormal,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
+
+        totalPagamentoTable.addCell(
+            makeCellText("Total pago", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+        );
+        totalPagamentoTable.addCell(
+            makeCellText(
+                Constants.getMoneyFormat(totalPago),
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_LEFT,
+                fontNormal,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
+
+        totalPagamentoTable.addCell(
+            makeCellText("Total", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+        );
+        totalPagamentoTable.addCell(
+            makeCellText(
+                Constants.getMoneyFormat(totalFactura),
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_LEFT,
+                fontNormal,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
+
+        totalTable.addCell(
+            makeCellTable(totalSaldoTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
+        );
+        totalTable.addCell(
+            makeCellTable(totalPagamentoTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
         );
 
         // Layout Página
         layoutTable.addCell(makeCellTable(headerTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false));
         layoutTable.addCell(makeCellTable(subHeader, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false));
         layoutTable.addCell(
-            makeCellText(
-                "Extrato de Pagamento",
-                Element.ALIGN_TOP,
-                Element.ALIGN_RIGHT,
-                fontBoldLarge,
-                leading,
-                padding,
-                borderNone,
-                true,
-                false
-            )
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
         );
         layoutTable.addCell(
             makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
         );
         layoutTable.addCell(
             makeCellText(
-                "--------------------------------------",
+                getLinhaTracos(),
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontBoldLarge,
@@ -692,15 +911,88 @@ public class FacturaPagamentoDoisLadosReport {
         layoutTable.addCell(
             makeCellTable(detalheTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
         );
-        //        layoutTable.addCell( makeCellText("--------------------------------------", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBoldLarge, leading, padding, borderNone, true, false ) );
+
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+
         layoutTable.addCell(
             makeCellTable(ajustesTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
         );
+
+        layoutTable.addCell(
+            makeCellText(getLinhaTracos(), Element.ALIGN_TOP, Element.ALIGN_CENTER, fontNormal, leading, padding, borderNone, true, false)
+        );
+
+        // informacao de entrega
+        layoutTable.addCell(
+            makeCellText(
+                "Os produtos/serviços foram colocados à disposição do adquirente na data e local do documento",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_LEFT,
+                fontNormal,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
+
+        // Codigo encriptacao da factura
+        layoutTable.addCell(
+            makeCellText(
+                factura.getHashShort() + "-Processado por programa valido nº.n31.1/AGT20 | Longonkelo",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_LEFT,
+                fontNormal,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
+
         layoutTable.addCell(
             makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
         );
         layoutTable.addCell(
-            makeCellTable(resumoPagamentoTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
+            makeCellText(
+                "Resumo do imposto",
+                Element.ALIGN_TOP,
+                Element.ALIGN_LEFT,
+                fontBoldLarge,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
+
+        // Resumo Imposto
+
+        layoutTable.addCell(
+            makeCellTable(resumoImpostoTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
+        );
+
+        layoutTable.addCell(
+            makeCellText(getLinhaTracos(), Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+
+        // Total Pagamento
+
+        layoutTable.addCell(makeCellTable(totalTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false));
+
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
         );
 
         // Assinatura
@@ -720,8 +1012,15 @@ public class FacturaPagamentoDoisLadosReport {
         layoutTable.addCell(
             makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
         );
+        layoutTable.addCell(
+            makeCellText("Página 1/1", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontNormal, leading, padding, borderNone, true, false)
+        );
 
         return layoutTable;
+    }
+
+    private String getLinhaTracos() {
+        return "-------------------------------------------------------------------------------------------------------------------------------------------------------";
     }
 
     private void getLinhasDocumento(
@@ -730,6 +1029,7 @@ public class FacturaPagamentoDoisLadosReport {
         float leading,
         float padding,
         Rectangle borderSmaller,
+        String codigoEmolumento,
         String descricao,
         String quantidade,
         String precoUnit,
@@ -737,6 +1037,21 @@ public class FacturaPagamentoDoisLadosReport {
         String multaJuro,
         String total
     ) {
+        // Codigo Emolumento
+        ajustesTable.addCell(
+            makeCellText(
+                codigoEmolumento,
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontNormal,
+                leading,
+                padding,
+                borderSmaller,
+                true,
+                false
+            )
+        );
+
         // Emolumento
         ajustesTable.addCell(
             makeCellText(descricao, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
@@ -781,26 +1096,13 @@ public class FacturaPagamentoDoisLadosReport {
         border.setBorderWidthRight(0f);
         border.setBorderWidthTop(0f);
 
-        PdfPTable assinaturaTabler = new PdfPTable(2);
-        assinaturaTabler.setWidthPercentage(100f);
+        PdfPTable assinaturaTabler = new PdfPTable(1);
+        assinaturaTabler.setWidthPercentage(50f);
+        assinaturaTabler.setHorizontalAlignment(Element.ALIGN_LEFT);
 
         assinaturaTabler.addCell(
             makeCellText(
-                data + "\n\n" + "PROCESSOU:" + "\n" + line + "\n" + nomeResponsavel,
-                Element.ALIGN_TOP,
-                Element.ALIGN_CENTER,
-                tableFont,
-                leading,
-                padding,
-                border,
-                true,
-                false
-            )
-        );
-
-        assinaturaTabler.addCell(
-            makeCellText(
-                "\n\nRECEBEU:" + "\n" + line + "\n" + nomeFuncionario,
+                data + "\n\n" + "Utilizador" + "\n" + line + "\n" + nomeResponsavel,
                 Element.ALIGN_TOP,
                 Element.ALIGN_CENTER,
                 tableFont,

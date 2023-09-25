@@ -6,9 +6,10 @@ import { MatriculaUpdateComponent } from './update/matricula-update.component';
 import { MatriculaDeleteDialogComponent } from './delete/matricula-delete-dialog.component';
 import { MatriculaRoutingModule } from './route/matricula-routing.module';
 import { FacturaModule } from '../factura/factura.module';
+import { ReciboModule } from '../recibo/recibo.module';
 
 @NgModule({
-  imports: [SharedModule, MatriculaRoutingModule, FacturaModule],
+  imports: [SharedModule, MatriculaRoutingModule, FacturaModule, ReciboModule],
   declarations: [MatriculaComponent, MatriculaDetailComponent, MatriculaUpdateComponent, MatriculaDeleteDialogComponent],
 })
 export class MatriculaModule {}

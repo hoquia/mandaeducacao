@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import { combineLatest, filter, Observable, switchMap, tap } from 'rxjs';
@@ -18,7 +18,8 @@ import { FilterOptions, IFilterOptions, IFilterOption } from 'app/shared/filter/
   templateUrl: './recibo.component.html',
 })
 export class ReciboComponent implements OnInit {
-  recibos?: IRecibo[];
+  @Input() recibos?: IRecibo[];
+  @Input() matriculaID = 0;
   isLoading = false;
 
   predicate = 'id';

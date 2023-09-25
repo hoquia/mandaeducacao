@@ -132,4 +132,14 @@ public class DocumentoComercialServiceImpl implements DocumentoComercialService 
     public Optional<SequenciaDocumento> getSequenciaDocumento(Long serieID) {
         return sequenciaDocumentoRepository.findAll().stream().filter(x -> x.getSerie().getId().equals(serieID)).findFirst();
     }
+
+    public DocumentoComercialDTO getDocumentoComercialReciboPadrao() {
+        var result = documentoComercialRepository.findAll().stream().filter(x -> x.getSiglaFiscal().equals(DocumentoFiscal.RC)).findFirst();
+
+        if (result.isEmpty()) {
+            throw new LongonkeloException("Não foi registrado um documento do tipo fiscal RC");
+        }
+
+        return documentoComercialMapper.toDto(result.get());
+    }
 }

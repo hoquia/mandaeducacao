@@ -13,6 +13,7 @@
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-recibo"
         [routerLink]="['/recibo/new']"
+        [queryParams]="{ matricula_id: matriculaID }"
       >
         <fa-icon icon="plus"></fa-icon>
         <span appTranslate="longonkeloApp.recibo.home.createLabel"> Criar novo(a) Recibo </span>

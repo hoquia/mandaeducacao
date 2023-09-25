@@ -1,6 +1,7 @@
 package com.ravunana.longonkelo.service;
 
 import com.ravunana.longonkelo.service.dto.ResumoImpostoFacturaDTO;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -63,4 +64,6 @@ public interface ResumoImpostoFacturaService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    List<ResumoImpostoFacturaDTO> getResumoImpostoFactura(Long facturaID);
 }

@@ -1,6 +1,7 @@
 package com.ravunana.longonkelo.service.impl;
 
 import com.ravunana.longonkelo.domain.EnderecoDiscente;
+import com.ravunana.longonkelo.domain.enumeration.TipoEndereco;
 import com.ravunana.longonkelo.repository.EnderecoDiscenteRepository;
 import com.ravunana.longonkelo.service.EnderecoDiscenteService;
 import com.ravunana.longonkelo.service.dto.EnderecoDiscenteDTO;
@@ -87,5 +88,16 @@ public class EnderecoDiscenteServiceImpl implements EnderecoDiscenteService {
     public void delete(Long id) {
         log.debug("Request to delete EnderecoDiscente : {}", id);
         enderecoDiscenteRepository.deleteById(id);
+    }
+
+    @Override
+    public String getEnderecoPadrao(Long discente) {
+        var result = enderecoDiscenteRepository.findAll().stream().filter(x -> x.getTipo().equals(TipoEndereco.FACTURACAO)).findFirst();
+
+        if (result.isEmpty()) {
+            return "";
+        }
+
+        return result.get().getMunicipio() + ", " + result.get().getBairro() + ", " + result.get().getRua();
     }
 }
