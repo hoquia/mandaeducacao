@@ -5,6 +5,9 @@ import com.ravunana.longonkelo.repository.AplicacaoReciboRepository;
 import com.ravunana.longonkelo.service.AplicacaoReciboService;
 import com.ravunana.longonkelo.service.dto.AplicacaoReciboDTO;
 import com.ravunana.longonkelo.service.mapper.AplicacaoReciboMapper;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +29,12 @@ public class AplicacaoReciboServiceImpl implements AplicacaoReciboService {
 
     private final AplicacaoReciboMapper aplicacaoReciboMapper;
 
-    public AplicacaoReciboServiceImpl(AplicacaoReciboRepository aplicacaoReciboRepository, AplicacaoReciboMapper aplicacaoReciboMapper) {
+    public AplicacaoReciboServiceImpl(
+        AplicacaoReciboRepository aplicacaoReciboRepository,
+        AplicacaoReciboMapper aplicacaoReciboMapper,
+        FacturaServiceImpl facturaService,
+        ItemFacturaServiceImpl itemFacturaService
+    ) {
         this.aplicacaoReciboRepository = aplicacaoReciboRepository;
         this.aplicacaoReciboMapper = aplicacaoReciboMapper;
     }
@@ -34,6 +42,59 @@ public class AplicacaoReciboServiceImpl implements AplicacaoReciboService {
     @Override
     public AplicacaoReciboDTO save(AplicacaoReciboDTO aplicacaoReciboDTO) {
         log.debug("Request to save AplicacaoRecibo : {}", aplicacaoReciboDTO);
+
+        var factura = aplicacaoReciboDTO.getFactura();
+        var itemRecibo = aplicacaoReciboDTO.getItemFactura();
+        var emolumento = itemRecibo.getEmolumento();
+        var transacao = aplicacaoReciboDTO.getRecibo().getTransacao();
+
+        var dataActual = ZonedDateTime.now();
+        var totalFactura = factura.getTotalPagar();
+        var totalPago = itemRecibo.getPrecoTotal();
+        var trasacaMontante = transacao.getMontante();
+        var dataPagametoMontante = transacao.getData();
+        var dataAplicacaoMulta = emolumento.getPlanoMulta().getDiaAplicacaoMulta();
+        var dataAplicacaoJuros = emolumento.getPlanoMulta().getDiaAplicacaoJuro();
+        var precoUnitarioEmolumento = emolumento.getPreco();
+        var taxaAplicacaoMulta = emolumento.getPlanoMulta().getTaxaMulta();
+        var taxaAplicacaoJuros = emolumento.getPlanoMulta().getTaxaJuro();
+
+        if (trasacaMontante.compareTo(totalPago) < 0) {
+            throw new RuntimeException("Saldo insuficiente!");
+        }
+
+        if (taxaAplicacaoMulta == null) {
+            taxaAplicacaoMulta = new BigDecimal(0);
+        }
+
+        if (taxaAplicacaoJuros == null) {
+            taxaAplicacaoJuros = new BigDecimal(0);
+        }
+
+        if (dataPagametoMontante.getDayOfMonth() > dataAplicacaoMulta) {
+            if (emolumento.getPlanoMulta().getIsTaxaMultaPercentual()) {
+                var multa = precoUnitarioEmolumento.multiply(taxaAplicacaoMulta.divide(new BigDecimal(100)));
+                precoUnitarioEmolumento.add(multa);
+            }
+
+            precoUnitarioEmolumento.add(taxaAplicacaoMulta);
+        }
+
+        if (dataPagametoMontante.getDayOfMonth() > dataAplicacaoJuros) {
+            if (emolumento.getPlanoMulta().getIsTaxaJuroPercentual()) {
+                var juros = precoUnitarioEmolumento.multiply(taxaAplicacaoJuros.divide(new BigDecimal(100)));
+                precoUnitarioEmolumento.add(juros);
+            }
+
+            precoUnitarioEmolumento.add(taxaAplicacaoJuros);
+        }
+
+        //        var aplicaRecibo = getDadosWithFactura(aplicacaoReciboDTO);
+
+        aplicacaoReciboDTO.setTimestamp(dataActual);
+        aplicacaoReciboDTO.setTotalFactura(totalFactura);
+        aplicacaoReciboDTO.setTotalPago(totalPago);
+
         AplicacaoRecibo aplicacaoRecibo = aplicacaoReciboMapper.toEntity(aplicacaoReciboDTO);
         aplicacaoRecibo = aplicacaoReciboRepository.save(aplicacaoRecibo);
         return aplicacaoReciboMapper.toDto(aplicacaoRecibo);
@@ -85,4 +146,15 @@ public class AplicacaoReciboServiceImpl implements AplicacaoReciboService {
         log.debug("Request to delete AplicacaoRecibo : {}", id);
         aplicacaoReciboRepository.deleteById(id);
     }
+    //    private AplicacaoReciboDTO getDadosWithFactura(AplicacaoReciboDTO aplicacaoReciboDTO){
+    //        AplicacaoReciboDTO aplicacaoRecDTO = new AplicacaoReciboDTO();
+    //
+    //
+    //        aplicacaoRecDTO.setFactura(factura);
+    //        aplicacaoRecDTO.setItemFactura(itemFactura);
+    //        aplicacaoRecDTO.setTotalPago(totalPago);
+    //        aplicacaoRecDTO.setTotalFactura(totalFactura);
+    //
+    //        return aplicacaoRecDTO;
+    //    }
 }

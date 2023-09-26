@@ -145,7 +145,7 @@
           >
             <option [ngValue]="null"></option>
             <option [ngValue]="itemFacturaOption" *ngFor="let itemFacturaOption of itemFacturasSharedCollection">
-              {{ itemFacturaOption.id }}
+              {{ itemFacturaOption.id }}:{{ itemFacturaOption.emolumento?.nome }}
             </option>
           </select>
         </div>
@@ -161,7 +161,9 @@
             [compareWith]="compareFactura"
           >
             <option *ngIf="editForm.get(['factura'])!.value == null" [ngValue]="null" selected></option>
-            <option [ngValue]="facturaOption" *ngFor="let facturaOption of facturasSharedCollection">{{ facturaOption.numero }}</option>
+            <option [ngValue]="facturaOption" *ngFor="let facturaOption of facturasSharedCollection">
+              {{ facturaOption.numero }}: {{ facturaOption.matricula?.numeroMatricula }}
+            </option>
           </select>
         </div>
         <div *ngIf="editForm.get(['factura'])!.invalid && (editForm.get(['factura'])!.dirty || editForm.get(['factura'])!.touched)">
