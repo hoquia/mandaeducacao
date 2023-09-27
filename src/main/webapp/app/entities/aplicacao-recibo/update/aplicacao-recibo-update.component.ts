@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 
@@ -34,7 +34,8 @@ export class AplicacaoReciboUpdateComponent implements OnInit {
     protected itemFacturaService: ItemFacturaService,
     protected facturaService: FacturaService,
     protected reciboService: ReciboService,
-    protected activatedRoute: ActivatedRoute
+    protected activatedRoute: ActivatedRoute,
+    protected router: Router
   ) {}
 
   compareItemFactura = (o1: IItemFactura | null, o2: IItemFactura | null): boolean => this.itemFacturaService.compareItemFactura(o1, o2);
@@ -82,13 +83,14 @@ export class AplicacaoReciboUpdateComponent implements OnInit {
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IAplicacaoRecibo>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
-      next: () => this.onSaveSuccess(),
+      next: e => this.onSaveSuccess(e.body?.factura?.matricula?.id),
       error: () => this.onSaveError(),
     });
   }
 
-  protected onSaveSuccess(): void {
-    this.previousState();
+  protected onSaveSuccess(id: any): void {
+    this.router.navigate(['/matricula'], { queryParams: { matricula_id: id } });
+    // this.previousState();
   }
 
   protected onSaveError(): void {

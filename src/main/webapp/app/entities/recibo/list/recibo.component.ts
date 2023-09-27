@@ -161,4 +161,19 @@ export class ReciboComponent implements OnInit {
       return [predicate + ',' + ascendingQueryParam];
     }
   }
+
+  protected gerarRecibo(reciboID: number): void {
+    this.reciboService.downloadReciboPdf(reciboID).subscribe(res => {
+      const url = window.URL.createObjectURL(res);
+      const a = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      a.title = `recibo-pagamento-${reciboID}`;
+      a.rel = 'noopener noreferrer';
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    });
+  }
 }

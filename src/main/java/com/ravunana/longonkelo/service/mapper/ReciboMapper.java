@@ -18,7 +18,7 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface ReciboMapper extends EntityMapper<ReciboDTO, Recibo> {
     @Mapping(target = "utilizador", source = "utilizador", qualifiedByName = "userLogin")
-    @Mapping(target = "matricula", source = "matricula", qualifiedByName = "matriculaNumeroMatricula")
+    @Mapping(target = "matricula", source = "matricula")
     @Mapping(target = "documentoComercial", source = "documentoComercial", qualifiedByName = "documentoComercialSiglaInterna")
     @Mapping(target = "transacao", source = "transacao")
     ReciboDTO toDto(Recibo s);

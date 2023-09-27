@@ -298,12 +298,7 @@
           </td>
           <td class="text-end">
             <div class="btn-group">
-              <button
-                type="submit"
-                [routerLink]="['/recibo', recibo.id, 'view']"
-                class="btn btn-warning btn-sm"
-                data-cy="entityDetailsButton"
-              >
+              <button type="submit" class="btn btn-warning btn-sm" data-cy="entityDetailsButton" (click)="gerarRecibo(recibo.id)">
                 <!-- <fa-icon icon="eye"></fa-icon> -->
                 <span class="d-none d-md-inline">Recibo</span>
               </button>

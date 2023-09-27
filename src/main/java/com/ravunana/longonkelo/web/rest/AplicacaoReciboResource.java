@@ -3,9 +3,15 @@ package com.ravunana.longonkelo.web.rest;
 import com.ravunana.longonkelo.repository.AplicacaoReciboRepository;
 import com.ravunana.longonkelo.service.AplicacaoReciboService;
 import com.ravunana.longonkelo.service.dto.AplicacaoReciboDTO;
+import com.ravunana.longonkelo.service.report.ReciboPagamentoReport;
 import com.ravunana.longonkelo.web.rest.errors.BadRequestAlertException;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -14,10 +20,12 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -43,9 +51,16 @@ public class AplicacaoReciboResource {
 
     private final AplicacaoReciboRepository aplicacaoReciboRepository;
 
-    public AplicacaoReciboResource(AplicacaoReciboService aplicacaoReciboService, AplicacaoReciboRepository aplicacaoReciboRepository) {
+    private final ReciboPagamentoReport reciboPagamentoReport;
+
+    public AplicacaoReciboResource(
+        AplicacaoReciboService aplicacaoReciboService,
+        AplicacaoReciboRepository aplicacaoReciboRepository,
+        ReciboPagamentoReport reciboPagamentoReport
+    ) {
         this.aplicacaoReciboService = aplicacaoReciboService;
         this.aplicacaoReciboRepository = aplicacaoReciboRepository;
+        this.reciboPagamentoReport = reciboPagamentoReport;
     }
 
     /**

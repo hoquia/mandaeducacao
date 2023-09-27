@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import dayjs from 'dayjs/esm';
@@ -127,5 +127,13 @@ export class ReciboService {
     return res.clone({
       body: res.body ? res.body.map(item => this.convertDateFromServer(item)) : null,
     });
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/member-ordering
+  downloadReciboPdf(reciboID: number) {
+    let headers = new HttpHeaders();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    headers = headers.set('Accept', 'application/pdf');
+    return this.http.get(`${this.resourceUrl}/recibo-pagamento/${reciboID}`, { headers, responseType: 'blob' });
   }
 }

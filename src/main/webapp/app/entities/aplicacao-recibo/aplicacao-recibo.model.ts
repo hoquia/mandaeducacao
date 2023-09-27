@@ -10,7 +10,7 @@ export interface IAplicacaoRecibo {
   totalDiferenca?: number | null;
   timestamp?: dayjs.Dayjs | null;
   itemFactura?: Pick<IItemFactura, 'id'> | null;
-  factura?: Pick<IFactura, 'id' | 'numero'> | null;
+  factura?: Pick<IFactura, 'id' | 'numero' | 'matricula'> | null;
   recibo?: Pick<IRecibo, 'id' | 'numero'> | null;
 }
 
