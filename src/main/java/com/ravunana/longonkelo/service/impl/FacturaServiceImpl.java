@@ -87,4 +87,9 @@ public class FacturaServiceImpl implements FacturaService {
         log.debug("Request to delete Factura : {}", id);
         facturaRepository.deleteById(id);
     }
+
+    public List<FacturaDTO> findAll() {
+        var facturas = facturaRepository.findAll().stream().collect(Collectors.toList());
+        return facturaMapper.toDto(facturas);
+    }
 }

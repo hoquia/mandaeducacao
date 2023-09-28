@@ -89,7 +89,7 @@ export class AplicacaoReciboUpdateComponent implements OnInit {
   }
 
   protected onSaveSuccess(id: any): void {
-    this.router.navigate(['/matricula'], { queryParams: { matricula_id: id } });
+    this.router.navigate(['/matricula', id, 'view']);
     // this.previousState();
   }
 

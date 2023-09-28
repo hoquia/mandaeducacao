@@ -6,7 +6,6 @@ import com.ravunana.longonkelo.service.AplicacaoReciboService;
 import com.ravunana.longonkelo.service.dto.AplicacaoReciboDTO;
 import com.ravunana.longonkelo.service.mapper.AplicacaoReciboMapper;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -146,6 +145,7 @@ public class AplicacaoReciboServiceImpl implements AplicacaoReciboService {
         log.debug("Request to delete AplicacaoRecibo : {}", id);
         aplicacaoReciboRepository.deleteById(id);
     }
+
     //    private AplicacaoReciboDTO getDadosWithFactura(AplicacaoReciboDTO aplicacaoReciboDTO){
     //        AplicacaoReciboDTO aplicacaoRecDTO = new AplicacaoReciboDTO();
     //
@@ -157,4 +157,8 @@ public class AplicacaoReciboServiceImpl implements AplicacaoReciboService {
     //
     //        return aplicacaoRecDTO;
     //    }
+
+    public Optional<AplicacaoReciboDTO> getOneAplicacaoRecibo(Long reciboID) {
+        return aplicacaoReciboRepository.findById(reciboID).map(aplicacaoReciboMapper::toDto);
+    }
 }

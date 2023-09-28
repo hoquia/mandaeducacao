@@ -16,8 +16,8 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface AplicacaoReciboMapper extends EntityMapper<AplicacaoReciboDTO, AplicacaoRecibo> {
     @Mapping(target = "itemFactura", source = "itemFactura", qualifiedByName = "itemFacturaId")
-    @Mapping(target = "factura", source = "factura", qualifiedByName = "facturaNumero")
-    @Mapping(target = "recibo", source = "recibo", qualifiedByName = "reciboNumero")
+    @Mapping(target = "factura", source = "factura")
+    @Mapping(target = "recibo", source = "recibo")
     AplicacaoReciboDTO toDto(AplicacaoRecibo s);
 
     @Named("itemFacturaId")

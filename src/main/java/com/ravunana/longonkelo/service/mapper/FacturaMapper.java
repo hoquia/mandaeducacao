@@ -20,7 +20,7 @@ public interface FacturaMapper extends EntityMapper<FacturaDTO, Factura> {
     @Mapping(target = "utilizador", source = "utilizador", qualifiedByName = "userLogin")
     @Mapping(target = "motivoAnulacao", source = "motivoAnulacao", qualifiedByName = "lookupItemDescricao")
     @Mapping(target = "matricula", source = "matricula")
-    @Mapping(target = "referencia", source = "referencia", qualifiedByName = "facturaNumero")
+    @Mapping(target = "referencia", source = "referencia")
     @Mapping(target = "documentoComercial", source = "documentoComercial")
     FacturaDTO toDto(Factura s);
 

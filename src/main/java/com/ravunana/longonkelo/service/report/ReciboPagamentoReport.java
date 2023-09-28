@@ -30,7 +30,7 @@ public class ReciboPagamentoReport {
     private final EnderecoDiscenteServiceImpl enderecoDiscenteService;
     private final ItemFacturaServiceImpl itemFacturaService;
     private final ResumoImpostoFacturaServiceImpl resumoImpostoFacturaService;
-    private final AplicacaoReciboServiceImpl aplicacaoReciboService;
+    private final ReciboServiceImpl reciboService;
 
     public ReciboPagamentoReport(
         ReportService reportService,
@@ -41,7 +41,7 @@ public class ReciboPagamentoReport {
         EnderecoDiscenteServiceImpl enderecoDiscenteService,
         ItemFacturaServiceImpl itemFacturaService,
         ResumoImpostoFacturaServiceImpl resumoImpostoFacturaService,
-        AplicacaoReciboServiceImpl aplicacaoReciboService
+        ReciboServiceImpl reciboService
     ) {
         this.reportService = reportService;
         this.instituicaoEnsinoService = instituicaoEnsinoService;
@@ -51,7 +51,7 @@ public class ReciboPagamentoReport {
         this.enderecoDiscenteService = enderecoDiscenteService;
         this.itemFacturaService = itemFacturaService;
         this.resumoImpostoFacturaService = resumoImpostoFacturaService;
-        this.aplicacaoReciboService = aplicacaoReciboService;
+        this.reciboService = reciboService;
     }
 
     public String gerarReciboPdf(Long reciboID) {
@@ -76,11 +76,9 @@ public class ReciboPagamentoReport {
             tempFileName = reportService.createTempFile(pdfName, ".pdf");
             file = new FileOutputStream(tempFileName);
 
-            var recibo = aplicacaoReciboService.findOne(reciboID).get();
+            var recibo = reciboService.findOne(reciboID).get();
 
-            var factura = recibo.getFactura();
-
-            var matricula = factura.getMatricula();
+            var matricula = recibo.getMatricula();
 
             final PdfWriter pdfWriter = PdfWriter.getInstance(document, file);
 
@@ -191,8 +189,8 @@ public class ReciboPagamentoReport {
     }
 
     private PdfPTable getRecibo(Long reciboID, String titulo) {
-        var recibo = aplicacaoReciboService.findOne(reciboID).get();
-        var factura = recibo.getFactura();
+        var recibo = reciboService.findOne(reciboID).get();
+        var factura = facturaService.findAll().stream().filter(ft -> ft.getNumero().equals(recibo.getNumero())).findFirst().get();
         var facturaID = factura.getId();
         var itemsFactura = itemFacturaService.getItemsFactura(facturaID);
 
@@ -200,7 +198,7 @@ public class ReciboPagamentoReport {
         int NUM_LINHA_FACTURA = itemsFactura.size();
         int NUM_LINHA_BRANCA_ADICIONAR = NUM_LINHA_ATE_FIM_PAGINA - NUM_LINHA_FACTURA;
 
-        var matricula = matriculaService.findOne(factura.getMatricula().getId()).get();
+        var matricula = matriculaService.findOne(recibo.getMatricula().getId()).get();
         var discente = matricula.getDiscente();
         var turma = matricula.getTurma();
         var planoCurricular = turma.getPlanoCurricular();
@@ -377,7 +375,7 @@ public class ReciboPagamentoReport {
         );
         detalheFactura.addCell(
             makeCellText(
-                factura.getNumero(),
+                recibo.getId().toString(),
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_LEFT,
                 fontNormal,
@@ -401,7 +399,7 @@ public class ReciboPagamentoReport {
         );
         detalheFactura.addCell(
             makeCellText(
-                Constants.getDateFormat(factura.getDataEmissao()),
+                Constants.getDateFormat(recibo.getData()),
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_LEFT,
                 fontNormal,
@@ -418,7 +416,7 @@ public class ReciboPagamentoReport {
         );
         detalheFactura.addCell(
             makeCellText(
-                Constants.getDateFormat(factura.getDataVencimento()),
+                Constants.getDateFormat(recibo.getVencimento()),
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_LEFT,
                 fontNormal,
@@ -435,7 +433,7 @@ public class ReciboPagamentoReport {
         );
         detalheFactura.addCell(
             makeCellText(
-                factura.getTimestamp().toLocalDateTime().toString(),
+                Constants.getDateFormat(recibo.getVencimento()),
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_LEFT,
                 fontNormal,
@@ -590,7 +588,7 @@ public class ReciboPagamentoReport {
                 padding,
                 borderSmaller,
                 emolumento.getNumero(), // Codigo
-                LocalDate.now().toString(), // data
+                recibo.getData().toString(), // data
                 emolumento.getNome(), // descricao
                 Constants.getMoneyFormat(item.getPrecoUnitario()), // Preco unitario
                 Constants.getMoneyFormat(item.getPrecoTotal()) // Total
