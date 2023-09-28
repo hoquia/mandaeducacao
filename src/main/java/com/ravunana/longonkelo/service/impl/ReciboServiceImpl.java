@@ -51,7 +51,7 @@ public class ReciboServiceImpl implements ReciboService {
 
         var serieDocumentoComercial = documentoComercialService.getSerieDocumentoComercialActivoByTipoFiscal(
             anoLectivo.getAno(),
-            DocumentoFiscal.FT
+            DocumentoFiscal.RC
         );
         var sequenciaResult = documentoComercialService.getSequenciaDocumento(serieDocumentoComercial.getId());
         Long sequencia = 1L;
