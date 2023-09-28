@@ -91,6 +91,7 @@ public class ReciboServiceImpl implements ReciboService {
         reciboDTO.setTotalTroco(BigDecimal.ZERO);
         reciboDTO.setOrigem("P");
         reciboDTO.setEstado(EstadoDocumentoComercial.P);
+        reciboDTO.setVencimento(Constants.DATE_TIME.toLocalDate());
 
         Recibo recibo = reciboMapper.toEntity(reciboDTO);
         recibo = reciboRepository.save(recibo);

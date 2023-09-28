@@ -145,7 +145,6 @@ public class AplicacaoReciboServiceImpl implements AplicacaoReciboService {
         log.debug("Request to delete AplicacaoRecibo : {}", id);
         aplicacaoReciboRepository.deleteById(id);
     }
-
     //    private AplicacaoReciboDTO getDadosWithFactura(AplicacaoReciboDTO aplicacaoReciboDTO){
     //        AplicacaoReciboDTO aplicacaoRecDTO = new AplicacaoReciboDTO();
     //
@@ -158,7 +157,4 @@ public class AplicacaoReciboServiceImpl implements AplicacaoReciboService {
     //        return aplicacaoRecDTO;
     //    }
 
-    public Optional<AplicacaoReciboDTO> getOneAplicacaoRecibo(Long reciboID) {
-        return aplicacaoReciboRepository.findById(reciboID).map(aplicacaoReciboMapper::toDto);
-    }
 }

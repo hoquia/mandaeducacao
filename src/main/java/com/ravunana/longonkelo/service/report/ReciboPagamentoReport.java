@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -192,7 +193,12 @@ public class ReciboPagamentoReport {
         var recibo = reciboService.findOne(reciboID).get();
         var factura = facturaService.findAll().stream().filter(ft -> ft.getNumero().equals(recibo.getNumero())).findFirst().get();
         var facturaID = factura.getId();
-        var itemsFactura = itemFacturaService.getItemsFactura(facturaID);
+        // Pega os itens da factura com estado PENDENTE
+        var itemsFactura = itemFacturaService
+            .getItemsFactura(facturaID)
+            .stream()
+            .filter(it -> it.getEstado().equals(EstadoItemFactura.PENDENTE))
+            .collect(Collectors.toList());
 
         int NUM_LINHA_ATE_FIM_PAGINA = 30;
         int NUM_LINHA_FACTURA = itemsFactura.size();
@@ -470,7 +476,7 @@ public class ReciboPagamentoReport {
         );
 
         // Items
-        float[] widths = { 0.2f, 0.6f, 0.2f, 0.3f, 0.2f };
+        float[] widths = { 0.2f, 0.2f, 0.6f, 0.3f, 0.2f };
         // Descricao, Qtde, Preco unit, Desc, IVA, Total
         PdfPTable ajustesTable = new PdfPTable(widths);
         ajustesTable.setWidthPercentage(100f);
@@ -478,7 +484,7 @@ public class ReciboPagamentoReport {
 
         ajustesTable.addCell(
             makeCellBackgroudColor(
-                "Código",
+                "Factura",
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontBold,
