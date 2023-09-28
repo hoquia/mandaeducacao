@@ -51,7 +51,7 @@ public class ReciboServiceImpl implements ReciboService {
 
         var serieDocumentoComercial = documentoComercialService.getSerieDocumentoComercialActivoByTipoFiscal(
             anoLectivo.getAno(),
-            DocumentoFiscal.FT
+            DocumentoFiscal.RC
         );
         var sequenciaResult = documentoComercialService.getSequenciaDocumento(serieDocumentoComercial.getId());
         Long sequencia = 1L;
@@ -76,6 +76,7 @@ public class ReciboServiceImpl implements ReciboService {
             serieDocumentoComercial.getTipoDocumento().getSiglaInterna() + " " + serieDocumentoComercial.getSerie() + "/" + sequencia
         );
         reciboDTO.setData(Constants.DATE_TIME.toLocalDate());
+        reciboDTO.setVencimento(Constants.DATE_TIME.toLocalDate());
         reciboDTO.setTotalSemImposto(BigDecimal.ZERO);
         reciboDTO.setTotalComImposto(BigDecimal.ZERO);
         reciboDTO.setTotalDescontoComercial(BigDecimal.ZERO);
