@@ -76,6 +76,7 @@ public class ReciboServiceImpl implements ReciboService {
             serieDocumentoComercial.getTipoDocumento().getSiglaInterna() + " " + serieDocumentoComercial.getSerie() + "/" + sequencia
         );
         reciboDTO.setData(Constants.DATE_TIME.toLocalDate());
+        reciboDTO.setVencimento(Constants.DATE_TIME.toLocalDate());
         reciboDTO.setTotalSemImposto(BigDecimal.ZERO);
         reciboDTO.setTotalComImposto(BigDecimal.ZERO);
         reciboDTO.setTotalDescontoComercial(BigDecimal.ZERO);

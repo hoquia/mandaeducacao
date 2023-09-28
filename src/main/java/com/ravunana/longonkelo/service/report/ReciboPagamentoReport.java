@@ -371,7 +371,7 @@ public class ReciboPagamentoReport {
         PdfPTable detalheFactura = new PdfPTable(2);
         detalheFactura.setWidthPercentage(100f);
         detalheFactura.addCell(
-            makeCellText("Factura/Recibo", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+            makeCellText("Recibo", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
         detalheFactura.addCell(
             makeCellText(
