@@ -84,7 +84,7 @@
           </div>
         </div> -->
 
-        <div class="row mb-3">
+        <!-- <div class="row mb-3">
           <label class="form-label" appTranslate="longonkeloApp.aplicacaoRecibo.totalDiferenca" for="field_totalDiferenca"
             >Total Diferenca</label
           >
@@ -116,7 +116,7 @@
               Este campo é do tipo número.
             </small>
           </div>
-        </div>
+        </div> -->
 
         <!-- <div class="row mb-3">
           <label class="form-label" appTranslate="longonkeloApp.aplicacaoRecibo.timestamp" for="field_timestamp">Timestamp</label>
@@ -207,9 +207,19 @@
           id="save-entity"
           data-cy="entityCreateSaveButton"
           [disabled]="editForm.invalid || isSaving"
+          class="btn btn-success"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Guardar e Continuar</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Guardar e Sair</span>
         </button>
       </div>
     </form>
