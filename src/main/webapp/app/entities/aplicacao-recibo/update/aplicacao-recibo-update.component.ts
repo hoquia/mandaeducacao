@@ -51,9 +51,16 @@ export class AplicacaoReciboUpdateComponent implements OnInit {
         this.updateForm(aplicacaoRecibo);
       } else {
         const reciboID = Number(this.activatedRoute.snapshot.queryParamMap.get('recibo_id'));
+
         this.reciboService.find(reciboID).subscribe(res => {
-          this.editForm.patchValue({
-            recibo: res.body,
+          const matriculaID = res.body?.matricula?.id;
+
+          this.facturaService.query({ size: 10000 }).subscribe(resFac => {
+            this.facturasSharedCollection = resFac.body?.filter(x => x.matricula?.id === matriculaID) ?? [];
+
+            this.editForm.patchValue({
+              recibo: res.body,
+            });
           });
         });
 
@@ -121,16 +128,6 @@ export class AplicacaoReciboUpdateComponent implements OnInit {
   }
 
   protected loadRelationshipsOptions(): void {
-    this.itemFacturaService
-      .query()
-      .pipe(map((res: HttpResponse<IItemFactura[]>) => res.body ?? []))
-      .pipe(
-        map((itemFacturas: IItemFactura[]) =>
-          this.itemFacturaService.addItemFacturaToCollectionIfMissing<IItemFactura>(itemFacturas, this.aplicacaoRecibo?.itemFactura)
-        )
-      )
-      .subscribe((itemFacturas: IItemFactura[]) => (this.itemFacturasSharedCollection = itemFacturas));
-
     this.facturaService
       .query()
       .pipe(map((res: HttpResponse<IFactura[]>) => res.body ?? []))
@@ -152,6 +149,13 @@ export class AplicacaoReciboUpdateComponent implements OnInit {
     const id = Number(this.editForm.get('factura')?.value?.id);
     this.itemFacturaService.query({ 'facturaId.equals': id }).subscribe(res => {
       this.itemFacturasSharedCollection = res.body ?? [];
+    });
+  }
+
+  getItemFactura(): void {
+    const id = Number(this.editForm.get('factura')?.value?.id);
+    this.itemFacturaService.query().subscribe(res => {
+      this.itemFacturasSharedCollection = res.body?.filter(x => x.factura?.id === id) ?? [];
     });
   }
 }
