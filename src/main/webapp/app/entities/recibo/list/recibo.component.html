@@ -259,8 +259,8 @@
           <td>{{ recibo.totalJuro }}</td>
           <td>{{ recibo.cambio }}</td>
           <td>{{ recibo.totalMoedaEstrangeira }}</td> -->
-          <td>{{ recibo.totalPagar }}</td>
-          <td>{{ recibo.totalPago }}</td>
+          <td>{{ recibo.totalPagar | currency: 'AKZ' }}</td>
+          <td>{{ recibo.totalPago | currency: 'AKZ' }}</td>
           <!-- <td>{{ recibo.totalFalta }}</td>
           <td>{{ recibo.totalTroco }}</td>
           <td>{{ recibo.isNovo }}</td>
