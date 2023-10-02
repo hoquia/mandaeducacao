@@ -308,6 +308,11 @@
                   >Show Ocorrencia</span
                 >
               </button> -->
+
+              <button class="btn btn-warning" [routerLink]="['/transacao/new']" [queryParams]="{ matricula_id: matricula.id }">
+                Transação
+              </button>
+
               <button
                 type="submit"
                 [routerLink]="['/matricula', matricula.id, 'view']"
