@@ -60,6 +60,7 @@ export class AplicacaoReciboUpdateComponent implements OnInit {
         this.editForm.patchValue({
           totalFactura: 0,
           totalPago: 0,
+          totalDiferenca: 0,
         });
       }
 

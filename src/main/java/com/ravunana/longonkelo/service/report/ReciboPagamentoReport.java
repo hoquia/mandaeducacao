@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,6 +32,7 @@ public class ReciboPagamentoReport {
     private final ItemFacturaServiceImpl itemFacturaService;
     private final ResumoImpostoFacturaServiceImpl resumoImpostoFacturaService;
     private final ReciboServiceImpl reciboService;
+    private final AplicacaoReciboServiceImpl aplicacaoReciboService;
 
     public ReciboPagamentoReport(
         ReportService reportService,
@@ -41,7 +43,8 @@ public class ReciboPagamentoReport {
         EnderecoDiscenteServiceImpl enderecoDiscenteService,
         ItemFacturaServiceImpl itemFacturaService,
         ResumoImpostoFacturaServiceImpl resumoImpostoFacturaService,
-        ReciboServiceImpl reciboService
+        ReciboServiceImpl reciboService,
+        AplicacaoReciboServiceImpl aplicacaoReciboService
     ) {
         this.reportService = reportService;
         this.instituicaoEnsinoService = instituicaoEnsinoService;
@@ -52,6 +55,7 @@ public class ReciboPagamentoReport {
         this.itemFacturaService = itemFacturaService;
         this.resumoImpostoFacturaService = resumoImpostoFacturaService;
         this.reciboService = reciboService;
+        this.aplicacaoReciboService = aplicacaoReciboService;
     }
 
     public String gerarReciboPdf(Long reciboID) {
@@ -189,13 +193,14 @@ public class ReciboPagamentoReport {
     }
 
     private PdfPTable getRecibo(Long reciboID, String titulo) {
+        var aplicacaoRecibos = aplicacaoReciboService.getAplicacaoReciboWithRecibo(reciboID);
+
         var recibo = reciboService.findOne(reciboID).get();
-        var factura = facturaService.findAll().stream().filter(ft -> ft.getNumero().equals(recibo.getNumero())).findFirst().get();
-        var facturaID = factura.getId();
-        var itemsFactura = itemFacturaService.getItemsFactura(facturaID);
+
+        // Pega os itens da factura com estado PENDENTE
 
         int NUM_LINHA_ATE_FIM_PAGINA = 30;
-        int NUM_LINHA_FACTURA = itemsFactura.size();
+        int NUM_LINHA_FACTURA = aplicacaoRecibos.size();
         int NUM_LINHA_BRANCA_ADICIONAR = NUM_LINHA_ATE_FIM_PAGINA - NUM_LINHA_FACTURA;
 
         var matricula = matriculaService.findOne(recibo.getMatricula().getId()).get();
@@ -448,19 +453,19 @@ public class ReciboPagamentoReport {
         detalheFactura.addCell(
             makeCellText("Moeda", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
-        detalheFactura.addCell(
-            makeCellText(
-                factura.getMoeda(),
-                Element.ALIGN_MIDDLE,
-                Element.ALIGN_LEFT,
-                fontNormal,
-                leading,
-                padding,
-                borderNone,
-                true,
-                false
-            )
-        );
+        //        detalheFactura.addCell(
+        //            makeCellText(
+        //                ,
+        //                Element.ALIGN_MIDDLE,
+        //                Element.ALIGN_LEFT,
+        //                fontNormal,
+        //                leading,
+        //                padding,
+        //                borderNone,
+        //                true,
+        //                false
+        //            )
+        //        );
 
         detalheFactura.addCell(
             makeCellText("Ano lectivo", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
@@ -470,7 +475,7 @@ public class ReciboPagamentoReport {
         );
 
         // Items
-        float[] widths = { 0.2f, 0.6f, 0.2f, 0.3f, 0.2f };
+        float[] widths = { 0.2f, 0.2f, 0.6f, 0.3f, 0.2f };
         // Descricao, Qtde, Preco unit, Desc, IVA, Total
         PdfPTable ajustesTable = new PdfPTable(widths);
         ajustesTable.setWidthPercentage(100f);
@@ -478,7 +483,7 @@ public class ReciboPagamentoReport {
 
         ajustesTable.addCell(
             makeCellBackgroudColor(
-                "Código",
+                "Factura",
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontBold,
@@ -519,7 +524,7 @@ public class ReciboPagamentoReport {
         );
         ajustesTable.addCell(
             makeCellBackgroudColor(
-                "Preço unit.",
+                "Data Pagamento",
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontBold,
@@ -570,8 +575,10 @@ public class ReciboPagamentoReport {
             )
         );
 
-        for (var item : itemsFactura) {
+        for (var aplicacaoRecibo : aplicacaoRecibos) {
+            var item = aplicacaoRecibo.getItemFactura();
             var emolumento = item.getEmolumento();
+            var factura = aplicacaoRecibo.getFactura();
 
             // Total do contrato incluido as multas e juros
 
@@ -587,10 +594,10 @@ public class ReciboPagamentoReport {
                 leading,
                 padding,
                 borderSmaller,
-                emolumento.getNumero(), // Codigo
-                recibo.getData().toString(), // data
+                factura.getNumero(), // Codigo
+                Constants.getDateFormat(factura.getDataEmissao()), // data
                 emolumento.getNome(), // descricao
-                Constants.getMoneyFormat(item.getPrecoUnitario()), // Preco unitario
+                Constants.getDateFormat(item.getEmissao()), // Data de pagamento
                 Constants.getMoneyFormat(item.getPrecoTotal()) // Total
             );
         }
@@ -607,78 +614,78 @@ public class ReciboPagamentoReport {
         }
 
         // Resumo de imposto
-        float[] withResumoImposto = { 0.4f, 0.1f, 0.2f, 0.2f };
-        PdfPTable resumoImpostoTable = new PdfPTable(withResumoImposto);
-        resumoImpostoTable.setWidthPercentage(50f);
-        resumoImpostoTable.setHorizontalAlignment(Element.ALIGN_LEFT);
-        // Descricao
-        resumoImpostoTable.addCell(
-            makeCellText("Descrição", Element.ALIGN_TOP, Element.ALIGN_LEFT, fontBold, leading, padding, borderSmaller, true, false)
-        );
-        resumoImpostoTable.addCell(
-            makeCellText("Taxa", Element.ALIGN_TOP, Element.ALIGN_LEFT, fontBold, leading, padding, borderSmaller, true, false)
-        );
-        resumoImpostoTable.addCell(
-            makeCellText("Incidencia", Element.ALIGN_TOP, Element.ALIGN_LEFT, fontBold, leading, padding, borderSmaller, true, false)
-        );
-        resumoImpostoTable.addCell(
-            makeCellText("Imposto", Element.ALIGN_TOP, Element.ALIGN_LEFT, fontBold, leading, padding, borderSmaller, true, false)
-        );
-
-        for (var resumo : resumoImpostoFacturaService.getResumoImpostoFactura(facturaID)) {
-            resumoImpostoTable.addCell(
-                makeCellText(
-                    resumo.getDescricao(),
-                    Element.ALIGN_TOP,
-                    Element.ALIGN_LEFT,
-                    fontNormal,
-                    leading,
-                    padding,
-                    borderSmaller,
-                    true,
-                    false
-                )
-            );
-            resumoImpostoTable.addCell(
-                makeCellText(
-                    resumo.getTaxa().toString(),
-                    Element.ALIGN_TOP,
-                    Element.ALIGN_LEFT,
-                    fontNormal,
-                    leading,
-                    padding,
-                    borderSmaller,
-                    true,
-                    false
-                )
-            );
-            resumoImpostoTable.addCell(
-                makeCellText(
-                    Constants.getMoneyFormat(resumo.getIncidencia()),
-                    Element.ALIGN_TOP,
-                    Element.ALIGN_LEFT,
-                    fontNormal,
-                    leading,
-                    padding,
-                    borderSmaller,
-                    true,
-                    false
-                )
-            );
-            resumoImpostoTable.addCell(
-                makeCellText(
-                    Constants.getMoneyFormat(resumo.getMontante()),
-                    Element.ALIGN_TOP,
-                    Element.ALIGN_LEFT,
-                    fontNormal,
-                    leading,
-                    padding,
-                    borderSmaller,
-                    true,
-                    false
-                )
-            );
-        }
+        //        float[] withResumoImposto = { 0.4f, 0.1f, 0.2f, 0.2f };
+        //        PdfPTable resumoImpostoTable = new PdfPTable(withResumoImposto);
+        //        resumoImpostoTable.setWidthPercentage(50f);
+        //        resumoImpostoTable.setHorizontalAlignment(Element.ALIGN_LEFT);
+        //        // Descricao
+        //        resumoImpostoTable.addCell(
+        //            makeCellText("Descrição", Element.ALIGN_TOP, Element.ALIGN_LEFT, fontBold, leading, padding, borderSmaller, true, false)
+        //        );
+        //        resumoImpostoTable.addCell(
+        //            makeCellText("Taxa", Element.ALIGN_TOP, Element.ALIGN_LEFT, fontBold, leading, padding, borderSmaller, true, false)
+        //        );
+        //        resumoImpostoTable.addCell(
+        //            makeCellText("Incidencia", Element.ALIGN_TOP, Element.ALIGN_LEFT, fontBold, leading, padding, borderSmaller, true, false)
+        //        );
+        //        resumoImpostoTable.addCell(
+        //            makeCellText("Imposto", Element.ALIGN_TOP, Element.ALIGN_LEFT, fontBold, leading, padding, borderSmaller, true, false)
+        //        );
+        //
+        //        for (var resumo : resumoImpostoFacturaService.getResumoImpostoFactura(facturaID)) {
+        //            resumoImpostoTable.addCell(
+        //                makeCellText(
+        //                    resumo.getDescricao(),
+        //                    Element.ALIGN_TOP,
+        //                    Element.ALIGN_LEFT,
+        //                    fontNormal,
+        //                    leading,
+        //                    padding,
+        //                    borderSmaller,
+        //                    true,
+        //                    false
+        //                )
+        //            );
+        //            resumoImpostoTable.addCell(
+        //                makeCellText(
+        //                    resumo.getTaxa().toString(),
+        //                    Element.ALIGN_TOP,
+        //                    Element.ALIGN_LEFT,
+        //                    fontNormal,
+        //                    leading,
+        //                    padding,
+        //                    borderSmaller,
+        //                    true,
+        //                    false
+        //                )
+        //            );
+        //            resumoImpostoTable.addCell(
+        //                makeCellText(
+        //                    Constants.getMoneyFormat(resumo.getIncidencia()),
+        //                    Element.ALIGN_TOP,
+        //                    Element.ALIGN_LEFT,
+        //                    fontNormal,
+        //                    leading,
+        //                    padding,
+        //                    borderSmaller,
+        //                    true,
+        //                    false
+        //                )
+        //            );
+        //            resumoImpostoTable.addCell(
+        //                makeCellText(
+        //                    Constants.getMoneyFormat(resumo.getMontante()),
+        //                    Element.ALIGN_TOP,
+        //                    Element.ALIGN_LEFT,
+        //                    fontNormal,
+        //                    leading,
+        //                    padding,
+        //                    borderSmaller,
+        //                    true,
+        //                    false
+        //                )
+        //            );
+        //        }
 
         // Totais
         PdfPTable totalTable = new PdfPTable(2);
@@ -792,7 +799,7 @@ public class ReciboPagamentoReport {
         );
         totalPagamentoTable.addCell(
             makeCellText(
-                Constants.getMoneyFormat(factura.getTotalDescontoComercial()),
+                Constants.getMoneyFormat(recibo.getTotalDescontoComercial()),
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_LEFT,
                 fontNormal,
@@ -819,7 +826,7 @@ public class ReciboPagamentoReport {
         );
         totalPagamentoTable.addCell(
             makeCellText(
-                Constants.getMoneyFormat(factura.getTotalDescontoFinanceiro()),
+                Constants.getMoneyFormat(recibo.getTotalDescontoFinanceiro()),
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_LEFT,
                 fontNormal,
@@ -836,7 +843,7 @@ public class ReciboPagamentoReport {
         );
         totalPagamentoTable.addCell(
             makeCellText(
-                Constants.getMoneyFormat(factura.getTotalImpostoIVA()),
+                Constants.getMoneyFormat(recibo.getTotalIVA()),
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_LEFT,
                 fontNormal,
@@ -945,7 +952,7 @@ public class ReciboPagamentoReport {
         // Codigo encriptacao da factura
         layoutTable.addCell(
             makeCellText(
-                factura.getHashShort() + "-Processado por programa valido nº.n31.1/AGT20 | Longonkelo",
+                recibo.getHashShort() + "-Processado por programa valido nº.n31.1/AGT20 | Longonkelo",
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_LEFT,
                 fontNormal,
@@ -976,9 +983,9 @@ public class ReciboPagamentoReport {
 
         // Resumo Imposto
 
-        layoutTable.addCell(
-            makeCellTable(resumoImpostoTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
-        );
+        //        layoutTable.addCell(
+        //            makeCellTable(resumoImpostoTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
+        //        );
 
         layoutTable.addCell(
             makeCellText(getLinhaTracos(), Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)

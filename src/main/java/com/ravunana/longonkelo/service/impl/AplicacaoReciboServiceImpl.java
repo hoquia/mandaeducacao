@@ -1,13 +1,16 @@
 package com.ravunana.longonkelo.service.impl;
 
+import com.ravunana.longonkelo.config.Constants;
 import com.ravunana.longonkelo.domain.AplicacaoRecibo;
+import com.ravunana.longonkelo.domain.enumeration.EstadoItemFactura;
 import com.ravunana.longonkelo.repository.AplicacaoReciboRepository;
 import com.ravunana.longonkelo.service.AplicacaoReciboService;
 import com.ravunana.longonkelo.service.dto.AplicacaoReciboDTO;
 import com.ravunana.longonkelo.service.mapper.AplicacaoReciboMapper;
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -27,15 +30,22 @@ public class AplicacaoReciboServiceImpl implements AplicacaoReciboService {
     private final AplicacaoReciboRepository aplicacaoReciboRepository;
 
     private final AplicacaoReciboMapper aplicacaoReciboMapper;
+    private final TransacaoServiceImpl transacaoService;
+    private final ItemFacturaServiceImpl itemFacturaService;
+    private final BigDecimal PERCENTAGEM_CALCULO_MULTA_JUROS = new BigDecimal(100);
 
     public AplicacaoReciboServiceImpl(
         AplicacaoReciboRepository aplicacaoReciboRepository,
         AplicacaoReciboMapper aplicacaoReciboMapper,
         FacturaServiceImpl facturaService,
-        ItemFacturaServiceImpl itemFacturaService
+        ItemFacturaServiceImpl itemFacturaService,
+        TransacaoServiceImpl transacaoService,
+        ItemFacturaServiceImpl itemFacturaService1
     ) {
         this.aplicacaoReciboRepository = aplicacaoReciboRepository;
         this.aplicacaoReciboMapper = aplicacaoReciboMapper;
+        this.transacaoService = transacaoService;
+        this.itemFacturaService = itemFacturaService1;
     }
 
     @Override
@@ -47,45 +57,62 @@ public class AplicacaoReciboServiceImpl implements AplicacaoReciboService {
         var emolumento = itemRecibo.getEmolumento();
         var transacao = aplicacaoReciboDTO.getRecibo().getTransacao();
 
-        var dataActual = ZonedDateTime.now();
+        var planoMulta = emolumento.getPlanoMulta();
+        var dataActual = Constants.DATE_TIME;
+        var dataPagametoMontante = transacao.getData();
+        var dataAplicacaoMulta = planoMulta.getDiaAplicacaoMulta();
+        var dataAplicacaoJuros = planoMulta.getDiaAplicacaoJuro();
+        var dataExpiracaoRecibo = itemRecibo.getExpiracao().getDayOfMonth();
         var totalFactura = factura.getTotalPagar();
         var totalPago = itemRecibo.getPrecoTotal();
         var trasacaMontante = transacao.getMontante();
-        var dataPagametoMontante = transacao.getData();
-        var dataAplicacaoMulta = emolumento.getPlanoMulta().getDiaAplicacaoMulta();
-        var dataAplicacaoJuros = emolumento.getPlanoMulta().getDiaAplicacaoJuro();
         var precoUnitarioEmolumento = emolumento.getPreco();
-        var taxaAplicacaoMulta = emolumento.getPlanoMulta().getTaxaMulta();
-        var taxaAplicacaoJuros = emolumento.getPlanoMulta().getTaxaJuro();
+        var taxaAplicacaoMulta = planoMulta.getTaxaMulta();
+        var taxaAplicacaoJuros = planoMulta.getTaxaJuro();
 
-        if (trasacaMontante.compareTo(totalPago) < 0) {
-            throw new RuntimeException("Saldo insuficiente!");
+        //Verificando se o emolumento ja foi pago  TODO:EDMAR_ZUNGO, VERIFICAR O ANO DE PAGAMENTO DO EMOLUMENTO
+        if (itemRecibo.getEstado().equals(EstadoItemFactura.PAGO)) {
+            throw new RuntimeException("O Emolumento selecionado já foi pago. Emolumento: " + emolumento.getNome());
         }
 
-        if (taxaAplicacaoMulta == null) {
-            taxaAplicacaoMulta = new BigDecimal(0);
-        }
-
-        if (taxaAplicacaoJuros == null) {
-            taxaAplicacaoJuros = new BigDecimal(0);
-        }
-
-        if (dataPagametoMontante.getDayOfMonth() > dataAplicacaoMulta) {
-            if (emolumento.getPlanoMulta().getIsTaxaMultaPercentual()) {
-                var multa = precoUnitarioEmolumento.multiply(taxaAplicacaoMulta.divide(new BigDecimal(100)));
-                precoUnitarioEmolumento.add(multa);
+        // Validando se existe plano de multa ou nao
+        if (planoMulta != null) {
+            if (taxaAplicacaoMulta == null) {
+                taxaAplicacaoMulta = new BigDecimal(0);
             }
 
-            precoUnitarioEmolumento.add(taxaAplicacaoMulta);
-        }
-
-        if (dataPagametoMontante.getDayOfMonth() > dataAplicacaoJuros) {
-            if (emolumento.getPlanoMulta().getIsTaxaJuroPercentual()) {
-                var juros = precoUnitarioEmolumento.multiply(taxaAplicacaoJuros.divide(new BigDecimal(100)));
-                precoUnitarioEmolumento.add(juros);
+            if (taxaAplicacaoJuros == null) {
+                taxaAplicacaoJuros = new BigDecimal(0);
             }
 
-            precoUnitarioEmolumento.add(taxaAplicacaoJuros);
+            if (dataAplicacaoMulta != null) {
+                //                TODO:EDMAR_ZUNGO, REFACTORAR COLOCAR A CONDICAO SUBCEQUENTE NA MESMA LINHA QUE A BAIXO
+                if (dataExpiracaoRecibo > dataAplicacaoMulta) {
+                    if (emolumento.getPlanoMulta().getIsTaxaMultaPercentual()) {
+                        var multa = precoUnitarioEmolumento.multiply(taxaAplicacaoMulta.divide(PERCENTAGEM_CALCULO_MULTA_JUROS));
+                        precoUnitarioEmolumento.add(multa);
+                    }
+
+                    precoUnitarioEmolumento.add(taxaAplicacaoMulta);
+                }
+            }
+
+            if (dataAplicacaoJuros != null) {
+                //                TODO:EDMAR_ZUNGO, REFACTORAR COLOCAR A CONDICAO SUBCEQUENTE NA MESMA LINHA QUE A BAIXO
+                if (dataPagametoMontante.getDayOfMonth() > dataAplicacaoJuros) {
+                    if (emolumento.getPlanoMulta().getIsTaxaJuroPercentual()) {
+                        var juros = precoUnitarioEmolumento.multiply(taxaAplicacaoJuros.divide(PERCENTAGEM_CALCULO_MULTA_JUROS));
+                        precoUnitarioEmolumento.add(juros);
+                    }
+
+                    precoUnitarioEmolumento.add(taxaAplicacaoJuros);
+                }
+            }
+
+            //Comparacao para saldo insuficiente
+            if (trasacaMontante.compareTo(totalPago.add(taxaAplicacaoMulta).add(taxaAplicacaoJuros)) < 0) {
+                throw new RuntimeException("Saldo insuficiente!");
+            }
         }
 
         //        var aplicaRecibo = getDadosWithFactura(aplicacaoReciboDTO);
@@ -93,6 +120,15 @@ public class AplicacaoReciboServiceImpl implements AplicacaoReciboService {
         aplicacaoReciboDTO.setTimestamp(dataActual);
         aplicacaoReciboDTO.setTotalFactura(totalFactura);
         aplicacaoReciboDTO.setTotalPago(totalPago);
+
+        //Setando a diferenca da aplicacao recibo
+        aplicacaoReciboDTO.setTotalDiferenca(totalFactura.subtract(totalPago));
+        //Diminuindo o valor da transacao ao salvar
+        var transacaUpdated = transacaoService.findOne(transacao.getId()).get();
+        transacaUpdated.setMontante(transacaUpdated.getMontante().subtract(totalPago));
+        //Setando o estado ao salvar
+        var itemReciboUpdated = itemFacturaService.findOne(itemRecibo.getId()).get();
+        itemReciboUpdated.setEstado(EstadoItemFactura.PAGO);
 
         AplicacaoRecibo aplicacaoRecibo = aplicacaoReciboMapper.toEntity(aplicacaoReciboDTO);
         aplicacaoRecibo = aplicacaoReciboRepository.save(aplicacaoRecibo);
@@ -158,7 +194,12 @@ public class AplicacaoReciboServiceImpl implements AplicacaoReciboService {
     //        return aplicacaoRecDTO;
     //    }
 
-    public Optional<AplicacaoReciboDTO> getOneAplicacaoRecibo(Long reciboID) {
-        return aplicacaoReciboRepository.findById(reciboID).map(aplicacaoReciboMapper::toDto);
+    public List<AplicacaoReciboDTO> getAplicacaoReciboWithRecibo(Long reciboID) {
+        var aplicacaoRecibo = aplicacaoReciboRepository
+            .findAll()
+            .stream()
+            .filter(ar -> ar.getRecibo().getId().equals(reciboID))
+            .collect(Collectors.toList());
+        return aplicacaoReciboMapper.toDto(aplicacaoRecibo);
     }
 }
