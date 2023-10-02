@@ -147,4 +147,11 @@ export class AplicacaoReciboUpdateComponent implements OnInit {
       .pipe(map((recibos: IRecibo[]) => this.reciboService.addReciboToCollectionIfMissing<IRecibo>(recibos, this.aplicacaoRecibo?.recibo)))
       .subscribe((recibos: IRecibo[]) => (this.recibosSharedCollection = recibos));
   }
+
+  protected searchItemFactura(): void {
+    const id = Number(this.editForm.get('factura')?.value?.id);
+    this.itemFacturaService.query({ 'facturaId.equals': id }).subscribe(res => {
+      this.itemFacturasSharedCollection = res.body ?? [];
+    });
+  }
 }

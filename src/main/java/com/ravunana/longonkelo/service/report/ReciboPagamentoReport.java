@@ -475,7 +475,7 @@ public class ReciboPagamentoReport {
         );
 
         // Items
-        float[] widths = { 0.2f, 0.2f, 0.6f, 0.3f, 0.2f };
+        float[] widths = { 0.2f, 0.6f, 0.2f, 0.2f, 0.2f, 0.2f };
         // Descricao, Qtde, Preco unit, Desc, IVA, Total
         PdfPTable ajustesTable = new PdfPTable(widths);
         ajustesTable.setWidthPercentage(100f);
@@ -484,20 +484,6 @@ public class ReciboPagamentoReport {
         ajustesTable.addCell(
             makeCellBackgroudColor(
                 "Factura",
-                Element.ALIGN_MIDDLE,
-                Element.ALIGN_CENTER,
-                fontBold,
-                leading,
-                padding,
-                borderNormal,
-                true,
-                false
-            )
-        );
-
-        ajustesTable.addCell(
-            makeCellBackgroudColor(
-                "Data",
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontBold,
@@ -522,6 +508,34 @@ public class ReciboPagamentoReport {
                 false
             )
         );
+
+        ajustesTable.addCell(
+            makeCellBackgroudColor(
+                "Referência",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontBold,
+                leading,
+                padding,
+                borderNormal,
+                true,
+                false
+            )
+        );
+
+        ajustesTable.addCell(
+            makeCellBackgroudColor(
+                "Data Deposito",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontBold,
+                leading,
+                padding,
+                borderNormal,
+                true,
+                false
+            )
+        );
         ajustesTable.addCell(
             makeCellBackgroudColor(
                 "Data Pagamento",
@@ -535,19 +549,6 @@ public class ReciboPagamentoReport {
                 false
             )
         );
-        //        ajustesTable.addCell(
-        //                makeCellBackgroudColor(
-        //                        "Desc.(%)",
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_CENTER,
-        //                        fontBold,
-        //                        leading,
-        //                        padding,
-        //                        borderNormal,
-        //                        true,
-        //                        false
-        //                )
-        //        );
         //        ajustesTable.addCell(
         //                makeCellBackgroudColor(
         //                        "Taxa(%)",
@@ -579,6 +580,8 @@ public class ReciboPagamentoReport {
             var item = aplicacaoRecibo.getItemFactura();
             var emolumento = item.getEmolumento();
             var factura = aplicacaoRecibo.getFactura();
+            var reciboResult = aplicacaoRecibo.getRecibo();
+            var transacaoResult = reciboResult.getTransacao();
 
             // Total do contrato incluido as multas e juros
 
@@ -594,10 +597,11 @@ public class ReciboPagamentoReport {
                 leading,
                 padding,
                 borderSmaller,
-                factura.getNumero(), // Codigo
-                Constants.getDateFormat(factura.getDataEmissao()), // data
+                factura.getNumero(), // numero da factura
                 emolumento.getNome(), // descricao
-                Constants.getDateFormat(item.getEmissao()), // Data de pagamento
+                transacaoResult.getReferencia(), // referencia
+                Constants.getDateFormat(transacaoResult.getData()), // Data de deposito
+                Constants.getDateFormat(reciboResult.getData()), // Data Pagamento
                 Constants.getMoneyFormat(item.getPrecoTotal()) // Total
             );
         }
@@ -610,7 +614,7 @@ public class ReciboPagamentoReport {
 
         // Linhas Documento em branco para o resumo estar no rodapé
         for (int i = 0; i <= NUM_LINHA_BRANCA_ADICIONAR; i++) {
-            getLinhasDocumento(ajustesTable, fontNormal, leading, padding, noBorder, "", "", "", "", "");
+            getLinhasDocumento(ajustesTable, fontNormal, leading, padding, noBorder, "", "", "", "", "", "");
         }
 
         // Resumo de imposto
@@ -952,7 +956,7 @@ public class ReciboPagamentoReport {
         // Codigo encriptacao da factura
         layoutTable.addCell(
             makeCellText(
-                recibo.getHashShort() + "-Processado por programa valido nº.n31.1/AGT20 | Longonkelo",
+                "-Processado por programa valido nº.n31.1/AGT20 | Longonkelo",
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_LEFT,
                 fontNormal,
@@ -1039,16 +1043,17 @@ public class ReciboPagamentoReport {
         float leading,
         float padding,
         com.lowagie.text.Rectangle borderSmaller,
-        String codigoEmolumento,
-        String data,
+        String numeroFactura,
         String descricao,
-        String precoUnit,
+        String referencia,
+        String dataDepos,
+        String dataPagam,
         String total
     ) {
         // Codigo Emolumento
         ajustesTable.addCell(
             makeCellText(
-                codigoEmolumento,
+                numeroFactura,
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontNormal,
@@ -1062,23 +1067,23 @@ public class ReciboPagamentoReport {
 
         // data
         ajustesTable.addCell(
-            makeCellText(data, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
+            makeCellText(descricao, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
         );
 
         // emolumento
         ajustesTable.addCell(
-            makeCellText(descricao, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
+            makeCellText(referencia, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
         );
 
         // ValorUnit
         ajustesTable.addCell(
-            makeCellText(precoUnit, Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontNormal, leading, padding, borderSmaller, true, false)
+            makeCellText(dataDepos, Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontNormal, leading, padding, borderSmaller, true, false)
         );
 
-        //        // Desconto
-        //        ajustesTable.addCell(
-        //                makeCellText(desconto, Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontNormal, leading, padding, borderSmaller, true, false)
-        //        );
+        // Desconto
+        ajustesTable.addCell(
+            makeCellText(dataPagam, Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontNormal, leading, padding, borderSmaller, true, false)
+        );
         //
         //        // Multa
         //        ajustesTable.addCell(

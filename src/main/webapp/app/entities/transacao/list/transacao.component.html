@@ -124,7 +124,7 @@
           <td>
             <a [routerLink]="['/transacao', transacao.id, 'view']">{{ transacao.id }}</a>
           </td>
-          <td>{{ transacao.montante }}</td>
+          <td>{{ transacao.montante | currency: 'AKZ' }}</td>
           <td>{{ transacao.data | formatMediumDate }}</td>
           <td>{{ transacao.referencia }}</td>
           <td appTranslate="{{ 'longonkeloApp.EstadoPagamento.' + transacao.estado }}">{{ transacao.estado }}</td>

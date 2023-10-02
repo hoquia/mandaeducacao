@@ -88,9 +88,9 @@
           <td>
             <a [routerLink]="['/aplicacao-recibo', aplicacaoRecibo.id, 'view']">{{ aplicacaoRecibo.id }}</a>
           </td>
-          <td>{{ aplicacaoRecibo.totalFactura }}</td>
-          <td>{{ aplicacaoRecibo.totalPago }}</td>
-          <td>{{ aplicacaoRecibo.totalDiferenca }}</td>
+          <td>{{ aplicacaoRecibo.totalFactura | currency: 'AKZ' }}</td>
+          <td>{{ aplicacaoRecibo.totalPago | currency: 'AKZ' }}</td>
+          <td>{{ aplicacaoRecibo.totalDiferenca | currency: 'AKZ' }}</td>
           <td>{{ aplicacaoRecibo.timestamp | formatMediumDatetime }}</td>
           <td>
             <div *ngIf="aplicacaoRecibo.itemFactura">

@@ -123,15 +123,26 @@ public class AplicacaoReciboServiceImpl implements AplicacaoReciboService {
 
         //Setando a diferenca da aplicacao recibo
         aplicacaoReciboDTO.setTotalDiferenca(totalFactura.subtract(totalPago));
-        //Diminuindo o valor da transacao ao salvar
-        var transacaUpdated = transacaoService.findOne(transacao.getId()).get();
-        transacaUpdated.setMontante(transacaUpdated.getMontante().subtract(totalPago));
-        //Setando o estado ao salvar
-        var itemReciboUpdated = itemFacturaService.findOne(itemRecibo.getId()).get();
-        itemReciboUpdated.setEstado(EstadoItemFactura.PAGO);
 
         AplicacaoRecibo aplicacaoRecibo = aplicacaoReciboMapper.toEntity(aplicacaoReciboDTO);
         aplicacaoRecibo = aplicacaoReciboRepository.save(aplicacaoRecibo);
+
+        //Diminuindo o valor da transacao ao salvar
+        var transacaResult = transacaoService.findOne(transacao.getId());
+        if (transacaResult.isPresent()) {
+            var transacaoResultDTO = transacaResult.get();
+            transacaoResultDTO.setMontante(transacaoResultDTO.getMontante().subtract(totalPago));
+            transacaoService.partialUpdate(transacaoResultDTO);
+        }
+
+        //Setando o estado ao salvar
+        var itemReciboResult = itemFacturaService.findOne(itemRecibo.getId());
+        if (itemReciboResult.isPresent()) {
+            var itemReciboResultDTO = itemReciboResult.get();
+            itemReciboResultDTO.setEstado(EstadoItemFactura.PAGO);
+            itemFacturaService.partialUpdate(itemReciboResultDTO);
+        }
+
         return aplicacaoReciboMapper.toDto(aplicacaoRecibo);
     }
 
