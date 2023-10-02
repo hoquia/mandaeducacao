@@ -2,8 +2,10 @@ package com.ravunana.longonkelo;
 
 import com.ravunana.longonkelo.config.ApplicationProperties;
 import com.ravunana.longonkelo.config.CRLFLogConverter;
+import com.ravunana.longonkelo.config.LongonkeloException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Optional;
@@ -38,6 +40,7 @@ public class LongonkeloApp {
      * <p>
      * You can find more information on how profiles work with JHipster on <a href="https://www.jhipster.tech/profiles/">https://www.jhipster.tech/profiles/</a>.
      */
+
     @PostConstruct
     public void initApplication() {
         Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());

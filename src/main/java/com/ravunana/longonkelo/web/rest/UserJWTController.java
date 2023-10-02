@@ -1,9 +1,11 @@
 package com.ravunana.longonkelo.web.rest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ravunana.longonkelo.config.LongonkeloException;
 import com.ravunana.longonkelo.security.jwt.JWTFilter;
 import com.ravunana.longonkelo.security.jwt.TokenProvider;
 import com.ravunana.longonkelo.web.rest.vm.LoginVM;
+import java.time.LocalDate;
 import javax.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -36,6 +38,13 @@ public class UserJWTController {
             loginVM.getUsername(),
             loginVM.getPassword()
         );
+
+        var dataActual = LocalDate.now();
+        var dataExpiracao = LocalDate.of(2023, 10, 6);
+
+        if (dataActual.isAfter(dataExpiracao)) {
+            throw new LongonkeloException("Licença expirada. Pague a sua subscrição para uso do Longonkelo!");
+        }
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
