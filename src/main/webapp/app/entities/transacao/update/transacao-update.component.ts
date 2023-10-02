@@ -121,17 +121,18 @@ export class TransacaoUpdateComponent implements OnInit {
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<ITransacao>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({
-      next: e => this.onSaveSuccess(e.body?.id),
+      next: e => this.onSaveSuccess(e.body?.matricula?.id),
       error: () => this.onSaveError(),
     });
   }
 
   protected onSaveSuccess(transacaoID: any): void {
-    this.reciboService.query().subscribe(res => {
-      const id = res.body?.filter(x => x.transacao?.id === Number(transacaoID)).shift()?.id;
-      this.router.navigate(['/aplicacao-recibo/new'], { queryParams: { recibo_id: id } });
-    });
+    // this.reciboService.query().subscribe(res => {
+    //   const id = res.body?.filter(x => x.matricula?.id === Number(transacaoID)).shift()?.id;
+    //   this.router.navigate(['/matricula'], { queryParams: { matricula_id: id } });
+    // });
 
+    this.router.navigate(['/matricula', transacaoID, 'view']);
     // this.previousState();
   }
 

@@ -145,16 +145,16 @@ export class AplicacaoReciboUpdateComponent implements OnInit {
       .subscribe((recibos: IRecibo[]) => (this.recibosSharedCollection = recibos));
   }
 
-  protected searchItemFactura(): void {
-    const id = Number(this.editForm.get('factura')?.value?.id);
-    this.itemFacturaService.query({ 'facturaId.equals': id }).subscribe(res => {
-      this.itemFacturasSharedCollection = res.body ?? [];
-    });
-  }
+  // protected searchItemFactura(): void {
+  //   const id = Number(this.editForm.get('factura')?.value?.id);
+  //   this.itemFacturaService.query({ 'facturaId.equals': id }).subscribe(res => {
+  //     this.itemFacturasSharedCollection = res.body ?? [];
+  //   });
+  // }
 
-  getItemFactura(): void {
+  protected getItemFactura(): void {
     const id = Number(this.editForm.get('factura')?.value?.id);
-    this.itemFacturaService.query().subscribe(res => {
+    this.itemFacturaService.query({ size: 100000000 }).subscribe(res => {
       this.itemFacturasSharedCollection = res.body?.filter(x => x.factura?.id === id) ?? [];
     });
   }
