@@ -954,19 +954,19 @@ public class ReciboPagamentoReport {
         );
 
         // Codigo encriptacao da factura
-        layoutTable.addCell(
-            makeCellText(
-                "-Processado por programa valido nº.n31.1/AGT20 | Longonkelo",
-                Element.ALIGN_MIDDLE,
-                Element.ALIGN_LEFT,
-                fontNormal,
-                leading,
-                padding,
-                borderNone,
-                true,
-                false
-            )
-        );
+        // layoutTable.addCell(
+        //     makeCellText(
+        //         "-Processado por programa valido nº.n31.1/AGT20 | Longonkelo",
+        //         Element.ALIGN_MIDDLE,
+        //         Element.ALIGN_LEFT,
+        //         fontNormal,
+        //         leading,
+        //         padding,
+        //         borderNone,
+        //         true,
+        //         false
+        //     )
+        // );
 
         layoutTable.addCell(
             makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
