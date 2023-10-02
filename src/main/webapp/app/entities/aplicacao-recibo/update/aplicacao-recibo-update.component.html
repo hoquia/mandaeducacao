@@ -204,13 +204,14 @@
         </button>
 
         <button
-          type="submit"
+          type="button"
           id="save-entity"
           data-cy="entityCreateSaveButton"
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-success"
+          (click)="save(true)"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span>Guardar e Continuar</span>
+          <span>Salva e continua</span>
         </button>
 
         <button
@@ -220,7 +221,7 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span>Guardar e Sair</span>
+          <span>Finalizar</span>
         </button>
       </div>
     </form>

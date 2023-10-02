@@ -380,7 +380,7 @@ public class ReciboPagamentoReport {
         );
         detalheFactura.addCell(
             makeCellText(
-                recibo.getId().toString(),
+                recibo.getNumero(),
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_LEFT,
                 fontNormal,

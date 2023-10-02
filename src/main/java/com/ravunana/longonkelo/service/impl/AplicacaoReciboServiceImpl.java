@@ -1,7 +1,9 @@
 package com.ravunana.longonkelo.service.impl;
 
 import com.ravunana.longonkelo.config.Constants;
+import com.ravunana.longonkelo.config.LongonkeloException;
 import com.ravunana.longonkelo.domain.AplicacaoRecibo;
+import com.ravunana.longonkelo.domain.enumeration.EstadoDocumentoComercial;
 import com.ravunana.longonkelo.domain.enumeration.EstadoItemFactura;
 import com.ravunana.longonkelo.repository.AplicacaoReciboRepository;
 import com.ravunana.longonkelo.service.AplicacaoReciboService;
@@ -28,11 +30,11 @@ public class AplicacaoReciboServiceImpl implements AplicacaoReciboService {
     private final Logger log = LoggerFactory.getLogger(AplicacaoReciboServiceImpl.class);
 
     private final AplicacaoReciboRepository aplicacaoReciboRepository;
-
     private final AplicacaoReciboMapper aplicacaoReciboMapper;
     private final TransacaoServiceImpl transacaoService;
     private final ItemFacturaServiceImpl itemFacturaService;
     private final BigDecimal PERCENTAGEM_CALCULO_MULTA_JUROS = new BigDecimal(100);
+    private final ReciboServiceImpl reciboService;
 
     public AplicacaoReciboServiceImpl(
         AplicacaoReciboRepository aplicacaoReciboRepository,
@@ -40,12 +42,14 @@ public class AplicacaoReciboServiceImpl implements AplicacaoReciboService {
         FacturaServiceImpl facturaService,
         ItemFacturaServiceImpl itemFacturaService,
         TransacaoServiceImpl transacaoService,
-        ItemFacturaServiceImpl itemFacturaService1
+        ItemFacturaServiceImpl itemFacturaService1,
+        ReciboServiceImpl reciboService
     ) {
         this.aplicacaoReciboRepository = aplicacaoReciboRepository;
         this.aplicacaoReciboMapper = aplicacaoReciboMapper;
         this.transacaoService = transacaoService;
         this.itemFacturaService = itemFacturaService1;
+        this.reciboService = reciboService;
     }
 
     @Override
@@ -60,21 +64,25 @@ public class AplicacaoReciboServiceImpl implements AplicacaoReciboService {
         var planoMulta = emolumento.getPlanoMulta();
         var dataActual = Constants.DATE_TIME;
         var dataPagametoMontante = transacao.getData();
-        var dataAplicacaoMulta = planoMulta.getDiaAplicacaoMulta();
-        var dataAplicacaoJuros = planoMulta.getDiaAplicacaoJuro();
+
         var dataExpiracaoRecibo = transacao.getData().getDayOfMonth();
         var totalFactura = factura.getTotalPagar();
         var totalPago = itemRecibo.getPrecoTotal();
+        BigDecimal totalMulta = BigDecimal.ZERO;
+        BigDecimal totalJuro = BigDecimal.ZERO;
         var trasacaMontante = transacao.getMontante();
         var precoUnitarioEmolumento = emolumento.getPreco();
 
         //Verificando se o emolumento ja foi pago  TODO:EDMAR_ZUNGO, VERIFICAR O ANO DE PAGAMENTO DO EMOLUMENTO
         if (itemRecibo.getEstado().equals(EstadoItemFactura.PAGO)) {
-            throw new RuntimeException("O Emolumento selecionado já foi pago. Emolumento: " + emolumento.getNome());
+            throw new LongonkeloException("O Emolumento selecionado " + emolumento.getNome() + "já foi pago");
         }
 
         // Validando se existe plano de multa ou nao
         if (planoMulta != null) {
+            var dataAplicacaoMulta = planoMulta.getDiaAplicacaoMulta();
+            var dataAplicacaoJuros = planoMulta.getDiaAplicacaoJuro();
+
             var taxaAplicacaoMulta = planoMulta.getTaxaMulta();
             var taxaAplicacaoJuros = planoMulta.getTaxaJuro();
 
@@ -90,8 +98,8 @@ public class AplicacaoReciboServiceImpl implements AplicacaoReciboService {
                 //                TODO:EDMAR_ZUNGO, REFACTORAR COLOCAR A CONDICAO SUBCEQUENTE NA MESMA LINHA QUE A BAIXO
                 if (dataExpiracaoRecibo >= dataAplicacaoMulta) {
                     if (emolumento.getPlanoMulta().getIsTaxaMultaPercentual()) {
-                        var multa = precoUnitarioEmolumento.multiply(taxaAplicacaoMulta.divide(PERCENTAGEM_CALCULO_MULTA_JUROS));
-                        precoUnitarioEmolumento.add(multa);
+                        totalMulta = precoUnitarioEmolumento.multiply(taxaAplicacaoMulta.divide(PERCENTAGEM_CALCULO_MULTA_JUROS));
+                        precoUnitarioEmolumento.add(totalMulta);
                     }
 
                     precoUnitarioEmolumento.add(taxaAplicacaoMulta);
@@ -106,8 +114,8 @@ public class AplicacaoReciboServiceImpl implements AplicacaoReciboService {
                 //                TODO:EDMAR_ZUNGO, REFACTORAR COLOCAR A CONDICAO SUBCEQUENTE NA MESMA LINHA QUE A BAIXO
                 if (dataPagametoMontante.getDayOfMonth() > dataAplicacaoJuros) {
                     if (emolumento.getPlanoMulta().getIsTaxaJuroPercentual()) {
-                        var juros = precoUnitarioEmolumento.multiply(taxaAplicacaoJuros.divide(PERCENTAGEM_CALCULO_MULTA_JUROS));
-                        precoUnitarioEmolumento.add(juros);
+                        totalJuro = precoUnitarioEmolumento.multiply(taxaAplicacaoJuros.divide(PERCENTAGEM_CALCULO_MULTA_JUROS));
+                        precoUnitarioEmolumento.add(totalJuro);
                     }
 
                     precoUnitarioEmolumento.add(taxaAplicacaoJuros);
@@ -145,6 +153,24 @@ public class AplicacaoReciboServiceImpl implements AplicacaoReciboService {
             var itemReciboResultDTO = itemReciboResult.get();
             itemReciboResultDTO.setEstado(EstadoItemFactura.PAGO);
             itemFacturaService.partialUpdate(itemReciboResultDTO);
+        }
+
+        var reciboResult = reciboService.findOne(aplicacaoRecibo.getId());
+
+        if (reciboResult.isPresent()) {
+            var recibo = reciboResult.get();
+
+            recibo.setTotalJuro(recibo.getTotalJuro().add(totalJuro));
+            recibo.setTotalPago(recibo.getTotalPago().add(totalPago));
+            recibo.setTotalPagar(recibo.getTotalPagar().add(totalPago));
+            recibo.setTotalTroco(recibo.getTotalTroco().add(recibo.getTotalPagar().subtract(recibo.getTotalPago())));
+            recibo.setTotalFalta(recibo.getTotalTroco());
+
+            if (recibo.getTotalPagar().equals(recibo.getTotalPago())) {
+                recibo.setEstado(EstadoDocumentoComercial.N);
+            }
+
+            reciboService.partialUpdate(recibo);
         }
 
         return aplicacaoReciboMapper.toDto(aplicacaoRecibo);
