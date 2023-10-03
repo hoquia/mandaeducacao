@@ -164,7 +164,7 @@ export class AplicacaoReciboUpdateComponent implements OnInit {
   protected getItemFactura(): void {
     const facturaID = Number(this.editForm.get('factura')?.value?.id);
 
-    alert(facturaID);
+    // alert(facturaID);
 
     this.itemFacturaService.query({ 'facturaId.equals': facturaID }).subscribe(res => {
       this.itemFacturasSharedCollection =
