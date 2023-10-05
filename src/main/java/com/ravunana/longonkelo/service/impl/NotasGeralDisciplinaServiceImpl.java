@@ -6,9 +6,12 @@ import com.ravunana.longonkelo.security.SecurityUtils;
 import com.ravunana.longonkelo.service.NotasGeralDisciplinaService;
 import com.ravunana.longonkelo.service.UserService;
 import com.ravunana.longonkelo.service.dto.NotasGeralDisciplinaDTO;
+import com.ravunana.longonkelo.service.dto.NotasPeriodicaDisciplinaDTO;
 import com.ravunana.longonkelo.service.mapper.NotasGeralDisciplinaMapper;
 import com.ravunana.longonkelo.service.mapper.UserMapper;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -160,5 +163,25 @@ public class NotasGeralDisciplinaServiceImpl implements NotasGeralDisciplinaServ
         var mediaFinalDisciplina = (media1 + media2 + media3 + exame + recurso + exameEspecial + notaConcelho) / 7;
 
         return mediaFinalDisciplina;
+    }
+
+    public Optional<NotasGeralDisciplina> getAllNotasWithMatriculaDisciplinaPeriodoLancamento(
+        NotasPeriodicaDisciplinaDTO notasPeriodicaDisciplinaDTO
+    ) {
+        var matriculaID = notasPeriodicaDisciplinaDTO.getMatricula().getId();
+        var disciplinaID = notasPeriodicaDisciplinaDTO.getDisciplinaCurricular().getId();
+        var priodoID = notasPeriodicaDisciplinaDTO.getPeriodoLancamento();
+
+        var notaGeralResult = notasGeralDisciplinaRepository
+            .findAll()
+            .stream()
+            .filter(ng ->
+                ng.getMatricula().getId().equals(matriculaID) &&
+                ng.getDisciplinaCurricular().getId().equals(disciplinaID) &&
+                ng.getPeriodoLancamento().equals(priodoID)
+            )
+            .findFirst();
+
+        return notaGeralResult;
     }
 }

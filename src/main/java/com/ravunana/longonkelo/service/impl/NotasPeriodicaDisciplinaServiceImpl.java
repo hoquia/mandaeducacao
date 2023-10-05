@@ -1,13 +1,18 @@
 package com.ravunana.longonkelo.service.impl;
 
+import com.ravunana.longonkelo.config.Constants;
+import com.ravunana.longonkelo.domain.NotasGeralDisciplina;
 import com.ravunana.longonkelo.domain.NotasPeriodicaDisciplina;
 import com.ravunana.longonkelo.repository.NotasPeriodicaDisciplinaRepository;
 import com.ravunana.longonkelo.security.SecurityUtils;
 import com.ravunana.longonkelo.service.NotasPeriodicaDisciplinaService;
 import com.ravunana.longonkelo.service.UserService;
+import com.ravunana.longonkelo.service.dto.EstadoDisciplinaCurricularDTO;
+import com.ravunana.longonkelo.service.dto.NotasGeralDisciplinaDTO;
 import com.ravunana.longonkelo.service.dto.NotasPeriodicaDisciplinaDTO;
 import com.ravunana.longonkelo.service.mapper.NotasPeriodicaDisciplinaMapper;
 import com.ravunana.longonkelo.service.mapper.UserMapper;
+import java.math.BigDecimal;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,16 +37,22 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
     private final UserService userService;
     private final UserMapper userMapper;
 
+    private final NotasGeralDisciplinaServiceImpl notasGeralDisciplinaService;
+
+    public static final Double ZERO = 0d;
+
     public NotasPeriodicaDisciplinaServiceImpl(
         NotasPeriodicaDisciplinaRepository notasPeriodicaDisciplinaRepository,
         NotasPeriodicaDisciplinaMapper notasPeriodicaDisciplinaMapper,
         UserService userService,
-        UserMapper userMapper
+        UserMapper userMapper,
+        NotasGeralDisciplinaServiceImpl notasGeralDisciplinaService
     ) {
         this.notasPeriodicaDisciplinaRepository = notasPeriodicaDisciplinaRepository;
         this.notasPeriodicaDisciplinaMapper = notasPeriodicaDisciplinaMapper;
         this.userService = userService;
         this.userMapper = userMapper;
+        this.notasGeralDisciplinaService = notasGeralDisciplinaService;
     }
 
     @Override
@@ -63,6 +74,19 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
 
         NotasPeriodicaDisciplina notasPeriodicaDisciplina = notasPeriodicaDisciplinaMapper.toEntity(notasPeriodicaDisciplinaDTO);
         notasPeriodicaDisciplina = notasPeriodicaDisciplinaRepository.save(notasPeriodicaDisciplina);
+
+        // Salvando a nota geral disciplina
+        var notaGeralDisciplina = notasGeralDisciplinaService.getAllNotasWithMatriculaDisciplinaPeriodoLancamento(
+            notasPeriodicaDisciplinaDTO
+        );
+        if (notaGeralDisciplina.isPresent()) {
+            var notaGeralDisciplinaSave = detalhesNotaGeralDisciplina(notasPeriodicaDisciplinaDTO);
+            notasGeralDisciplinaService.save(notaGeralDisciplinaSave);
+        } else {
+            var notaGeralDisciplinaFirst = detalhesNotaGeralDisciplina(notasPeriodicaDisciplinaDTO);
+            notasGeralDisciplinaService.save(notaGeralDisciplinaFirst);
+        }
+
         return notasPeriodicaDisciplinaMapper.toDto(notasPeriodicaDisciplina);
     }
 
@@ -132,6 +156,18 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
         return sb.toString();
     }
 
+    public String getChaveCompostaNotaGeral(NotasPeriodicaDisciplinaDTO notasPeriodicaDisciplinaDTO) {
+        var discente = notasPeriodicaDisciplinaDTO.getMatricula().getDiscente().getId();
+        var disciplina = notasPeriodicaDisciplinaDTO.getDisciplinaCurricular().getId();
+        var ano = notasPeriodicaDisciplinaDTO.getTurma().getId();
+
+        StringBuilder chave = new StringBuilder();
+        chave.append(ano).append(disciplina).append(discente);
+        var chaveComposta = chave.toString();
+
+        return chaveComposta;
+    }
+
     @Override
     public Double calcularMedia(NotasPeriodicaDisciplinaDTO notasPeriodicaDisciplinaDTO) {
         // nota1 + nota2 + nota3 / 3
@@ -153,6 +189,74 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
         }
 
         Double media = (nota1 + nota2 + nota3) / 3;
+
+        return media;
+    }
+
+    public NotasGeralDisciplinaDTO detalhesNotaGeralDisciplina(NotasPeriodicaDisciplinaDTO notasPeriodicaDisciplinaDTO) {
+        var notaGeralDisciplinaDTO = new NotasGeralDisciplinaDTO();
+        var chaveCompostaNotaGeralDisciplina = getChaveCompostaNotaGeral(notasPeriodicaDisciplinaDTO);
+        var media = ZERO;
+
+        notaGeralDisciplinaDTO.setPeriodoLancamento(notasPeriodicaDisciplinaDTO.getPeriodoLancamento());
+        notaGeralDisciplinaDTO.setMatricula(notasPeriodicaDisciplinaDTO.getMatricula());
+        notaGeralDisciplinaDTO.setDisciplinaCurricular(notasPeriodicaDisciplinaDTO.getDisciplinaCurricular());
+        notaGeralDisciplinaDTO.setDocente(notasPeriodicaDisciplinaDTO.getDocente());
+        notaGeralDisciplinaDTO.setExame(ZERO);
+        notaGeralDisciplinaDTO.setExameEspecial(ZERO);
+        notaGeralDisciplinaDTO.setRecurso(ZERO);
+        notaGeralDisciplinaDTO.setNotaConselho(ZERO);
+        notaGeralDisciplinaDTO.setFaltaJusticada(notasPeriodicaDisciplinaDTO.getFaltaJusticada());
+        notaGeralDisciplinaDTO.setFaltaInjustificada(notasPeriodicaDisciplinaDTO.getFaltaInjustificada());
+        notaGeralDisciplinaDTO.setTimestamp(Constants.DATE_TIME);
+        notaGeralDisciplinaDTO.setChaveComposta(chaveCompostaNotaGeralDisciplina);
+        notaGeralDisciplinaDTO.setUtilizador(notasPeriodicaDisciplinaDTO.getUtilizador());
+
+        if (notasPeriodicaDisciplinaDTO.getPeriodoLancamento().equals(1)) {
+            notaGeralDisciplinaDTO.setMedia1(notasPeriodicaDisciplinaDTO.getMedia());
+            notaGeralDisciplinaDTO.setMedia2(ZERO);
+            notaGeralDisciplinaDTO.setMedia3(ZERO);
+
+            media = calcuarMediaFinalDisciplina(notaGeralDisciplinaDTO);
+            if (media > 0) {
+                notaGeralDisciplinaDTO.setEstado(notaGeralDisciplinaDTO.getEstado());
+            } else {
+                notaGeralDisciplinaDTO.setEstado(notaGeralDisciplinaDTO.getEstado());
+            }
+        }
+        if (notasPeriodicaDisciplinaDTO.getPeriodoLancamento().equals(2)) {
+            notaGeralDisciplinaDTO.setMedia2(notasPeriodicaDisciplinaDTO.getMedia());
+            notaGeralDisciplinaDTO.setMedia3(ZERO);
+
+            media = calcuarMediaFinalDisciplina(notaGeralDisciplinaDTO);
+            if (media > 0) {
+                notaGeralDisciplinaDTO.setEstado(notaGeralDisciplinaDTO.getEstado());
+            } else {
+                notaGeralDisciplinaDTO.setEstado(notaGeralDisciplinaDTO.getEstado());
+            }
+        }
+        if (notasPeriodicaDisciplinaDTO.getPeriodoLancamento().equals(3)) {
+            notaGeralDisciplinaDTO.setMedia3(notasPeriodicaDisciplinaDTO.getMedia());
+
+            media = calcuarMediaFinalDisciplina(notaGeralDisciplinaDTO);
+            if (media > 0) {
+                notaGeralDisciplinaDTO.setEstado(notaGeralDisciplinaDTO.getEstado());
+            } else {
+                notaGeralDisciplinaDTO.setEstado(notaGeralDisciplinaDTO.getEstado());
+            }
+        }
+
+        notaGeralDisciplinaDTO.setMediaFinalDisciplina(media);
+
+        return notaGeralDisciplinaDTO;
+    }
+
+    public Double calcuarMediaFinalDisciplina(NotasGeralDisciplinaDTO notasGeralDisciplinaDTO) {
+        var media1 = notasGeralDisciplinaDTO.getMedia1();
+        var media2 = notasGeralDisciplinaDTO.getMedia2();
+        var media3 = notasGeralDisciplinaDTO.getMedia3();
+
+        var media = (media1 + media2 + media3) / 3;
 
         return media;
     }
