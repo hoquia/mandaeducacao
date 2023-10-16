@@ -73,6 +73,8 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
 
         // TODO: Pegar o docente pelo utilizador logado no sistema
 
+        getNotaGeralDisciplina(notasPeriodicaDisciplinaDTO);
+
         NotasPeriodicaDisciplina notasPeriodicaDisciplina = notasPeriodicaDisciplinaMapper.toEntity(notasPeriodicaDisciplinaDTO);
         notasPeriodicaDisciplina = notasPeriodicaDisciplinaRepository.save(notasPeriodicaDisciplina);
 
@@ -86,8 +88,6 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
         //        } else {
         //           getNotaGeralDisciplina(notasPeriodicaDisciplinaDTO);
         //        }
-
-        getNotaGeralDisciplina(notasPeriodicaDisciplinaDTO);
 
         return notasPeriodicaDisciplinaMapper.toDto(notasPeriodicaDisciplina);
     }
@@ -232,12 +232,15 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
             notaGeralDisciplinaDTO.setMedia3(notasPeriodicaDisciplinaDTO.getMedia());
         }
 
-        var mediaFinalDisciplina =
-            (notaGeralDisciplinaDTO.getMedia1() + notaGeralDisciplinaDTO.getMedia2() + notaGeralDisciplinaDTO.getMedia3()) / 3;
-
-        notaGeralDisciplinaDTO.setTimestamp(Constants.DATE_TIME);
+        var mediaFinalDisciplina = calcuarMediaFinalDisciplina(
+            notaGeralDisciplinaDTO.getMedia1(),
+            notaGeralDisciplinaDTO.getMedia2(),
+            notaGeralDisciplinaDTO.getMedia3()
+        );
 
         notaGeralDisciplinaDTO.setMediaFinalDisciplina(mediaFinalDisciplina);
+
+        notaGeralDisciplinaDTO.setTimestamp(Constants.DATE_TIME);
 
         if (notaGeralEncontrada.isPresent()) {
             notaGeralDisciplinaDTO.setId(notaGeralEncontrada.get().getId());
@@ -252,7 +255,7 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
         var media2 = nota2;
         var media3 = nota3;
 
-        var media = (media1 + media2 + media3) / 3;
+        Double media = (media1 + media2 + media3) / 3;
 
         return media;
     }

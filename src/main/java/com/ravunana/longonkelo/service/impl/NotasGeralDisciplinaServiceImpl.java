@@ -49,14 +49,14 @@ public class NotasGeralDisciplinaServiceImpl implements NotasGeralDisciplinaServ
     @Override
     public NotasGeralDisciplinaDTO save(NotasGeralDisciplinaDTO notasGeralDisciplinaDTO) {
         log.debug("Request to save NotasGeralDisciplina : {}", notasGeralDisciplinaDTO);
-        var chaveComposta = getChaveComposta(notasGeralDisciplinaDTO);
-        notasGeralDisciplinaDTO.setChaveComposta(chaveComposta);
-
-        var mediaFinalDisciplina = calcularMediaFinalDisciplina(notasGeralDisciplinaDTO);
-        notasGeralDisciplinaDTO.setMediaFinalDisciplina(mediaFinalDisciplina);
-
-        var utilizador = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
-        notasGeralDisciplinaDTO.setUtilizador(userMapper.toDtoLogin(utilizador));
+        //        var chaveComposta = getChaveComposta(notasGeralDisciplinaDTO);
+        //        notasGeralDisciplinaDTO.setChaveComposta(chaveComposta);
+        //
+        //        var mediaFinalDisciplina = calcularMediaFinalDisciplina(notasGeralDisciplinaDTO);
+        //        notasGeralDisciplinaDTO.setMediaFinalDisciplina(mediaFinalDisciplina);
+        //
+        //        var utilizador = userService.getUserWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
+        //        notasGeralDisciplinaDTO.setUtilizador(userMapper.toDtoLogin(utilizador));
 
         NotasGeralDisciplina notasGeralDisciplina = notasGeralDisciplinaMapper.toEntity(notasGeralDisciplinaDTO);
         notasGeralDisciplina = notasGeralDisciplinaRepository.save(notasGeralDisciplina);
@@ -67,8 +67,8 @@ public class NotasGeralDisciplinaServiceImpl implements NotasGeralDisciplinaServ
     public NotasGeralDisciplinaDTO update(NotasGeralDisciplinaDTO notasGeralDisciplinaDTO) {
         log.debug("Request to update NotasGeralDisciplina : {}", notasGeralDisciplinaDTO);
 
-        var mediaFinalDisciplina = calcularMediaFinalDisciplina(notasGeralDisciplinaDTO);
-        notasGeralDisciplinaDTO.setMediaFinalDisciplina(mediaFinalDisciplina);
+        //        var mediaFinalDisciplina = calcularMediaFinalDisciplina(notasGeralDisciplinaDTO);
+        //        notasGeralDisciplinaDTO.setMediaFinalDisciplina(mediaFinalDisciplina);
 
         NotasGeralDisciplina notasGeralDisciplina = notasGeralDisciplinaMapper.toEntity(notasGeralDisciplinaDTO);
         notasGeralDisciplina = notasGeralDisciplinaRepository.save(notasGeralDisciplina);
@@ -79,8 +79,8 @@ public class NotasGeralDisciplinaServiceImpl implements NotasGeralDisciplinaServ
     public Optional<NotasGeralDisciplinaDTO> partialUpdate(NotasGeralDisciplinaDTO notasGeralDisciplinaDTO) {
         log.debug("Request to partially update NotasGeralDisciplina : {}", notasGeralDisciplinaDTO);
 
-        var mediaFinalDisciplina = calcularMediaFinalDisciplina(notasGeralDisciplinaDTO);
-        notasGeralDisciplinaDTO.setMediaFinalDisciplina(mediaFinalDisciplina);
+        //        var mediaFinalDisciplina = calcularMediaFinalDisciplina(notasGeralDisciplinaDTO);
+        //        notasGeralDisciplinaDTO.setMediaFinalDisciplina(mediaFinalDisciplina);
 
         return notasGeralDisciplinaRepository
             .findById(notasGeralDisciplinaDTO.getId())
