@@ -2,6 +2,7 @@ package com.ravunana.longonkelo.service.impl;
 
 import com.ravunana.longonkelo.config.Constants;
 import com.ravunana.longonkelo.domain.NotasPeriodicaDisciplina;
+import com.ravunana.longonkelo.domain.enumeration.EstadoAcademico;
 import com.ravunana.longonkelo.repository.NotasGeralDisciplinaRepository;
 import com.ravunana.longonkelo.repository.NotasPeriodicaDisciplinaRepository;
 import com.ravunana.longonkelo.security.SecurityUtils;
@@ -96,8 +97,10 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
     public NotasPeriodicaDisciplinaDTO update(NotasPeriodicaDisciplinaDTO notasPeriodicaDisciplinaDTO) {
         log.debug("Request to update NotasPeriodicaDisciplina : {}", notasPeriodicaDisciplinaDTO);
 
-        var media = calcularMedia(notasPeriodicaDisciplinaDTO);
-        notasPeriodicaDisciplinaDTO.setMedia(media);
+        //        var media = calcularMedia(notasPeriodicaDisciplinaDTO);
+        //        notasPeriodicaDisciplinaDTO.setMedia(media);
+
+        getNotaGeralDisciplina(notasPeriodicaDisciplinaDTO);
 
         NotasPeriodicaDisciplina notasPeriodicaDisciplina = notasPeriodicaDisciplinaMapper.toEntity(notasPeriodicaDisciplinaDTO);
         notasPeriodicaDisciplina = notasPeriodicaDisciplinaRepository.save(notasPeriodicaDisciplina);
@@ -108,8 +111,10 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
     public Optional<NotasPeriodicaDisciplinaDTO> partialUpdate(NotasPeriodicaDisciplinaDTO notasPeriodicaDisciplinaDTO) {
         log.debug("Request to partially update NotasPeriodicaDisciplina : {}", notasPeriodicaDisciplinaDTO);
 
-        var media = calcularMedia(notasPeriodicaDisciplinaDTO);
-        notasPeriodicaDisciplinaDTO.setMedia(media);
+        getNotaGeralDisciplina(notasPeriodicaDisciplinaDTO);
+
+        //        var media = calcularMedia(notasPeriodicaDisciplinaDTO);
+        //        notasPeriodicaDisciplinaDTO.setMedia(media);
 
         return notasPeriodicaDisciplinaRepository
             .findById(notasPeriodicaDisciplinaDTO.getId())
