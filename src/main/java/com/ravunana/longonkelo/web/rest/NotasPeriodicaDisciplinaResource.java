@@ -5,9 +5,15 @@ import com.ravunana.longonkelo.service.NotasPeriodicaDisciplinaQueryService;
 import com.ravunana.longonkelo.service.NotasPeriodicaDisciplinaService;
 import com.ravunana.longonkelo.service.criteria.NotasPeriodicaDisciplinaCriteria;
 import com.ravunana.longonkelo.service.dto.NotasPeriodicaDisciplinaDTO;
+import com.ravunana.longonkelo.service.report.BoletimNotasServiceReport;
 import com.ravunana.longonkelo.web.rest.errors.BadRequestAlertException;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -16,9 +22,12 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -46,14 +55,18 @@ public class NotasPeriodicaDisciplinaResource {
 
     private final NotasPeriodicaDisciplinaQueryService notasPeriodicaDisciplinaQueryService;
 
+    private final BoletimNotasServiceReport boletimNotasServiceReport;
+
     public NotasPeriodicaDisciplinaResource(
         NotasPeriodicaDisciplinaService notasPeriodicaDisciplinaService,
         NotasPeriodicaDisciplinaRepository notasPeriodicaDisciplinaRepository,
-        NotasPeriodicaDisciplinaQueryService notasPeriodicaDisciplinaQueryService
+        NotasPeriodicaDisciplinaQueryService notasPeriodicaDisciplinaQueryService,
+        BoletimNotasServiceReport boletimNotasServiceReport
     ) {
         this.notasPeriodicaDisciplinaService = notasPeriodicaDisciplinaService;
         this.notasPeriodicaDisciplinaRepository = notasPeriodicaDisciplinaRepository;
         this.notasPeriodicaDisciplinaQueryService = notasPeriodicaDisciplinaQueryService;
+        this.boletimNotasServiceReport = boletimNotasServiceReport;
     }
 
     /**

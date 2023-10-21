@@ -5,7 +5,9 @@ import com.ravunana.longonkelo.repository.EstadoDisciplinaCurricularRepository;
 import com.ravunana.longonkelo.service.EstadoDisciplinaCurricularService;
 import com.ravunana.longonkelo.service.dto.EstadoDisciplinaCurricularDTO;
 import com.ravunana.longonkelo.service.mapper.EstadoDisciplinaCurricularMapper;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -87,5 +89,10 @@ public class EstadoDisciplinaCurricularServiceImpl implements EstadoDisciplinaCu
     public void delete(Long id) {
         log.debug("Request to delete EstadoDisciplinaCurricular : {}", id);
         estadoDisciplinaCurricularRepository.deleteById(id);
+    }
+
+    public List<EstadoDisciplinaCurricularDTO> findAll() {
+        var listaEstados = estadoDisciplinaCurricularRepository.findAll().stream().collect(Collectors.toList());
+        return estadoDisciplinaCurricularMapper.toDto(listaEstados);
     }
 }

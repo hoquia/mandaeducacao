@@ -5,9 +5,15 @@ import com.ravunana.longonkelo.service.MatriculaQueryService;
 import com.ravunana.longonkelo.service.MatriculaService;
 import com.ravunana.longonkelo.service.criteria.MatriculaCriteria;
 import com.ravunana.longonkelo.service.dto.MatriculaDTO;
+import com.ravunana.longonkelo.service.report.BoletimNotasServiceReport;
 import com.ravunana.longonkelo.web.rest.errors.BadRequestAlertException;
+import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -16,9 +22,12 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -45,15 +54,18 @@ public class MatriculaResource {
     private final MatriculaRepository matriculaRepository;
 
     private final MatriculaQueryService matriculaQueryService;
+    private final BoletimNotasServiceReport boletimNotasServiceReport;
 
     public MatriculaResource(
         MatriculaService matriculaService,
         MatriculaRepository matriculaRepository,
-        MatriculaQueryService matriculaQueryService
+        MatriculaQueryService matriculaQueryService,
+        BoletimNotasServiceReport boletimNotasServiceReport
     ) {
         this.matriculaService = matriculaService;
         this.matriculaRepository = matriculaRepository;
         this.matriculaQueryService = matriculaQueryService;
+        this.boletimNotasServiceReport = boletimNotasServiceReport;
     }
 
     /**
@@ -203,5 +215,21 @@ public class MatriculaResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @GetMapping("/matriculas/boletim-notas/{matriculaID}/{periodo}")
+    public ResponseEntity<Resource> gerarBoletimNotas(@PathVariable Long matriculaID, @PathVariable Integer periodo) throws IOException {
+        var filePath = boletimNotasServiceReport.gerarPdf(matriculaID, periodo);
+        File file = new File(filePath);
+
+        Path path = Paths.get(file.getAbsolutePath());
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(resource);
     }
 }

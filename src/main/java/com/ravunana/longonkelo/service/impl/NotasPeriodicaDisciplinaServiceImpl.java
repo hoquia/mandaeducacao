@@ -2,14 +2,16 @@ package com.ravunana.longonkelo.service.impl;
 
 import com.ravunana.longonkelo.config.Constants;
 import com.ravunana.longonkelo.domain.NotasPeriodicaDisciplina;
-import com.ravunana.longonkelo.domain.enumeration.EstadoAcademico;
+import com.ravunana.longonkelo.domain.enumeration.CategoriaClassificacao;
 import com.ravunana.longonkelo.repository.NotasGeralDisciplinaRepository;
 import com.ravunana.longonkelo.repository.NotasPeriodicaDisciplinaRepository;
 import com.ravunana.longonkelo.security.SecurityUtils;
 import com.ravunana.longonkelo.service.NotasPeriodicaDisciplinaService;
 import com.ravunana.longonkelo.service.UserService;
+import com.ravunana.longonkelo.service.dto.EstadoDisciplinaCurricularDTO;
 import com.ravunana.longonkelo.service.dto.NotasGeralDisciplinaDTO;
 import com.ravunana.longonkelo.service.dto.NotasPeriodicaDisciplinaDTO;
+import com.ravunana.longonkelo.service.mapper.NotasGeralDisciplinaMapper;
 import com.ravunana.longonkelo.service.mapper.NotasPeriodicaDisciplinaMapper;
 import com.ravunana.longonkelo.service.mapper.UserMapper;
 import java.util.Optional;
@@ -32,6 +34,9 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
     private final NotasPeriodicaDisciplinaRepository notasPeriodicaDisciplinaRepository;
 
     private final NotasPeriodicaDisciplinaMapper notasPeriodicaDisciplinaMapper;
+    private final EstadoDisciplinaCurricularServiceImpl estadoDisciplinaCurricularService;
+
+    private final NotasGeralDisciplinaMapper notasGeralDisciplinaMapper;
 
     private final UserService userService;
     private final UserMapper userMapper;
@@ -44,6 +49,8 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
     public NotasPeriodicaDisciplinaServiceImpl(
         NotasPeriodicaDisciplinaRepository notasPeriodicaDisciplinaRepository,
         NotasPeriodicaDisciplinaMapper notasPeriodicaDisciplinaMapper,
+        EstadoDisciplinaCurricularServiceImpl estadoDisciplinaCurricularService,
+        NotasGeralDisciplinaMapper notasGeralDisciplinaMapper,
         UserService userService,
         UserMapper userMapper,
         NotasGeralDisciplinaServiceImpl notasGeralDisciplinaService,
@@ -51,15 +58,51 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
     ) {
         this.notasPeriodicaDisciplinaRepository = notasPeriodicaDisciplinaRepository;
         this.notasPeriodicaDisciplinaMapper = notasPeriodicaDisciplinaMapper;
+        this.estadoDisciplinaCurricularService = estadoDisciplinaCurricularService;
+        this.notasGeralDisciplinaMapper = notasGeralDisciplinaMapper;
         this.userService = userService;
         this.userMapper = userMapper;
         this.notasGeralDisciplinaService = notasGeralDisciplinaService;
         this.notasGeralDisciplinaRepository = notasGeralDisciplinaRepository;
     }
 
+    private EstadoDisciplinaCurricularDTO getEstadoNota(Double media) {
+        EstadoDisciplinaCurricularDTO estado = null;
+        if (media >= 10d) {
+            estado =
+                estadoDisciplinaCurricularService
+                    .findAll()
+                    .stream()
+                    .filter(e -> e.getClassificacao().equals(CategoriaClassificacao.APROVADO))
+                    .findFirst()
+                    .get();
+            return estado;
+        } else {
+            estado =
+                estadoDisciplinaCurricularService
+                    .findAll()
+                    .stream()
+                    .filter(e -> e.getClassificacao().equals(CategoriaClassificacao.REPROVADO))
+                    .findFirst()
+                    .get();
+            return estado;
+        }
+    }
+
     @Override
     public NotasPeriodicaDisciplinaDTO save(NotasPeriodicaDisciplinaDTO notasPeriodicaDisciplinaDTO) {
         log.debug("Request to save NotasPeriodicaDisciplina : {}", notasPeriodicaDisciplinaDTO);
+
+        // na primeira fase desse codigo ou lancamento de notas do periodo
+        /*
+        tens tres variaveis nota1, nota2, nota3
+        lancas a nota1 = 10
+        o codigo corre e salva
+        questão? qual é o valor da nota2 e nota3?
+        É atribuido o valor 0 para elas, ok
+        lanço a notas2 = 12 qual o valor da nota1 e nota 3?
+        A nota1 permanece 10 e a nota2 é actualizada para 12 e a nota3 recebe 0 e é actualizada a media, testa esse cenario. Just Look
+        * */
 
         var chaveComposta = getChaveComposta(notasPeriodicaDisciplinaDTO);
         notasPeriodicaDisciplinaDTO.setChaveComposta(chaveComposta);
@@ -71,13 +114,16 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
         notasPeriodicaDisciplinaDTO.setUtilizador(userMapper.toDtoLogin(utilizador));
 
         // TODO.RC: Atribuir o estado pela media do aluno
+        notasPeriodicaDisciplinaDTO.setEstado(getEstadoNota(media));
 
         // TODO: Pegar o docente pelo utilizador logado no sistema
 
-        getNotaGeralDisciplina(notasPeriodicaDisciplinaDTO);
-
         NotasPeriodicaDisciplina notasPeriodicaDisciplina = notasPeriodicaDisciplinaMapper.toEntity(notasPeriodicaDisciplinaDTO);
         notasPeriodicaDisciplina = notasPeriodicaDisciplinaRepository.save(notasPeriodicaDisciplina);
+
+        // por causa da transacao a entidade que depend da outra fica depois da principal salvar o seu dado na bd
+        // e deves passar a entidade salva
+        getNotaGeralDisciplina(notasPeriodicaDisciplinaMapper.toDto(notasPeriodicaDisciplina));
 
         //        // Salvando a nota geral disciplina
         //        var notaGeralDisciplina = notasGeralDisciplinaService.getAllNotasWithMatriculaDisciplinaPeriodoLancamento(
@@ -94,16 +140,20 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
     }
 
     @Override
+    @Transactional(readOnly = false)
     public NotasPeriodicaDisciplinaDTO update(NotasPeriodicaDisciplinaDTO notasPeriodicaDisciplinaDTO) {
         log.debug("Request to update NotasPeriodicaDisciplina : {}", notasPeriodicaDisciplinaDTO);
 
-        //        var media = calcularMedia(notasPeriodicaDisciplinaDTO);
-        //        notasPeriodicaDisciplinaDTO.setMedia(media);
+        var media = calcularMedia(notasPeriodicaDisciplinaDTO);
+        notasPeriodicaDisciplinaDTO.setMedia(media);
 
-        getNotaGeralDisciplina(notasPeriodicaDisciplinaDTO);
+        notasPeriodicaDisciplinaDTO.setEstado(getEstadoNota(media));
 
         NotasPeriodicaDisciplina notasPeriodicaDisciplina = notasPeriodicaDisciplinaMapper.toEntity(notasPeriodicaDisciplinaDTO);
         notasPeriodicaDisciplina = notasPeriodicaDisciplinaRepository.save(notasPeriodicaDisciplina);
+
+        getNotaGeralDisciplina(notasPeriodicaDisciplinaMapper.toDto(notasPeriodicaDisciplina));
+
         return notasPeriodicaDisciplinaMapper.toDto(notasPeriodicaDisciplina);
     }
 
@@ -200,19 +250,11 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
         return media;
     }
 
+    @Transactional(readOnly = false)
     public void getNotaGeralDisciplina(NotasPeriodicaDisciplinaDTO notasPeriodicaDisciplinaDTO) {
         var notaGeralDisciplinaDTO = new NotasGeralDisciplinaDTO();
         var chaveCompostaNotaGeralDisciplina = getChaveCompostaNotaGeral(notasPeriodicaDisciplinaDTO);
         //        var media = ZERO;
-
-        notaGeralDisciplinaDTO.setMatricula(notasPeriodicaDisciplinaDTO.getMatricula());
-        notaGeralDisciplinaDTO.setDisciplinaCurricular(notasPeriodicaDisciplinaDTO.getDisciplinaCurricular());
-        notaGeralDisciplinaDTO.setDocente(notasPeriodicaDisciplinaDTO.getDocente());
-        notaGeralDisciplinaDTO.setPeriodoLancamento(notasPeriodicaDisciplinaDTO.getPeriodoLancamento());
-        notaGeralDisciplinaDTO.setFaltaJusticada(notasPeriodicaDisciplinaDTO.getFaltaJusticada());
-        notaGeralDisciplinaDTO.setFaltaInjustificada(notasPeriodicaDisciplinaDTO.getFaltaInjustificada());
-        notaGeralDisciplinaDTO.setChaveComposta(chaveCompostaNotaGeralDisciplina);
-        notaGeralDisciplinaDTO.setUtilizador(notasPeriodicaDisciplinaDTO.getUtilizador());
 
         var notaGeralEncontrada = notasGeralDisciplinaRepository
             .findAll()
@@ -222,6 +264,9 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
                 nge.getDisciplinaCurricular().getId().equals(notasPeriodicaDisciplinaDTO.getDisciplinaCurricular().getId())
             )
             .findFirst();
+
+        notaGeralDisciplinaDTO.setFaltaJusticada(notasPeriodicaDisciplinaDTO.getFaltaJusticada());
+        notaGeralDisciplinaDTO.setFaltaInjustificada(notasPeriodicaDisciplinaDTO.getFaltaInjustificada());
 
         if (notasPeriodicaDisciplinaDTO.getPeriodoLancamento().equals(1)) {
             notaGeralDisciplinaDTO.setMedia1(notasPeriodicaDisciplinaDTO.getMedia());
@@ -245,12 +290,61 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
 
         notaGeralDisciplinaDTO.setMediaFinalDisciplina(mediaFinalDisciplina);
 
+        if (mediaFinalDisciplina >= 10d) {
+            var aprovado = estadoDisciplinaCurricularService
+                .findAll()
+                .stream()
+                .filter(e -> e.getClassificacao().equals(CategoriaClassificacao.APROVADO))
+                .findFirst()
+                .get();
+            notaGeralDisciplinaDTO.setEstado(aprovado);
+        } else {
+            var reprovado = estadoDisciplinaCurricularService
+                .findAll()
+                .stream()
+                .filter(e -> e.getClassificacao().equals(CategoriaClassificacao.REPROVADO))
+                .findFirst()
+                .get();
+            notaGeralDisciplinaDTO.setEstado(reprovado);
+        }
+
         notaGeralDisciplinaDTO.setTimestamp(Constants.DATE_TIME);
+        notaGeralDisciplinaDTO.setChaveComposta(chaveCompostaNotaGeralDisciplina);
+
+        // Não vou mexer muinto no teu codigo, só tentnado entender.ok
+
+        // voce tem dosi estado diferentes para tua entidade novo e actualizado
+        // tens que saber quais os campos que quando já existir na bd
+        // não voa ser mais actualizados
+        // na entidade que estas actualizar deves passar esses campos actualizados
+        // Ex. o que precisas nesse momento é: passar os dados actualizados na entidade--> notaGeralncontrada
 
         if (notaGeralEncontrada.isPresent()) {
             notaGeralDisciplinaDTO.setId(notaGeralEncontrada.get().getId());
-            notasGeralDisciplinaService.partialUpdate(notaGeralDisciplinaDTO);
+            var entidadeUpdate = notaGeralEncontrada.get();
+            entidadeUpdate.setEstado();
+            entidadeUpdate.setMedia1();
+            entidadeUpdate.setMedia2();
+            entidadeUpdate.setMedia3();
+            entidadeUpdate.setMediaFinalDisciplina();
+            // nao precisa setar o id por já tem no momento que você vai fazer um find. ok
+            //            Nesse trecho a baixo, é setado a notaGeral que já existe e depois salvamos, porquê? Dessa forma ele não vai actualizar
+            //            notaGeralDisciplinaDTO = notasGeralDisciplinaMapper.toDto(notaGeralEncontrada.get());
+            // La em cima nos actualizamos alguns valores, entao apenas envio esse lancamento. Esse e o e
+            notasGeralDisciplinaService.partialUpdate(notasGeralDisciplinaMapper.toDto(entidadeUpdate));
+            // como vais fazer isso, não sei (mas sei), mas evita duplicar dados DRY KISS YAGNI
+            // entendido, agora preciso avançar outras cenas. Acredito que sim, to apensar em como fazer...
+            // Ok, bons pensamentos. Obrigado
+            // O pdf coloca na vertical. Ta bem
+            // até... Ate.
+            // no codigo acima estas a passar a mesma entidade
         } else {
+            // esses dados não podem ser lterados uma vez lançado. ok
+            notaGeralDisciplinaDTO.setMatricula(notasPeriodicaDisciplinaDTO.getMatricula());
+            notaGeralDisciplinaDTO.setDisciplinaCurricular(notasPeriodicaDisciplinaDTO.getDisciplinaCurricular());
+            notaGeralDisciplinaDTO.setDocente(notasPeriodicaDisciplinaDTO.getDocente());
+            notaGeralDisciplinaDTO.setPeriodoLancamento(notasPeriodicaDisciplinaDTO.getPeriodoLancamento());
+            notaGeralDisciplinaDTO.setUtilizador(notasPeriodicaDisciplinaDTO.getUtilizador());
             notasGeralDisciplinaService.save(notaGeralDisciplinaDTO);
         }
     }
@@ -263,5 +357,16 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
         Double media = (media1 + media2 + media3) / 3;
 
         return media;
+    }
+
+    public Optional<NotasPeriodicaDisciplinaDTO> getNotaPeriodicaWithMatriculaPeriodo(Long matriculaID, Integer periodo) {
+        var nota = notasPeriodicaDisciplinaRepository
+            .findAll()
+            .stream()
+            .filter(npd -> npd.getMatricula().getId().equals(matriculaID) && npd.getPeriodoLancamento().equals(periodo))
+            .findFirst()
+            .map(notasPeriodicaDisciplinaMapper::toDto);
+
+        return nota;
     }
 }
