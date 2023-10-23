@@ -80,7 +80,7 @@ public class BoletimNotasServiceReport {
 
             HeaderFooter header = new HeaderFooter(new Phrase("This is a header."), false);
             HeaderFooter footer = new HeaderFooter(
-                new Phrase(String.valueOf(getAssinatura(SecurityUtils.getCurrentUserLogin().get(), matricula.getDiscente().getNome()))),
+                new Phrase(String.valueOf(getAssinatura(notaResult.getUtilizador().getLogin(), matricula.getDiscente().getNome()))),
                 new Phrase(".")
             );
             // document.setHeader(header);
@@ -198,7 +198,10 @@ public class BoletimNotasServiceReport {
 
         var matricula = matriculaService.findOne(notaPeriodica.getMatricula().getId()).get();
         var discente = matricula.getDiscente();
+        var numeroChamada = matricula.getNumeroChamada();
+        var numeroMatricula = matricula.getNumeroMatricula();
         var turma = matricula.getTurma();
+        var curso = turma.getPlanoCurricular().getCurso().getNome();
         var sala = turma.getSala();
         var classe = turma.getPlanoCurricular().getClasse().getDescricao();
         var turno = turma.getTurno();
@@ -301,17 +304,17 @@ public class BoletimNotasServiceReport {
 
         // SubHeader
 
-        PdfPTable detalheTable = new PdfPTable(1);
+        PdfPTable detalheTable = new PdfPTable(2);
         detalheTable.setWidthPercentage(100f);
 
         // Detalhes do Discente
-        float width[] = { 0.3f, 0.6f, 0.3f, 0.5f, 0.3f, 0.8f, 0.4f, 0.6f, 0.3f, 0.2f, 0.3f, 0.4f };
-        PdfPTable detalheMatricula = new PdfPTable(width);
+        //        float width[] = { 2};
+        PdfPTable detalheMatricula = new PdfPTable(2);
 
         detalheMatricula.setWidthPercentage(100f);
 
         detalheMatricula.addCell(
-            makeCellText("Nome:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNormal, true, false)
+            makeCellText("Nome:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
         detalheMatricula.addCell(
             makeCellText(
@@ -321,70 +324,54 @@ public class BoletimNotasServiceReport {
                 fontNormal,
                 leading,
                 padding,
-                borderNormal,
+                borderNone,
                 true,
                 false
             )
         );
 
         detalheMatricula.addCell(
-            makeCellText("Classe:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNormal, true, false)
-        );
-        detalheMatricula.addCell(
-            makeCellText(classe, Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNormal, true, false)
-        );
-
-        detalheMatricula.addCell(
-            makeCellText("Turma:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNormal, true, false)
+            makeCellText("Nº Chamada:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
         detalheMatricula.addCell(
             makeCellText(
-                turma.getDescricao(),
+                numeroChamada.toString(),
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_LEFT,
                 fontNormal,
                 leading,
                 padding,
-                borderNormal,
-                true,
-                false
-            )
-        );
-
-        //         Detalhes da factura
-        //        float width2[] = { 0.4f, 0.6f, 0.3f, 0.2f, 0.3f, 0.4f};
-        //                PdfPTable detalheFactura = new PdfPTable(width2);
-        //                detalheFactura.setWidthPercentage(100f);
-
-        detalheMatricula.addCell(
-            makeCellText("Nº Processo:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNormal, true, false)
-        );
-        detalheMatricula.addCell(
-            makeCellText(
-                matricula.getNumeroMatricula(),
-                Element.ALIGN_MIDDLE,
-                Element.ALIGN_LEFT,
-                fontNormal,
-                leading,
-                padding,
-                borderNormal,
+                borderNone,
                 true,
                 false
             )
         );
 
         detalheMatricula.addCell(
-            makeCellText("Sala:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNormal, true, false)
-        );
-        detalheMatricula.addCell(
-            makeCellText(sala.toString(), Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNormal, true, false)
+            makeCellText("Nº Processo:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
 
         detalheMatricula.addCell(
-            makeCellText("Turno:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNormal, true, false)
+            makeCellText(numeroMatricula, Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
+        );
+
+        detalheMatricula.addCell(
+            makeCellText("Curso:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
         detalheMatricula.addCell(
-            makeCellText(turno.getNome(), Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNormal, true, false)
+            makeCellText(curso, Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
+        );
+
+        //                 Detalhes da factura
+        //                float width2[] = { 0.3f, 0.6f, 0.3f, 0.5f, 0.3f, 0.8f};
+        PdfPTable detalheFactura = new PdfPTable(2);
+        detalheFactura.setWidthPercentage(100f);
+
+        detalheFactura.addCell(
+            makeCellText("Turno:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+        );
+        detalheFactura.addCell(
+            makeCellText(turno.getNome(), Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
         );
         //        detalheFactura.addCell(
         //                makeCellText("Recibo", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
@@ -406,9 +393,30 @@ public class BoletimNotasServiceReport {
         detalheTable.addCell(
             makeCellTable(detalheMatricula, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
         );
-        //                detalheTable.addCell(
-        //                        makeCellTable(detalheFactura, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
-        //                );
+        detalheTable.addCell(
+            makeCellTable(detalheFactura, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
+        );
+
+        detalheFactura.addCell(
+            makeCellText("Sala:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+        );
+        detalheFactura.addCell(
+            makeCellText(sala.toString(), Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
+        );
+
+        detalheFactura.addCell(
+            makeCellText("Turno:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+        );
+        detalheFactura.addCell(
+            makeCellText(turno.getNome(), Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
+        );
+        detalheFactura.addCell(
+            makeCellText("Classe:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+        );
+        detalheFactura.addCell(
+            makeCellText(classe, Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
+        );
+
         //
         //        detalheFactura.addCell(
         //                makeCellText("Data emissão", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
@@ -486,11 +494,25 @@ public class BoletimNotasServiceReport {
         //        );
 
         // Items
-        float[] widths = { 0.6f, 0.1f, 0.1f, 0.1f, 0.1f, 0.4f, 0.3f };
+        float[] widths = { 0.5f, 0.5f, 0.2f, 0.2f, 0.2f, 0.2f, 0.3f, 0.2f, 0.2f, 0.3f };
         // Descricao, Qtde, Preco unit, Desc, IVA, Total
         PdfPTable ajustesTable = new PdfPTable(widths);
         ajustesTable.setWidthPercentage(100f);
         // Calculo Header
+
+        ajustesTable.addCell(
+            makeCellBackgroudColor(
+                "Professor",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontBold,
+                leading,
+                padding,
+                borderNormal,
+                true,
+                false
+            )
+        );
 
         ajustesTable.addCell(
             makeCellBackgroudColor(
@@ -508,7 +530,7 @@ public class BoletimNotasServiceReport {
 
         ajustesTable.addCell(
             makeCellBackgroudColor(
-                "Nota 1",
+                "1ª Prova",
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontBold,
@@ -522,21 +544,7 @@ public class BoletimNotasServiceReport {
 
         ajustesTable.addCell(
             makeCellBackgroudColor(
-                "Nota 2",
-                Element.ALIGN_MIDDLE,
-                Element.ALIGN_CENTER,
-                fontBold,
-                leading,
-                padding,
-                borderNormal,
-                true,
-                false
-            )
-        );
-
-        ajustesTable.addCell(
-            makeCellBackgroudColor(
-                "Nota 3",
+                "2ª Prova",
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontBold,
@@ -549,7 +557,7 @@ public class BoletimNotasServiceReport {
         );
         ajustesTable.addCell(
             makeCellBackgroudColor(
-                "Média Final",
+                "3ª Prova",
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontBold,
@@ -562,7 +570,46 @@ public class BoletimNotasServiceReport {
         );
         ajustesTable.addCell(
             makeCellBackgroudColor(
-                "Docente",
+                "Media",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontBold,
+                leading,
+                padding,
+                borderNormal,
+                true,
+                false
+            )
+        );
+        ajustesTable.addCell(
+            makeCellBackgroudColor(
+                "Comportamento",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontBold,
+                leading,
+                padding,
+                borderNormal,
+                true,
+                false
+            )
+        );
+        ajustesTable.addCell(
+            makeCellBackgroudColor(
+                "Faltas Justificadas",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontBold,
+                leading,
+                padding,
+                borderNormal,
+                true,
+                false
+            )
+        );
+        ajustesTable.addCell(
+            makeCellBackgroudColor(
+                "Faltas Injustificadas",
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontBold,
@@ -606,6 +653,9 @@ public class BoletimNotasServiceReport {
             var nota2 = nota.getNota2();
             var nota3 = nota.getNota3();
             var media = nota.getMedia();
+            var faltasJustificadas = nota.getFaltaJusticada().toString();
+            var faltasInjustificadas = nota.getFaltaInjustificada().toString();
+            var comportamento = nota.getComportamento();
             var docente = nota.getDocente().getNome();
             var estado = nota.getEstado().getDescricao();
 
@@ -628,6 +678,9 @@ public class BoletimNotasServiceReport {
                 nota2.toString(),
                 nota3.toString(),
                 media.toString(),
+                faltasJustificadas,
+                faltasInjustificadas,
+                comportamento.toString(),
                 docente,
                 estado
             );
@@ -1056,24 +1109,285 @@ public class BoletimNotasServiceReport {
         //
         //        // Assinatura
         //
-        //        layoutTable.addCell(
-        //                makeCellTable(
-        //                        getAssinatura(SecurityUtils.getCurrentUserLogin().get(), discente.getNome()),
-        //                        Element.ALIGN_TOP,
-        //                        Element.ALIGN_CENTER,
-        //                        leading,
-        //                        padding,
-        //                        borderNone,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //        layoutTable.addCell(
-        //                makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
-        //        );
-        //        layoutTable.addCell(
-        //                makeCellText("Página 1/1", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontNormal, leading, padding, borderNone, true, false)
-        //        );
+
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+
+        layoutTable.addCell(
+            makeCellTable(
+                getAssinatura(SecurityUtils.getCurrentUserLogin().get(), discente.getNome()),
+                Element.ALIGN_TOP,
+                Element.ALIGN_CENTER,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText(
+                "MAC: Media Avaliação Continua" +
+                "\n" +
+                "NPP: Nota Prova Professor" +
+                "\n" +
+                "NPT: Nota Prota Trimestre" +
+                "\n" +
+                "FJ: Faltas Justificadas" +
+                "\n" +
+                "FI: Faltas Injustificadas" +
+                "\n",
+                Element.ALIGN_TOP,
+                Element.ALIGN_LEFT,
+                fontNormal,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
 
         return layoutTable;
     }
@@ -1093,10 +1407,18 @@ public class BoletimNotasServiceReport {
         String nota2,
         String nota3,
         String media,
+        String faltasJustificadas,
+        String faltasInjustificadas,
+        String comportamento,
         String docente,
         String estado
     ) {
         // Codigo Emolumento
+        ajustesTable.addCell(
+            makeCellText(docente, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
+        );
+
+        // data
         ajustesTable.addCell(
             makeCellText(
                 disciplinaCurricular,
@@ -1111,29 +1433,63 @@ public class BoletimNotasServiceReport {
             )
         );
 
-        // data
+        // emolumento
         ajustesTable.addCell(
             makeCellText(nota1, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
         );
 
-        // emolumento
+        //         ValorUnit
         ajustesTable.addCell(
             makeCellText(nota2, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
         );
 
-        //         ValorUnit
+        // Desconto
         ajustesTable.addCell(
             makeCellText(nota3, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
         );
 
-        // Desconto
+        // Multa
         ajustesTable.addCell(
             makeCellText(media, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
         );
-
-        // Multa
         ajustesTable.addCell(
-            makeCellText(docente, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
+            makeCellText(
+                comportamento,
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontNormal,
+                leading,
+                padding,
+                borderSmaller,
+                true,
+                false
+            )
+        );
+        ajustesTable.addCell(
+            makeCellText(
+                faltasJustificadas,
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontNormal,
+                leading,
+                padding,
+                borderSmaller,
+                true,
+                false
+            )
+        );
+        ajustesTable.addCell(
+            makeCellText(
+                faltasInjustificadas,
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontNormal,
+                leading,
+                padding,
+                borderSmaller,
+                true,
+                false
+            )
         );
         ajustesTable.addCell(
             makeCellText(estado, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
@@ -1147,7 +1503,13 @@ public class BoletimNotasServiceReport {
 
     private PdfPTable getAssinatura(String nomeResponsavel, String nomeFuncionario) {
         var today = LocalDate.now();
-        var data = "LUANDA, AOS " + today.getDayOfMonth() + " DE " + Constants.getMesPT(today) + " DE " + today.getYear();
+        var data =
+            "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t LUANDA, AOS " +
+            today.getDayOfMonth() +
+            " DE " +
+            Constants.getMesPT(today) +
+            " DE " +
+            today.getYear();
         var line = "_________________________________";
         Font tableFont = FontFactory.getFont("Helvetica", 6, Font.BOLD, Color.BLACK);
         float padding = 2f;
@@ -1158,23 +1520,36 @@ public class BoletimNotasServiceReport {
         border.setBorderWidthRight(0f);
         border.setBorderWidthTop(0f);
 
-        PdfPTable assinaturaTabler = new PdfPTable(1);
+        PdfPTable assinaturaTabler = new PdfPTable(2);
         assinaturaTabler.setWidthPercentage(50f);
         assinaturaTabler.setHorizontalAlignment(Element.ALIGN_LEFT);
 
-        //        assinaturaTabler.addCell(
-        //                makeCellText(
-        //                        data + "\n\n" + "Utilizador" + "\n" + line + "\n" + nomeResponsavel,
-        //                        Element.ALIGN_TOP,
-        //                        Element.ALIGN_CENTER,
-        //                        tableFont,
-        //                        leading,
-        //                        padding,
-        //                        border,
-        //                        true,
-        //                        false
-        //                )
-        //        );
+        assinaturaTabler.addCell(
+            makeCellText(
+                data + "\n\n\n\n\n\n\n" + "Coordenador" + "\n" + line + "\n" + nomeResponsavel,
+                Element.ALIGN_TOP,
+                Element.ALIGN_CENTER,
+                tableFont,
+                leading,
+                padding,
+                border,
+                true,
+                false
+            )
+        );
+        assinaturaTabler.addCell(
+            makeCellText(
+                "\n\n\n\n\n\n\n" + "Encarregado" + "\n" + line + "\n" + nomeFuncionario,
+                Element.ALIGN_TOP,
+                Element.ALIGN_CENTER,
+                tableFont,
+                leading,
+                padding,
+                border,
+                true,
+                false
+            )
+        );
 
         return assinaturaTabler;
     }
