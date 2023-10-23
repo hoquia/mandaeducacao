@@ -43,7 +43,7 @@ public class BoletimNotasServiceReport {
         String pdfName;
         FileOutputStream file;
         pdfName = "boletim-notas";
-        document = new Document(PageSize.A4.rotate(), 4f, 4f, 4f, 4f);
+        document = new Document(PageSize.A4, 4f, 4f, 4f, 4f);
         String tempFileName = "./" + pdfName + ".pdf";
 
         try {
@@ -64,7 +64,10 @@ public class BoletimNotasServiceReport {
             // nada ao menenos que tenha esse id nessa tabela, mas será um dado errado
             // o filtro seria pelo matriclaID e peridoID cria um metodo na classe notasperiodicasdisciplinaimpl
             // fui. Ta vou aplicar isso e ver o que faco ate o periodo em que poderei te dar um feedback, ate
-            var notaPeriodica = notasPeriodicaDisciplinaService.getNotaPeriodicaWithMatriculaPeriodo(matriculaID, periodo);
+            var notaPeriodica = notasPeriodicaDisciplinaService
+                .getNotaPeriodicaWithMatriculaPeriodo(matriculaID, periodo)
+                .stream()
+                .findFirst();
 
             if (!notaPeriodica.isPresent()) {
                 throw new RuntimeException("Not Founded!");
@@ -184,7 +187,8 @@ public class BoletimNotasServiceReport {
     private PdfPTable getRecibo(Long matriculaID, Integer periodo) {
         //        var aplicacaoRecibos = aplicacaoReciboService.getAplicacaoReciboWithRecibo(reciboID);
 
-        var notaPeriodica = notasPeriodicaDisciplinaService.getNotaPeriodicaWithMatriculaPeriodo(matriculaID, periodo).get();
+        var notasPeriodicasAluno = notasPeriodicaDisciplinaService.getNotaPeriodicaWithMatriculaPeriodo(matriculaID, periodo);
+        var notaPeriodica = notasPeriodicasAluno.stream().findFirst().get();
 
         // Pega os itens da factura com estado PENDENTE
         //
@@ -216,11 +220,11 @@ public class BoletimNotasServiceReport {
         */
 
         Font fontNormal = FontFactory.getFont("Helvetica", 8, Font.NORMAL, Color.BLACK);
-        Font fontBold = FontFactory.getFont("Helvetica", 10, Font.BOLD, Color.BLACK);
-        Font fontBoldLarge = FontFactory.getFont("Helvetica", 8, Font.BOLD, Color.BLACK);
+        Font fontBold = FontFactory.getFont("Helvetica", 7, Font.BOLD, Color.BLACK);
+        Font fontBoldLarge = FontFactory.getFont("Helvetica", 12, Font.BOLD, Color.BLACK);
 
         var borderNone = getBorder(0f, 0f, 0f, 0f, 0f, 0f);
-        var borderNormal = getBorder(0f, 0f, 0f, 1f, 0f, 0f);
+        var borderNormal = getBorder(0f, 0f, 1f, 1f, 1f, 1f);
         var borderSmaller = getBorder(0f, 0f, 0.3f, 0.3f, 0.3f, 0.3f);
 
         float padding = 1.3f;
@@ -254,13 +258,18 @@ public class BoletimNotasServiceReport {
         subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
         subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
         subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
+        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
+        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
+        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
+        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
+        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
 
         subHeader.addCell(
             makeCellText(
                 "BOLETIM DE NOTAS DO " + periodo + "º TRIMESTRE",
                 Element.ALIGN_TOP,
                 Element.ALIGN_CENTER,
-                fontBold,
+                fontBoldLarge,
                 leading,
                 padding,
                 borderNone,
@@ -268,6 +277,14 @@ public class BoletimNotasServiceReport {
                 false
             )
         );
+
+        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
+        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
+        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
+        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
+        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
+        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
+
         //        subHeader.addCell(
         //                makeCellText(
         //                        getContactoEmpresa(),
@@ -288,10 +305,10 @@ public class BoletimNotasServiceReport {
         detalheTable.setWidthPercentage(100f);
 
         // Detalhes do Discente
-        float width[] = { 0.2f, 0.6f, 0.2f, 0.3f, 0.2f, 0.8f, 0.3f, 0.3f, 0.2f, 0.2f, 0.2f, 0.3f };
+        float width[] = { 0.3f, 0.6f, 0.3f, 0.5f, 0.3f, 0.8f, 0.4f, 0.6f, 0.3f, 0.2f, 0.3f, 0.4f };
         PdfPTable detalheMatricula = new PdfPTable(width);
 
-        detalheMatricula.setWidthPercentage(90f);
+        detalheMatricula.setWidthPercentage(100f);
 
         detalheMatricula.addCell(
             makeCellText("Nome:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNormal, true, false)
@@ -334,6 +351,11 @@ public class BoletimNotasServiceReport {
             )
         );
 
+        //         Detalhes da factura
+        //        float width2[] = { 0.4f, 0.6f, 0.3f, 0.2f, 0.3f, 0.4f};
+        //                PdfPTable detalheFactura = new PdfPTable(width2);
+        //                detalheFactura.setWidthPercentage(100f);
+
         detalheMatricula.addCell(
             makeCellText("Nº Processo:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNormal, true, false)
         );
@@ -364,10 +386,6 @@ public class BoletimNotasServiceReport {
         detalheMatricula.addCell(
             makeCellText(turno.getNome(), Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNormal, true, false)
         );
-
-        // Detalhes da factura
-        //        PdfPTable detalheFactura = new PdfPTable(2);
-        //        detalheFactura.setWidthPercentage(100f);
         //        detalheFactura.addCell(
         //                makeCellText("Recibo", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         //        );
@@ -388,9 +406,9 @@ public class BoletimNotasServiceReport {
         detalheTable.addCell(
             makeCellTable(detalheMatricula, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
         );
-        //        detalheTable.addCell(
-        //                makeCellTable(detalheFactura, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
-        //        );
+        //                detalheTable.addCell(
+        //                        makeCellTable(detalheFactura, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
+        //                );
         //
         //        detalheFactura.addCell(
         //                makeCellText("Data emissão", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
@@ -468,136 +486,152 @@ public class BoletimNotasServiceReport {
         //        );
 
         // Items
-        float[] widths = { 0.2f, 0.6f, 0.2f, 0.2f, 0.2f, 0.2f };
+        float[] widths = { 0.6f, 0.1f, 0.1f, 0.1f, 0.1f, 0.4f, 0.3f };
         // Descricao, Qtde, Preco unit, Desc, IVA, Total
         PdfPTable ajustesTable = new PdfPTable(widths);
         ajustesTable.setWidthPercentage(100f);
         // Calculo Header
+
+        ajustesTable.addCell(
+            makeCellBackgroudColor(
+                "Disciplina",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontBold,
+                leading,
+                padding,
+                borderNormal,
+                true,
+                false
+            )
+        );
+
+        ajustesTable.addCell(
+            makeCellBackgroudColor(
+                "Nota 1",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontBold,
+                leading,
+                padding,
+                borderNormal,
+                true,
+                false
+            )
+        );
+
+        ajustesTable.addCell(
+            makeCellBackgroudColor(
+                "Nota 2",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontBold,
+                leading,
+                padding,
+                borderNormal,
+                true,
+                false
+            )
+        );
+
+        ajustesTable.addCell(
+            makeCellBackgroudColor(
+                "Nota 3",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontBold,
+                leading,
+                padding,
+                borderNormal,
+                true,
+                false
+            )
+        );
+        ajustesTable.addCell(
+            makeCellBackgroudColor(
+                "Média Final",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontBold,
+                leading,
+                padding,
+                borderNormal,
+                true,
+                false
+            )
+        );
+        ajustesTable.addCell(
+            makeCellBackgroudColor(
+                "Docente",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontBold,
+                leading,
+                padding,
+                borderNormal,
+                true,
+                false
+            )
+        );
+        ajustesTable.addCell(
+            makeCellBackgroudColor(
+                "Estado",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontBold,
+                leading,
+                padding,
+                borderNormal,
+                true,
+                false
+            )
+        );
+        //                ajustesTable.addCell(
+        //                        makeCellBackgroudColor(
+        //                                "Total",
+        //                                Element.ALIGN_MIDDLE,
+        //                                Element.ALIGN_CENTER,
+        //                                fontBold,
+        //                                leading,
+        //                                padding,
+        //                                borderNormal,
+        //                                true,
+        //                                false
+        //                        )
+        //                );
         //
-        //        ajustesTable.addCell(
-        //                makeCellBackgroudColor(
-        //                        "Factura",
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_CENTER,
-        //                        fontBold,
-        //                        leading,
-        //                        padding,
-        //                        borderNormal,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //
-        //        ajustesTable.addCell(
-        //                makeCellBackgroudColor(
-        //                        "Descrição",
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_CENTER,
-        //                        fontBold,
-        //                        leading,
-        //                        padding,
-        //                        borderNormal,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //
-        //        ajustesTable.addCell(
-        //                makeCellBackgroudColor(
-        //                        "Referência",
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_CENTER,
-        //                        fontBold,
-        //                        leading,
-        //                        padding,
-        //                        borderNormal,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //
-        //        ajustesTable.addCell(
-        //                makeCellBackgroudColor(
-        //                        "Data Deposito",
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_CENTER,
-        //                        fontBold,
-        //                        leading,
-        //                        padding,
-        //                        borderNormal,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //        ajustesTable.addCell(
-        //                makeCellBackgroudColor(
-        //                        "Data Pagamento",
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_CENTER,
-        //                        fontBold,
-        //                        leading,
-        //                        padding,
-        //                        borderNormal,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //        ajustesTable.addCell(
-        //                makeCellBackgroudColor(
-        //                        "Taxa(%)",
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_CENTER,
-        //                        fontBold,
-        //                        leading,
-        //                        padding,
-        //                        borderNormal,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //        ajustesTable.addCell(
-        //                makeCellBackgroudColor(
-        //                        "Total",
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_CENTER,
-        //                        fontBold,
-        //                        leading,
-        //                        padding,
-        //                        borderNormal,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //
-        //        for (var aplicacaoRecibo : aplicacaoRecibos) {
-        //            var item = aplicacaoRecibo.getItemFactura();
-        //            var emolumento = item.getEmolumento();
-        //            var factura = aplicacaoRecibo.getFactura();
-        //            var reciboResult = aplicacaoRecibo.getRecibo();
-        //            var transacaoResult = reciboResult.getTransacao();
-        //
-        //            // Total do contrato incluido as multas e juros
-        //
-        //            if (item.getEstado().equals(EstadoItemFactura.PAGO)) {
-        //                totalPago = totalPago.add(item.getPrecoTotal());
-        //                totalFactura = totalPago;
-        //            }
-        //
-        //            // LinhasDocumento
-        //            getLinhasDocumento(
-        //                    ajustesTable,
-        //                    fontNormal,
-        //                    leading,
-        //                    padding,
-        //                    borderSmaller,
-        //                    factura.getNumero(), // numero da factura
-        //                    emolumento.getNome(), // descricao
-        //                    transacaoResult.getReferencia(), // referencia
-        //                    Constants.getDateFormat(transacaoResult.getData()), // Data de deposito
-        //                    Constants.getDateFormat(reciboResult.getData()), // Data Pagamento
-        //                    Constants.getMoneyFormat(item.getPrecoTotal()) // Total
-        //            );
-        //        }
+        for (var nota : notasPeriodicasAluno) {
+            var disciplinaCurricular = nota.getDisciplinaCurricular().getDisciplina().getNome();
+            var nota1 = nota.getNota1();
+            var nota2 = nota.getNota2();
+            var nota3 = nota.getNota3();
+            var media = nota.getMedia();
+            var docente = nota.getDocente().getNome();
+            var estado = nota.getEstado().getDescricao();
+
+            // Total do contrato incluido as multas e juros
+            //
+            //                    if (item.getEstado().equals(EstadoItemFactura.PAGO)) {
+            //                        totalPago = totalPago.add(item.getPrecoTotal());
+            //                        totalFactura = totalPago;
+            //                    }
+
+            // LinhasDocumento
+            getLinhasDocumento(
+                ajustesTable,
+                fontNormal,
+                leading,
+                padding,
+                borderSmaller,
+                disciplinaCurricular,
+                nota1.toString(),
+                nota2.toString(),
+                nota3.toString(),
+                media.toString(),
+                docente,
+                estado
+            );
+        }
         //
         com.lowagie.text.Rectangle noBorder = new com.lowagie.text.Rectangle(0f, 0f);
         noBorder.setBorderWidthLeft(0f);
@@ -689,8 +723,8 @@ public class BoletimNotasServiceReport {
         //        totalTable.setWidthPercentage(100f);
 
         // Detalhes do Discente
-        PdfPTable totalSaldoTable = new PdfPTable(2);
-        totalSaldoTable.setWidthPercentage(100f);
+        //        PdfPTable totalSaldoTable = new PdfPTable(2);
+        //        totalSaldoTable.setWidthPercentage(100f);
         //
         //        totalSaldoTable.addCell(
         //                makeCellText("Multa", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
@@ -922,6 +956,24 @@ public class BoletimNotasServiceReport {
         layoutTable.addCell(
             makeCellText("", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBoldLarge, leading, padding, borderNone, true, false)
         );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
+        layoutTable.addCell(
+            makeCellText("", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBoldLarge, leading, padding, borderNone, true, false)
+        );
         //
         layoutTable.addCell(
             makeCellTable(ajustesTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
@@ -1035,58 +1087,62 @@ public class BoletimNotasServiceReport {
         Font fontNormal,
         float leading,
         float padding,
-        com.lowagie.text.Rectangle borderSmaller,
-        String numeroFactura,
-        String descricao,
-        String referencia,
-        String dataDepos,
-        String dataPagam,
-        String total
+        Rectangle borderSmaller,
+        String disciplinaCurricular,
+        String nota1,
+        String nota2,
+        String nota3,
+        String media,
+        String docente,
+        String estado
     ) {
         // Codigo Emolumento
-        //        ajustesTable.addCell(
-        //                makeCellText(
-        //                        numeroFactura,
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_CENTER,
-        //                        fontNormal,
-        //                        leading,
-        //                        padding,
-        //                        borderSmaller,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //
-        //        // data
-        //        ajustesTable.addCell(
-        //                makeCellText(descricao, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
-        //        );
-        //
-        //        // emolumento
-        //        ajustesTable.addCell(
-        //                makeCellText(referencia, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
-        //        );
+        ajustesTable.addCell(
+            makeCellText(
+                disciplinaCurricular,
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontNormal,
+                leading,
+                padding,
+                borderSmaller,
+                true,
+                false
+            )
+        );
 
-        // ValorUnit
-        //        ajustesTable.addCell(
-        //                makeCellText(dataDepos, Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontNormal, leading, padding, borderSmaller, true, false)
-        //        );
-        //
-        //        // Desconto
-        //        ajustesTable.addCell(
-        //                makeCellText(dataPagam, Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontNormal, leading, padding, borderSmaller, true, false)
-        //        );
-        //
-        //        // Multa
-        //        ajustesTable.addCell(
-        //                makeCellText(multaJuro, Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontNormal, leading, padding, borderSmaller, true, false)
-        //        );
+        // data
+        ajustesTable.addCell(
+            makeCellText(nota1, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
+        );
 
-        // Total
-        //        ajustesTable.addCell(
-        //                makeCellText(total, Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontNormal, leading, padding, borderSmaller, true, false)
-        //        );
+        // emolumento
+        ajustesTable.addCell(
+            makeCellText(nota2, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
+        );
+
+        //         ValorUnit
+        ajustesTable.addCell(
+            makeCellText(nota3, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
+        );
+
+        // Desconto
+        ajustesTable.addCell(
+            makeCellText(media, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
+        );
+
+        // Multa
+        ajustesTable.addCell(
+            makeCellText(docente, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
+        );
+        ajustesTable.addCell(
+            makeCellText(estado, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
+        );
+        //
+        //         Total
+        //                ajustesTable.addCell(
+        //                        makeCellText(total, Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontNormal, leading, padding, borderSmaller, true, false)
+        //                );
     }
 
     private PdfPTable getAssinatura(String nomeResponsavel, String nomeFuncionario) {

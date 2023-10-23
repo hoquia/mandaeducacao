@@ -24,7 +24,7 @@ public interface NotasPeriodicaDisciplinaMapper extends EntityMapper<NotasPeriod
     @Mapping(target = "utilizador", source = "utilizador", qualifiedByName = "userLogin")
     @Mapping(target = "turma", source = "turma", qualifiedByName = "turmaDescricao")
     @Mapping(target = "docente", source = "docente", qualifiedByName = "docenteNome")
-    @Mapping(target = "disciplinaCurricular", source = "disciplinaCurricular", qualifiedByName = "disciplinaCurricularDescricao")
+    @Mapping(target = "disciplinaCurricular", source = "disciplinaCurricular")
     @Mapping(target = "matricula", source = "matricula")
     @Mapping(target = "estado", source = "estado")
     NotasPeriodicaDisciplinaDTO toDto(NotasPeriodicaDisciplina s);

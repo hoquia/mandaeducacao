@@ -15,7 +15,9 @@ import com.ravunana.longonkelo.service.mapper.EstadoDisciplinaCurricularMapper;
 import com.ravunana.longonkelo.service.mapper.NotasGeralDisciplinaMapper;
 import com.ravunana.longonkelo.service.mapper.NotasPeriodicaDisciplinaMapper;
 import com.ravunana.longonkelo.service.mapper.UserMapper;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -365,14 +367,13 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
         return media;
     }
 
-    public Optional<NotasPeriodicaDisciplinaDTO> getNotaPeriodicaWithMatriculaPeriodo(Long matriculaID, Integer periodo) {
-        var nota = notasPeriodicaDisciplinaRepository
+    public List<NotasPeriodicaDisciplinaDTO> getNotaPeriodicaWithMatriculaPeriodo(Long matriculaID, Integer periodo) {
+        var notas = notasPeriodicaDisciplinaRepository
             .findAll()
             .stream()
             .filter(npd -> npd.getMatricula().getId().equals(matriculaID) && npd.getPeriodoLancamento().equals(periodo))
-            .findFirst()
-            .map(notasPeriodicaDisciplinaMapper::toDto);
+            .collect(Collectors.toList());
 
-        return nota;
+        return notasPeriodicaDisciplinaMapper.toDto(notas);
     }
 }
