@@ -11,6 +11,7 @@ import com.ravunana.longonkelo.service.UserService;
 import com.ravunana.longonkelo.service.dto.EstadoDisciplinaCurricularDTO;
 import com.ravunana.longonkelo.service.dto.NotasGeralDisciplinaDTO;
 import com.ravunana.longonkelo.service.dto.NotasPeriodicaDisciplinaDTO;
+import com.ravunana.longonkelo.service.mapper.EstadoDisciplinaCurricularMapper;
 import com.ravunana.longonkelo.service.mapper.NotasGeralDisciplinaMapper;
 import com.ravunana.longonkelo.service.mapper.NotasPeriodicaDisciplinaMapper;
 import com.ravunana.longonkelo.service.mapper.UserMapper;
@@ -43,6 +44,7 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
 
     private final NotasGeralDisciplinaServiceImpl notasGeralDisciplinaService;
     private final NotasGeralDisciplinaRepository notasGeralDisciplinaRepository;
+    private final EstadoDisciplinaCurricularMapper estadoDisciplinaCurricularMapper;
 
     public static final Double ZERO = 0d;
 
@@ -54,7 +56,8 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
         UserService userService,
         UserMapper userMapper,
         NotasGeralDisciplinaServiceImpl notasGeralDisciplinaService,
-        NotasGeralDisciplinaRepository notasGeralDisciplinaRepository
+        NotasGeralDisciplinaRepository notasGeralDisciplinaRepository,
+        EstadoDisciplinaCurricularMapper estadoDisciplinaCurricularMapper
     ) {
         this.notasPeriodicaDisciplinaRepository = notasPeriodicaDisciplinaRepository;
         this.notasPeriodicaDisciplinaMapper = notasPeriodicaDisciplinaMapper;
@@ -64,6 +67,7 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
         this.userMapper = userMapper;
         this.notasGeralDisciplinaService = notasGeralDisciplinaService;
         this.notasGeralDisciplinaRepository = notasGeralDisciplinaRepository;
+        this.estadoDisciplinaCurricularMapper = estadoDisciplinaCurricularMapper;
     }
 
     private EstadoDisciplinaCurricularDTO getEstadoNota(Double media) {
@@ -322,11 +326,13 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
         if (notaGeralEncontrada.isPresent()) {
             notaGeralDisciplinaDTO.setId(notaGeralEncontrada.get().getId());
             var entidadeUpdate = notaGeralEncontrada.get();
-            entidadeUpdate.setEstado();
-            entidadeUpdate.setMedia1();
-            entidadeUpdate.setMedia2();
-            entidadeUpdate.setMedia3();
-            entidadeUpdate.setMediaFinalDisciplina();
+            var estado = estadoDisciplinaCurricularMapper.toEntity(notasPeriodicaDisciplinaDTO.getEstado());
+            entidadeUpdate.setPeriodoLancamento(notasPeriodicaDisciplinaDTO.getPeriodoLancamento());
+            entidadeUpdate.setEstado(estado);
+            entidadeUpdate.setMedia1(notaGeralDisciplinaDTO.getMedia1());
+            entidadeUpdate.setMedia2(notaGeralDisciplinaDTO.getMedia2());
+            entidadeUpdate.setMedia3(notaGeralDisciplinaDTO.getMedia3());
+            entidadeUpdate.setMediaFinalDisciplina(notaGeralDisciplinaDTO.getMediaFinalDisciplina());
             // nao precisa setar o id por já tem no momento que você vai fazer um find. ok
             //            Nesse trecho a baixo, é setado a notaGeral que já existe e depois salvamos, porquê? Dessa forma ele não vai actualizar
             //            notaGeralDisciplinaDTO = notasGeralDisciplinaMapper.toDto(notaGeralEncontrada.get());
