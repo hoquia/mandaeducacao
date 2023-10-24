@@ -22,7 +22,7 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface NotasPeriodicaDisciplinaMapper extends EntityMapper<NotasPeriodicaDisciplinaDTO, NotasPeriodicaDisciplina> {
     @Mapping(target = "utilizador", source = "utilizador", qualifiedByName = "userLogin")
-    @Mapping(target = "turma", source = "turma", qualifiedByName = "turmaDescricao")
+    @Mapping(target = "turma", source = "turma")
     @Mapping(target = "docente", source = "docente", qualifiedByName = "docenteNome")
     @Mapping(target = "disciplinaCurricular", source = "disciplinaCurricular")
     @Mapping(target = "matricula", source = "matricula")

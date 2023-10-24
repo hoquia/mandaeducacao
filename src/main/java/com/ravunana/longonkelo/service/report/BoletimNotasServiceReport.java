@@ -191,10 +191,10 @@ public class BoletimNotasServiceReport {
         var notaPeriodica = notasPeriodicasAluno.stream().findFirst().get();
 
         // Pega os itens da factura com estado PENDENTE
-        //
-        //        int NUM_LINHA_ATE_FIM_PAGINA = 30;
-        //        int NUM_LINHA_FACTURA = aplicacaoRecibos.size();
-        //        int NUM_LINHA_BRANCA_ADICIONAR = NUM_LINHA_ATE_FIM_PAGINA - NUM_LINHA_FACTURA;
+
+        int NUM_LINHA_ATE_FIM_PAGINA = 30;
+        int NUM_LINHA_FACTURA = notasPeriodicasAluno.size();
+        int NUM_LINHA_BRANCA_ADICIONAR = NUM_LINHA_ATE_FIM_PAGINA - NUM_LINHA_FACTURA;
 
         var matricula = matriculaService.findOne(notaPeriodica.getMatricula().getId()).get();
         var discente = matricula.getDiscente();
@@ -246,7 +246,22 @@ public class BoletimNotasServiceReport {
 
         // SubHeader
         PdfPTable subHeader = new PdfPTable(1);
-        subHeader.setWidthPercentage(100f);
+        subHeader.setWidthPercentage(50f);
+
+        subHeader.addCell(
+            makeCellText(
+                getVistoGestor(notaPeriodica.getMatricula().getId(), notaPeriodica.getPeriodoLancamento()),
+                Element.ALIGN_TOP,
+                Element.ALIGN_LEFT,
+                fontBold,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
+
         subHeader.addCell(
             makeCellTImage(getLogotipo(), Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
         );
@@ -260,13 +275,6 @@ public class BoletimNotasServiceReport {
         subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
         subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
         subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
-        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
-        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
-        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
-        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
-        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
-        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
-
         subHeader.addCell(
             makeCellText(
                 "BOLETIM DE NOTAS DO " + periodo + "º TRIMESTRE",
@@ -282,12 +290,12 @@ public class BoletimNotasServiceReport {
         );
 
         subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
-        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
-        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
-        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
-        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
-        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
 
+        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
+        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
+        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
+        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
+        subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
         //        subHeader.addCell(
         //                makeCellText(
         //                        getContactoEmpresa(),
@@ -305,8 +313,8 @@ public class BoletimNotasServiceReport {
         // SubHeader
 
         PdfPTable detalheTable = new PdfPTable(2);
-        detalheTable.setWidthPercentage(100f);
 
+        detalheTable.setWidthPercentage(100f);
         // Detalhes do Discente
         //        float width[] = { 2};
         PdfPTable detalheMatricula = new PdfPTable(2);
@@ -316,6 +324,7 @@ public class BoletimNotasServiceReport {
         detalheMatricula.addCell(
             makeCellText("Nome:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
+
         detalheMatricula.addCell(
             makeCellText(
                 discente.getNome(),
@@ -329,10 +338,10 @@ public class BoletimNotasServiceReport {
                 false
             )
         );
-
         detalheMatricula.addCell(
             makeCellText("Nº Chamada:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
+
         detalheMatricula.addCell(
             makeCellText(
                 numeroChamada.toString(),
@@ -346,7 +355,6 @@ public class BoletimNotasServiceReport {
                 false
             )
         );
-
         detalheMatricula.addCell(
             makeCellText("Nº Processo:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
@@ -358,18 +366,19 @@ public class BoletimNotasServiceReport {
         detalheMatricula.addCell(
             makeCellText("Curso:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
+
         detalheMatricula.addCell(
             makeCellText(curso, Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
         );
-
         //                 Detalhes da factura
         //                float width2[] = { 0.3f, 0.6f, 0.3f, 0.5f, 0.3f, 0.8f};
         PdfPTable detalheFactura = new PdfPTable(2);
-        detalheFactura.setWidthPercentage(100f);
 
+        detalheFactura.setWidthPercentage(100f);
         detalheFactura.addCell(
             makeCellText("Turno:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
+
         detalheFactura.addCell(
             makeCellText(turno.getNome(), Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
         );
@@ -396,17 +405,17 @@ public class BoletimNotasServiceReport {
         detalheTable.addCell(
             makeCellTable(detalheFactura, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
         );
-
         detalheFactura.addCell(
             makeCellText("Sala:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
+
         detalheFactura.addCell(
             makeCellText(sala.toString(), Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
         );
-
         detalheFactura.addCell(
             makeCellText("Turno:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
+
         detalheFactura.addCell(
             makeCellText(turno.getNome(), Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
         );
@@ -416,7 +425,6 @@ public class BoletimNotasServiceReport {
         detalheFactura.addCell(
             makeCellText(classe, Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
         );
-
         //
         //        detalheFactura.addCell(
         //                makeCellText("Data emissão", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
@@ -495,6 +503,7 @@ public class BoletimNotasServiceReport {
 
         // Items
         float[] widths = { 0.5f, 0.5f, 0.2f, 0.2f, 0.2f, 0.2f, 0.3f, 0.2f, 0.2f, 0.3f };
+
         // Descricao, Qtde, Preco unit, Desc, IVA, Total
         PdfPTable ajustesTable = new PdfPTable(widths);
         ajustesTable.setWidthPercentage(100f);
@@ -513,7 +522,6 @@ public class BoletimNotasServiceReport {
                 false
             )
         );
-
         ajustesTable.addCell(
             makeCellBackgroudColor(
                 "Disciplina",
@@ -529,48 +537,19 @@ public class BoletimNotasServiceReport {
         );
 
         ajustesTable.addCell(
-            makeCellBackgroudColor(
-                "1ª Prova",
-                Element.ALIGN_MIDDLE,
-                Element.ALIGN_CENTER,
-                fontBold,
-                leading,
-                padding,
-                borderNormal,
-                true,
-                false
-            )
+            makeCellBackgroudColor("MAC", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBold, leading, padding, borderNormal, true, false)
         );
 
         ajustesTable.addCell(
-            makeCellBackgroudColor(
-                "2ª Prova",
-                Element.ALIGN_MIDDLE,
-                Element.ALIGN_CENTER,
-                fontBold,
-                leading,
-                padding,
-                borderNormal,
-                true,
-                false
-            )
+            makeCellBackgroudColor("NPP", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBold, leading, padding, borderNormal, true, false)
+        );
+
+        ajustesTable.addCell(
+            makeCellBackgroudColor("NPT", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBold, leading, padding, borderNormal, true, false)
         );
         ajustesTable.addCell(
             makeCellBackgroudColor(
-                "3ª Prova",
-                Element.ALIGN_MIDDLE,
-                Element.ALIGN_CENTER,
-                fontBold,
-                leading,
-                padding,
-                borderNormal,
-                true,
-                false
-            )
-        );
-        ajustesTable.addCell(
-            makeCellBackgroudColor(
-                "Media",
+                "Média",
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontBold,
@@ -692,11 +671,10 @@ public class BoletimNotasServiceReport {
         noBorder.setBorderWidthRight(0f);
         noBorder.setBorderWidthTop(0f);
         //
-        //        // Linhas Documento em branco para o resumo estar no rodapé
-        //        for (int i = 0; i <= NUM_LINHA_BRANCA_ADICIONAR; i++) {
-        //            getLinhasDocumento(ajustesTable, fontNormal, leading, padding, noBorder, "", "", "", "", "", "");
-        //        }
-
+        // Linhas Documento em branco para o resumo estar no rodapé
+        for (int i = 0; i <= NUM_LINHA_BRANCA_ADICIONAR; i++) {
+            getLinhasDocumento(ajustesTable, fontNormal, leading, padding, noBorder, "", "", "", "", "", "", "", "", "", "");
+        }
         // Resumo de imposto
         //        float[] withResumoImposto = { 0.4f, 0.1f, 0.2f, 0.2f };
         //        PdfPTable resumoImpostoTable = new PdfPTable(withResumoImposto);
@@ -982,6 +960,7 @@ public class BoletimNotasServiceReport {
 
         // Layout Página
         layoutTable.addCell(makeCellTable(headerTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false));
+
         layoutTable.addCell(makeCellTable(subHeader, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false));
         layoutTable.addCell(
             makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
@@ -1005,10 +984,10 @@ public class BoletimNotasServiceReport {
         layoutTable.addCell(
             makeCellTable(detalheTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
         );
-
         layoutTable.addCell(
             makeCellText("", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBoldLarge, leading, padding, borderNone, true, false)
         );
+
         layoutTable.addCell(
             makeCellText("", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBoldLarge, leading, padding, borderNone, true, false)
         );
@@ -1236,7 +1215,6 @@ public class BoletimNotasServiceReport {
         layoutTable.addCell(
             makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
         );
-
         layoutTable.addCell(
             makeCellTable(
                 getAssinatura(SecurityUtils.getCurrentUserLogin().get(), discente.getNome()),
@@ -1249,6 +1227,7 @@ public class BoletimNotasServiceReport {
                 false
             )
         );
+
         layoutTable.addCell(
             makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
         );
@@ -1372,7 +1351,7 @@ public class BoletimNotasServiceReport {
                 "\n" +
                 "NPP: Nota Prova Professor" +
                 "\n" +
-                "NPT: Nota Prota Trimestre" +
+                "NPT: Nota Prova Trimestre" +
                 "\n" +
                 "FJ: Faltas Justificadas" +
                 "\n" +
@@ -1388,7 +1367,6 @@ public class BoletimNotasServiceReport {
                 false
             )
         );
-
         return layoutTable;
     }
 
@@ -1552,6 +1530,19 @@ public class BoletimNotasServiceReport {
         );
 
         return assinaturaTabler;
+    }
+
+    private String getVistoGestor(Long matriculaID, Integer periodoID) {
+        var notaPeriodica = notasPeriodicaDisciplinaService
+            .getNotaPeriodicaWithMatriculaPeriodo(matriculaID, periodoID)
+            .stream()
+            .findFirst()
+            .get();
+
+        var responsavel = notaPeriodica.getUtilizador().getLogin();
+
+        //        String descricaoVisto = lookupItemService.getVisto(empresa).toUpperCase();
+        return "\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tVisto" + ":\n__________________________\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t" + responsavel;
     }
 
     private static PdfPCell makeCellText(
