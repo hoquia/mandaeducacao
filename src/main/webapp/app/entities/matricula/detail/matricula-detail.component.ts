@@ -42,7 +42,7 @@ export class MatriculaDetailComponent implements OnInit {
         this.recibos = res.body ?? [];
       });
 
-      this.notaPeriodicaService.query().subscribe(res => {
+      this.notaPeriodicaService.query({ size: 3 }).subscribe(res => {
         this.periodosSharedCollection = res.body ?? [];
       });
     });

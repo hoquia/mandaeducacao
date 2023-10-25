@@ -9,7 +9,9 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.ravunana.longonkelo.config.Constants;
 import com.ravunana.longonkelo.security.SecurityUtils;
-import com.ravunana.longonkelo.service.impl.*;
+import com.ravunana.longonkelo.service.impl.InstituicaoEnsinoServiceImpl;
+import com.ravunana.longonkelo.service.impl.MatriculaServiceImpl;
+import com.ravunana.longonkelo.service.impl.NotasPeriodicaDisciplinaServiceImpl;
 import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -18,7 +20,7 @@ import java.time.LocalDate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BoletimNotasServiceReport {
+public class MiniPautaServiceReport {
 
     private final ReportService reportService;
     private final InstituicaoEnsinoServiceImpl instituicaoEnsinoService;
@@ -26,7 +28,7 @@ public class BoletimNotasServiceReport {
 
     private final NotasPeriodicaDisciplinaServiceImpl notasPeriodicaDisciplinaService;
 
-    public BoletimNotasServiceReport(
+    public MiniPautaServiceReport(
         ReportService reportService,
         InstituicaoEnsinoServiceImpl instituicaoEnsinoService,
         MatriculaServiceImpl matriculaService,
@@ -1359,7 +1361,7 @@ public class BoletimNotasServiceReport {
         Font fontNormal,
         float leading,
         float padding,
-        Rectangle borderSmaller,
+        com.lowagie.text.Rectangle borderSmaller,
         String disciplinaCurricular,
         String nota1,
         String nota2,

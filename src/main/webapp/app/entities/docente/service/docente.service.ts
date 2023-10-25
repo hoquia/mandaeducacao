@@ -145,4 +145,12 @@ export class DocenteService {
       body: res.body ? res.body.map(item => this.convertDateFromServer(item)) : null,
     });
   }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/member-ordering
+  downloadListaPagoNaoPagoPdf(docenteID: number, periodoID: number) {
+    let headers = new HttpHeaders();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    headers = headers.set('Accept', 'application/pdf');
+    return this.http.get(`${this.resourceUrl}/boletim-notas/${docenteID}/${periodoID}`, { headers, responseType: 'blob' });
+  }
 }

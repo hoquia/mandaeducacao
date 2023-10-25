@@ -3,6 +3,37 @@
     <div *ngIf="docente">
       <h2 data-cy="docenteDetailsHeading"><span appTranslate="longonkeloApp.docente.detail.title">Docente</span></h2>
 
+      <div class="row">
+        <div class="col-md-4 col-sm-12">
+          <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.periodoLancamento" for="field_periodoLancamento"
+            >Periodo de Lançamento</label
+          >
+          <ng-select
+            id="field_periodoLancamento"
+            data-cy="periodoLancamento"
+            name="periodoLancamento"
+            #periodoLancamentoVar
+            [(ngModel)]="periodoSelecionado"
+          >
+            <ng-option [value]="periodoOption.periodoLancamento" *ngFor="let periodoOption of periodosSharedCollection">
+              {{ periodoOption.periodoLancamento }}º Trimestre
+            </ng-option>
+          </ng-select>
+        </div>
+
+        <div class="col-md-8 col-sm-12 mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.horario.disciplinaCurricular" for="field_horario">Horario</label>
+          <ng-select id="field_horario" data-cy="horario" name="horario" #horarioVar [(ngModel)]="horarioSelecionado">
+            <ng-option [value]="horarioOption.id" *ngFor="let horarioOption of horarioSharedCollection">
+              {{ horarioOption.turma?.descricao }} - {{ horarioOption.disciplinaCurricular?.descricao }}
+            </ng-option>
+          </ng-select>
+        </div>
+      </div>
+
+      <button [disabled]="horarioSelecionado === null" class="btn btn-warning" (click)="gerarListaPagoNaoPago(docente.id)">
+        Mini-Pauta
+      </button>
       <hr />
 
       <app-alert-error></app-alert-error>
