@@ -18,7 +18,7 @@ export class DocenteDetailComponent implements OnInit {
   horarioSharedCollection: IHorario[] = [];
   periodosSharedCollection: INotasPeriodicaDisciplina[] = [];
   periodoSelecionado = 0;
-  horarioSelecionado = null;
+  horarioSelecionado: IHorario | any = null;
   disciplinaCurricularSelecionada = [];
 
   constructor(
@@ -68,15 +68,17 @@ export class DocenteDetailComponent implements OnInit {
     });
   }
 
-  protected gerarListaPagoNaoPago(docenteID: number): void {
-    alert(this.periodoSelecionado.toString());
-    this.docenteService.downloadListaPagoNaoPagoPdf(docenteID, this.periodoSelecionado).subscribe(res => {
+  protected gerarListaPagoNaoPago(horarioSelecionado: IHorario): void {
+    // alert(this.periodoSelecionado.toString());
+    // eslint-disable-next-line no-console
+    const horarioID = Number(horarioSelecionado.id);
+    this.docenteService.downloadListaPagoNaoPagoPdf(horarioID, this.periodoSelecionado).subscribe(res => {
       const url = window.URL.createObjectURL(res);
       const a = document.createElement('a');
       a.href = url;
       a.target = '_blank';
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      a.title = `boletim-notas-${docenteID}`;
+      a.title = `mini-pauta-${horarioSelecionado}`;
       a.rel = 'noopener noreferrer';
       a.click();
       window.URL.revokeObjectURL(url);

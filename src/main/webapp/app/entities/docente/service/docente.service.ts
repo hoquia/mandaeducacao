@@ -9,6 +9,7 @@ import { DATE_FORMAT } from 'app/config/input.constants';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IDocente, NewDocente } from '../docente.model';
+import { IHorario } from 'app/entities/horario/horario.model';
 
 export type PartialUpdateDocente = Partial<IDocente> & Pick<IDocente, 'id'>;
 
@@ -147,10 +148,11 @@ export class DocenteService {
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/member-ordering
-  downloadListaPagoNaoPagoPdf(docenteID: number, periodoID: number) {
+  downloadListaPagoNaoPagoPdf(horarioSelecionado: number, periodoID: number) {
     let headers = new HttpHeaders();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     headers = headers.set('Accept', 'application/pdf');
-    return this.http.get(`${this.resourceUrl}/boletim-notas/${docenteID}/${periodoID}`, { headers, responseType: 'blob' });
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    return this.http.get(`${this.resourceUrl}/mini-pauta/${horarioSelecionado}/${periodoID}`, { headers, responseType: 'blob' });
   }
 }

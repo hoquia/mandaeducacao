@@ -376,4 +376,22 @@ public class NotasPeriodicaDisciplinaServiceImpl implements NotasPeriodicaDiscip
 
         return notasPeriodicaDisciplinaMapper.toDto(notas);
     }
+
+    public List<NotasPeriodicaDisciplinaDTO> getNotasPeriodicasWithTurmaDisciplinaPeriodo(
+        Long turmaID,
+        Long disciplinaID,
+        Integer periodo
+    ) {
+        var notas = notasPeriodicaDisciplinaRepository
+            .findAll()
+            .stream()
+            .filter(npd ->
+                npd.getTurma().getId().equals(turmaID) &&
+                npd.getDisciplinaCurricular().getId().equals(disciplinaID) &&
+                npd.getPeriodoLancamento().equals(periodo)
+            )
+            .collect(Collectors.toList());
+
+        return notasPeriodicaDisciplinaMapper.toDto(notas);
+    }
 }

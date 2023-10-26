@@ -24,14 +24,16 @@
         <div class="col-md-8 col-sm-12 mb-3">
           <label class="form-label" appTranslate="longonkeloApp.horario.disciplinaCurricular" for="field_horario">Horario</label>
           <ng-select id="field_horario" data-cy="horario" name="horario" #horarioVar [(ngModel)]="horarioSelecionado">
-            <ng-option [value]="horarioOption.id" *ngFor="let horarioOption of horarioSharedCollection">
+            <ng-option [value]="horarioOption" *ngFor="let horarioOption of horarioSharedCollection">
               {{ horarioOption.turma?.descricao }} - {{ horarioOption.disciplinaCurricular?.descricao }}
             </ng-option>
           </ng-select>
         </div>
       </div>
 
-      <button [disabled]="horarioSelecionado === null" class="btn btn-warning" (click)="gerarListaPagoNaoPago(docente.id)">
+      <p>{{ horarioSelecionado | json }}</p>
+
+      <button [disabled]="!horarioSelecionado" class="btn btn-warning" (click)="gerarListaPagoNaoPago(horarioSelecionado)">
         Mini-Pauta
       </button>
       <hr />

@@ -5,7 +5,9 @@ import com.ravunana.longonkelo.service.DocenteQueryService;
 import com.ravunana.longonkelo.service.DocenteService;
 import com.ravunana.longonkelo.service.criteria.DocenteCriteria;
 import com.ravunana.longonkelo.service.dto.DocenteDTO;
+import com.ravunana.longonkelo.service.dto.HorarioDTO;
 import com.ravunana.longonkelo.service.report.HorarioDocenteReport;
+import com.ravunana.longonkelo.service.report.MiniPautaServiceReport;
 import com.ravunana.longonkelo.web.rest.errors.BadRequestAlertException;
 import java.io.File;
 import java.io.IOException;
@@ -55,17 +57,20 @@ public class DocenteResource {
 
     private final DocenteQueryService docenteQueryService;
     private final HorarioDocenteReport horarioDocenteService;
+    private final MiniPautaServiceReport miniPautaServiceReport;
 
     public DocenteResource(
         DocenteService docenteService,
         DocenteRepository docenteRepository,
         DocenteQueryService docenteQueryService,
-        HorarioDocenteReport horarioDocenteService
+        HorarioDocenteReport horarioDocenteService,
+        MiniPautaServiceReport miniPautaServiceReport
     ) {
         this.docenteService = docenteService;
         this.docenteRepository = docenteRepository;
         this.docenteQueryService = docenteQueryService;
         this.horarioDocenteService = horarioDocenteService;
+        this.miniPautaServiceReport = miniPautaServiceReport;
     }
 
     /**
@@ -220,6 +225,22 @@ public class DocenteResource {
     @GetMapping("/docentes/horario-docente/{docenteID}")
     public ResponseEntity<Resource> getHorarioDiscente(@PathVariable Long docenteID) throws IOException {
         var filePath = horarioDocenteService.gerarPdf(docenteID);
+        File file = new File(filePath);
+
+        Path path = Paths.get(file.getAbsolutePath());
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(resource);
+    }
+
+    @GetMapping("/docentes/mini-pauta/{horarioID}/{periodoID}")
+    public ResponseEntity<Resource> gerarBoletimNotas(@PathVariable Long horarioID, @PathVariable Integer periodoID) throws IOException {
+        var filePath = miniPautaServiceReport.gerarPdf(horarioID, periodoID);
         File file = new File(filePath);
 
         Path path = Paths.get(file.getAbsolutePath());

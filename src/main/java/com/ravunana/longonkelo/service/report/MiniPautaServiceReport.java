@@ -9,6 +9,7 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.ravunana.longonkelo.config.Constants;
 import com.ravunana.longonkelo.security.SecurityUtils;
+import com.ravunana.longonkelo.service.impl.HorarioServiceImpl;
 import com.ravunana.longonkelo.service.impl.InstituicaoEnsinoServiceImpl;
 import com.ravunana.longonkelo.service.impl.MatriculaServiceImpl;
 import com.ravunana.longonkelo.service.impl.NotasPeriodicaDisciplinaServiceImpl;
@@ -27,24 +28,27 @@ public class MiniPautaServiceReport {
     private final MatriculaServiceImpl matriculaService;
 
     private final NotasPeriodicaDisciplinaServiceImpl notasPeriodicaDisciplinaService;
+    private final HorarioServiceImpl horarioService;
 
     public MiniPautaServiceReport(
         ReportService reportService,
         InstituicaoEnsinoServiceImpl instituicaoEnsinoService,
         MatriculaServiceImpl matriculaService,
-        NotasPeriodicaDisciplinaServiceImpl notasPeriodicaDisciplinaService
+        NotasPeriodicaDisciplinaServiceImpl notasPeriodicaDisciplinaService,
+        HorarioServiceImpl horarioService
     ) {
         this.reportService = reportService;
         this.instituicaoEnsinoService = instituicaoEnsinoService;
         this.matriculaService = matriculaService;
         this.notasPeriodicaDisciplinaService = notasPeriodicaDisciplinaService;
+        this.horarioService = horarioService;
     }
 
-    public String gerarPdf(Long matriculaID, Integer periodo) {
+    public String gerarPdf(Long horarioID, Integer periodoID) {
         Document document;
         String pdfName;
         FileOutputStream file;
-        pdfName = "boletim-notas";
+        pdfName = "mini-pauta";
         document = new Document(PageSize.A4, 4f, 4f, 4f, 4f);
         String tempFileName = "./" + pdfName + ".pdf";
 
@@ -66,33 +70,29 @@ public class MiniPautaServiceReport {
             // nada ao menenos que tenha esse id nessa tabela, mas será um dado errado
             // o filtro seria pelo matriclaID e peridoID cria um metodo na classe notasperiodicasdisciplinaimpl
             // fui. Ta vou aplicar isso e ver o que faco ate o periodo em que poderei te dar um feedback, ate
-            var notaPeriodica = notasPeriodicaDisciplinaService
-                .getNotaPeriodicaWithMatriculaPeriodo(matriculaID, periodo)
-                .stream()
-                .findFirst();
 
-            if (!notaPeriodica.isPresent()) {
-                throw new RuntimeException("Not Founded!");
-            }
-
-            var notaResult = notaPeriodica.get();
-            var matricula = notaResult.getMatricula();
+            //            if (!notaPeriodica.isPresent()) {
+            //                throw new RuntimeException("Not Founded!");
+            //            }
+            //
+            //            var notaResult = notaPeriodica.get();
+            //            var matricula = notaResult.getMatricula();
 
             final PdfWriter pdfWriter = PdfWriter.getInstance(document, file);
 
             HeaderFooter header = new HeaderFooter(new Phrase("This is a header."), false);
-            HeaderFooter footer = new HeaderFooter(
-                new Phrase(String.valueOf(getAssinatura(notaResult.getUtilizador().getLogin(), matricula.getDiscente().getNome()))),
-                new Phrase(".")
-            );
+            //            HeaderFooter footer = new HeaderFooter(
+            //                new Phrase(String.valueOf(getAssinatura(notaResult.getUtilizador().getLogin(), matricula.getDiscente().getNome()))),
+            //                new Phrase(".")
+            //            );
             // document.setHeader(header);
 
             document.open();
 
             // Pdf Metadatas
-            document.addTitle("Boletim de Notas " + periodo);
-            document.addSubject(periodo.toString());
-            document.addKeywords("boletim," + "notas," + periodo);
+            document.addTitle("Mini Pauta " + periodoID);
+            document.addSubject(periodoID.toString());
+            document.addKeywords("mini," + "pauta," + periodoID);
             document.addCreator("ravunana,lda");
             document.addAuthor("ravunana");
             //            document.setFooter(footer);
@@ -102,7 +102,7 @@ public class MiniPautaServiceReport {
 
             layoutTable.addCell(
                 makeCellTable(
-                    getRecibo(matriculaID, periodo),
+                    getRecibo(horarioID, periodoID),
                     Element.ALIGN_CENTER,
                     Element.ALIGN_LEFT,
                     leading,
@@ -186,23 +186,35 @@ public class MiniPautaServiceReport {
         return (endereco + "\n" + email + "\n" + telefone);
     }
 
-    private PdfPTable getRecibo(Long matriculaID, Integer periodo) {
+    private PdfPTable getRecibo(Long horarioID, Integer periodo) {
         //        var aplicacaoRecibos = aplicacaoReciboService.getAplicacaoReciboWithRecibo(reciboID);
 
-        var notasPeriodicasAluno = notasPeriodicaDisciplinaService.getNotaPeriodicaWithMatriculaPeriodo(matriculaID, periodo);
-        var notaPeriodica = notasPeriodicasAluno.stream().findFirst().get();
+        //        var notasPeriodicasAluno = notasPeriodicaDisciplinaService.getNotaPeriodicaWithMatriculaPeriodo(matriculas, periodo);
+        //        var notaPeriodica = notasPeriodicasAluno.stream().findFirst().get();
+
+        var horarioVar = horarioService.findOne(horarioID).get();
+
+        var turmaID = horarioVar.getTurma().getId();
+        var disciplinaID = horarioVar.getDisciplinaCurricular().getId();
+        var matriculas = matriculaService.getMatriculas(turmaID);
+
+        var notasPeriodicasWithTurmaDisciplinaPeriodo = notasPeriodicaDisciplinaService.getNotasPeriodicasWithTurmaDisciplinaPeriodo(
+            turmaID,
+            disciplinaID,
+            periodo
+        );
 
         // Pega os itens da factura com estado PENDENTE
 
         int NUM_LINHA_ATE_FIM_PAGINA = 30;
-        int NUM_LINHA_FACTURA = notasPeriodicasAluno.size();
+        int NUM_LINHA_FACTURA = matriculas.size();
         int NUM_LINHA_BRANCA_ADICIONAR = NUM_LINHA_ATE_FIM_PAGINA - NUM_LINHA_FACTURA;
 
-        var matricula = matriculaService.findOne(notaPeriodica.getMatricula().getId()).get();
-        var discente = matricula.getDiscente();
-        var numeroChamada = matricula.getNumeroChamada();
-        var numeroMatricula = matricula.getNumeroMatricula();
-        var turma = matricula.getTurma();
+        //        var matricula = matriculaService.findOne(notaPeriodica.getMatricula().getId()).get();
+        //        var discente = matricula.getDiscente();
+        //        var numeroChamada = matricula.getNumeroChamada();
+        //        var numeroMatricula = matricula.getNumeroMatricula();
+        var turma = horarioVar.getTurma();
         var curso = turma.getPlanoCurricular().getCurso().getNome();
         var sala = turma.getSala();
         var classe = turma.getPlanoCurricular().getClasse().getDescricao();
@@ -250,19 +262,19 @@ public class MiniPautaServiceReport {
         PdfPTable subHeader = new PdfPTable(1);
         subHeader.setWidthPercentage(50f);
 
-        subHeader.addCell(
-            makeCellText(
-                getVistoGestor(notaPeriodica.getMatricula().getId(), notaPeriodica.getPeriodoLancamento()),
-                Element.ALIGN_TOP,
-                Element.ALIGN_LEFT,
-                fontBold,
-                leading,
-                padding,
-                borderNone,
-                true,
-                false
-            )
-        );
+        //        subHeader.addCell(
+        //            makeCellText(
+        //                getVistoGestor(notaPeriodica.getMatricula().getId(), notaPeriodica.getPeriodoLancamento()),
+        //                Element.ALIGN_TOP,
+        //                Element.ALIGN_LEFT,
+        //                fontBold,
+        //                leading,
+        //                padding,
+        //                borderNone,
+        //                true,
+        //                false
+        //            )
+        //        );
 
         subHeader.addCell(
             makeCellTImage(getLogotipo(), Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
@@ -279,7 +291,7 @@ public class MiniPautaServiceReport {
         subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
         subHeader.addCell(
             makeCellText(
-                "BOLETIM DE NOTAS DO " + periodo + "º TRIMESTRE",
+                "MINI PAUTA DO " + periodo + "º TRIMESTRE",
                 Element.ALIGN_TOP,
                 Element.ALIGN_CENTER,
                 fontBoldLarge,
@@ -322,48 +334,6 @@ public class MiniPautaServiceReport {
         PdfPTable detalheMatricula = new PdfPTable(2);
 
         detalheMatricula.setWidthPercentage(100f);
-
-        detalheMatricula.addCell(
-            makeCellText("Nome:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        );
-
-        detalheMatricula.addCell(
-            makeCellText(
-                discente.getNome(),
-                Element.ALIGN_MIDDLE,
-                Element.ALIGN_LEFT,
-                fontNormal,
-                leading,
-                padding,
-                borderNone,
-                true,
-                false
-            )
-        );
-        detalheMatricula.addCell(
-            makeCellText("Nº Chamada:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        );
-
-        detalheMatricula.addCell(
-            makeCellText(
-                numeroChamada.toString(),
-                Element.ALIGN_MIDDLE,
-                Element.ALIGN_LEFT,
-                fontNormal,
-                leading,
-                padding,
-                borderNone,
-                true,
-                false
-            )
-        );
-        detalheMatricula.addCell(
-            makeCellText("Nº Processo:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        );
-
-        detalheMatricula.addCell(
-            makeCellText(numeroMatricula, Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
-        );
 
         detalheMatricula.addCell(
             makeCellText("Curso:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
@@ -504,7 +474,7 @@ public class MiniPautaServiceReport {
         //        );
 
         // Items
-        float[] widths = { 0.5f, 0.5f, 0.2f, 0.2f, 0.2f, 0.2f, 0.3f, 0.2f, 0.2f, 0.3f };
+        float[] widths = { 0.2f, 0.4f, 0.6f, 0.2f, 0.2f, 0.2f, 0.2f, 0.2f };
 
         // Descricao, Qtde, Preco unit, Desc, IVA, Total
         PdfPTable ajustesTable = new PdfPTable(widths);
@@ -512,8 +482,11 @@ public class MiniPautaServiceReport {
         // Calculo Header
 
         ajustesTable.addCell(
+            makeCellBackgroudColor("Nº", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBold, leading, padding, borderNormal, true, false)
+        );
+        ajustesTable.addCell(
             makeCellBackgroudColor(
-                "Professor",
+                "Nº Matricula",
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontBold,
@@ -524,9 +497,24 @@ public class MiniPautaServiceReport {
                 false
             )
         );
+
         ajustesTable.addCell(
             makeCellBackgroudColor(
-                "Disciplina",
+                "Nome Completo",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontBold,
+                leading,
+                padding,
+                borderNormal,
+                true,
+                false
+            )
+        );
+
+        ajustesTable.addCell(
+            makeCellBackgroudColor(
+                "Género",
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontBold,
@@ -541,11 +529,9 @@ public class MiniPautaServiceReport {
         ajustesTable.addCell(
             makeCellBackgroudColor("MAC", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBold, leading, padding, borderNormal, true, false)
         );
-
         ajustesTable.addCell(
             makeCellBackgroudColor("NPP", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBold, leading, padding, borderNormal, true, false)
         );
-
         ajustesTable.addCell(
             makeCellBackgroudColor("NPT", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBold, leading, padding, borderNormal, true, false)
         );
@@ -562,38 +548,22 @@ public class MiniPautaServiceReport {
                 false
             )
         );
-        ajustesTable.addCell(
-            makeCellBackgroudColor(
-                "Comportamento",
-                Element.ALIGN_MIDDLE,
-                Element.ALIGN_CENTER,
-                fontBold,
-                leading,
-                padding,
-                borderNormal,
-                true,
-                false
-            )
-        );
-        ajustesTable.addCell(
-            makeCellBackgroudColor("FJ", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBold, leading, padding, borderNormal, true, false)
-        );
-        ajustesTable.addCell(
-            makeCellBackgroudColor("FI", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBold, leading, padding, borderNormal, true, false)
-        );
-        ajustesTable.addCell(
-            makeCellBackgroudColor(
-                "Estado",
-                Element.ALIGN_MIDDLE,
-                Element.ALIGN_CENTER,
-                fontBold,
-                leading,
-                padding,
-                borderNormal,
-                true,
-                false
-            )
-        );
+        //        ajustesTable.addCell(
+        //            makeCellBackgroudColor("FI", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBold, leading, padding, borderNormal, true, false)
+        //        );
+        //        ajustesTable.addCell(
+        //            makeCellBackgroudColor(
+        //                "Estado",
+        //                Element.ALIGN_MIDDLE,
+        //                Element.ALIGN_CENTER,
+        //                fontBold,
+        //                leading,
+        //                padding,
+        //                borderNormal,
+        //                true,
+        //                false
+        //            )
+        //        );
         //                ajustesTable.addCell(
         //                        makeCellBackgroudColor(
         //                                "Total",
@@ -608,17 +578,20 @@ public class MiniPautaServiceReport {
         //                        )
         //                );
         //
-        for (var nota : notasPeriodicasAluno) {
-            var disciplinaCurricular = nota.getDisciplinaCurricular().getDisciplina().getNome();
-            var nota1 = nota.getNota1();
-            var nota2 = nota.getNota2();
-            var nota3 = nota.getNota3();
-            var media = nota.getMedia();
-            var faltasJustificadas = nota.getFaltaJusticada().toString();
-            var faltasInjustificadas = nota.getFaltaInjustificada().toString();
-            var comportamento = nota.getComportamento();
-            var docente = nota.getDocente().getNome();
-            var estado = nota.getEstado().getDescricao();
+        for (var matricula : matriculas) {
+            var notasAluno = notasPeriodicasWithTurmaDisciplinaPeriodo
+                .stream()
+                .filter(npd -> npd.getMatricula().getId().equals(matricula.getId()))
+                .findFirst()
+                .get();
+            var nota1 = notasAluno.getNota1();
+            var nota2 = notasAluno.getNota2();
+            var nota3 = notasAluno.getNota3();
+            var media = notasAluno.getMedia();
+            var nome = matricula.getDiscente().getNome();
+            var numeroMatricula = matricula.getNumeroMatricula();
+            var numeroChamada = matricula.getNumeroChamada();
+            var genero = matricula.getDiscente().getSexo();
 
             // Total do contrato incluido as multas e juros
             //
@@ -634,16 +607,14 @@ public class MiniPautaServiceReport {
                 leading,
                 padding,
                 borderSmaller,
-                disciplinaCurricular,
+                nome,
+                numeroMatricula,
+                numeroChamada.toString(),
+                genero.toString(),
                 nota1.toString(),
                 nota2.toString(),
                 nota3.toString(),
-                media.toString(),
-                faltasJustificadas,
-                faltasInjustificadas,
-                comportamento.toString(),
-                docente,
-                estado
+                media.toString()
             );
         }
         //
@@ -655,7 +626,7 @@ public class MiniPautaServiceReport {
         //
         // Linhas Documento em branco para o resumo estar no rodapé
         for (int i = 0; i <= NUM_LINHA_BRANCA_ADICIONAR; i++) {
-            getLinhasDocumento(ajustesTable, fontNormal, leading, padding, noBorder, "", "", "", "", "", "", "", "", "", "");
+            getLinhasDocumento(ajustesTable, fontNormal, leading, padding, noBorder, "", "", "", "", "", "", "", "");
         }
         // Resumo de imposto
         //        float[] withResumoImposto = { 0.4f, 0.1f, 0.2f, 0.2f };
@@ -1197,18 +1168,18 @@ public class MiniPautaServiceReport {
         layoutTable.addCell(
             makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
         );
-        layoutTable.addCell(
-            makeCellTable(
-                getAssinatura(SecurityUtils.getCurrentUserLogin().get(), discente.getNome()),
-                Element.ALIGN_TOP,
-                Element.ALIGN_CENTER,
-                leading,
-                padding,
-                borderNone,
-                true,
-                false
-            )
-        );
+        //        layoutTable.addCell(
+        //            makeCellTable(
+        //                getAssinatura(SecurityUtils.getCurrentUserLogin().get(), discente.getNome()),
+        //                Element.ALIGN_TOP,
+        //                Element.ALIGN_CENTER,
+        //                leading,
+        //                padding,
+        //                borderNone,
+        //                true,
+        //                false
+        //            )
+        //        );
 
         layoutTable.addCell(
             makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
@@ -1362,26 +1333,34 @@ public class MiniPautaServiceReport {
         float leading,
         float padding,
         com.lowagie.text.Rectangle borderSmaller,
-        String disciplinaCurricular,
+        String nome,
+        String numeroMatricula,
+        String numeroChamada,
+        String genero,
         String nota1,
         String nota2,
         String nota3,
-        String media,
-        String faltasJustificadas,
-        String faltasInjustificadas,
-        String comportamento,
-        String docente,
-        String estado
+        String media
     ) {
         // Codigo Emolumento
         ajustesTable.addCell(
-            makeCellText(docente, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
+            makeCellText(
+                numeroChamada,
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontNormal,
+                leading,
+                padding,
+                borderSmaller,
+                true,
+                false
+            )
         );
 
         // data
         ajustesTable.addCell(
             makeCellText(
-                disciplinaCurricular,
+                numeroMatricula,
                 Element.ALIGN_MIDDLE,
                 Element.ALIGN_CENTER,
                 fontNormal,
@@ -1395,65 +1374,45 @@ public class MiniPautaServiceReport {
 
         // emolumento
         ajustesTable.addCell(
-            makeCellText(nota1, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
+            makeCellText(nome, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
         );
 
         //         ValorUnit
         ajustesTable.addCell(
-            makeCellText(nota2, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
+            makeCellText(genero, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
         );
 
         // Desconto
         ajustesTable.addCell(
-            makeCellText(nota3, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
+            makeCellText(nota1, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
         );
 
         // Multa
         ajustesTable.addCell(
+            makeCellText(nota2, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
+        );
+        ajustesTable.addCell(
+            makeCellText(nota3, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
+        );
+        ajustesTable.addCell(
             makeCellText(media, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
         );
-        ajustesTable.addCell(
-            makeCellText(
-                comportamento,
-                Element.ALIGN_MIDDLE,
-                Element.ALIGN_CENTER,
-                fontNormal,
-                leading,
-                padding,
-                borderSmaller,
-                true,
-                false
-            )
-        );
-        ajustesTable.addCell(
-            makeCellText(
-                faltasJustificadas,
-                Element.ALIGN_MIDDLE,
-                Element.ALIGN_CENTER,
-                fontNormal,
-                leading,
-                padding,
-                borderSmaller,
-                true,
-                false
-            )
-        );
-        ajustesTable.addCell(
-            makeCellText(
-                faltasInjustificadas,
-                Element.ALIGN_MIDDLE,
-                Element.ALIGN_CENTER,
-                fontNormal,
-                leading,
-                padding,
-                borderSmaller,
-                true,
-                false
-            )
-        );
-        ajustesTable.addCell(
-            makeCellText(estado, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
-        );
+        //        ajustesTable.addCell(
+        //            makeCellText(
+        //                faltasInjustificadas,
+        //                Element.ALIGN_MIDDLE,
+        //                Element.ALIGN_CENTER,
+        //                fontNormal,
+        //                leading,
+        //                padding,
+        //                borderSmaller,
+        //                true,
+        //                false
+        //            )
+        //        );
+        //        ajustesTable.addCell(
+        //            makeCellText(estado, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
+        //        );
         //
         //         Total
         //                ajustesTable.addCell(
