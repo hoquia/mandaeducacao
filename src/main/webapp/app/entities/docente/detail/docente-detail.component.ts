@@ -71,7 +71,7 @@ export class DocenteDetailComponent implements OnInit {
   protected gerarListaPagoNaoPago(horarioSelecionado: IHorario): void {
     // alert(this.periodoSelecionado.toString());
     // eslint-disable-next-line no-console
-    const horarioID = Number(horarioSelecionado.id);
+    const horarioID = horarioSelecionado.id;
     this.docenteService.downloadListaPagoNaoPagoPdf(horarioID, this.periodoSelecionado).subscribe(res => {
       const url = window.URL.createObjectURL(res);
       const a = document.createElement('a');

@@ -8,6 +8,7 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.ravunana.longonkelo.config.Constants;
+import com.ravunana.longonkelo.config.LongonkeloException;
 import com.ravunana.longonkelo.security.SecurityUtils;
 import com.ravunana.longonkelo.service.impl.HorarioServiceImpl;
 import com.ravunana.longonkelo.service.impl.InstituicaoEnsinoServiceImpl;
@@ -219,7 +220,8 @@ public class MiniPautaServiceReport {
         var sala = turma.getSala();
         var classe = turma.getPlanoCurricular().getClasse().getDescricao();
         var turno = turma.getTurno();
-        String anoLectivo = turma.getDescricao().split("/")[1];
+        var disciplina = horarioVar.getDisciplinaCurricular().getDisciplina().getNome();
+        //        String anoLectivo = turma.getDescricao().split("/")[1];
         //        var contas = transacaoService.getUltimaTransacaoMatricula(matricula.getId());
 
         //        String morada = enderecoDiscenteService.getEnderecoPadrao(matricula.getDiscente().getId());
@@ -336,24 +338,43 @@ public class MiniPautaServiceReport {
         detalheMatricula.setWidthPercentage(100f);
 
         detalheMatricula.addCell(
+            makeCellText("Disciplina:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+        );
+
+        detalheMatricula.addCell(
+            makeCellText(disciplina, Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
+        );
+
+        detalheMatricula.addCell(
             makeCellText("Curso:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
 
         detalheMatricula.addCell(
             makeCellText(curso, Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
         );
+        detalheMatricula.addCell(
+            makeCellText("Turma:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
+        );
+
+        detalheMatricula.addCell(
+            makeCellText(
+                turma.getDescricao(),
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_LEFT,
+                fontNormal,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
+
         //                 Detalhes da factura
         //                float width2[] = { 0.3f, 0.6f, 0.3f, 0.5f, 0.3f, 0.8f};
         PdfPTable detalheFactura = new PdfPTable(2);
 
         detalheFactura.setWidthPercentage(100f);
-        detalheFactura.addCell(
-            makeCellText("Turno:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        );
-
-        detalheFactura.addCell(
-            makeCellText(turno.getNome(), Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
-        );
         //        detalheFactura.addCell(
         //                makeCellText("Recibo", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         //        );
@@ -371,12 +392,7 @@ public class MiniPautaServiceReport {
         //                )
         //        );
         //
-        detalheTable.addCell(
-            makeCellTable(detalheMatricula, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
-        );
-        detalheTable.addCell(
-            makeCellTable(detalheFactura, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
-        );
+
         detalheFactura.addCell(
             makeCellText("Sala:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
         );
@@ -396,6 +412,13 @@ public class MiniPautaServiceReport {
         );
         detalheFactura.addCell(
             makeCellText(classe, Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
+        );
+
+        detalheTable.addCell(
+            makeCellTable(detalheMatricula, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
+        );
+        detalheTable.addCell(
+            makeCellTable(detalheFactura, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
         );
         //
         //        detalheFactura.addCell(
@@ -474,7 +497,7 @@ public class MiniPautaServiceReport {
         //        );
 
         // Items
-        float[] widths = { 0.2f, 0.4f, 0.6f, 0.2f, 0.2f, 0.2f, 0.2f, 0.2f };
+        float[] widths = { 0.1f, 0.4f, 0.6f, 0.2f, 0.1f, 0.1f, 0.1f, 0.1f, 0.3f };
 
         // Descricao, Qtde, Preco unit, Desc, IVA, Total
         PdfPTable ajustesTable = new PdfPTable(widths);
@@ -548,6 +571,19 @@ public class MiniPautaServiceReport {
                 false
             )
         );
+        ajustesTable.addCell(
+            makeCellBackgroudColor(
+                "Estado",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_CENTER,
+                fontBold,
+                leading,
+                padding,
+                borderNormal,
+                true,
+                false
+            )
+        );
         //        ajustesTable.addCell(
         //            makeCellBackgroudColor("FI", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBold, leading, padding, borderNormal, true, false)
         //        );
@@ -579,11 +615,16 @@ public class MiniPautaServiceReport {
         //                );
         //
         for (var matricula : matriculas) {
-            var notasAluno = notasPeriodicasWithTurmaDisciplinaPeriodo
+            var notasAlunoResult = notasPeriodicasWithTurmaDisciplinaPeriodo
                 .stream()
                 .filter(npd -> npd.getMatricula().getId().equals(matricula.getId()))
-                .findFirst()
-                .get();
+                .findFirst();
+
+            if (!notasAlunoResult.isPresent()) {
+                throw new LongonkeloException("Nenhuma matricula encontrada!");
+            }
+
+            var notasAluno = notasAlunoResult.get();
             var nota1 = notasAluno.getNota1();
             var nota2 = notasAluno.getNota2();
             var nota3 = notasAluno.getNota3();
@@ -592,6 +633,7 @@ public class MiniPautaServiceReport {
             var numeroMatricula = matricula.getNumeroMatricula();
             var numeroChamada = matricula.getNumeroChamada();
             var genero = matricula.getDiscente().getSexo();
+            var estado = notasAluno.getEstado().getDescricao();
 
             // Total do contrato incluido as multas e juros
             //
@@ -614,7 +656,8 @@ public class MiniPautaServiceReport {
                 nota1.toString(),
                 nota2.toString(),
                 nota3.toString(),
-                media.toString()
+                media.toString(),
+                estado
             );
         }
         //
@@ -626,7 +669,7 @@ public class MiniPautaServiceReport {
         //
         // Linhas Documento em branco para o resumo estar no rodapé
         for (int i = 0; i <= NUM_LINHA_BRANCA_ADICIONAR; i++) {
-            getLinhasDocumento(ajustesTable, fontNormal, leading, padding, noBorder, "", "", "", "", "", "", "", "");
+            getLinhasDocumento(ajustesTable, fontNormal, leading, padding, noBorder, "", "", "", "", "", "", "", "", "");
         }
         // Resumo de imposto
         //        float[] withResumoImposto = { 0.4f, 0.1f, 0.2f, 0.2f };
@@ -1340,7 +1383,8 @@ public class MiniPautaServiceReport {
         String nota1,
         String nota2,
         String nota3,
-        String media
+        String media,
+        String estado
     ) {
         // Codigo Emolumento
         ajustesTable.addCell(
@@ -1396,6 +1440,9 @@ public class MiniPautaServiceReport {
         );
         ajustesTable.addCell(
             makeCellText(media, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
+        );
+        ajustesTable.addCell(
+            makeCellText(estado, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
         );
         //        ajustesTable.addCell(
         //            makeCellText(
