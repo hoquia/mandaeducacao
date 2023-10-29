@@ -614,17 +614,9 @@ public class MiniPautaServiceReport {
         //                        )
         //                );
         //
-        for (var matricula : matriculas) {
-            var notasAlunoResult = notasPeriodicasWithTurmaDisciplinaPeriodo
-                .stream()
-                .filter(npd -> npd.getMatricula().getId().equals(matricula.getId()))
-                .findFirst();
+        for (var notasAluno : notasPeriodicasWithTurmaDisciplinaPeriodo) {
+            var matricula = matriculaService.findOne(notasAluno.getMatricula().getId()).get();
 
-            if (!notasAlunoResult.isPresent()) {
-                throw new LongonkeloException("Nenhuma matricula encontrada!");
-            }
-
-            var notasAluno = notasAlunoResult.get();
             var nota1 = notasAluno.getNota1();
             var nota2 = notasAluno.getNota2();
             var nota3 = notasAluno.getNota3();
