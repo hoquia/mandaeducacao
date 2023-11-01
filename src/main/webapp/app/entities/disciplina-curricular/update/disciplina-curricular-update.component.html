@@ -173,6 +173,7 @@
             formControlName="planosCurriculars"
             [compareWith]="comparePlanoCurricular"
             [multiple]="true"
+            required
           >
             <ng-option [value]="planoCurricularOption" *ngFor="let planoCurricularOption of planoCurricularsSharedCollection">
               {{ planoCurricularOption.descricao }}

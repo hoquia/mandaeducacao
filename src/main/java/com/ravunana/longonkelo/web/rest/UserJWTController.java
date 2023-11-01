@@ -39,12 +39,12 @@ public class UserJWTController {
             loginVM.getPassword()
         );
 
-        //        var dataActual = LocalDate.now();
-        //        var dataExpiracao = LocalDate.of(2023, 10, 6);
-        //
-        //        if (dataActual.isAfter(dataExpiracao)) {
-        //            throw new LongonkeloException("Licença expirada. Pague a sua subscrição para uso do Longonkelo!");
-        //        }
+        var dataActual = LocalDate.now();
+        var dataExpiracao = LocalDate.of(2024, 1, 1);
+
+        if (dataActual.isAfter(dataExpiracao)) {
+            throw new LongonkeloException("Licença expirada. Pague a sua subscrição para uso do Longonkelo!");
+        }
 
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
