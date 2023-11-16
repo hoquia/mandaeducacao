@@ -1,55 +1,49 @@
-<div class="row">
-  <div class="col-md-5">
-    <span class="hipster img-fluid rounded"></span>
-    <!-- <img src="../../content/images/Longokelo.png" height="800px" width="1024px" /> -->
-  </div>
+<div>
+  <h1><span appTranslate="home.title">Bem-vindo, Java Hipster!</span></h1>
 
-  <div class="col-md-6">
-    <h1><span appTranslate="home.title">Bem-vindo, Java Hipster!</span></h1>
+  <!-- <p class="lead" appTranslate="home.subtitle">Esta é a página principal</p> -->
 
-    <!-- <p class="lead" appTranslate="home.subtitle">Esta é a página principal</p> -->
-
-    <div class="mt-4" [ngSwitch]="account !== null">
-      <div class="alert alert-success" *ngSwitchCase="true">
-        <span id="home-logged-message" *ngIf="account" appTranslate="home.logged.message" [translateValues]="{ username: account.login }"
-          >Está autenticado como "{{ account.login }}".</span
-        >
-      </div>
-
-      <div class="alert alert-warning" *ngSwitchCase="false">
-        <span appTranslate="global.messages.info.authenticated.prefix">Para </span>
-        <button class="btn alert-link" (click)="login()">Entrar na instituição</button>
-        <span
-          >, como demostração utilize as seguintes contas:<br />
-          - Director (utilizador="director" e palavra-passe="director") <br />
-          - Docente (utilizador="docente" e palavra-passe="docente") <br />
-          - Encarregado (utilizador="encarregado" e palavra-passe="encarregado") <br />
-          - Estudante (Estudante="estudante" e palavra-passe="estudante"). <br />
-        </span>
-      </div>
-
-      <div *ngSwitchCase="false">
-        <h3 appTranslate="global.messages.info.register.noaccount">Ainda não tem uma conta?</h3>
-        &nbsp;
-        <div>
-          <button class="btn btn-lg btn-primary mb-2" routerLink="account/register" [queryParams]="{ tipo: 'R' }">
-            Crie uma nova conta como Pai ou Encarregado de educação
-          </button>
-        </div>
-        <div>
-          <button class="btn btn-lg btn-success mb-2" routerLink="account/register" [queryParams]="{ tipo: 'E' }">
-            Crie uma nova conta como Estudante
-          </button>
-        </div>
-        <div>
-          <button class="btn btn-lg btn-warning mb-2" routerLink="account/register" [queryParams]="{ tipo: 'P' }">
-            Crie uma nova conta como Docente
-          </button>
-        </div>
-      </div>
+  <div class="mt-4" [ngSwitch]="account !== null">
+    <div class="alert alert-success" *ngSwitchCase="true">
+      <span id="home-logged-message" *ngIf="account" appTranslate="home.logged.message" [translateValues]="{ username: account.login }"
+        >Está autenticado como "{{ account.login }}".</span
+      >
     </div>
 
-    <!-- <p>Contactos de Apoio e Suporte</p>
+    <div class="alert alert-warning" *ngSwitchCase="false">
+      <span appTranslate="global.messages.info.authenticated.prefix">Para </span>
+      <button class="btn alert-link" (click)="login()">Entrar na instituição</button>
+      <span
+        >, como demostração utilize as seguintes contas:<br />
+        - Director (utilizador="director" e palavra-passe="director") <br />
+        - Docente (utilizador="docente" e palavra-passe="docente") <br />
+        - Encarregado (utilizador="encarregado" e palavra-passe="encarregado") <br />
+        - Estudante (Estudante="estudante" e palavra-passe="estudante"). <br />
+      </span>
+    </div>
+
+    <div *ngSwitchCase="false">
+      <h3 appTranslate="global.messages.info.register.noaccount">Ainda não tem uma conta?</h3>
+      &nbsp;
+      <div>
+        <button class="btn btn-lg btn-primary mb-2" routerLink="account/register" [queryParams]="{ tipo: 'R' }">
+          Crie uma nova conta como Pai ou Encarregado de educação
+        </button>
+      </div>
+      <div>
+        <button class="btn btn-lg btn-success mb-2" routerLink="account/register" [queryParams]="{ tipo: 'E' }">
+          Crie uma nova conta como Estudante
+        </button>
+      </div>
+      <div>
+        <button class="btn btn-lg btn-warning mb-2" routerLink="account/register" [queryParams]="{ tipo: 'P' }">
+          Crie uma nova conta como Docente
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- <p>Contactos de Apoio e Suporte</p>
 
     <ul>
       <li>
@@ -93,5 +87,506 @@
         >GitHub</a
       >!
     </p> -->
+
+  <!-- ./Gerente -->
+  <div *appHasAnyAuthority="['DIRECTOR_GERAL', 'SUB_DIRECTOR_PEDAGOGICO']">
+    <h1>Dashboard Gerentes</h1>
+
+    <div class="container">
+      <div class="row mb-2">
+        <div class="col-md-4 col-xl-3">
+          <div class="card bg-c-blue order-card">
+            <div class="card-block">
+              <h6 class="m-b-20">Turmas</h6>
+              <h2 class="text-right">
+                <!-- <i class="fa fa-cart-plus f-left"></i> -->
+                <fa-icon icon="users-rectangle" [fixedWidth]="true"></fa-icon>
+                <span>486</span>
+              </h2>
+
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Turno</th>
+                    <th scope="col">Nº Turma</th>
+                    <th scope="col">Nº Alunos</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>Manhã</th>
+                    <td>{{ totalTurmaManha | number }}</td>
+                    <td>{{ totalAlunoManha | number }}</td>
+                  </tr>
+                  <tr>
+                    <th>Tarde</th>
+                    <td>{{ totalTurmaTarde | number }}</td>
+                    <td>{{ totalAlunoTarde | number }}</td>
+                  </tr>
+                  <tr>
+                    <th>Noite</th>
+                    <td>{{ totalTurmaNoite | number }}</td>
+                    <td>{{ totalAlunoNoite | number }}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <p><a href="/turma">Lista de Turmas</a></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-xl-3">
+          <div class="card bg-c-green order-card">
+            <div class="card-block">
+              <h6 class="m-b-20">Professores</h6>
+              <h2 class="text-right">
+                <fa-icon icon="user-tie" [fixedWidth]="true"></fa-icon>
+                <span>{{ totalProfessores }}</span>
+              </h2>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Turno</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">M</th>
+                    <th scope="col">F</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>Manhã</th>
+                    <td>{{ totalProfessoresManha | number }}</td>
+                    <td>{{ totalProfessoresManhaMasculino | number }}</td>
+                    <td>{{ totalProfessoresManhaFeminino | number }}</td>
+                  </tr>
+                  <tr>
+                    <th>Tarde</th>
+                    <td>{{ totalProfessoresTarde | number }}</td>
+                    <td>{{ totalProfessoresTardeMasculino | number }}</td>
+                    <td>{{ totalProfessoresTardeFeminino | number }}</td>
+                  </tr>
+                  <tr>
+                    <th>Noite</th>
+                    <td>{{ totalProfessoresNoite | number }}</td>
+                    <td>{{ totalProfessoresNoiteMasculino | number }}</td>
+                    <td>{{ totalProfessoresNoiteFeminino | number }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <!-- <p class="m-b-0">Completed Orders<span class="f-right">351</span></p> -->
+              <p><a href="/docente">Lista dos professores</a></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-xl-3">
+          <div class="card bg-c-yellow order-card">
+            <div class="card-block">
+              <h6 class="m-b-20">Matriculas</h6>
+              <h2 class="text-right">
+                <!-- <i class="fa fa-refresh f-left"></i> -->
+                <fa-icon icon="address-card" [fixedWidth]="true"></fa-icon>
+                <span>{{ totalMatriculas }}</span>
+              </h2>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Turno</th>
+                    <th scope="col">Alunos</th>
+                    <th scope="col">M</th>
+                    <th scope="col">F</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>Manhã</th>
+                    <td>{{ totalMatriculasManha | number }}</td>
+                    <td>{{ totalManhaMasculino | number }}</td>
+                    <td>{{ totalManhaFeminino | number }}</td>
+                  </tr>
+                  <tr>
+                    <th>Tarde</th>
+                    <td>{{ totalMatriculasTarde | number }}</td>
+                    <td>{{ totalTardeMasculino | number }}</td>
+                    <td>{{ totalTardeFeminino | number }}</td>
+                  </tr>
+                  <tr>
+                    <th>Noite</th>
+                    <td>{{ totalMatriculasNoite | number }}</td>
+                    <td>{{ totalNoiteMasculino | number }}</td>
+                    <td>{{ totalNoiteFeminino | number }}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <p><a href="/matricula">Lista de Matriculas</a></p>
+              <!-- <p class="m-b-0">Completed Orders<span class="f-right">351</span></p> -->
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="col-md-4 col-xl-3">
+          <div class="card bg-c-pink order-card">
+            <div class="card-block">
+              <h6 class="m-b-20">Orders Received</h6>
+              <h2 class="text-right"><i class="fa fa-credit-card f-left"></i><span>486</span></h2>
+              <p class="m-b-0">Completed Orders<span class="f-right">351</span></p>
+            </div>
+          </div>
+        </div> -->
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 col-xl-3">
+          <div class="card bg-c-green order-card">
+            <div class="card-block">
+              <h6 class="m-b-20">Confirmações</h6>
+              <h2 class="text-right">
+                <!-- <i class="fa fa-refresh f-left"></i> -->
+                <fa-icon icon="address-card" [fixedWidth]="true"></fa-icon>
+                <span>{{ totalMatriculas }}</span>
+              </h2>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Turno</th>
+                    <th scope="col">Alunos</th>
+                    <th scope="col">M</th>
+                    <th scope="col">F</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>Manhã</th>
+                    <td>{{ totalMatriculasManha | number }}</td>
+                    <td>{{ totalManhaMasculino | number }}</td>
+                    <td>{{ totalManhaFeminino | number }}</td>
+                  </tr>
+                  <tr>
+                    <th>Tarde</th>
+                    <td>{{ totalMatriculasTarde | number }}</td>
+                    <td>{{ totalTardeMasculino | number }}</td>
+                    <td>{{ totalTardeFeminino | number }}</td>
+                  </tr>
+                  <tr>
+                    <th>Noite</th>
+                    <td>{{ totalMatriculasNoite | number }}</td>
+                    <td>{{ totalNoiteMasculino | number }}</td>
+                    <td>{{ totalNoiteFeminino | number }}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <p><a href="/matricula">Lista de Confirmados</a></p>
+              <!-- <p class="m-b-0">Completed Orders<span class="f-right">351</span></p> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-xl-3">
+          <div class="card bg-c-yellow order-card">
+            <div class="card-block">
+              <h6 class="m-b-20">Transferências</h6>
+              <h2 class="text-right">
+                <!-- <i class="fa fa-refresh f-left"></i> -->
+                <fa-icon icon="arrow-right-arrow-left" [fixedWidth]="true"></fa-icon>
+                <span>{{ totalMatriculas }}</span>
+              </h2>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Turno</th>
+                    <th scope="col">Alunos</th>
+                    <th scope="col">M</th>
+                    <th scope="col">F</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>Manhã</th>
+                    <td>{{ totalMatriculasManha | number }}</td>
+                    <td>{{ totalManhaMasculino | number }}</td>
+                    <td>{{ totalManhaFeminino | number }}</td>
+                  </tr>
+                  <tr>
+                    <th>Tarde</th>
+                    <td>{{ totalMatriculasTarde | number }}</td>
+                    <td>{{ totalTardeMasculino | number }}</td>
+                    <td>{{ totalTardeFeminino | number }}</td>
+                  </tr>
+                  <tr>
+                    <th>Noite</th>
+                    <td>{{ totalMatriculasNoite | number }}</td>
+                    <td>{{ totalNoiteMasculino | number }}</td>
+                    <td>{{ totalNoiteFeminino | number }}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <p><a href="/matricula">Lista de Transferências</a></p>
+              <!-- <p class="m-b-0">Completed Orders<span class="f-right">351</span></p> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 col-xl-3">
+          <div class="card bg-c-blue order-card">
+            <div class="card-block">
+              <h6 class="m-b-20">Alunos</h6>
+              <h2 class="text-right">
+                <!-- <i class="fa fa-refresh f-left"></i> -->
+                <fa-icon icon="address-card" [fixedWidth]="true"></fa-icon>
+                <span>{{ totalMatriculas }}</span>
+              </h2>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Turno</th>
+                    <th scope="col">Alunos</th>
+                    <th scope="col">M</th>
+                    <th scope="col">F</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>Manhã</th>
+                    <td>{{ totalMatriculasManha | number }}</td>
+                    <td>{{ totalManhaMasculino | number }}</td>
+                    <td>{{ totalManhaFeminino | number }}</td>
+                  </tr>
+                  <tr>
+                    <th>Tarde</th>
+                    <td>{{ totalMatriculasTarde | number }}</td>
+                    <td>{{ totalTardeMasculino | number }}</td>
+                    <td>{{ totalTardeFeminino | number }}</td>
+                  </tr>
+                  <tr>
+                    <th>Noite</th>
+                    <td>{{ totalMatriculasNoite | number }}</td>
+                    <td>{{ totalNoiteMasculino | number }}</td>
+                    <td>{{ totalNoiteFeminino | number }}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <p><a href="/matricula">Lista de Alunos</a></p>
+              <!-- <p class="m-b-0">Completed Orders<span class="f-right">351</span></p> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+  <!-- \.Gerente -->
+
+  <!-- ./Estudantes -->
+  <div *appHasAnyAuthority="['ESTUDANTE']">
+    <h3 class="text-bold">Lançamentos de Nota</h3>
+
+    <table class="table table-hover table-bordered border border-dark mb-5">
+      <thead class="table-active">
+        <tr>
+          <th class="col-md-7">Disciplina</th>
+          <th class="col-md-1">Nota 1</th>
+          <th class="col-md-1">Nota 2</th>
+          <th class="col-md-1">Nota 3</th>
+          <th class="col-md-1">Média</th>
+          <th class="col-md-1">Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+        </tr>
+        <tr>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+        </tr>
+        <tr>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="text-bold">Faltas</h3>
+
+    <table class="table table-hover table-bordered border border-dark mb-5">
+      <thead class="table-active">
+        <tr>
+          <th class="col-md-9">Disciplina</th>
+          <th class="col-md-1">FJ</th>
+          <th class="col-md-1">FI</th>
+          <th class="col-md-1">TF</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+        </tr>
+        <tr>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+        </tr>
+        <tr>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="text-bold">Horário</h3>
+
+    <table class="table table-hover table-bordered border border-dark mb-5">
+      <thead class="table-active">
+        <tr>
+          <th class="col-md-2">Segunda-Feira</th>
+          <th class="col-md-2">Terça-Feira</th>
+          <th class="col-md-2">Quarta-Feira</th>
+          <th class="col-md-2">Quinta-Feira</th>
+          <th class="col-md-2">Sexta-Feira</th>
+          <th class="col-md-2">Sábado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+        </tr>
+        <tr>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+        </tr>
+        <tr>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="text-bold">Lista de Colegas</h3>
+
+    <table class="table table-hover table-bordered border border-dark">
+      <thead class="table-active">
+        <tr>
+          <th class="col-md-2">Nº Matricula</th>
+          <th class="col-md-10">Nome Completo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Otto</td>
+          <td>Otto</td>
+        </tr>
+        <tr>
+          <td>Otto</td>
+          <td>Otto</td>
+        </tr>
+        <tr>
+          <td>Otto</td>
+          <td>Otto</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- \.Estudantes -->
+
+  <!-- /.Encarregados -->
+  <div *appHasAnyAuthority="['ENCARREGADO']">
+    <h3 class="text-bold">Coordenadores</h3>
+
+    <table class="table table-hover table-bordered border border-dark mb-5">
+      <thead class="table-active">
+        <tr>
+          <th class="col-md-4">Nome Completo</th>
+          <th class="col-md-4">Disciplina</th>
+          <th class="col-md-1">Telemóvel</th>
+          <th class="col-md-2">Email</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let item of professoresTelemovel">
+        <tr>
+          <td>{{ item.nome }}</td>
+          <td>{{ item.disciplina }}</td>
+          <td>{{ item.telemovel }}</td>
+          <td>{{ item.email }}</td>
+        </tr>
+        <!-- <tr>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+        </tr>
+        <tr>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+        </tr> -->
+      </tbody>
+    </table>
+
+    <h3 class="text-bold">Ocorrências</h3>
+
+    <table class="table table-hover table-bordered border border-dark mb-5">
+      <thead class="table-active">
+        <tr>
+          <th class="col-md-4">Estudante</th>
+          <th class="col-md-4">Disciplina</th>
+          <th class="col-md-4">Motivo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+        </tr>
+        <tr>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+        </tr>
+        <tr>
+          <td>Otto</td>
+          <td>Otto</td>
+          <td>Otto</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <!-- \.Encarregados -->
 </div>
