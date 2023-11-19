@@ -19,7 +19,7 @@ public interface DiscenteMapper extends EntityMapper<DiscenteDTO, Discente> {
     @Mapping(target = "profissao", source = "profissao", qualifiedByName = "lookupItemDescricao")
     @Mapping(target = "grupoSanguinio", source = "grupoSanguinio", qualifiedByName = "lookupItemDescricao")
     @Mapping(target = "necessidadeEspecial", source = "necessidadeEspecial", qualifiedByName = "lookupItemDescricao")
-    @Mapping(target = "encarregadoEducacao", source = "encarregadoEducacao", qualifiedByName = "encarregadoEducacaoNome")
+    @Mapping(target = "encarregadoEducacao", source = "encarregadoEducacao")
     DiscenteDTO toDto(Discente s);
 
     @Named("lookupItemDescricao")

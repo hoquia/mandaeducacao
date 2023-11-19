@@ -41,9 +41,10 @@ public class OcorrenciaServiceImpl implements OcorrenciaService {
         String descricao = ocorrenciaDTO.getDescricao();
 
         Ocorrencia ocorrencia = ocorrenciaMapper.toEntity(ocorrenciaDTO);
+        String telefone = ocorrencia.getMatricula().getDiscente().getTelefoneParente();
         ocorrencia = ocorrenciaRepository.save(ocorrencia);
 
-        smsInfobip.send( "931265627", descricao );
+        smsInfobip.send( telefone, descricao );
 
         return ocorrenciaMapper.toDto(ocorrencia);
     }
