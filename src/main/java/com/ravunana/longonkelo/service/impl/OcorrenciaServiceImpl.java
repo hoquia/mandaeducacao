@@ -1,5 +1,6 @@
 package com.ravunana.longonkelo.service.impl;
 
+import com.ravunana.longonkelo.config.SendSmsInfobip;
 import com.ravunana.longonkelo.domain.Ocorrencia;
 import com.ravunana.longonkelo.repository.OcorrenciaRepository;
 import com.ravunana.longonkelo.service.OcorrenciaService;
@@ -25,17 +26,25 @@ public class OcorrenciaServiceImpl implements OcorrenciaService {
     private final OcorrenciaRepository ocorrenciaRepository;
 
     private final OcorrenciaMapper ocorrenciaMapper;
+    private final SendSmsInfobip smsInfobip;
 
-    public OcorrenciaServiceImpl(OcorrenciaRepository ocorrenciaRepository, OcorrenciaMapper ocorrenciaMapper) {
+    public OcorrenciaServiceImpl(OcorrenciaRepository ocorrenciaRepository, OcorrenciaMapper ocorrenciaMapper, SendSmsInfobip smsInfobip) {
         this.ocorrenciaRepository = ocorrenciaRepository;
         this.ocorrenciaMapper = ocorrenciaMapper;
+        this.smsInfobip = smsInfobip;
     }
 
     @Override
     public OcorrenciaDTO save(OcorrenciaDTO ocorrenciaDTO) {
         log.debug("Request to save Ocorrencia : {}", ocorrenciaDTO);
+
+        String descricao = ocorrenciaDTO.getDescricao();
+
         Ocorrencia ocorrencia = ocorrenciaMapper.toEntity(ocorrenciaDTO);
         ocorrencia = ocorrenciaRepository.save(ocorrencia);
+
+        smsInfobip.send( "931265627", descricao );
+
         return ocorrenciaMapper.toDto(ocorrencia);
     }
 
