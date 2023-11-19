@@ -22,7 +22,7 @@ public interface OcorrenciaMapper extends EntityMapper<OcorrenciaDTO, Ocorrencia
     @Mapping(target = "utilizador", source = "utilizador", qualifiedByName = "userLogin")
     @Mapping(target = "referencia", source = "referencia", qualifiedByName = "ocorrenciaId")
     @Mapping(target = "docente", source = "docente", qualifiedByName = "docenteNome")
-    @Mapping(target = "matricula", source = "matricula", qualifiedByName = "matriculaNumeroMatricula")
+    @Mapping(target = "matricula", source = "matricula")
     @Mapping(target = "estado", source = "estado", qualifiedByName = "categoriaOcorrenciaDescricao")
     @Mapping(target = "licao", source = "licao", qualifiedByName = "licaoNumero")
     OcorrenciaDTO toDto(Ocorrencia s);
