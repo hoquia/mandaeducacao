@@ -17,7 +17,7 @@
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div>
 
-        <div class="row mb-3">
+        <!-- <div class="row mb-3">
           <label class="form-label" appTranslate="longonkeloApp.ocorrencia.uniqueOcorrencia" for="field_uniqueOcorrencia"
             >Unique Ocorrencia</label
           >
@@ -35,7 +35,7 @@
               (editForm.get('uniqueOcorrencia')!.dirty || editForm.get('uniqueOcorrencia')!.touched)
             "
           ></div>
-        </div>
+        </div> -->
 
         <div class="row mb-3">
           <label class="form-label" appTranslate="longonkeloApp.ocorrencia.descricao" for="field_descricao">Descricao</label>
@@ -51,7 +51,7 @@
           </div>
         </div>
 
-        <div class="row mb-3">
+        <!-- <div class="row mb-3">
           <label class="form-label" appTranslate="longonkeloApp.ocorrencia.evidencia" for="field_evidencia">Evidencia</label>
           <div>
             <div *ngIf="editForm.get('evidencia')!.value" class="form-text text-danger clearfix">
@@ -88,14 +88,14 @@
             id="field_evidenciaContentType"
             formControlName="evidenciaContentType"
           />
-        </div>
+        </div> -->
 
-        <div class="row mb-3">
+        <!-- <div class="row mb-3">
           <label class="form-label" appTranslate="longonkeloApp.ocorrencia.hash" for="field_hash">Hash</label>
           <input type="text" class="form-control" name="hash" id="field_hash" data-cy="hash" formControlName="hash" />
-        </div>
+        </div> -->
 
-        <div class="row mb-3">
+        <!-- <div class="row mb-3">
           <label class="form-label" appTranslate="longonkeloApp.ocorrencia.timestamp" for="field_timestamp">Timestamp</label>
           <div class="d-flex">
             <input
@@ -124,9 +124,9 @@
               Este campo é do tipo data/hora.
             </small>
           </div>
-        </div>
+        </div> -->
 
-        <div class="row mb-3">
+        <!-- <div class="row mb-3">
           <label class="form-label" appTranslate="longonkeloApp.ocorrencia.utilizador" for="field_utilizador">Utilizador</label>
           <select
             class="form-control"
@@ -139,9 +139,9 @@
             <option [ngValue]="null"></option>
             <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
           </select>
-        </div>
+        </div> -->
 
-        <div class="row mb-3">
+        <!-- <div class="row mb-3">
           <label class="form-label" appTranslate="longonkeloApp.ocorrencia.referencia" for="field_referencia">Referencia</label>
           <select
             class="form-control"
@@ -156,7 +156,7 @@
               {{ ocorrenciaOption.id }}
             </option>
           </select>
-        </div>
+        </div> -->
 
         <div class="row mb-3">
           <label class="form-label" appTranslate="longonkeloApp.ocorrencia.docente" for="field_docente">Docente</label>

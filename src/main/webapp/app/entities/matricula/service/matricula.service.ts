@@ -129,4 +129,28 @@ export class MatriculaService {
     headers = headers.set('Accept', 'application/pdf');
     return this.http.get(`${this.resourceUrl}/boletim-notas/${matriculaID}/${periodoID}`, { headers, responseType: 'blob' });
   }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/member-ordering
+  downloadDeclaracaoNotas(matriculaID: number, periodoID: number) {
+    let headers = new HttpHeaders();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    headers = headers.set('Accept', 'application/pdf');
+    return this.http.get(`${this.resourceUrl}/declaracao-notas/${matriculaID}/${periodoID}`, { headers, responseType: 'blob' });
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/member-ordering
+  downloadDeclaracaoSemNotas(matriculaID: number) {
+    let headers = new HttpHeaders();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    headers = headers.set('Accept', 'application/pdf');
+    return this.http.get(`${this.resourceUrl}/declaracao/${matriculaID}`, { headers, responseType: 'blob' });
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/member-ordering
+  downloadCertificado(matriculaID: number, periodoID: number) {
+    let headers = new HttpHeaders();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    headers = headers.set('Accept', 'application/pdf');
+    return this.http.get(`${this.resourceUrl}/certificado/${matriculaID}/${periodoID}`, { headers, responseType: 'blob' });
+  }
 }

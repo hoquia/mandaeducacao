@@ -75,4 +75,51 @@ export class MatriculaDetailComponent implements OnInit {
       a.remove();
     });
   }
+
+  protected gerarDeclaracaoNotas(matriculaID: number): void {
+    alert(this.periodoSelecionado.toString());
+    this.matriculaService.downloadDeclaracaoNotas(matriculaID, this.periodoSelecionado).subscribe(res => {
+      const url = window.URL.createObjectURL(res);
+      const a = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      a.title = `declaracao-notas-${matriculaID}`;
+      a.rel = 'noopener noreferrer';
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    });
+  }
+
+  protected gerarDeclaracaoSemNotas(matriculaID: number): void {
+    this.matriculaService.downloadDeclaracaoSemNotas(matriculaID).subscribe(res => {
+      const url = window.URL.createObjectURL(res);
+      const a = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      a.title = `declaracao-${matriculaID}`;
+      a.rel = 'noopener noreferrer';
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    });
+  }
+
+  protected gerarCertificado(matriculaID: number): void {
+    alert(this.periodoSelecionado.toString());
+    this.matriculaService.downloadCertificado(matriculaID, this.periodoSelecionado).subscribe(res => {
+      const url = window.URL.createObjectURL(res);
+      const a = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      a.title = `certificado-${matriculaID}`;
+      a.rel = 'noopener noreferrer';
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    });
+  }
 }

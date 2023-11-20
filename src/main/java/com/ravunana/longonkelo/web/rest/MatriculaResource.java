@@ -6,6 +6,9 @@ import com.ravunana.longonkelo.service.MatriculaService;
 import com.ravunana.longonkelo.service.criteria.MatriculaCriteria;
 import com.ravunana.longonkelo.service.dto.MatriculaDTO;
 import com.ravunana.longonkelo.service.report.BoletimNotasServiceReport;
+import com.ravunana.longonkelo.service.report.CertificadoServiceReport;
+import com.ravunana.longonkelo.service.report.DeclaracaoNotasServiceReport;
+import com.ravunana.longonkelo.service.report.DeclaracaoSemNotasServiceReport;
 import com.ravunana.longonkelo.web.rest.errors.BadRequestAlertException;
 import java.io.File;
 import java.io.IOException;
@@ -55,17 +58,26 @@ public class MatriculaResource {
 
     private final MatriculaQueryService matriculaQueryService;
     private final BoletimNotasServiceReport boletimNotasServiceReport;
+    private final DeclaracaoNotasServiceReport declaracaoNotasServiceReport;
+    private final DeclaracaoSemNotasServiceReport declaracaoSemNotasServiceReport;
+    private final CertificadoServiceReport certificadoServiceReport;
 
     public MatriculaResource(
         MatriculaService matriculaService,
         MatriculaRepository matriculaRepository,
         MatriculaQueryService matriculaQueryService,
-        BoletimNotasServiceReport boletimNotasServiceReport
+        BoletimNotasServiceReport boletimNotasServiceReport,
+        DeclaracaoNotasServiceReport declaracaoSemNotasServiceReport,
+        DeclaracaoSemNotasServiceReport declaracaoSemNotasServiceReport1,
+        CertificadoServiceReport certificadoServiceReport
     ) {
         this.matriculaService = matriculaService;
         this.matriculaRepository = matriculaRepository;
         this.matriculaQueryService = matriculaQueryService;
         this.boletimNotasServiceReport = boletimNotasServiceReport;
+        this.declaracaoNotasServiceReport = declaracaoSemNotasServiceReport;
+        this.declaracaoSemNotasServiceReport = declaracaoSemNotasServiceReport1;
+        this.certificadoServiceReport = certificadoServiceReport;
     }
 
     /**
@@ -220,6 +232,54 @@ public class MatriculaResource {
     @GetMapping("/matriculas/boletim-notas/{matriculaID}/{periodo}")
     public ResponseEntity<Resource> gerarBoletimNotas(@PathVariable Long matriculaID, @PathVariable Integer periodo) throws IOException {
         var filePath = boletimNotasServiceReport.gerarPdf(matriculaID, periodo);
+        File file = new File(filePath);
+
+        Path path = Paths.get(file.getAbsolutePath());
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(resource);
+    }
+
+    @GetMapping("/matriculas/declaracao-notas/{matriculaID}/{periodo}")
+    public ResponseEntity<Resource> gerarDeclaracaoNotas(@PathVariable Long matriculaID, @PathVariable Integer periodo) throws IOException {
+        var filePath = declaracaoNotasServiceReport.gerarPdf(matriculaID, periodo);
+        File file = new File(filePath);
+
+        Path path = Paths.get(file.getAbsolutePath());
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(resource);
+    }
+
+    @GetMapping("/matriculas/declaracao/{matriculaID}")
+    public ResponseEntity<Resource> gerarDeclaracaoSemNotas(@PathVariable Long matriculaID) throws IOException {
+        var filePath = declaracaoSemNotasServiceReport.gerarPdf(matriculaID);
+        File file = new File(filePath);
+
+        Path path = Paths.get(file.getAbsolutePath());
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(resource);
+    }
+
+    @GetMapping("/matriculas/certificado/{matriculaID}/{periodo}")
+    public ResponseEntity<Resource> gerarCertificado(@PathVariable Long matriculaID, @PathVariable Integer periodo) throws IOException {
+        var filePath = certificadoServiceReport.gerarPdf(matriculaID, periodo);
         File file = new File(filePath);
 
         Path path = Paths.get(file.getAbsolutePath());
