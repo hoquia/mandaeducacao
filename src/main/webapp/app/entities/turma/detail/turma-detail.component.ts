@@ -66,7 +66,6 @@ export class TurmaDetailComponent implements OnInit {
   }
 
   protected gerarListaPagoNaoPago(turmaID: number): void {
-    alert(this.emolumentoSelecionadoID.toString());
     this.turmaService.downloadListaPagoNaoPagoPdf(turmaID, this.emolumentoSelecionadoID).subscribe(res => {
       const url = window.URL.createObjectURL(res);
       const a = document.createElement('a');
@@ -82,7 +81,7 @@ export class TurmaDetailComponent implements OnInit {
   }
 
   protected gerarEstratoFinanceiro(turmaID: number): void {
-    this.turmaService.downloadEstratoFinanceiro(turmaID).subscribe(res => {
+    this.turmaService.downloadEstratoFinanceiro(turmaID, this.emolumentoSelecionadoID).subscribe(res => {
       const url = window.URL.createObjectURL(res);
       const a = document.createElement('a');
       a.href = url;

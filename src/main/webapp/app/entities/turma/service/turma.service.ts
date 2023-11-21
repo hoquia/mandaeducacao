@@ -150,10 +150,10 @@ export class TurmaService {
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  downloadEstratoFinanceiro(turmaID: number) {
+  downloadEstratoFinanceiro(turmaID: number, emolumentoID: number) {
     let headers = new HttpHeaders();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     headers = headers.set('Accept', 'application/pdf');
-    return this.http.get(`${this.resourceUrl}/estrato-financeiro/${turmaID}`, { headers, responseType: 'blob' });
+    return this.http.get(`${this.resourceUrl}/estrato-financeiro/${turmaID}/${emolumentoID}`, { headers, responseType: 'blob' });
   }
 }

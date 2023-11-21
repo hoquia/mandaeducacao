@@ -60,7 +60,7 @@ public class EstratoFinanceiroReport {
         Document pdfDocument;
         String pdfName;
         FileOutputStream file;
-        pdfName = "lista-pago-nao-pago-turma " + turmaID;
+        pdfName = "extracto-financeiro" + turmaID;
         pdfDocument = new Document(PageSize.A4, 3, 3, 20, 3);
         String tempFileName;
 

@@ -61,7 +61,6 @@ export class MatriculaDetailComponent implements OnInit {
   }
 
   protected gerarListaPagoNaoPago(matriculaID: number): void {
-    alert(this.periodoSelecionado.toString());
     this.matriculaService.downloadListaPagoNaoPagoPdf(matriculaID, this.periodoSelecionado).subscribe(res => {
       const url = window.URL.createObjectURL(res);
       const a = document.createElement('a');
@@ -77,7 +76,6 @@ export class MatriculaDetailComponent implements OnInit {
   }
 
   protected gerarDeclaracaoNotas(matriculaID: number): void {
-    alert(this.periodoSelecionado.toString());
     this.matriculaService.downloadDeclaracaoNotas(matriculaID, this.periodoSelecionado).subscribe(res => {
       const url = window.URL.createObjectURL(res);
       const a = document.createElement('a');
@@ -108,7 +106,6 @@ export class MatriculaDetailComponent implements OnInit {
   }
 
   protected gerarCertificado(matriculaID: number): void {
-    alert(this.periodoSelecionado.toString());
     this.matriculaService.downloadCertificado(matriculaID, this.periodoSelecionado).subscribe(res => {
       const url = window.URL.createObjectURL(res);
       const a = document.createElement('a');

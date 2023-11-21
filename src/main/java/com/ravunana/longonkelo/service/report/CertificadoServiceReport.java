@@ -62,17 +62,13 @@ public class CertificadoServiceReport {
             tempFileName = reportService.createTempFile(pdfName, ".pdf");
             file = new FileOutputStream(tempFileName);
 
-            // tens o id perido = 5 e vais para a tabela notasperidodica com esse id 5 não vai aparecer
-            // nada ao menenos que tenha esse id nessa tabela, mas será um dado errado
-            // o filtro seria pelo matriclaID e peridoID cria um metodo na classe notasperiodicasdisciplinaimpl
-            // fui. Ta vou aplicar isso e ver o que faco ate o periodo em que poderei te dar um feedback, ate
             var notaPeriodica = notasPeriodicaDisciplinaService
                 .getNotaPeriodicaWithMatriculaPeriodo(matriculaID, periodo)
                 .stream()
                 .findFirst();
 
             if (!notaPeriodica.isPresent()) {
-                throw new RuntimeException("Not Founded!");
+                throw new RuntimeException("O Estudante não tem notas nesse período!");
             }
 
             var notaResult = notaPeriodica.get();

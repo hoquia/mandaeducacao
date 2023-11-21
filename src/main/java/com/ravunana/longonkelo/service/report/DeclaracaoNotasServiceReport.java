@@ -72,7 +72,7 @@ public class DeclaracaoNotasServiceReport {
                 .findFirst();
 
             if (!notaPeriodica.isPresent()) {
-                throw new RuntimeException("Not Founded!");
+                throw new RuntimeException("O Estudante não tem notas lançadas nesse periodo");
             }
 
             var notaResult = notaPeriodica.get();
