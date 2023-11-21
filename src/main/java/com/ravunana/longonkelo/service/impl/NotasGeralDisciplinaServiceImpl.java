@@ -184,4 +184,15 @@ public class NotasGeralDisciplinaServiceImpl implements NotasGeralDisciplinaServ
 
         return notaGeralResult;
     }
+
+    public List<NotasGeralDisciplinaDTO> getNotaWithMatricula(Long matriculaID) {
+        var notaGeralResult = notasGeralDisciplinaRepository
+            .findAll()
+            .stream()
+            .filter(ngr -> ngr.getMatricula().getId().equals(matriculaID))
+            .map(notasGeralDisciplinaMapper::toDto)
+            .collect(Collectors.toList());
+
+        return notaGeralResult;
+    }
 }

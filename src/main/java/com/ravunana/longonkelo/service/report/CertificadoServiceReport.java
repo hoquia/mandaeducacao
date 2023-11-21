@@ -11,6 +11,7 @@ import com.ravunana.longonkelo.config.Constants;
 import com.ravunana.longonkelo.security.SecurityUtils;
 import com.ravunana.longonkelo.service.impl.InstituicaoEnsinoServiceImpl;
 import com.ravunana.longonkelo.service.impl.MatriculaServiceImpl;
+import com.ravunana.longonkelo.service.impl.NotasGeralDisciplinaServiceImpl;
 import com.ravunana.longonkelo.service.impl.NotasPeriodicaDisciplinaServiceImpl;
 import java.awt.*;
 import java.io.FileNotFoundException;
@@ -27,20 +28,23 @@ public class CertificadoServiceReport {
     private final MatriculaServiceImpl matriculaService;
 
     private final NotasPeriodicaDisciplinaServiceImpl notasPeriodicaDisciplinaService;
+    private final NotasGeralDisciplinaServiceImpl notasGeralDisciplinaService;
 
     public CertificadoServiceReport(
         ReportService reportService,
         InstituicaoEnsinoServiceImpl instituicaoEnsinoService,
         MatriculaServiceImpl matriculaService,
-        NotasPeriodicaDisciplinaServiceImpl notasPeriodicaDisciplinaService
+        NotasPeriodicaDisciplinaServiceImpl notasPeriodicaDisciplinaService,
+        NotasGeralDisciplinaServiceImpl notasGeralDisciplinaService
     ) {
         this.reportService = reportService;
         this.instituicaoEnsinoService = instituicaoEnsinoService;
         this.matriculaService = matriculaService;
         this.notasPeriodicaDisciplinaService = notasPeriodicaDisciplinaService;
+        this.notasGeralDisciplinaService = notasGeralDisciplinaService;
     }
 
-    public String gerarPdf(Long matriculaID, Integer periodo) {
+    public String gerarPdf(Long matriculaID) {
         Document document;
         String pdfName;
         FileOutputStream file;
@@ -62,32 +66,32 @@ public class CertificadoServiceReport {
             tempFileName = reportService.createTempFile(pdfName, ".pdf");
             file = new FileOutputStream(tempFileName);
 
-            var notaPeriodica = notasPeriodicaDisciplinaService
-                .getNotaPeriodicaWithMatriculaPeriodo(matriculaID, periodo)
-                .stream()
-                .findFirst();
-
-            if (!notaPeriodica.isPresent()) {
-                throw new RuntimeException("O Estudante não tem notas nesse período!");
-            }
-
-            var notaResult = notaPeriodica.get();
-            var matricula = notaResult.getMatricula();
+            //            var notaPeriodica = notasPeriodicaDisciplinaService
+            //                .getNotaPeriodicaWithMatriculaPeriodo(matriculaID, periodo)
+            //                .stream()
+            //                .findFirst();
+            //
+            //            if (!notaPeriodica.isPresent()) {
+            //                throw new RuntimeException("O Estudante não tem notas nesse período!");
+            //            }
+            //
+            //            var notaResult = notaPeriodica.get();
+            //            var matricula = notaResult.getMatricula();
 
             final PdfWriter pdfWriter = PdfWriter.getInstance(document, file);
 
-            HeaderFooter header = new HeaderFooter(new Phrase("This is a header."), false);
-            HeaderFooter footer = new HeaderFooter(
-                new Phrase(String.valueOf(getAssinatura(notaResult.getUtilizador().getLogin(), matricula.getDiscente().getNome()))),
-                new Phrase(".")
-            );
+            //            HeaderFooter header = new HeaderFooter(new Phrase("This is a header."), false);
+            //            HeaderFooter footer = new HeaderFooter(
+            //                new Phrase(String.valueOf(getAssinatura(notaResult.getUtilizador().getLogin(), matricula.getDiscente().getNome()))),
+            //                new Phrase(".")
+            //            );
             // document.setHeader(header);
 
             document.open();
 
             // Pdf Metadatas
-            document.addTitle("certificado" + periodo);
-            document.addSubject(periodo.toString());
+            document.addTitle("certificado" + matriculaID);
+            document.addSubject(matriculaID.toString());
             document.addKeywords("certificado");
             document.addCreator("ravunana,lda");
             document.addAuthor("ravunana");
@@ -97,16 +101,7 @@ public class CertificadoServiceReport {
             layoutTable.setWidthPercentage(100f);
 
             layoutTable.addCell(
-                makeCellTable(
-                    getRecibo(matriculaID, periodo),
-                    Element.ALIGN_CENTER,
-                    Element.ALIGN_LEFT,
-                    leading,
-                    padding,
-                    border,
-                    true,
-                    false
-                )
+                makeCellTable(getRecibo(matriculaID), Element.ALIGN_CENTER, Element.ALIGN_LEFT, leading, padding, border, true, false)
             );
             //            layoutTable.addCell(
             //                    makeCellTable(
@@ -182,19 +177,18 @@ public class CertificadoServiceReport {
         return (endereco + "\n" + email + "\n" + telefone);
     }
 
-    private PdfPTable getRecibo(Long matriculaID, Integer periodo) {
+    private PdfPTable getRecibo(Long matriculaID) {
         //        var aplicacaoRecibos = aplicacaoReciboService.getAplicacaoReciboWithRecibo(reciboID);
 
-        var notasPeriodicasAluno = notasPeriodicaDisciplinaService.getNotaPeriodicaWithMatriculaPeriodo(matriculaID, periodo);
-        var notaPeriodica = notasPeriodicasAluno.stream().findFirst().get();
-
+        var listNotasGeraisAluno = notasGeralDisciplinaService.getNotaWithMatricula(matriculaID);
+        var notaGeralAluno = listNotasGeraisAluno.stream().findFirst().get();
         // Pega os itens da factura com estado PENDENTE
 
         int NUM_LINHA_ATE_FIM_PAGINA = 30;
-        int NUM_LINHA_FACTURA = notasPeriodicasAluno.size();
+        int NUM_LINHA_FACTURA = listNotasGeraisAluno.size();
         int NUM_LINHA_BRANCA_ADICIONAR = NUM_LINHA_ATE_FIM_PAGINA - NUM_LINHA_FACTURA;
 
-        var matricula = matriculaService.findOne(notaPeriodica.getMatricula().getId()).get();
+        var matricula = matriculaService.findOne(notaGeralAluno.getMatricula().getId()).get();
         var discente = matricula.getDiscente();
         var numeroChamada = matricula.getNumeroChamada();
         var numeroMatricula = matricula.getNumeroMatricula();
@@ -626,9 +620,9 @@ public class CertificadoServiceReport {
         //                        )
         //                );
         //
-        for (var nota : notasPeriodicasAluno) {
+        for (var nota : listNotasGeraisAluno) {
             var disciplinaCurricular = nota.getDisciplinaCurricular().getDisciplina().getNome();
-            var media = nota.getMedia();
+            var media = nota.getMediaFinalDisciplina();
 
             // Total do contrato incluido as multas e juros
             //

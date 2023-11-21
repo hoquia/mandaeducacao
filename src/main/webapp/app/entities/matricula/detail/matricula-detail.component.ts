@@ -76,7 +76,7 @@ export class MatriculaDetailComponent implements OnInit {
   }
 
   protected gerarDeclaracaoNotas(matriculaID: number): void {
-    this.matriculaService.downloadDeclaracaoNotas(matriculaID, this.periodoSelecionado).subscribe(res => {
+    this.matriculaService.downloadDeclaracaoNotas(matriculaID).subscribe(res => {
       const url = window.URL.createObjectURL(res);
       const a = document.createElement('a');
       a.href = url;
@@ -106,7 +106,7 @@ export class MatriculaDetailComponent implements OnInit {
   }
 
   protected gerarCertificado(matriculaID: number): void {
-    this.matriculaService.downloadCertificado(matriculaID, this.periodoSelecionado).subscribe(res => {
+    this.matriculaService.downloadCertificado(matriculaID).subscribe(res => {
       const url = window.URL.createObjectURL(res);
       const a = document.createElement('a');
       a.href = url;

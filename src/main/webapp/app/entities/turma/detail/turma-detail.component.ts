@@ -14,6 +14,7 @@ export class TurmaDetailComponent implements OnInit {
   turma: ITurma | null = null;
   emolumentosSharedCollection: IEmolumento[] = [];
   emolumentoSelecionadoID = 0;
+  emolumentoSelecionadoEstrato = 0;
 
   constructor(
     protected activatedRoute: ActivatedRoute,
@@ -66,7 +67,7 @@ export class TurmaDetailComponent implements OnInit {
   }
 
   protected gerarListaPagoNaoPago(turmaID: number): void {
-    this.turmaService.downloadListaPagoNaoPagoPdf(turmaID, this.emolumentoSelecionadoID).subscribe(res => {
+    this.turmaService.downloadEstratoFinanceiro(turmaID, this.emolumentoSelecionadoID).subscribe(res => {
       const url = window.URL.createObjectURL(res);
       const a = document.createElement('a');
       a.href = url;
@@ -81,7 +82,7 @@ export class TurmaDetailComponent implements OnInit {
   }
 
   protected gerarEstratoFinanceiro(turmaID: number): void {
-    this.turmaService.downloadEstratoFinanceiro(turmaID, this.emolumentoSelecionadoID).subscribe(res => {
+    this.turmaService.downloadEstratoFinanceiro(turmaID, this.emolumentoSelecionadoEstrato).subscribe(res => {
       const url = window.URL.createObjectURL(res);
       const a = document.createElement('a');
       a.href = url;

@@ -21,7 +21,7 @@ import org.mapstruct.*;
 public interface NotasGeralDisciplinaMapper extends EntityMapper<NotasGeralDisciplinaDTO, NotasGeralDisciplina> {
     @Mapping(target = "utilizador", source = "utilizador", qualifiedByName = "userLogin")
     @Mapping(target = "docente", source = "docente", qualifiedByName = "docenteNome")
-    @Mapping(target = "disciplinaCurricular", source = "disciplinaCurricular", qualifiedByName = "disciplinaCurricularDescricao")
+    @Mapping(target = "disciplinaCurricular", source = "disciplinaCurricular")
     @Mapping(target = "matricula", source = "matricula", qualifiedByName = "matriculaNumeroMatricula")
     @Mapping(target = "estado", source = "estado", qualifiedByName = "estadoDisciplinaCurricularDescricao")
     NotasGeralDisciplinaDTO toDto(NotasGeralDisciplina s);

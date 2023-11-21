@@ -245,9 +245,9 @@ public class MatriculaResource {
         return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(resource);
     }
 
-    @GetMapping("/matriculas/declaracao-notas/{matriculaID}/{periodo}")
-    public ResponseEntity<Resource> gerarDeclaracaoNotas(@PathVariable Long matriculaID, @PathVariable Integer periodo) throws IOException {
-        var filePath = declaracaoNotasServiceReport.gerarPdf(matriculaID, periodo);
+    @GetMapping("/matriculas/declaracao-notas/{matriculaID}")
+    public ResponseEntity<Resource> gerarDeclaracaoNotas(@PathVariable Long matriculaID) throws IOException {
+        var filePath = declaracaoNotasServiceReport.gerarPdf(matriculaID);
         File file = new File(filePath);
 
         Path path = Paths.get(file.getAbsolutePath());
@@ -277,9 +277,9 @@ public class MatriculaResource {
         return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(resource);
     }
 
-    @GetMapping("/matriculas/certificado/{matriculaID}/{periodo}")
-    public ResponseEntity<Resource> gerarCertificado(@PathVariable Long matriculaID, @PathVariable Integer periodo) throws IOException {
-        var filePath = certificadoServiceReport.gerarPdf(matriculaID, periodo);
+    @GetMapping("/matriculas/certificado/{matriculaID}")
+    public ResponseEntity<Resource> gerarCertificado(@PathVariable Long matriculaID) throws IOException {
+        var filePath = certificadoServiceReport.gerarPdf(matriculaID);
         File file = new File(filePath);
 
         Path path = Paths.get(file.getAbsolutePath());

@@ -278,9 +278,10 @@ public class TurmaResource {
         return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(resource);
     }
 
-    @GetMapping("/turmas/estrato-financeiro/{turmaID}")
-    public ResponseEntity<Resource> getEstratoFinanceiro(@PathVariable Long turmaID, @PathVariable Long emolumentoID) throws IOException {
-        var filePath = estratoFinanceiroReport.gerarPdf(turmaID, emolumentoID);
+    @GetMapping("/turmas/estrato-financeiro/{turmaID}/{emolumentoSelecionadoEstrato}")
+    public ResponseEntity<Resource> getEstratoFinanceiro(@PathVariable Long turmaID, @PathVariable Long emolumentoSelecionadoEstrato)
+        throws IOException {
+        var filePath = estratoFinanceiroReport.gerarPdf(turmaID, emolumentoSelecionadoEstrato);
         File file = new File(filePath);
 
         Path path = Paths.get(file.getAbsolutePath());
