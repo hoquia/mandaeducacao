@@ -223,8 +223,8 @@ public class DocenteResource {
     }
 
     @GetMapping("/docentes/horario-docente/{docenteID}")
-    public ResponseEntity<Resource> getHorarioDiscente(@PathVariable Long docenteID) throws IOException {
-        var filePath = horarioDocenteService.gerarPdf(docenteID);
+    public ResponseEntity<Resource> getHorarioDocente(@PathVariable Long docenteID) throws IOException {
+        var filePath = horarioDocenteService.gerarHorarioDocentePdf(docenteID);
         File file = new File(filePath);
 
         Path path = Paths.get(file.getAbsolutePath());
@@ -239,8 +239,8 @@ public class DocenteResource {
     }
 
     @GetMapping("/docentes/mini-pauta/{horarioID}/{periodoID}")
-    public ResponseEntity<Resource> gerarBoletimNotas(@PathVariable Long horarioID, @PathVariable Integer periodoID) throws IOException {
-        var filePath = miniPautaServiceReport.gerarPdf(horarioID, periodoID);
+    public ResponseEntity<Resource> gerarMiniPauta(@PathVariable Long horarioID, @PathVariable Integer periodoID) throws IOException {
+        var filePath = miniPautaServiceReport.gerarMiniPautaPdf(horarioID, periodoID);
         File file = new File(filePath);
 
         Path path = Paths.get(file.getAbsolutePath());

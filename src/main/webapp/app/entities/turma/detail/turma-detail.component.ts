@@ -67,7 +67,8 @@ export class TurmaDetailComponent implements OnInit {
   }
 
   protected gerarListaPagoNaoPago(turmaID: number): void {
-    this.turmaService.downloadEstratoFinanceiro(turmaID, this.emolumentoSelecionadoID).subscribe(res => {
+    alert(`Selecionado: ${this.emolumentoSelecionadoID}`);
+    this.turmaService.downloadListaPagoNaoPagoPdf(turmaID, this.emolumentoSelecionadoID).subscribe(res => {
       const url = window.URL.createObjectURL(res);
       const a = document.createElement('a');
       a.href = url;

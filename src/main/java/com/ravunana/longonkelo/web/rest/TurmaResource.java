@@ -231,8 +231,8 @@ public class TurmaResource {
     }
 
     @GetMapping("/turmas/lista-presenca/{turmaID}")
-    public ResponseEntity<Resource> getReciboSalario(@PathVariable Long turmaID) throws IOException {
-        var filePath = listaPresencaTurmaService.gerarPdf(turmaID);
+    public ResponseEntity<Resource> getListaPresenca(@PathVariable Long turmaID) throws IOException {
+        var filePath = listaPresencaTurmaService.ListaPresencaPdf(turmaID);
         File file = new File(filePath);
 
         Path path = Paths.get(file.getAbsolutePath());
@@ -248,7 +248,7 @@ public class TurmaResource {
 
     @GetMapping("/turmas/horario-discente/{turmaID}")
     public ResponseEntity<Resource> getHorarioDiscente(@PathVariable Long turmaID) throws IOException {
-        var filePath = horarioDiscenteService.gerarPdf(turmaID);
+        var filePath = horarioDiscenteService.gerarHorarioDiscentePdf(turmaID);
         File file = new File(filePath);
 
         Path path = Paths.get(file.getAbsolutePath());
@@ -262,9 +262,10 @@ public class TurmaResource {
         return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(resource);
     }
 
-    @GetMapping("/turmas/lista-pago-nao-pago/{turmaID}/{emolumentoID}")
-    public ResponseEntity<Resource> getListaPagoNaoPago(@PathVariable Long turmaID, Long emolumentoID) throws IOException {
-        var filePath = listaPagoNaoPagoReport.gerarPdf(turmaID, 16L);
+    @GetMapping("/turmas/lista-pago-nao-pago/{turmaID}/{emolumentoSelecionadoID}")
+    public ResponseEntity<Resource> getListaPagoNaoPago(@PathVariable Long turmaID, @PathVariable Long emolumentoSelecionadoID)
+        throws IOException {
+        var filePath = listaPagoNaoPagoReport.gerarListaPagoNaoPagoPdf(turmaID, emolumentoSelecionadoID);
         File file = new File(filePath);
 
         Path path = Paths.get(file.getAbsolutePath());

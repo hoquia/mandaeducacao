@@ -45,7 +45,7 @@ public class MiniPautaServiceReport {
         this.horarioService = horarioService;
     }
 
-    public String gerarPdf(Long horarioID, Integer periodoID) {
+    public String gerarMiniPautaPdf(Long horarioID, Integer periodoID) {
         Document document;
         String pdfName;
         FileOutputStream file;
@@ -55,7 +55,6 @@ public class MiniPautaServiceReport {
 
         try {
             Font fontNormal = FontFactory.getFont("Helvetica", 7, Font.NORMAL, Color.BLACK);
-            Font fontBold = FontFactory.getFont("Helvetica", 7, Font.BOLD, Color.BLACK);
             float padding = 2f;
             float leading = fontNormal.getSize() * 1.2f;
             com.lowagie.text.Rectangle border = new com.lowagie.text.Rectangle(0f, 0f);
@@ -67,26 +66,7 @@ public class MiniPautaServiceReport {
             tempFileName = reportService.createTempFile(pdfName, ".pdf");
             file = new FileOutputStream(tempFileName);
 
-            // tens o id perido = 5 e vais para a tabela notasperidodica com esse id 5 não vai aparecer
-            // nada ao menenos que tenha esse id nessa tabela, mas será um dado errado
-            // o filtro seria pelo matriclaID e peridoID cria um metodo na classe notasperiodicasdisciplinaimpl
-            // fui. Ta vou aplicar isso e ver o que faco ate o periodo em que poderei te dar um feedback, ate
-
-            //            if (!notaPeriodica.isPresent()) {
-            //                throw new RuntimeException("Not Founded!");
-            //            }
-            //
-            //            var notaResult = notaPeriodica.get();
-            //            var matricula = notaResult.getMatricula();
-
             final PdfWriter pdfWriter = PdfWriter.getInstance(document, file);
-
-            HeaderFooter header = new HeaderFooter(new Phrase("This is a header."), false);
-            //            HeaderFooter footer = new HeaderFooter(
-            //                new Phrase(String.valueOf(getAssinatura(notaResult.getUtilizador().getLogin(), matricula.getDiscente().getNome()))),
-            //                new Phrase(".")
-            //            );
-            // document.setHeader(header);
 
             document.open();
 
@@ -103,7 +83,7 @@ public class MiniPautaServiceReport {
 
             layoutTable.addCell(
                 makeCellTable(
-                    getRecibo(horarioID, periodoID),
+                    getMiniPautaPdf(horarioID, periodoID),
                     Element.ALIGN_CENTER,
                     Element.ALIGN_LEFT,
                     leading,
@@ -113,18 +93,6 @@ public class MiniPautaServiceReport {
                     false
                 )
             );
-            //            layoutTable.addCell(
-            //                    makeCellTable(
-            //                            getRecibo(reciboID, "Cópia"),
-            //                            Element.ALIGN_CENTER,
-            //                            Element.ALIGN_RIGHT,
-            //                            leading,
-            //                            padding,
-            //                            border,
-            //                            true,
-            //                            false
-            //                    )
-            //            );
 
             document.add(layoutTable);
 
@@ -154,8 +122,6 @@ public class MiniPautaServiceReport {
     }
 
     private String getInfoEmpresa() {
-        //        var info1 = "REPÚBLICA DE ANGOLA";
-        //        var ministerio = "MINISTÉRIO DA INDÚSTRIA E COMÉRCIO";
         var empresa = instituicaoEnsinoService.getInstituicao(SecurityUtils.getCurrentUserLogin().get()); // TODO: Pesquisar pelo id da empresa do usuario logado
         var nome = empresa.getUnidadeOrganica();
         var departamento = "Secretária-geral";
@@ -167,32 +133,7 @@ public class MiniPautaServiceReport {
         return (nome + "\n" + departamento + "\n" + nif);
     }
 
-    private String getContactoEmpresa() {
-        var empresa = instituicaoEnsinoService.getInstituicao(SecurityUtils.getCurrentUserLogin().get()); // TODO: Pesquisar pelo id da empresa do usuario logado
-        var endereco = empresa.getEnderecoDetalhado();
-        String email = "";
-        var telefone = "";
-        if (empresa.getTelefone() != null) {
-            telefone = empresa.getTelefone();
-        }
-
-        if (empresa.getEmail() != null) {
-            email = empresa.getEmail();
-        }
-
-        if (empresa.getTelemovel() != null) {
-            telefone = telefone + " | " + empresa.getTelemovel();
-        }
-
-        return (endereco + "\n" + email + "\n" + telefone);
-    }
-
-    private PdfPTable getRecibo(Long horarioID, Integer periodo) {
-        //        var aplicacaoRecibos = aplicacaoReciboService.getAplicacaoReciboWithRecibo(reciboID);
-
-        //        var notasPeriodicasAluno = notasPeriodicaDisciplinaService.getNotaPeriodicaWithMatriculaPeriodo(matriculas, periodo);
-        //        var notaPeriodica = notasPeriodicasAluno.stream().findFirst().get();
-
+    private PdfPTable getMiniPautaPdf(Long horarioID, Integer periodo) {
         var horarioVar = horarioService.findOne(horarioID).get();
 
         var turmaID = horarioVar.getTurma().getId();
@@ -205,38 +146,16 @@ public class MiniPautaServiceReport {
             periodo
         );
 
-        // Pega os itens da factura com estado PENDENTE
-
         int NUM_LINHA_ATE_FIM_PAGINA = 30;
         int NUM_LINHA_FACTURA = matriculas.size();
         int NUM_LINHA_BRANCA_ADICIONAR = NUM_LINHA_ATE_FIM_PAGINA - NUM_LINHA_FACTURA;
 
-        //        var matricula = matriculaService.findOne(notaPeriodica.getMatricula().getId()).get();
-        //        var discente = matricula.getDiscente();
-        //        var numeroChamada = matricula.getNumeroChamada();
-        //        var numeroMatricula = matricula.getNumeroMatricula();
         var turma = horarioVar.getTurma();
         var curso = turma.getPlanoCurricular().getCurso().getNome();
         var sala = turma.getSala();
         var classe = turma.getPlanoCurricular().getClasse().getDescricao();
         var turno = turma.getTurno();
         var disciplina = horarioVar.getDisciplinaCurricular().getDisciplina().getNome();
-        //        String anoLectivo = turma.getDescricao().split("/")[1];
-        //        var contas = transacaoService.getUltimaTransacaoMatricula(matricula.getId());
-
-        //        String morada = enderecoDiscenteService.getEnderecoPadrao(matricula.getDiscente().getId());
-        //        BigDecimal totalMulta = BigDecimal.ZERO;
-        //        BigDecimal totalJuro = BigDecimal.ZERO;
-        //        BigDecimal saldoAnterior = BigDecimal.ZERO;
-        //        BigDecimal saldoActual = BigDecimal.ZERO;
-        //        BigDecimal totalPago = BigDecimal.ZERO;
-        //        BigDecimal totalFactura = BigDecimal.ZERO;
-
-        /*
-        for (var conta : contas) {
-            saldo = saldo.add(conta.getSaldo());
-        }
-        */
 
         Font fontNormal = FontFactory.getFont("Helvetica", 8, Font.NORMAL, Color.BLACK);
         Font fontBold = FontFactory.getFont("Helvetica", 7, Font.BOLD, Color.BLACK);
@@ -263,20 +182,6 @@ public class MiniPautaServiceReport {
         // SubHeader
         PdfPTable subHeader = new PdfPTable(1);
         subHeader.setWidthPercentage(50f);
-
-        //        subHeader.addCell(
-        //            makeCellText(
-        //                getVistoGestor(notaPeriodica.getMatricula().getId(), notaPeriodica.getPeriodoLancamento()),
-        //                Element.ALIGN_TOP,
-        //                Element.ALIGN_LEFT,
-        //                fontBold,
-        //                leading,
-        //                padding,
-        //                borderNone,
-        //                true,
-        //                false
-        //            )
-        //        );
 
         subHeader.addCell(
             makeCellTImage(getLogotipo(), Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
@@ -312,21 +217,6 @@ public class MiniPautaServiceReport {
         subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
         subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
         subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
-        //        subHeader.addCell(
-        //                makeCellText(
-        //                        getContactoEmpresa(),
-        //                        Element.ALIGN_TOP,
-        //                        Element.ALIGN_RIGHT,
-        //                        fontNormal,
-        //                        leading,
-        //                        padding,
-        //                        borderNone,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-
-        // SubHeader
 
         PdfPTable detalheTable = new PdfPTable(2);
 
@@ -370,28 +260,9 @@ public class MiniPautaServiceReport {
             )
         );
 
-        //                 Detalhes da factura
-        //                float width2[] = { 0.3f, 0.6f, 0.3f, 0.5f, 0.3f, 0.8f};
         PdfPTable detalheFactura = new PdfPTable(2);
 
         detalheFactura.setWidthPercentage(100f);
-        //        detalheFactura.addCell(
-        //                makeCellText("Recibo", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        //        );
-        //        detalheFactura.addCell(
-        //                makeCellText(
-        //                        recibo.getNumero(),
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_LEFT,
-        //                        fontNormal,
-        //                        leading,
-        //                        padding,
-        //                        borderNone,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //
 
         detalheFactura.addCell(
             makeCellText("Sala:", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
@@ -420,89 +291,10 @@ public class MiniPautaServiceReport {
         detalheTable.addCell(
             makeCellTable(detalheFactura, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
         );
-        //
-        //        detalheFactura.addCell(
-        //                makeCellText("Data emissão", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        //        );
-        //        detalheFactura.addCell(
-        //                makeCellText(
-        //                        Constants.getDateFormat(recibo.getData()),
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_LEFT,
-        //                        fontNormal,
-        //                        leading,
-        //                        padding,
-        //                        borderNone,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //
-        //        detalheFactura.addCell(
-        //                makeCellText("Data vencimento", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        //        );
-        //        detalheFactura.addCell(
-        //                makeCellText(
-        //                        Constants.getDateFormat(recibo.getVencimento()),
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_LEFT,
-        //                        fontNormal,
-        //                        leading,
-        //                        padding,
-        //                        borderNone,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //
-        //        detalheFactura.addCell(
-        //                makeCellText("Data", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        //        );
-        //        detalheFactura.addCell(
-        //                makeCellText(
-        //                        Constants.getDateFormat(recibo.getVencimento()),
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_LEFT,
-        //                        fontNormal,
-        //                        leading,
-        //                        padding,
-        //                        borderNone,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //
-        //        detalheFactura.addCell(
-        //                makeCellText("Moeda", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        //        );
-        //        detalheFactura.addCell(
-        //            makeCellText(
-        //                ,
-        //                Element.ALIGN_MIDDLE,
-        //                Element.ALIGN_LEFT,
-        //                fontNormal,
-        //                leading,
-        //                padding,
-        //                borderNone,
-        //                true,
-        //                false
-        //            )
-        //        );
 
-        //        detalheFactura.addCell(
-        //                makeCellText("Ano lectivo", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        //        );
-        //        detalheFactura.addCell(
-        //                makeCellText(anoLectivo, Element.ALIGN_MIDDLE, Element.ALIGN_LEFT, fontNormal, leading, padding, borderNone, true, false)
-        //        );
-
-        // Items
         float[] widths = { 0.1f, 0.4f, 0.6f, 0.2f, 0.1f, 0.1f, 0.1f, 0.1f, 0.3f };
-
-        // Descricao, Qtde, Preco unit, Desc, IVA, Total
         PdfPTable ajustesTable = new PdfPTable(widths);
         ajustesTable.setWidthPercentage(100f);
-        // Calculo Header
 
         ajustesTable.addCell(
             makeCellBackgroudColor("Nº", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBold, leading, padding, borderNormal, true, false)
@@ -584,36 +376,7 @@ public class MiniPautaServiceReport {
                 false
             )
         );
-        //        ajustesTable.addCell(
-        //            makeCellBackgroudColor("FI", Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontBold, leading, padding, borderNormal, true, false)
-        //        );
-        //        ajustesTable.addCell(
-        //            makeCellBackgroudColor(
-        //                "Estado",
-        //                Element.ALIGN_MIDDLE,
-        //                Element.ALIGN_CENTER,
-        //                fontBold,
-        //                leading,
-        //                padding,
-        //                borderNormal,
-        //                true,
-        //                false
-        //            )
-        //        );
-        //                ajustesTable.addCell(
-        //                        makeCellBackgroudColor(
-        //                                "Total",
-        //                                Element.ALIGN_MIDDLE,
-        //                                Element.ALIGN_CENTER,
-        //                                fontBold,
-        //                                leading,
-        //                                padding,
-        //                                borderNormal,
-        //                                true,
-        //                                false
-        //                        )
-        //                );
-        //
+
         for (var notasAluno : notasPeriodicasWithTurmaDisciplinaPeriodo) {
             var matricula = matriculaService.findOne(notasAluno.getMatricula().getId()).get();
 
@@ -626,13 +389,6 @@ public class MiniPautaServiceReport {
             var numeroChamada = matricula.getNumeroChamada();
             var genero = matricula.getDiscente().getSexo();
             var estado = notasAluno.getEstado().getDescricao();
-
-            // Total do contrato incluido as multas e juros
-            //
-            //                    if (item.getEstado().equals(EstadoItemFactura.PAGO)) {
-            //                        totalPago = totalPago.add(item.getPrecoTotal());
-            //                        totalFactura = totalPago;
-            //                    }
 
             // LinhasDocumento
             getLinhasDocumento(
@@ -658,293 +414,11 @@ public class MiniPautaServiceReport {
         noBorder.setBorderWidthBottom(0f);
         noBorder.setBorderWidthRight(0f);
         noBorder.setBorderWidthTop(0f);
-        //
+
         // Linhas Documento em branco para o resumo estar no rodapé
         for (int i = 0; i <= NUM_LINHA_BRANCA_ADICIONAR; i++) {
             getLinhasDocumento(ajustesTable, fontNormal, leading, padding, noBorder, "", "", "", "", "", "", "", "", "");
         }
-        // Resumo de imposto
-        //        float[] withResumoImposto = { 0.4f, 0.1f, 0.2f, 0.2f };
-        //        PdfPTable resumoImpostoTable = new PdfPTable(withResumoImposto);
-        //        resumoImpostoTable.setWidthPercentage(50f);
-        //        resumoImpostoTable.setHorizontalAlignment(Element.ALIGN_LEFT);
-        //        // Descricao
-        //        resumoImpostoTable.addCell(
-        //            makeCellText("Descrição", Element.ALIGN_TOP, Element.ALIGN_LEFT, fontBold, leading, padding, borderSmaller, true, false)
-        //        );
-        //        resumoImpostoTable.addCell(
-        //            makeCellText("Taxa", Element.ALIGN_TOP, Element.ALIGN_LEFT, fontBold, leading, padding, borderSmaller, true, false)
-        //        );
-        //        resumoImpostoTable.addCell(
-        //            makeCellText("Incidencia", Element.ALIGN_TOP, Element.ALIGN_LEFT, fontBold, leading, padding, borderSmaller, true, false)
-        //        );
-        //        resumoImpostoTable.addCell(
-        //            makeCellText("Imposto", Element.ALIGN_TOP, Element.ALIGN_LEFT, fontBold, leading, padding, borderSmaller, true, false)
-        //        );
-        //
-        //        for (var resumo : resumoImpostoFacturaService.getResumoImpostoFactura(facturaID)) {
-        //            resumoImpostoTable.addCell(
-        //                makeCellText(
-        //                    resumo.getDescricao(),
-        //                    Element.ALIGN_TOP,
-        //                    Element.ALIGN_LEFT,
-        //                    fontNormal,
-        //                    leading,
-        //                    padding,
-        //                    borderSmaller,
-        //                    true,
-        //                    false
-        //                )
-        //            );
-        //            resumoImpostoTable.addCell(
-        //                makeCellText(
-        //                    resumo.getTaxa().toString(),
-        //                    Element.ALIGN_TOP,
-        //                    Element.ALIGN_LEFT,
-        //                    fontNormal,
-        //                    leading,
-        //                    padding,
-        //                    borderSmaller,
-        //                    true,
-        //                    false
-        //                )
-        //            );
-        //            resumoImpostoTable.addCell(
-        //                makeCellText(
-        //                    Constants.getMoneyFormat(resumo.getIncidencia()),
-        //                    Element.ALIGN_TOP,
-        //                    Element.ALIGN_LEFT,
-        //                    fontNormal,
-        //                    leading,
-        //                    padding,
-        //                    borderSmaller,
-        //                    true,
-        //                    false
-        //                )
-        //            );
-        //            resumoImpostoTable.addCell(
-        //                makeCellText(
-        //                    Constants.getMoneyFormat(resumo.getMontante()),
-        //                    Element.ALIGN_TOP,
-        //                    Element.ALIGN_LEFT,
-        //                    fontNormal,
-        //                    leading,
-        //                    padding,
-        //                    borderSmaller,
-        //                    true,
-        //                    false
-        //                )
-        //            );
-        //        }
-
-        // Totais
-        //        PdfPTable totalTable = new PdfPTable(2);
-        //        totalTable.setWidthPercentage(100f);
-
-        // Detalhes do Discente
-        //        PdfPTable totalSaldoTable = new PdfPTable(2);
-        //        totalSaldoTable.setWidthPercentage(100f);
-        //
-        //        totalSaldoTable.addCell(
-        //                makeCellText("Multa", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        //        );
-        //
-        //        totalSaldoTable.addCell(
-        //                makeCellText(
-        //                        Constants.getMoneyFormat(totalMulta),
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_LEFT,
-        //                        fontNormal,
-        //                        leading,
-        //                        padding,
-        //                        borderNone,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //
-        //        totalSaldoTable.addCell(
-        //                makeCellText("Juro", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        //        );
-        //        totalSaldoTable.addCell(
-        //                makeCellText(
-        //                        Constants.getMoneyFormat(totalJuro),
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_LEFT,
-        //                        fontNormal,
-        //                        leading,
-        //                        padding,
-        //                        borderNone,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //        totalSaldoTable.addCell(
-        //                makeCellText("Saldo anterior", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        //        );
-        //        totalSaldoTable.addCell(
-        //                makeCellText(
-        //                        Constants.getMoneyFormat(saldoAnterior),
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_LEFT,
-        //                        fontNormal,
-        //                        leading,
-        //                        padding,
-        //                        borderNone,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //        totalSaldoTable.addCell(
-        //                makeCellText("Saldo actual", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        //        );
-        //        totalSaldoTable.addCell(
-        //                makeCellText(
-        //                        Constants.getMoneyFormat(saldoActual),
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_LEFT,
-        //                        fontNormal,
-        //                        leading,
-        //                        padding,
-        //                        borderNone,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //
-        //        // Total pagamento
-        //        PdfPTable totalPagamentoTable = new PdfPTable(2);
-        //        totalPagamentoTable.setWidthPercentage(25f);
-        //        totalPagamentoTable.setHorizontalAlignment(Element.ALIGN_RIGHT);
-        //
-        //        totalPagamentoTable.addCell(
-        //                makeCellText("Total Iliquido", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        //        );
-        //        totalPagamentoTable.addCell(
-        //                makeCellText(
-        //                        Constants.getMoneyFormat(totalFactura),
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_LEFT,
-        //                        fontNormal,
-        //                        leading,
-        //                        padding,
-        //                        borderNone,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //
-        //        totalPagamentoTable.addCell(
-        //                makeCellText(
-        //                        "Desconto comercial",
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_RIGHT,
-        //                        fontBold,
-        //                        leading,
-        //                        padding,
-        //                        borderNone,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //        totalPagamentoTable.addCell(
-        //                makeCellText(
-        //                        Constants.getMoneyFormat(recibo.getTotalDescontoComercial()),
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_LEFT,
-        //                        fontNormal,
-        //                        leading,
-        //                        padding,
-        //                        borderNone,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //
-        //        totalPagamentoTable.addCell(
-        //                makeCellText(
-        //                        "Desconto financeiro",
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_RIGHT,
-        //                        fontBold,
-        //                        leading,
-        //                        padding,
-        //                        borderNone,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //        totalPagamentoTable.addCell(
-        //                makeCellText(
-        //                        Constants.getMoneyFormat(recibo.getTotalDescontoFinanceiro()),
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_LEFT,
-        //                        fontNormal,
-        //                        leading,
-        //                        padding,
-        //                        borderNone,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //
-        //        totalPagamentoTable.addCell(
-        //                makeCellText("Total IVA", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        //        );
-        //        totalPagamentoTable.addCell(
-        //                makeCellText(
-        //                        Constants.getMoneyFormat(recibo.getTotalIVA()),
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_LEFT,
-        //                        fontNormal,
-        //                        leading,
-        //                        padding,
-        //                        borderNone,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //
-        //        totalPagamentoTable.addCell(
-        //                makeCellText("Total pago", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        //        );
-        //        totalPagamentoTable.addCell(
-        //                makeCellText(
-        //                        Constants.getMoneyFormat(totalPago),
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_LEFT,
-        //                        fontNormal,
-        //                        leading,
-        //                        padding,
-        //                        borderNone,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //
-        //        totalPagamentoTable.addCell(
-        //                makeCellText("Total", Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontBold, leading, padding, borderNone, true, false)
-        //        );
-        //        totalPagamentoTable.addCell(
-        //                makeCellText(
-        //                        Constants.getMoneyFormat(totalFactura),
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_LEFT,
-        //                        fontNormal,
-        //                        leading,
-        //                        padding,
-        //                        borderNone,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-
-        //        totalTable.addCell(
-        //                makeCellTable(totalSaldoTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
-        //        );
-        //        totalTable.addCell(
-        //                makeCellTable(totalPagamentoTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
-        //        );
 
         // Layout Página
         layoutTable.addCell(makeCellTable(headerTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false));
@@ -956,19 +430,7 @@ public class MiniPautaServiceReport {
         layoutTable.addCell(
             makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
         );
-        //        layoutTable.addCell(
-        //                makeCellText(
-        //                        getLinhaTracos(),
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_CENTER,
-        //                        fontBoldLarge,
-        //                        leading,
-        //                        padding,
-        //                        borderNone,
-        //                        true,
-        //                        false
-        //                )
-        //        );
+
         layoutTable.addCell(
             makeCellTable(detalheTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
         );
@@ -998,84 +460,6 @@ public class MiniPautaServiceReport {
         layoutTable.addCell(
             makeCellTable(ajustesTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
         );
-        //
-        //        layoutTable.addCell(
-        //                makeCellText(getLinhaTracos(), Element.ALIGN_TOP, Element.ALIGN_CENTER, fontNormal, leading, padding, borderNone, true, false)
-        //        );
-
-        // informacao de entrega
-        //        layoutTable.addCell(
-        //                makeCellText(
-        //                        "Os produtos/serviços foram colocados à disposição do adquirente na data e local do documento",
-        //                        Element.ALIGN_MIDDLE,
-        //                        Element.ALIGN_LEFT,
-        //                        fontNormal,
-        //                        leading,
-        //                        padding,
-        //                        borderNone,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-
-        // Codigo encriptacao da factura
-        // layoutTable.addCell(
-        //     makeCellText(
-        //         "-Processado por programa valido nº.n31.1/AGT20 | Longonkelo",
-        //         Element.ALIGN_MIDDLE,
-        //         Element.ALIGN_LEFT,
-        //         fontNormal,
-        //         leading,
-        //         padding,
-        //         borderNone,
-        //         true,
-        //         false
-        //     )
-        // );
-
-        //        layoutTable.addCell(
-        //                makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
-        //        );
-        //        layoutTable.addCell(
-        //                makeCellText(
-        //                        "Resumo do imposto",
-        //                        Element.ALIGN_TOP,
-        //                        Element.ALIGN_LEFT,
-        //                        fontBoldLarge,
-        //                        leading,
-        //                        padding,
-        //                        borderNone,
-        //                        true,
-        //                        false
-        //                )
-        //        );
-        //
-        //        // Resumo Imposto
-        //
-        //        //        layoutTable.addCell(
-        //        //            makeCellTable(resumoImpostoTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
-        //        //        );
-        //
-        //        layoutTable.addCell(
-        //                makeCellText(getLinhaTracos(), Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
-        //        );
-        //        layoutTable.addCell(
-        //                makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
-        //        );
-        //
-        //        // Total Pagamento
-        //
-        //        layoutTable.addCell(makeCellTable(totalTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false));
-        //
-        //        layoutTable.addCell(
-        //                makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
-        //        );
-        //        layoutTable.addCell(
-        //                makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
-        //        );
-        //
-        //        // Assinatura
-        //
 
         layoutTable.addCell(
             makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
@@ -1203,18 +587,6 @@ public class MiniPautaServiceReport {
         layoutTable.addCell(
             makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
         );
-        //        layoutTable.addCell(
-        //            makeCellTable(
-        //                getAssinatura(SecurityUtils.getCurrentUserLogin().get(), discente.getNome()),
-        //                Element.ALIGN_TOP,
-        //                Element.ALIGN_CENTER,
-        //                leading,
-        //                padding,
-        //                borderNone,
-        //                true,
-        //                false
-        //            )
-        //        );
 
         layoutTable.addCell(
             makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
@@ -1358,10 +730,6 @@ public class MiniPautaServiceReport {
         return layoutTable;
     }
 
-    //    private String getLinhaTracos() {
-    //        return "-------------------------------------------------------------------------------------------------------------------------------------------------------";
-    //    }
-
     private void getLinhasDocumento(
         PdfPTable ajustesTable,
         Font fontNormal,
@@ -1378,7 +746,6 @@ public class MiniPautaServiceReport {
         String media,
         String estado
     ) {
-        // Codigo Emolumento
         ajustesTable.addCell(
             makeCellText(
                 numeroChamada,
@@ -1393,7 +760,6 @@ public class MiniPautaServiceReport {
             )
         );
 
-        // data
         ajustesTable.addCell(
             makeCellText(
                 numeroMatricula,
@@ -1408,22 +774,18 @@ public class MiniPautaServiceReport {
             )
         );
 
-        // emolumento
         ajustesTable.addCell(
             makeCellText(nome, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
         );
 
-        //         ValorUnit
         ajustesTable.addCell(
             makeCellText(genero, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
         );
 
-        // Desconto
         ajustesTable.addCell(
             makeCellText(nota1, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
         );
 
-        // Multa
         ajustesTable.addCell(
             makeCellText(nota2, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
         );
@@ -1436,27 +798,6 @@ public class MiniPautaServiceReport {
         ajustesTable.addCell(
             makeCellText(estado, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
         );
-        //        ajustesTable.addCell(
-        //            makeCellText(
-        //                faltasInjustificadas,
-        //                Element.ALIGN_MIDDLE,
-        //                Element.ALIGN_CENTER,
-        //                fontNormal,
-        //                leading,
-        //                padding,
-        //                borderSmaller,
-        //                true,
-        //                false
-        //            )
-        //        );
-        //        ajustesTable.addCell(
-        //            makeCellText(estado, Element.ALIGN_MIDDLE, Element.ALIGN_CENTER, fontNormal, leading, padding, borderSmaller, true, false)
-        //        );
-        //
-        //         Total
-        //                ajustesTable.addCell(
-        //                        makeCellText(total, Element.ALIGN_MIDDLE, Element.ALIGN_RIGHT, fontNormal, leading, padding, borderSmaller, true, false)
-        //                );
     }
 
     private PdfPTable getAssinatura(String nomeResponsavel, String nomeFuncionario) {

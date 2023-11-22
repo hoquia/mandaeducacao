@@ -42,7 +42,7 @@ public class ListaPresencaTurmaReport {
         this.turmaService = turmaService;
     }
 
-    public String gerarPdf(Long turmaID) {
+    public String ListaPresencaPdf(Long turmaID) {
         Document pdfDocument;
         String pdfName;
         FileOutputStream file;
@@ -79,7 +79,7 @@ public class ListaPresencaTurmaReport {
             pdfDocument.add(header);
             pdfDocument.add(getTituloMapa(curso, classe, sala, turno, turmaDTO.getDescricao()));
             pdfDocument.add(addNewLine());
-            var detalhe = getDetalhe(turmaID);
+            var detalhe = getListaPresencaDetalhe(turmaID);
             pdfDocument.add(detalhe);
             pdfDocument.add(addNewLine());
             pdfDocument.add(addNewLine());
@@ -213,7 +213,7 @@ public class ListaPresencaTurmaReport {
         return tableHeader;
     }
 
-    private PdfPTable getDetalhe(Long turmaID) {
+    private PdfPTable getListaPresencaDetalhe(Long turmaID) {
         var matriculas = matriculaService.getMatriculas(turmaID);
 
         int contador = 1;

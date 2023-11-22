@@ -36,7 +36,6 @@ public class HorarioDocenteReport {
         ReportServiceImpl reportService,
         InstituicaoEnsinoServiceImpl instituicaoEnsinoService,
         HorarioServiceImpl horarioService,
-        TurmaServiceImpl turmaService1,
         DocenteServiceImpl docenteService
     ) {
         this.reportService = reportService;
@@ -45,7 +44,7 @@ public class HorarioDocenteReport {
         this.docenteService = docenteService;
     }
 
-    public String gerarPdf(Long docenteID) {
+    public String gerarHorarioDocentePdf(Long docenteID) {
         Document pdfDocument;
         String pdfName;
         FileOutputStream file;
@@ -76,19 +75,10 @@ public class HorarioDocenteReport {
             pdfDocument.add(header);
             pdfDocument.add(getTituloMapa(docente.getNome()));
             pdfDocument.add(addNewLine());
-            var detalhe = getDetalhe(docenteID);
+            var detalhe = getHorarioDocenteDetalhe(docenteID);
             pdfDocument.add(detalhe);
             pdfDocument.add(addNewLine());
             pdfDocument.add(addNewLine());
-            //pdfDocument.add(getAssinatura(empresa));
-            //            pdfWriter.setPageEvent(new PdfPageEventHelper() {
-            //                @Override
-            //                public void onEndPage(PdfWriter writer, Document document) {
-            //                    PdfContentByte cb = writer.getDirectContent();
-            //                    cb.rectangle(header);
-            //                    cb.rectangle(footer);
-            //                }
-            //            });
 
             pdfDocument.close();
             pdfWriter.close();
@@ -210,7 +200,7 @@ public class HorarioDocenteReport {
         return tableHeader;
     }
 
-    private PdfPTable getDetalhe(Long docenteID) {
+    private PdfPTable getHorarioDocenteDetalhe(Long docenteID) {
         var horarios = horarioService.getHorarioDocente(docenteID);
 
         // Segunda-feira
@@ -231,13 +221,10 @@ public class HorarioDocenteReport {
         border.setBorderWidthRight(0.5f);
         border.setBorderWidthTop(1f);
 
-        float[] widths = { 0.1f, 0.3f, 0.6f, 0.2f, 0.2f, 0.6f };
-        // Nº chamada, Nº processo, Nome completo, idade, sexo, observacoes
         PdfPTable tableDetalhe = new PdfPTable(8);
         tableDetalhe.setWidthPercentage(100);
 
         // Headers
-
         tableDetalhe.addCell(
             makeCellBackgroudColor(
                 "Tempos".toUpperCase(),

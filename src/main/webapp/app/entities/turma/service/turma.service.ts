@@ -142,11 +142,14 @@ export class TurmaService {
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  downloadListaPagoNaoPagoPdf(turmaID: number, emolumentoID: number) {
+  downloadListaPagoNaoPagoPdf(turmaID: number, emolumentoSelecionadoID: number) {
     let headers = new HttpHeaders();
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     headers = headers.set('Accept', 'application/pdf');
-    return this.http.get(`${this.resourceUrl}/lista-pago-nao-pago/${turmaID}/${emolumentoID}`, { headers, responseType: 'blob' });
+    return this.http.get(`${this.resourceUrl}/lista-pago-nao-pago/${turmaID}/${emolumentoSelecionadoID}`, {
+      headers,
+      responseType: 'blob',
+    });
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

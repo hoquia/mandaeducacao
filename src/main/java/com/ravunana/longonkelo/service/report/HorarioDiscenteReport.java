@@ -38,8 +38,6 @@ public class HorarioDiscenteReport {
     public HorarioDiscenteReport(
         ReportServiceImpl reportService,
         InstituicaoEnsinoServiceImpl instituicaoEnsinoService,
-        MatriculaServiceImpl matriculaService,
-        TurmaServiceImpl turmaService,
         HorarioServiceImpl horarioService,
         TurmaServiceImpl turmaService1
     ) {
@@ -49,11 +47,11 @@ public class HorarioDiscenteReport {
         this.turmaService = turmaService1;
     }
 
-    public String gerarPdf(Long turmaID) {
+    public String gerarHorarioDiscentePdf(Long turmaID) {
         Document pdfDocument;
         String pdfName;
         FileOutputStream file;
-        pdfName = "lista-presenca-turma " + turmaID;
+        pdfName = "horario-discente " + turmaID;
         pdfDocument = new Document(PageSize.A4.rotate(), 3, 3, 20, 3);
         String tempFileName;
 
@@ -78,7 +76,7 @@ public class HorarioDiscenteReport {
             pdfDocument.add(getLogotipo());
 
             String curso = planoCurricular.getCurso().getNome();
-            String classe = planoCurricular.getClasse().getDescricao() + " " + planoCurricular.getClasse().getDescricao();
+            String classe = planoCurricular.getClasse().getDescricao();
             String sala = turmaDTO.getSala().toString();
             String turno = turmaDTO.getTurno().getCodigo();
 
@@ -86,19 +84,10 @@ public class HorarioDiscenteReport {
             pdfDocument.add(header);
             pdfDocument.add(getTituloMapa(curso, classe, sala, turno, turmaDTO.getDescricao()));
             pdfDocument.add(addNewLine());
-            var detalhe = getDetalhe(turmaID);
+            var detalhe = getHorarioDiscenteDetalhe(turmaID);
             pdfDocument.add(detalhe);
             pdfDocument.add(addNewLine());
             pdfDocument.add(addNewLine());
-            //pdfDocument.add(getAssinatura(empresa));
-            //            pdfWriter.setPageEvent(new PdfPageEventHelper() {
-            //                @Override
-            //                public void onEndPage(PdfWriter writer, Document document) {
-            //                    PdfContentByte cb = writer.getDirectContent();
-            //                    cb.rectangle(header);
-            //                    cb.rectangle(footer);
-            //                }
-            //            });
 
             pdfDocument.close();
             pdfWriter.close();
@@ -114,15 +103,15 @@ public class HorarioDiscenteReport {
     }
 
     private String getPdfTitulo(String turma) {
-        return "Lista de Presença da Turma: " + turma;
+        return "Horário: " + turma;
     }
 
     private String getPdfSubTitulo() {
-        return "lista-presenca";
+        return "horario";
     }
 
     private String getPdfPalavrasChaves() {
-        return "ravunana, mapa, salario";
+        return "ravunana, horario, discente, turma";
     }
 
     private String getPdfCriador() {
@@ -220,7 +209,7 @@ public class HorarioDiscenteReport {
         return tableHeader;
     }
 
-    private PdfPTable getDetalhe(Long turmaID) {
+    private PdfPTable getHorarioDiscenteDetalhe(Long turmaID) {
         var horarios = horarioService.getHorarioDiscente(turmaID);
 
         // Segunda-feira
@@ -241,8 +230,6 @@ public class HorarioDiscenteReport {
         border.setBorderWidthRight(0.5f);
         border.setBorderWidthTop(1f);
 
-        float[] widths = { 0.1f, 0.3f, 0.6f, 0.2f, 0.2f, 0.6f };
-        // Nº chamada, Nº processo, Nome completo, idade, sexo, observacoes
         PdfPTable tableDetalhe = new PdfPTable(8);
         tableDetalhe.setWidthPercentage(100);
 
@@ -361,7 +348,6 @@ public class HorarioDiscenteReport {
         );
 
         // Content
-
         if (primeiroTempo.isPresent()) {
             tableDetalhe =
                 getHorarioTempo(horarios, primeiroTempo.get().getPeriodo(), tableDetalhe, tableFontNormal, leading, padding, border);

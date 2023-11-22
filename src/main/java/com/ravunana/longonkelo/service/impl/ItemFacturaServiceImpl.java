@@ -91,11 +91,14 @@ public class ItemFacturaServiceImpl implements ItemFacturaService {
     }
 
     @Override
-    public List<ItemFacturaDTO> getItemsFacturaByTurmaAndEmolumento(Long turmaID, Long emolumentoID) {
+    public List<ItemFacturaDTO> getItemsFacturaByTurmaAndEmolumento(Long turmaID, Long emolumentoSelecionadoID) {
         var result = itemFacturaRepository
             .findAll()
             .stream()
-            .filter(x -> x.getFactura().getMatricula().getTurma().getId().equals(turmaID) && x.getEmolumento().getId().equals(emolumentoID))
+            .filter(x ->
+                x.getFactura().getMatricula().getTurma().getId().equals(turmaID) &&
+                x.getEmolumento().getId().equals(emolumentoSelecionadoID)
+            )
             .collect(Collectors.toList());
 
         return itemFacturaMapper.toDto(result);

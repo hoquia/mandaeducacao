@@ -349,8 +349,6 @@ public class EstratoFinanceiroReport {
         );
 
         // Content
-
-        // o for será de todos os alunos da turma
         for (var matricula : matriculaService.getMatriculas(turmaID)) {
             var discente = matricula.getDiscente();
             var factura = itemsFactura

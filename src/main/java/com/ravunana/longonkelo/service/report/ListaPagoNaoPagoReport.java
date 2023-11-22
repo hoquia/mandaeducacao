@@ -37,8 +37,6 @@ public class ListaPagoNaoPagoReport {
         InstituicaoEnsinoServiceImpl instituicaoEnsinoService,
         MatriculaServiceImpl matriculaService,
         TurmaServiceImpl turmaService,
-        FacturaServiceImpl facturaService,
-        TransacaoServiceImpl transacaoService,
         ItemFacturaServiceImpl itemFacturaService
     ) {
         this.reportService = reportService;
@@ -48,7 +46,7 @@ public class ListaPagoNaoPagoReport {
         this.itemFacturaService = itemFacturaService;
     }
 
-    public String gerarPdf(Long turmaID, Long emolumentoID) {
+    public String gerarListaPagoNaoPagoPdf(Long turmaID, Long emolumentoID) {
         Document pdfDocument;
         String pdfName;
         FileOutputStream file;
@@ -85,19 +83,10 @@ public class ListaPagoNaoPagoReport {
             pdfDocument.add(header);
             pdfDocument.add(getTituloMapa(curso, classe, sala, turno, turmaDTO.getDescricao()));
             pdfDocument.add(addNewLine());
-            var detalhe = getDetalhe(turmaID, emolumentoID);
+            var detalhe = getListaPagoNaoPagoDetalhe(turmaID, emolumentoID);
             pdfDocument.add(detalhe);
             pdfDocument.add(addNewLine());
             pdfDocument.add(addNewLine());
-            //pdfDocument.add(getAssinatura(empresa));
-            //            pdfWriter.setPageEvent(new PdfPageEventHelper() {
-            //                @Override
-            //                public void onEndPage(PdfWriter writer, Document document) {
-            //                    PdfContentByte cb = writer.getDirectContent();
-            //                    cb.rectangle(header);
-            //                    cb.rectangle(footer);
-            //                }
-            //            });
 
             pdfDocument.close();
             pdfWriter.close();
@@ -113,15 +102,15 @@ public class ListaPagoNaoPagoReport {
     }
 
     private String getPdfTitulo(String turma) {
-        return "Lista de Presença da Turma: " + turma;
+        return "Lista de Pago e Não Pago: " + turma;
     }
 
     private String getPdfSubTitulo() {
-        return "lista-presenca";
+        return "lista-de-pago-nao-pago";
     }
 
     private String getPdfPalavrasChaves() {
-        return "ravunana, mapa, salario";
+        return "ravunana, lista, pago, nao pago, emolumento";
     }
 
     private String getPdfCriador() {
@@ -156,7 +145,7 @@ public class ListaPagoNaoPagoReport {
         var departamento = "Secretária-geral";
 
         var nif = "Nif nº " + instituicao.getNif();
-        var tituloMapa = "Lista de Presença";
+        var tituloMapa = "Lista de Pago e Não Pago";
 
         return (nome + "\n" + nif + "\n" + departamento + "\n" + tituloMapa);
     }
@@ -219,10 +208,8 @@ public class ListaPagoNaoPagoReport {
         return tableHeader;
     }
 
-    private PdfPTable getDetalhe(Long turmaID, Long emolumentoID) {
-        var itemsFactura = itemFacturaService.getItemsFacturaByTurmaAndEmolumento(turmaID, emolumentoID);
-
-        int contador = 1;
+    private PdfPTable getListaPagoNaoPagoDetalhe(Long turmaID, Long emolumentoSelecionadoID) {
+        var itemsFactura = itemFacturaService.getItemsFacturaByTurmaAndEmolumento(turmaID, emolumentoSelecionadoID);
 
         Font tableFontNormal = FontFactory.getFont("Helvetica", FONT_ZIZE_NORMAL, Font.NORMAL, Color.BLACK);
         Font tableFontHeader = FontFactory.getFont("Helvetica", FONT_ZIZE_NORMAL, Font.BOLD, Color.BLACK);
@@ -235,7 +222,6 @@ public class ListaPagoNaoPagoReport {
         border.setBorderWidthTop(1f);
 
         float[] widths = { 0.1f, 0.3f, 0.4f, 0.2f, 0.2f, 0.2f, 0.2f, 0.2f, 0.2f, 0.2f, 0.2f, 0.2f, 0.2f, 0.2f, 0.2f };
-        // Nº chamada, Nº processo, Nome completo, idade, sexo, observacoes
         PdfPTable tableDetalhe = new PdfPTable(widths);
         tableDetalhe.setWidthPercentage(100);
 
@@ -432,11 +418,7 @@ public class ListaPagoNaoPagoReport {
         );
 
         // Content
-
-        // o for será de todos os alunos da turma
         for (var matricula : matriculaService.getMatriculas(turmaID)) {
-            var discente = matricula.getDiscente();
-
             getLinhaPagoNaoPago(matricula, itemsFactura, tableDetalhe, tableFontNormal, leading, padding, border);
         }
 
