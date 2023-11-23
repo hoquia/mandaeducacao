@@ -8,10 +8,9 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.ravunana.longonkelo.config.Constants;
+import com.ravunana.longonkelo.config.LongonkeloException;
 import com.ravunana.longonkelo.security.SecurityUtils;
 import com.ravunana.longonkelo.service.UserService;
-import com.ravunana.longonkelo.service.dto.ItemFacturaDTO;
-import com.ravunana.longonkelo.service.dto.MatriculaDTO;
 import com.ravunana.longonkelo.service.impl.*;
 import java.awt.*;
 import java.io.FileNotFoundException;
@@ -21,7 +20,6 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -33,7 +31,9 @@ public class EstratoFinanceiroReport {
     private final TurmaServiceImpl turmaService;
     private final UserService userService;
     private final ItemFacturaServiceImpl itemFacturaService;
+    private final AplicacaoReciboServiceImpl aplicacaoReciboService;
     private final TransacaoServiceImpl transacaoService;
+    private final FacturaServiceImpl facturaService;
     private final float FONT_ZIZE_NORMAL = 7;
     private final float FONT_SIZE_TITLE = 7;
 
@@ -42,6 +42,7 @@ public class EstratoFinanceiroReport {
         InstituicaoEnsinoServiceImpl instituicaoEnsinoService,
         MatriculaServiceImpl matriculaService,
         TurmaServiceImpl turmaService,
+        AplicacaoReciboServiceImpl aplicacaoReciboService,
         FacturaServiceImpl facturaService,
         UserService userService,
         ItemFacturaServiceImpl itemFacturaService,
@@ -51,9 +52,11 @@ public class EstratoFinanceiroReport {
         this.instituicaoEnsinoService = instituicaoEnsinoService;
         this.matriculaService = matriculaService;
         this.turmaService = turmaService;
+        this.aplicacaoReciboService = aplicacaoReciboService;
         this.userService = userService;
         this.itemFacturaService = itemFacturaService;
         this.transacaoService = transacaoService;
+        this.facturaService = facturaService;
     }
 
     public String gerarPdf(Long turmaID, Long emolumentoID) {
@@ -97,16 +100,6 @@ public class EstratoFinanceiroReport {
             pdfDocument.add(detalhe);
             pdfDocument.add(addNewLine());
             pdfDocument.add(addNewLine());
-            //pdfDocument.add(getAssinatura(empresa));
-            //            pdfWriter.setPageEvent(new PdfPageEventHelper() {
-            //                @Override
-            //                public void onEndPage(PdfWriter writer, Document document) {
-            //                    PdfContentByte cb = writer.getDirectContent();
-            //                    cb.rectangle(header);
-            //                    cb.rectangle(footer);
-            //                }
-            //            });
-
             pdfDocument.close();
             pdfWriter.close();
         } catch (FileNotFoundException e) {
@@ -164,7 +157,7 @@ public class EstratoFinanceiroReport {
         var departamento = "Secretária-geral";
 
         var nif = "Nif nº " + instituicao.getNif();
-        var tituloMapa = "Lista de Presença";
+        var tituloMapa = "Estrato Financeiro";
 
         return (nome + "\n" + nif + "\n" + departamento + "\n" + tituloMapa);
     }
@@ -230,8 +223,6 @@ public class EstratoFinanceiroReport {
     private PdfPTable getDetalhe(Long turmaID, Long emolumentoID) {
         var itemsFactura = itemFacturaService.getItemsFacturaByTurmaAndEmolumento(turmaID, emolumentoID);
 
-        int contador = 1;
-
         Font tableFontNormal = FontFactory.getFont("Helvetica", FONT_ZIZE_NORMAL, Font.NORMAL, Color.BLACK);
         Font tableFontHeader = FontFactory.getFont("Helvetica", FONT_ZIZE_NORMAL, Font.BOLD, Color.BLACK);
         float padding = 2f;
@@ -242,15 +233,14 @@ public class EstratoFinanceiroReport {
         border.setBorderWidthRight(0.5f);
         border.setBorderWidthTop(1f);
 
-        float[] widths = { 0.1f, 0.3f, 0.4f, 0.2f, 0.3f, 0.3f, 0.3f, 0.3f };
-        // Nº chamada, Nº processo, Nome completo, idade, sexo, observacoes
+        float[] widths = { 0.3f, 0.4f, 0.2f, 0.3f, 0.2f, 0.2f, 0.2f };
         PdfPTable tableDetalhe = new PdfPTable(widths);
-        tableDetalhe.setWidthPercentage(100);
+        tableDetalhe.setWidthPercentage(95f);
 
         // Headers
-        tableDetalhe.addCell(
-            makeCellBackgroudColor("Nº", Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontHeader, leading, padding, border, true, false)
-        );
+        //        tableDetalhe.addCell(
+        //            makeCellBackgroudColor("Nº", Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontHeader, leading, padding, border, true, false)
+        //        );
 
         tableDetalhe.addCell(
             makeCellBackgroudColor(
@@ -296,7 +286,7 @@ public class EstratoFinanceiroReport {
 
         tableDetalhe.addCell(
             makeCellBackgroudColor(
-                "Referência".toUpperCase(),
+                "Nº Transação".toUpperCase(),
                 Element.ALIGN_TOP,
                 Element.ALIGN_CENTER,
                 tableFontHeader,
@@ -336,7 +326,7 @@ public class EstratoFinanceiroReport {
         );
         tableDetalhe.addCell(
             makeCellBackgroudColor(
-                "Utilizador".toUpperCase(),
+                "Valor".toUpperCase(),
                 Element.ALIGN_TOP,
                 Element.ALIGN_CENTER,
                 tableFontHeader,
@@ -351,16 +341,37 @@ public class EstratoFinanceiroReport {
         // Content
         for (var matricula : matriculaService.getMatriculas(turmaID)) {
             var discente = matricula.getDiscente();
-            var factura = itemsFactura
-                .stream()
-                .filter(x -> x.getFactura().getMatricula().getId().equals(matricula.getId()))
-                .findFirst()
-                .get()
-                .getFactura();
-            // var item = itemsFactura.stream().filter( x -> x.getFactura().getMatricula().getId().equals(matricula.getId()) ).findFirst();
-            // var transacao =
+            var emolumentoPreco = itemsFactura.stream().findFirst().get().getPrecoUnitario();
 
-            // getLinhaPagoNaoPago(tableDetalhe, tableFontNormal, leading, padding, border, matricula.getNumeroChamada(), matricula.getNumeroMatricula(), discente.getNome(), item. );
+            var itemPego = itemsFactura.stream().findFirst().get().getEmolumento().getId();
+
+            var aplicacaoRecibo = aplicacaoReciboService.getAplicacaoReciboWithItemAndMatricula(itemPego);
+            if (!aplicacaoRecibo.isPresent()) {
+                throw new LongonkeloException("Recibo nao encontrado");
+            }
+
+            var aplicacaoReciboResult = aplicacaoRecibo.get();
+
+            var recibo = aplicacaoReciboResult.getRecibo();
+            var transacao = recibo.getTransacao().getReferencia();
+            var conta = recibo.getTransacao().getConta().getTitulo();
+            var dataTransacao = recibo.getTransacao().getData();
+            var dataPagamento = aplicacaoReciboResult.getTimestamp().toLocalDate();
+
+            getLinhaPagoNaoPago(
+                tableDetalhe,
+                tableFontNormal,
+                leading,
+                padding,
+                border,
+                matricula.getNumeroMatricula(),
+                discente.getNome(),
+                conta,
+                transacao,
+                dataTransacao,
+                dataPagamento,
+                emolumentoPreco
+            );
         }
 
         return tableDetalhe;
@@ -372,31 +383,14 @@ public class EstratoFinanceiroReport {
         float leading,
         float padding,
         Rectangle border,
-        int numeroChamada,
         String numeroProcesso,
         String nomeCompleto,
         String conta,
         String referenciaTransacao,
         LocalDate dataTransacao,
         LocalDate dataPagamento,
-        BigDecimal total,
-        String utilizador
+        BigDecimal total
     ) {
-        // Nº Chamada
-        tableDetalhe.addCell(
-            makeCell(
-                String.valueOf(numeroChamada),
-                Element.ALIGN_TOP,
-                Element.ALIGN_CENTER,
-                tableFontNormal,
-                leading,
-                padding,
-                border,
-                true,
-                false
-            )
-        );
-
         // Nº processo
         tableDetalhe.addCell(
             makeCell(
@@ -471,11 +465,10 @@ public class EstratoFinanceiroReport {
                 false
             )
         );
-
         // UTILIZADOR
-        tableDetalhe.addCell(
-            makeCell(utilizador, Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
-        );
+        //        tableDetalhe.addCell(
+        //            makeCell(utilizador, Element.ALIGN_TOP, Element.ALIGN_CENTER, tableFontNormal, leading, padding, border, true, false)
+        //        );
     }
 
     private Paragraph getTituloMapa(String curso, String classe, String sala, String turno, String turma) {

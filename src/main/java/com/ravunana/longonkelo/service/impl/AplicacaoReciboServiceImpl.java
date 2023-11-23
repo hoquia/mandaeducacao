@@ -223,18 +223,6 @@ public class AplicacaoReciboServiceImpl implements AplicacaoReciboService {
         aplicacaoReciboRepository.deleteById(id);
     }
 
-    //    private AplicacaoReciboDTO getDadosWithFactura(AplicacaoReciboDTO aplicacaoReciboDTO){
-    //        AplicacaoReciboDTO aplicacaoRecDTO = new AplicacaoReciboDTO();
-    //
-    //
-    //        aplicacaoRecDTO.setFactura(factura);
-    //        aplicacaoRecDTO.setItemFactura(itemFactura);
-    //        aplicacaoRecDTO.setTotalPago(totalPago);
-    //        aplicacaoRecDTO.setTotalFactura(totalFactura);
-    //
-    //        return aplicacaoRecDTO;
-    //    }
-
     public List<AplicacaoReciboDTO> getAplicacaoReciboWithRecibo(Long reciboID) {
         var aplicacaoRecibo = aplicacaoReciboRepository
             .findAll()
@@ -242,5 +230,16 @@ public class AplicacaoReciboServiceImpl implements AplicacaoReciboService {
             .filter(ar -> ar.getRecibo().getId().equals(reciboID))
             .collect(Collectors.toList());
         return aplicacaoReciboMapper.toDto(aplicacaoRecibo);
+    }
+
+    public Optional<AplicacaoReciboDTO> getAplicacaoReciboWithItemAndMatricula(Long emolumentoItemID) {
+        var aplicacaoReciboResult = aplicacaoReciboRepository
+            .findAll()
+            .stream()
+            .filter(ar -> ar.getItemFactura().getEmolumento().getId().equals(emolumentoItemID))
+            .findFirst()
+            .map(aplicacaoReciboMapper::toDto);
+
+        return aplicacaoReciboResult;
     }
 }

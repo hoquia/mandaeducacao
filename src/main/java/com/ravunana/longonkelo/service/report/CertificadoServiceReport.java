@@ -74,7 +74,7 @@ public class CertificadoServiceReport {
             document.addAuthor("ravunana");
 
             PdfPTable layoutTable = new PdfPTable(1);
-            layoutTable.setWidthPercentage(100f);
+            layoutTable.setWidthPercentage(85f);
 
             layoutTable.addCell(
                 makeCellTable(getCertificado(matriculaID), Element.ALIGN_CENTER, Element.ALIGN_LEFT, leading, padding, border, true, false)
@@ -155,7 +155,7 @@ public class CertificadoServiceReport {
 
         // Header
         PdfPTable headerTable = new PdfPTable(2);
-        headerTable.setWidthPercentage(100f);
+        headerTable.setWidthPercentage(80f);
         headerTable.addCell(
             makeCellText("", Element.ALIGN_TOP, Element.ALIGN_LEFT, fontBoldLarge, leading, padding, borderNone, true, false)
         );
@@ -163,7 +163,7 @@ public class CertificadoServiceReport {
 
         // SubHeader
         PdfPTable subHeader = new PdfPTable(1);
-        subHeader.setWidthPercentage(50f);
+        subHeader.setWidthPercentage(80f);
 
         subHeader.addCell(
             makeCellTImage(getLogotipo(), Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
@@ -185,7 +185,6 @@ public class CertificadoServiceReport {
         subHeader.addCell(makeCellText("", Element.ALIGN_TOP, Element.ALIGN_CENTER, fontBold, leading, padding, borderNone, true, false));
 
         Paragraph tituloDocumento = new Paragraph("CERTIFICADO DE HABILITACAO");
-        //            tituloDocumento.setSpacingAfter(10f);
 
         subHeader.addCell(
             makeCellText(
@@ -213,15 +212,14 @@ public class CertificadoServiceReport {
 
         // SubHeader
         PdfPTable detalheTable = new PdfPTable(2);
+        detalheTable.setWidthPercentage(80f);
 
-        detalheTable.setWidthPercentage(70f);
         PdfPTable detalheMatricula = new PdfPTable(2);
-
-        detalheMatricula.setWidthPercentage(100f);
+        detalheMatricula.setWidthPercentage(80f);
 
         float[] widths = { 0.6f, 0.3f };
         PdfPTable ajustesTable = new PdfPTable(widths);
-        ajustesTable.setWidthPercentage(70f);
+        ajustesTable.setWidthPercentage(80f);
 
         ajustesTable.addCell(
             makeCellBackgroudColor(
@@ -278,7 +276,7 @@ public class CertificadoServiceReport {
             makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
         );
 
-        Paragraph textoPrincipal = new Paragraph(textoDeclaracaoSegundo);
+        Paragraph textoPrincipal = new Paragraph(textoDeclaracaoPrimeiro);
         textoPrincipal.setSpacingAfter(8f);
 
         layoutTable.addCell(
