@@ -9,6 +9,7 @@ import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 import com.ravunana.longonkelo.config.Constants;
 import com.ravunana.longonkelo.config.LongonkeloException;
+import com.ravunana.longonkelo.domain.enumeration.EstadoItemFactura;
 import com.ravunana.longonkelo.security.SecurityUtils;
 import com.ravunana.longonkelo.service.UserService;
 import com.ravunana.longonkelo.service.impl.*;
@@ -20,6 +21,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -221,8 +223,6 @@ public class EstratoFinanceiroReport {
     }
 
     private PdfPTable getDetalhe(Long turmaID, Long emolumentoID) {
-        var itemsFactura = itemFacturaService.getItemsFacturaByTurmaAndEmolumento(turmaID, emolumentoID);
-
         Font tableFontNormal = FontFactory.getFont("Helvetica", FONT_ZIZE_NORMAL, Font.NORMAL, Color.BLACK);
         Font tableFontHeader = FontFactory.getFont("Helvetica", FONT_ZIZE_NORMAL, Font.BOLD, Color.BLACK);
         float padding = 2f;
@@ -339,13 +339,22 @@ public class EstratoFinanceiroReport {
         );
 
         // Content
-        for (var matricula : matriculaService.getMatriculas(turmaID)) {
+
+        var itemsFactura = itemFacturaService
+            .getItemsFacturaByTurmaAndEmolumento(turmaID, emolumentoID)
+            .stream()
+            .filter(itf -> itf.getEstado().equals(EstadoItemFactura.PAGO))
+            .collect(Collectors.toList());
+
+        for (var item : itemsFactura) {
+            var matricula = item.getFactura().getMatricula();
             var discente = matricula.getDiscente();
-            var emolumentoPreco = itemsFactura.stream().findFirst().get().getPrecoUnitario();
 
-            var itemPego = itemsFactura.stream().findFirst().get().getEmolumento().getId();
+            var emolumentoPreco = itemsFactura.stream().findFirst().get().getPrecoTotal();
+            var itemID = item.getId();
 
-            var aplicacaoRecibo = aplicacaoReciboService.getAplicacaoReciboWithItemAndMatricula(itemPego);
+            var aplicacaoRecibo = aplicacaoReciboService.getAplicacaoReciboWithItemAndMatricula(itemID, matricula.getId());
+
             if (!aplicacaoRecibo.isPresent()) {
                 throw new LongonkeloException("Recibo nao encontrado");
             }

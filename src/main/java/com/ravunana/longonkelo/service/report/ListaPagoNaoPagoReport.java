@@ -418,8 +418,9 @@ public class ListaPagoNaoPagoReport {
         );
 
         // Content
-        for (var matricula : matriculaService.getMatriculas(turmaID)) {
-            getLinhaPagoNaoPago(matricula, itemsFactura, tableDetalhe, tableFontNormal, leading, padding, border);
+        for (var item : itemsFactura) {
+            var matricula = item.getFactura().getMatricula();
+            getLinhaPagoNaoPago(matricula, item, tableDetalhe, tableFontNormal, leading, padding, border);
         }
 
         return tableDetalhe;
@@ -427,7 +428,7 @@ public class ListaPagoNaoPagoReport {
 
     private void getLinhaPagoNaoPago(
         MatriculaDTO matricula,
-        List<ItemFacturaDTO> items,
+        ItemFacturaDTO item,
         PdfPTable tableDetalhe,
         Font tableFontNormal,
         float leading,
@@ -447,54 +448,41 @@ public class ListaPagoNaoPagoReport {
         String nov = "PENDENTE";
         String dez = "PENDENTE";
 
-        var janR = items.stream().filter(x -> x.getPeriodo().equals(1)).findFirst();
-        var fevR = items.stream().filter(x -> x.getPeriodo().equals(2)).findFirst();
-        var marR = items.stream().filter(x -> x.getPeriodo().equals(3)).findFirst();
-        var abrR = items.stream().filter(x -> x.getPeriodo().equals(4)).findFirst();
-        var maiR = items.stream().filter(x -> x.getPeriodo().equals(5)).findFirst();
-        var junR = items.stream().filter(x -> x.getPeriodo().equals(6)).findFirst();
-        var julR = items.stream().filter(x -> x.getPeriodo().equals(7)).findFirst();
-        var agoR = items.stream().filter(x -> x.getPeriodo().equals(8)).findFirst();
-        var setR = items.stream().filter(x -> x.getPeriodo().equals(9)).findFirst();
-        var outR = items.stream().filter(x -> x.getPeriodo().equals(10)).findFirst();
-        var novR = items.stream().filter(x -> x.getPeriodo().equals(11)).findFirst();
-        var dezR = items.stream().filter(x -> x.getPeriodo().equals(12)).findFirst();
-
-        if (janR.isPresent()) {
-            jan = janR.get().getEstado().name();
+        if (item.getPeriodo().equals(1)) {
+            jan = item.getEstado().name();
         }
-        if (fevR.isPresent()) {
-            fev = fevR.get().getEstado().name();
+        if (item.getPeriodo().equals(2)) {
+            fev = item.getEstado().name();
         }
-        if (marR.isPresent()) {
-            mar = marR.get().getEstado().name();
+        if (item.getPeriodo().equals(3)) {
+            mar = item.getEstado().name();
         }
-        if (abrR.isPresent()) {
-            abr = abrR.get().getEstado().name();
+        if (item.getPeriodo().equals(4)) {
+            abr = item.getEstado().name();
         }
-        if (maiR.isPresent()) {
-            mai = maiR.get().getEstado().name();
+        if (item.getPeriodo().equals(5)) {
+            mai = item.getEstado().name();
         }
-        if (junR.isPresent()) {
-            jun = junR.get().getEstado().name();
+        if (item.getPeriodo().equals(6)) {
+            jun = item.getEstado().name();
         }
-        if (julR.isPresent()) {
-            jul = julR.get().getEstado().name();
+        if (item.getPeriodo().equals(7)) {
+            jul = item.getEstado().name();
         }
-        if (agoR.isPresent()) {
-            ago = agoR.get().getEstado().name();
+        if (item.getPeriodo().equals(8)) {
+            ago = item.getEstado().name();
         }
-        if (setR.isPresent()) {
-            set = setR.get().getEstado().name();
+        if (item.getPeriodo().equals(9)) {
+            set = item.getEstado().name();
         }
-        if (outR.isPresent()) {
-            out = outR.get().getEstado().name();
+        if (item.getPeriodo().equals(10)) {
+            out = item.getEstado().name();
         }
-        if (novR.isPresent()) {
-            nov = novR.get().getEstado().name();
+        if (item.getPeriodo().equals(11)) {
+            nov = item.getEstado().name();
         }
-        if (dezR.isPresent()) {
-            dez = dezR.get().getEstado().name();
+        if (item.getPeriodo().equals(12)) {
+            dez = item.getEstado().name();
         }
 
         // Nº Chamada

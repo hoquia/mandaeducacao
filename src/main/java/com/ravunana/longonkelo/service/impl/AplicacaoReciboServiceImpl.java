@@ -232,11 +232,11 @@ public class AplicacaoReciboServiceImpl implements AplicacaoReciboService {
         return aplicacaoReciboMapper.toDto(aplicacaoRecibo);
     }
 
-    public Optional<AplicacaoReciboDTO> getAplicacaoReciboWithItemAndMatricula(Long emolumentoItemID) {
+    public Optional<AplicacaoReciboDTO> getAplicacaoReciboWithItemAndMatricula(Long itemID, Long matriculaID) {
         var aplicacaoReciboResult = aplicacaoReciboRepository
             .findAll()
             .stream()
-            .filter(ar -> ar.getItemFactura().getEmolumento().getId().equals(emolumentoItemID))
+            .filter(ar -> ar.getItemFactura().getId().equals(itemID) && ar.getFactura().getMatricula().getId().equals(matriculaID))
             .findFirst()
             .map(aplicacaoReciboMapper::toDto);
 
