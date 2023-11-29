@@ -153,4 +153,9 @@ export class MatriculaService {
     headers = headers.set('Accept', 'application/pdf');
     return this.http.get(`${this.resourceUrl}/certificado/${matriculaID}`, { headers, responseType: 'blob' });
   }
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  getMatriculas(): Observable<IMatricula[]> {
+    return this.http.get<IMatricula[]>(`${this.resourceUrl}`);
+  }
 }

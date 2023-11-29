@@ -162,4 +162,8 @@ export class TurmaService {
       responseType: 'blob',
     });
   }
+
+  getTurmas(): Observable<ITurma[]> {
+    return this.http.get<ITurma[]>(`${this.resourceUrl}`);
+  }
 }

@@ -155,4 +155,9 @@ export class DocenteService {
     // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     return this.http.get(`${this.resourceUrl}/mini-pauta/${horarioSelecionado}/${periodoID}`, { headers, responseType: 'blob' });
   }
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  getDiscentes(): Observable<IDocente[]> {
+    return this.http.get<IDocente[]>(`${this.resourceUrl}`);
+  }
 }

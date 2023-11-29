@@ -1,3 +1,4 @@
+import { IDocente } from './../../docente/docente.model';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -130,5 +131,10 @@ export class DiscenteService {
     return res.clone({
       body: res.body ? res.body.map(item => this.convertDateFromServer(item)) : null,
     });
+  }
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  getDiscentes(): Observable<IDocente[]> {
+    return this.http.get<IDocente[]>(`${this.resourceUrl}`);
   }
 }

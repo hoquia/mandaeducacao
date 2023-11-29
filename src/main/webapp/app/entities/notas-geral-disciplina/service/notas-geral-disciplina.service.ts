@@ -129,4 +129,9 @@ export class NotasGeralDisciplinaService {
       body: res.body ? res.body.map(item => this.convertDateFromServer(item)) : null,
     });
   }
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  getNotasGerais(): Observable<INotasGeralDisciplina[]> {
+    return this.http.get<INotasGeralDisciplina[]>(`${this.resourceUrl}`);
+  }
 }

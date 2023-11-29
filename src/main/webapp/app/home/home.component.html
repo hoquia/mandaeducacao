@@ -101,7 +101,7 @@
               <h2 class="text-right">
                 <!-- <i class="fa fa-cart-plus f-left"></i> -->
                 <fa-icon icon="users-rectangle" [fixedWidth]="true"></fa-icon>
-                <span>486</span>
+                <span>{{ totalTurmas }}</span>
               </h2>
 
               <table class="table">
@@ -116,17 +116,17 @@
                   <tr>
                     <th>Manhã</th>
                     <td>{{ totalTurmaManha | number }}</td>
-                    <td>{{ totalAlunoManha | number }}</td>
+                    <td>{{ totalAlunosManha | number }}</td>
                   </tr>
                   <tr>
                     <th>Tarde</th>
                     <td>{{ totalTurmaTarde | number }}</td>
-                    <td>{{ totalAlunoTarde | number }}</td>
+                    <td>{{ totalAlunosTarde | number }}</td>
                   </tr>
                   <tr>
                     <th>Noite</th>
                     <td>{{ totalTurmaNoite | number }}</td>
-                    <td>{{ totalAlunoNoite | number }}</td>
+                    <td>{{ totalAlunosNoite | number }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -202,20 +202,20 @@
                   <tr>
                     <th>Manhã</th>
                     <td>{{ totalMatriculasManha | number }}</td>
-                    <td>{{ totalManhaMasculino | number }}</td>
-                    <td>{{ totalManhaFeminino | number }}</td>
+                    <td>{{ totalManhaMatriculasMasculino | number }}</td>
+                    <td>{{ totalManhaMatriculasFeminino | number }}</td>
                   </tr>
                   <tr>
                     <th>Tarde</th>
                     <td>{{ totalMatriculasTarde | number }}</td>
-                    <td>{{ totalTardeMasculino | number }}</td>
-                    <td>{{ totalTardeFeminino | number }}</td>
+                    <td>{{ totalTardeMatriculasMasculino | number }}</td>
+                    <td>{{ totalTardeMatriculasFeminino | number }}</td>
                   </tr>
                   <tr>
                     <th>Noite</th>
                     <td>{{ totalMatriculasNoite | number }}</td>
-                    <td>{{ totalNoiteMasculino | number }}</td>
-                    <td>{{ totalNoiteFeminino | number }}</td>
+                    <td>{{ totalNoiteMatriculasMasculino | number }}</td>
+                    <td>{{ totalNoiteMatriculasFeminino | number }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -245,7 +245,7 @@
               <h2 class="text-right">
                 <!-- <i class="fa fa-refresh f-left"></i> -->
                 <fa-icon icon="address-card" [fixedWidth]="true"></fa-icon>
-                <span>{{ totalMatriculas }}</span>
+                <span>{{ totalConfirmacoes }}</span>
               </h2>
               <table class="table">
                 <thead>
@@ -259,21 +259,21 @@
                 <tbody>
                   <tr>
                     <th>Manhã</th>
-                    <td>{{ totalMatriculasManha | number }}</td>
-                    <td>{{ totalManhaMasculino | number }}</td>
-                    <td>{{ totalManhaFeminino | number }}</td>
+                    <td>{{ totalConfirmacoesManha | number }}</td>
+                    <td>{{ totalConfirmacoesManhaMasculino | number }}</td>
+                    <td>{{ totalConfirmacoesManhaFemenino | number }}</td>
                   </tr>
                   <tr>
                     <th>Tarde</th>
-                    <td>{{ totalMatriculasTarde | number }}</td>
-                    <td>{{ totalTardeMasculino | number }}</td>
-                    <td>{{ totalTardeFeminino | number }}</td>
+                    <td>{{ totalConfirmacoesTarde | number }}</td>
+                    <td>{{ totalConfirmacoesTardeMasculino | number }}</td>
+                    <td>{{ totalConfirmacoesTardeFemenino | number }}</td>
                   </tr>
                   <tr>
                     <th>Noite</th>
-                    <td>{{ totalMatriculasNoite | number }}</td>
-                    <td>{{ totalNoiteMasculino | number }}</td>
-                    <td>{{ totalNoiteFeminino | number }}</td>
+                    <td>{{ totalConfirmacoesNoite | number }}</td>
+                    <td>{{ totalConfirmacoesNoiteMasculino | number }}</td>
+                    <td>{{ totalConfirmacoesNoiteFemenino | number }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -306,20 +306,20 @@
                   <tr>
                     <th>Manhã</th>
                     <td>{{ totalMatriculasManha | number }}</td>
-                    <td>{{ totalManhaMasculino | number }}</td>
-                    <td>{{ totalManhaFeminino | number }}</td>
+                    <td>{{ totalConfirmacoesManhaMasculino | number }}</td>
+                    <td>{{ totalConfirmacoesManhaMasculino | number }}</td>
                   </tr>
                   <tr>
                     <th>Tarde</th>
                     <td>{{ totalMatriculasTarde | number }}</td>
-                    <td>{{ totalTardeMasculino | number }}</td>
-                    <td>{{ totalTardeFeminino | number }}</td>
+                    <td>{{ totalConfirmacoesManhaMasculino | number }}</td>
+                    <td>{{ totalConfirmacoesManhaMasculino | number }}</td>
                   </tr>
                   <tr>
                     <th>Noite</th>
                     <td>{{ totalMatriculasNoite | number }}</td>
-                    <td>{{ totalNoiteMasculino | number }}</td>
-                    <td>{{ totalNoiteFeminino | number }}</td>
+                    <td>{{ totalConfirmacoesManhaMasculino | number }}</td>
+                    <td>{{ totalConfirmacoesManhaMasculino | number }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -337,7 +337,7 @@
               <h2 class="text-right">
                 <!-- <i class="fa fa-refresh f-left"></i> -->
                 <fa-icon icon="address-card" [fixedWidth]="true"></fa-icon>
-                <span>{{ totalMatriculas }}</span>
+                <span>{{ totalAlunoGeral }}</span>
               </h2>
               <table class="table">
                 <thead>
@@ -351,21 +351,21 @@
                 <tbody>
                   <tr>
                     <th>Manhã</th>
-                    <td>{{ totalMatriculasManha | number }}</td>
-                    <td>{{ totalManhaMasculino | number }}</td>
-                    <td>{{ totalManhaFeminino | number }}</td>
+                    <td>{{ totalAlunosManha | number }}</td>
+                    <td>{{ totalAlunosManhaMasculino | number }}</td>
+                    <td>{{ totalAlunosManhaFeminino | number }}</td>
                   </tr>
                   <tr>
                     <th>Tarde</th>
-                    <td>{{ totalMatriculasTarde | number }}</td>
-                    <td>{{ totalTardeMasculino | number }}</td>
-                    <td>{{ totalTardeFeminino | number }}</td>
+                    <td>{{ totalAlunosTarde | number }}</td>
+                    <td>{{ totalAlunosTardeMasculino | number }}</td>
+                    <td>{{ totalAlunosTardeFeminino | number }}</td>
                   </tr>
                   <tr>
                     <th>Noite</th>
-                    <td>{{ totalMatriculasNoite | number }}</td>
-                    <td>{{ totalNoiteMasculino | number }}</td>
-                    <td>{{ totalNoiteFeminino | number }}</td>
+                    <td>{{ totalAlunosNoite | number }}</td>
+                    <td>{{ totalAlunosNoiteMasculino | number }}</td>
+                    <td>{{ totalAlunosNoiteFeminino | number }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -395,30 +395,14 @@
           <th class="col-md-1">Estado</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody *ngFor="let nota of notasGeraisDisciplina">
         <tr>
-          <td>Otto</td>
-          <td>Otto</td>
-          <td>Otto</td>
-          <td>Otto</td>
-          <td>Otto</td>
-          <td>Otto</td>
-        </tr>
-        <tr>
-          <td>Otto</td>
-          <td>Otto</td>
-          <td>Otto</td>
-          <td>Otto</td>
-          <td>Otto</td>
-          <td>Otto</td>
-        </tr>
-        <tr>
-          <td>Otto</td>
-          <td>Otto</td>
-          <td>Otto</td>
-          <td>Otto</td>
-          <td>Otto</td>
-          <td>Otto</td>
+          <td>{{ nota.disciplinaCurricular?.descricao }}</td>
+          <td>{{ nota.media1 | number }}</td>
+          <td>{{ nota.media2 | number }}</td>
+          <td>{{ nota.media3 | number }}</td>
+          <td>{{ nota.mediaFinalDisciplina | number }}</td>
+          <td>{{ nota.estado?.descricao }}</td>
         </tr>
       </tbody>
     </table>
@@ -540,8 +524,8 @@
       <tbody *ngFor="let item of professoresTelemovel">
         <tr>
           <td>{{ item.nome }}</td>
-          <td>{{ item.disciplina }}</td>
-          <td>{{ item.telemovel }}</td>
+          <td>Disciplina</td>
+          <td>{{ item.telefonePrincipal }}</td>
           <td>{{ item.email }}</td>
         </tr>
       </tbody>

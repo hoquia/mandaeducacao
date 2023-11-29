@@ -20,9 +20,9 @@ export interface IMatricula {
   isAceiteTermosCompromisso?: boolean | null;
   utilizador?: Pick<IUser, 'id' | 'login'> | null;
   categoriasMatriculas?: Pick<IPlanoDesconto, 'id' | 'nome'>[] | null;
-  turma?: Pick<ITurma, 'id' | 'descricao'> | null;
+  turma?: Pick<ITurma, 'id' | 'descricao' | 'turno'> | null;
   responsavelFinanceiro?: Pick<IEncarregadoEducacao, 'id' | 'nome'> | null;
-  discente?: Pick<IDiscente, 'id' | 'nome'> | null;
+  discente?: Pick<IDiscente, 'id' | 'nome' | 'sexo'> | null;
   referencia?: Pick<IMatricula, 'id'> | null;
 }
 

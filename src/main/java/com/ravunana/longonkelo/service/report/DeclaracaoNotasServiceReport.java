@@ -150,7 +150,7 @@ public class DeclaracaoNotasServiceReport {
             "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?";
 
         String textoDeclaracaoSegundo =
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+            "O(A) Director(a) da Escola de Formação de Técnicos de Saúde de Luanda, dE BOAVIDA, certifica de acordo com o artº.25 e 27º dos Estatutos do Subsistema do Ensino Técnico Profissional, aprovado pelo decreto nº 90/04 de 3 de Dezembro de 2014, que, SANTA TACA VUNGE , filho(a) de Sebastião Vunge e de Zumba Taca, natural de Negage província de Uige, nascido 2001-07-05, portador do B.l. nº 008174977-UE-041, emitido  2016-03-09, concluiu, em regime Diurno, no ano lectivo 2020/21 a 13º classe, o curso de Saúde da Área de Formação e Enfermagem no Instituto Técnico Privado de Saúde São Vicente de Paulo, tendo obtido as seguintes classificações,conforme consta do processo individual nº 2049262072.";
 
         Font fontNormal = FontFactory.getFont("Helvetica", 8, Font.NORMAL, Color.BLACK);
         Font fontBold = FontFactory.getFont("Helvetica", 7, Font.BOLD, Color.BLACK);
@@ -310,21 +310,21 @@ public class DeclaracaoNotasServiceReport {
             )
         );
 
-        Paragraph textoSegundo = new Paragraph(textoDeclaracaoSegundo);
-        textoPrincipal.setSpacingAfter(8f);
-        layoutTable.addCell(
-            makeCellText(
-                textoSegundo.toString(),
-                Element.ALIGN_JUSTIFIED_ALL,
-                Element.ALIGN_JUSTIFIED_ALL,
-                fontNormalText,
-                leadingTexto,
-                paddingTexto,
-                borderNone,
-                true,
-                false
-            )
-        );
+        //        Paragraph textoSegundo = new Paragraph(textoDeclaracaoSegundo);
+        //        textoPrincipal.setSpacingAfter(8f);
+        //        layoutTable.addCell(
+        //            makeCellText(
+        //                textoSegundo.toString(),
+        //                Element.ALIGN_JUSTIFIED_ALL,
+        //                Element.ALIGN_JUSTIFIED_ALL,
+        //                fontNormalText,
+        //                leadingTexto,
+        //                paddingTexto,
+        //                borderNone,
+        //                true,
+        //                false
+        //            )
+        //        );
 
         layoutTable.addCell(
             makeCellTable(detalheTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
