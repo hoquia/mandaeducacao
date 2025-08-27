@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { ITurma } from '../turma.model';
 import { TurmaService } from '../service/turma.service';
+import { INotasPeriodicaDisciplina } from 'app/entities/notas-periodica-disciplina/notas-periodica-disciplina.model';
+import { NotasPeriodicaDisciplinaService } from 'app/entities/notas-periodica-disciplina/service/notas-periodica-disciplina.service';
 
 @Component({
   selector: 'app-turma-detail',
@@ -15,11 +17,14 @@ export class TurmaDetailComponent implements OnInit {
   emolumentosSharedCollection: IEmolumento[] = [];
   emolumentoSelecionadoID = 0;
   emolumentoSelecionadoEstrato = 0;
+  periodosSharedCollection: number[] = [1, 2, 3];
+  periodoSelecionado = 0;
 
   constructor(
     protected activatedRoute: ActivatedRoute,
     protected turmaService: TurmaService,
-    protected emolumentoService: EmolumentoService
+    protected emolumentoService: EmolumentoService,
+    protected notaPeriodicaService: NotasPeriodicaDisciplinaService
   ) {}
 
   ngOnInit(): void {
@@ -34,6 +39,21 @@ export class TurmaDetailComponent implements OnInit {
 
   previousState(): void {
     window.history.back();
+  }
+
+  protected gerarMiniPauta(turmaID: number): void {
+    this.turmaService.downloadMinipautaPdf(turmaID, this.periodoSelecionado).subscribe(res => {
+      const url = window.URL.createObjectURL(res);
+      const a = document.createElement('a');
+      a.href = url;
+      a.target = '_blank';
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      a.title = `mini-pauta-${turmaID}`;
+      a.rel = 'noopener noreferrer';
+      a.click();
+      window.URL.revokeObjectURL(url);
+      a.remove();
+    });
   }
 
   protected gerarListaPresenca(turmaID: number): void {

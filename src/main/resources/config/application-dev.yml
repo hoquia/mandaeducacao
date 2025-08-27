@@ -43,10 +43,24 @@ spring:
   liquibase:
     contexts: dev
   mail:
-    host: localhost
-    port: 25
-    username:
-    password:
+    host: mail.mandaerp.co.ao
+    port: 465
+    username: media@mandaerp.co.ao
+    password: H?6!atA%UFE[^l(o
+    protocol: smtps
+    debug: true
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            required: true
+          ssl:
+            enable: true
+        smtps:
+          auth: true
+    thymeleaf:
+      cache: true
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
   thymeleaf:

@@ -125,6 +125,14 @@ export class TurmaService {
     });
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/member-ordering
+  downloadMinipautaPdf(turmaID: number, periodoID: number) {
+    let headers = new HttpHeaders();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    headers = headers.set('Accept', 'application/pdf');
+    return this.http.get(`${this.resourceUrl}/mini-pauta/${turmaID}/${periodoID}`, { headers, responseType: 'blob' });
+  }
+
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   downloadListaPresencaPdf(turmaID: number) {
     let headers = new HttpHeaders();

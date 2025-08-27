@@ -5,10 +5,7 @@ import com.ravunana.longonkelo.service.TurmaQueryService;
 import com.ravunana.longonkelo.service.TurmaService;
 import com.ravunana.longonkelo.service.criteria.TurmaCriteria;
 import com.ravunana.longonkelo.service.dto.TurmaDTO;
-import com.ravunana.longonkelo.service.report.EstratoFinanceiroReport;
-import com.ravunana.longonkelo.service.report.HorarioDiscenteReport;
-import com.ravunana.longonkelo.service.report.ListaPagoNaoPagoReport;
-import com.ravunana.longonkelo.service.report.ListaPresencaTurmaReport;
+import com.ravunana.longonkelo.service.report.*;
 import com.ravunana.longonkelo.web.rest.errors.BadRequestAlertException;
 import java.io.File;
 import java.io.IOException;
@@ -62,6 +59,7 @@ public class TurmaResource {
     private final HorarioDiscenteReport horarioDiscenteService;
     private final ListaPagoNaoPagoReport listaPagoNaoPagoReport;
     private final EstratoFinanceiroReport estratoFinanceiroReport;
+    private final BoletimNotasServiceReport boletimNotasServiceReport;
 
     public TurmaResource(
         TurmaService turmaService,
@@ -70,7 +68,8 @@ public class TurmaResource {
         ListaPresencaTurmaReport listaPresencaTurmaService,
         HorarioDiscenteReport horarioDiscenteService,
         ListaPagoNaoPagoReport listaPagoNaoPagoReport,
-        EstratoFinanceiroReport estratoFinanceiroReport
+        EstratoFinanceiroReport estratoFinanceiroReport,
+        BoletimNotasServiceReport boletimNotasServiceReport
     ) {
         this.turmaService = turmaService;
         this.turmaRepository = turmaRepository;
@@ -79,6 +78,7 @@ public class TurmaResource {
         this.horarioDiscenteService = horarioDiscenteService;
         this.listaPagoNaoPagoReport = listaPagoNaoPagoReport;
         this.estratoFinanceiroReport = estratoFinanceiroReport;
+        this.boletimNotasServiceReport = boletimNotasServiceReport;
     }
 
     /**
@@ -283,6 +283,22 @@ public class TurmaResource {
     public ResponseEntity<Resource> getEstratoFinanceiro(@PathVariable Long turmaID, @PathVariable Long emolumentoSelecionadoEstrato)
         throws IOException {
         var filePath = estratoFinanceiroReport.gerarPdf(turmaID, emolumentoSelecionadoEstrato);
+        File file = new File(filePath);
+
+        Path path = Paths.get(file.getAbsolutePath());
+        ByteArrayResource resource = new ByteArrayResource(Files.readAllBytes(path));
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
+        headers.add("Pragma", "no-cache");
+        headers.add("Expires", "0");
+
+        return ResponseEntity.ok().headers(headers).contentLength(file.length()).contentType(MediaType.APPLICATION_PDF).body(resource);
+    }
+
+    @GetMapping("/turmas/mini-pauta/{turmaID}/{periodo}")
+    public ResponseEntity<Resource> gerarBoletimNotas(@PathVariable Long turmaID, @PathVariable Integer periodo) throws IOException {
+        var filePath = boletimNotasServiceReport.gerarMiniPautaPdf(turmaID, periodo);
         File file = new File(filePath);
 
         Path path = Paths.get(file.getAbsolutePath());

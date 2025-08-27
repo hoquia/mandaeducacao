@@ -45,12 +45,24 @@ spring:
   liquibase:
     contexts: prod
   mail:
-    host: localhost
-    port: 25
-    username:
-    password:
-  thymeleaf:
-    cache: true
+    host: mail.mandaerp.co.ao
+    port: 465
+    username: media@mandaerp.co.ao
+    password: H?6!atA%UFE[^l(o
+    protocol: smtps
+    debug: true
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            required: true
+          ssl:
+            enable: true
+        smtps:
+          auth: true
+    thymeleaf:
+      cache: true
 
 # ===================================================================
 # To enable TLS in production, generate a certificate using:
