@@ -33,9 +33,9 @@ spring:
       enabled: false
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/longonkelo_db
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://${PGHOST}:${PGPORT}/longonkelo_db
+    username: ${PGUSER}
+    password: ${PGPASSWORD}
     hikari:
       poolName: Hikari
       auto-commit: false
