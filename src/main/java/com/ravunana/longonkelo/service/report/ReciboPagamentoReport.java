@@ -954,23 +954,24 @@ public class ReciboPagamentoReport {
         );
 
         // Codigo encriptacao da factura
-        // layoutTable.addCell(
-        //     makeCellText(
-        //         "-Processado por programa valido nº.n31.1/AGT20 | Longonkelo",
-        //         Element.ALIGN_MIDDLE,
-        //         Element.ALIGN_LEFT,
-        //         fontNormal,
-        //         leading,
-        //         padding,
-        //         borderNone,
-        //         true,
-        //         false
-        //     )
-        // );
+        layoutTable.addCell(
+            makeCellText(
+                "-Processado por programa valido nº 4737AGT/2024 MANDA ERP",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_LEFT,
+                fontNormal,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
 
         layoutTable.addCell(
             makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
         );
+        /*
         layoutTable.addCell(
             makeCellText(
                 "Resumo do imposto",
@@ -985,11 +986,11 @@ public class ReciboPagamentoReport {
             )
         );
 
-        // Resumo Imposto
 
-        //        layoutTable.addCell(
-        //            makeCellTable(resumoImpostoTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
-        //        );
+                layoutTable.addCell(
+                    makeCellTable(resumoImpostoTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
+                );
+                */
 
         layoutTable.addCell(
             makeCellText(getLinhaTracos(), Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)

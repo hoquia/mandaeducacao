@@ -1,41 +1,49 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="app-processo-selectivo-matricula-heading"
-        data-cy="ProcessoSelectivoMatriculaCreateUpdateHeading"
-        appTranslate="longonkeloApp.processoSelectivoMatricula.home.createOrEditLabel"
-      >
-        Criar ou editar Processo Selectivo Matricula
+<div class="modern-form-container">
+  <div class="modern-form-wrapper">
+    <div class="modern-form-header">
+      <h2 class="modern-form-title">
+        <fa-icon [icon]="['fas', 'user-graduate']" class="me-2"></fa-icon>
+        <span appTranslate="longonkeloApp.processoSelectivoMatricula.home.createOrEditLabel">
+          Criar ou editar Processo Selectivo Matricula
+        </span>
       </h2>
+    </div>
 
-      <div>
-        <app-alert-error></app-alert-error>
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm" class="modern-form">
+      <app-alert-error></app-alert-error>
 
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
+      <!-- Hidden ID field -->
+      <input type="hidden" name="id" formControlName="id" *ngIf="editForm.controls.id.value !== null" />
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.processoSelectivoMatricula.localTeste" for="field_localTeste"
-            >Local Teste</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="localTeste"
-            id="field_localTeste"
-            data-cy="localTeste"
-            formControlName="localTeste"
-          />
-        </div>
+      <!-- Seção 1: Informações do Teste -->
+      <fieldset class="modern-form-section">
+        <legend class="modern-form-section-title">
+          <fa-icon [icon]="['fas', 'clipboard-check']" class="section-icon me-2"></fa-icon>
+          <span>Informações do Teste</span>
+        </legend>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.processoSelectivoMatricula.dataTeste" for="field_dataTeste"
-            >Data Teste</label
-          >
-          <div class="d-flex">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label" for="field_localTeste">
+              <fa-icon [icon]="['fas', 'map-marker-alt']" class="me-1"></fa-icon>
+              <span appTranslate="longonkeloApp.processoSelectivoMatricula.localTeste">Local Teste</span>
+            </label>
+            <input
+              type="text"
+              class="form-control"
+              name="localTeste"
+              id="field_localTeste"
+              data-cy="localTeste"
+              formControlName="localTeste"
+              placeholder="Digite o local do teste"
+            />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label" for="field_dataTeste">
+              <fa-icon [icon]="['fas', 'calendar-alt']" class="me-1"></fa-icon>
+              <span appTranslate="longonkeloApp.processoSelectivoMatricula.dataTeste">Data Teste</span>
+            </label>
             <input
               id="field_dataTeste"
               data-cy="dataTeste"
@@ -48,101 +56,162 @@
           </div>
         </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.processoSelectivoMatricula.notaTeste" for="field_notaTeste"
-            >Nota Teste</label
-          >
-          <input type="number" class="form-control" name="notaTeste" id="field_notaTeste" data-cy="notaTeste" formControlName="notaTeste" />
-          <div *ngIf="editForm.get('notaTeste')!.invalid && (editForm.get('notaTeste')!.dirty || editForm.get('notaTeste')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('notaTeste')?.errors?.min"
-              appTranslate="entity.validation.min"
-              [translateValues]="{ min: 0 }"
-            >
-              Este campo deve ser maior que 0.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('notaTeste')?.errors?.number"
-              appTranslate="entity.validation.number"
-            >
-              Este campo é do tipo número.
-            </small>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label" for="field_notaTeste">
+              <fa-icon [icon]="['fas', 'star']" class="me-1"></fa-icon>
+              <span appTranslate="longonkeloApp.processoSelectivoMatricula.notaTeste">Nota Teste</span>
+            </label>
+            <input
+              type="number"
+              class="form-control"
+              name="notaTeste"
+              id="field_notaTeste"
+              data-cy="notaTeste"
+              formControlName="notaTeste"
+              placeholder="0.00"
+              min="0"
+              step="0.01"
+            />
+            <div *ngIf="editForm.get('notaTeste')!.invalid && (editForm.get('notaTeste')!.dirty || editForm.get('notaTeste')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('notaTeste')?.errors?.min"
+                appTranslate="entity.validation.min"
+                [translateValues]="{ min: 0 }"
+              >
+                Este campo deve ser maior que 0.
+              </small>
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('notaTeste')?.errors?.number"
+                appTranslate="entity.validation.number"
+              >
+                Este campo é do tipo número.
+              </small>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label class="form-label">
+              <fa-icon [icon]="['fas', 'check-circle']" class="me-1"></fa-icon>
+              <span appTranslate="longonkeloApp.processoSelectivoMatricula.isAdmitido">Status de Admissão</span>
+            </label>
+            <div class="form-switch-container">
+              <div class="form-check form-switch">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  name="isAdmitido"
+                  id="field_isAdmitido"
+                  data-cy="isAdmitido"
+                  formControlName="isAdmitido"
+                />
+                <label class="form-check-label" for="field_isAdmitido"> Candidato Admitido </label>
+              </div>
+              <small class="form-text text-muted"> Marque se o candidato foi admitido no processo seletivo </small>
+            </div>
           </div>
         </div>
+      </fieldset>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.processoSelectivoMatricula.isAdmitido" for="field_isAdmitido"
-            >Is Admitido</label
-          >
-          <input
-            type="checkbox"
-            class="form-check"
-            name="isAdmitido"
-            id="field_isAdmitido"
-            data-cy="isAdmitido"
-            formControlName="isAdmitido"
-          />
-        </div>
+      <!-- Seção 2: Associações Acadêmicas -->
+      <fieldset class="modern-form-section">
+        <legend class="modern-form-section-title">
+          <fa-icon [icon]="['fas', 'users']" class="section-icon me-2"></fa-icon>
+          <span>Associações Acadêmicas</span>
+        </legend>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.processoSelectivoMatricula.utilizador" for="field_utilizador"
-            >Utilizador</label
-          >
-          <select
-            class="form-control"
-            id="field_utilizador"
-            data-cy="utilizador"
-            name="utilizador"
-            formControlName="utilizador"
-            [compareWith]="compareUser"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
-          </select>
-        </div>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label class="form-label" for="field_utilizador">
+              <fa-icon [icon]="['fas', 'user']" class="me-1"></fa-icon>
+              <span appTranslate="longonkeloApp.processoSelectivoMatricula.utilizador">Utilizador</span>
+            </label>
+            <select
+              class="form-control"
+              id="field_utilizador"
+              data-cy="utilizador"
+              name="utilizador"
+              formControlName="utilizador"
+              [compareWith]="compareUser"
+            >
+              <option [ngValue]="null">Selecione um utilizador</option>
+              <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">
+                {{ userOption.login }}
+              </option>
+            </select>
+          </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.processoSelectivoMatricula.turma" for="field_turma">Turma</label>
-          <select class="form-control" id="field_turma" data-cy="turma" name="turma" formControlName="turma" [compareWith]="compareTurma">
-            <option *ngIf="editForm.get(['turma'])!.value == null" [ngValue]="null" selected></option>
-            <option [ngValue]="turmaOption" *ngFor="let turmaOption of turmasSharedCollection">{{ turmaOption.descricao }}</option>
-          </select>
-        </div>
-        <div *ngIf="editForm.get(['turma'])!.invalid && (editForm.get(['turma'])!.dirty || editForm.get(['turma'])!.touched)">
-          <small class="form-text text-danger" *ngIf="editForm.get(['turma'])?.errors?.required" appTranslate="entity.validation.required">
-            O campo é obrigatório.
-          </small>
-        </div>
+          <div class="col-md-4 mb-3">
+            <label class="form-label" for="field_turma">
+              <fa-icon [icon]="['fas', 'chalkboard-teacher']" class="me-1"></fa-icon>
+              <span appTranslate="longonkeloApp.processoSelectivoMatricula.turma">Turma</span>
+              <span class="text-danger">*</span>
+            </label>
+            <select
+              class="form-control"
+              id="field_turma"
+              data-cy="turma"
+              name="turma"
+              formControlName="turma"
+              [compareWith]="compareTurma"
+              [class.is-invalid]="editForm.get(['turma'])!.invalid && (editForm.get(['turma'])!.dirty || editForm.get(['turma'])!.touched)"
+            >
+              <option *ngIf="editForm.get(['turma'])!.value == null" [ngValue]="null" selected>Selecione uma turma</option>
+              <option [ngValue]="turmaOption" *ngFor="let turmaOption of turmasSharedCollection">
+                {{ turmaOption.descricao }}
+              </option>
+            </select>
+            <div *ngIf="editForm.get(['turma'])!.invalid && (editForm.get(['turma'])!.dirty || editForm.get(['turma'])!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get(['turma'])?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                O campo é obrigatório.
+              </small>
+            </div>
+          </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.processoSelectivoMatricula.discente" for="field_discente">Discente</label>
-          <select
-            class="form-control"
-            id="field_discente"
-            data-cy="discente"
-            name="discente"
-            formControlName="discente"
-            [compareWith]="compareDiscente"
-          >
-            <option *ngIf="editForm.get(['discente'])!.value == null" [ngValue]="null" selected></option>
-            <option [ngValue]="discenteOption" *ngFor="let discenteOption of discentesSharedCollection">{{ discenteOption.nome }}</option>
-          </select>
+          <div class="col-md-4 mb-3">
+            <label class="form-label" for="field_discente">
+              <fa-icon [icon]="['fas', 'user-graduate']" class="me-1"></fa-icon>
+              <span appTranslate="longonkeloApp.processoSelectivoMatricula.discente">Discente</span>
+              <span class="text-danger">*</span>
+            </label>
+            <select
+              class="form-control"
+              id="field_discente"
+              data-cy="discente"
+              name="discente"
+              formControlName="discente"
+              [compareWith]="compareDiscente"
+              [class.is-invalid]="
+                editForm.get(['discente'])!.invalid && (editForm.get(['discente'])!.dirty || editForm.get(['discente'])!.touched)
+              "
+            >
+              <option *ngIf="editForm.get(['discente'])!.value == null" [ngValue]="null" selected>Selecione um discente</option>
+              <option [ngValue]="discenteOption" *ngFor="let discenteOption of discentesSharedCollection">
+                {{ discenteOption.nome }}
+              </option>
+            </select>
+            <div *ngIf="editForm.get(['discente'])!.invalid && (editForm.get(['discente'])!.dirty || editForm.get(['discente'])!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get(['discente'])?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                O campo é obrigatório.
+              </small>
+            </div>
+          </div>
         </div>
-        <div *ngIf="editForm.get(['discente'])!.invalid && (editForm.get(['discente'])!.dirty || editForm.get(['discente'])!.touched)">
-          <small
-            class="form-text text-danger"
-            *ngIf="editForm.get(['discente'])?.errors?.required"
-            appTranslate="entity.validation.required"
-          >
-            O campo é obrigatório.
-          </small>
-        </div>
-      </div>
+      </fieldset>
 
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+      <!-- Botões de Ação -->
+      <div class="modern-form-actions">
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary me-2" (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
         </button>
 

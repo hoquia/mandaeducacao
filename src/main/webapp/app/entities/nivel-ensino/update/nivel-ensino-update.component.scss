@@ -1,0 +1,359 @@
+// ================================================================
+// Formulário de Nível de Ensino - Estilos Modernos
+// ================================================================
+
+@import '../../../../content/scss/modern-forms';
+@import '../../../../content/scss/animations';
+
+// Variáveis específicas do nível de ensino
+:host {
+  --nivel-primary: var(--azul-vibrante);
+  --nivel-secondary: var(--prata);
+  --nivel-accent: var(--amarelo);
+  --nivel-educational: #28a745; // Verde educacional
+}
+
+// Container principal
+.modern-form-container {
+  @include modern-form-container;
+
+  // Tema específico para nível de ensino
+  .form-header {
+    background: linear-gradient(135deg, rgba(30, 144, 255, 0.1) 0%, rgba(40, 167, 69, 0.05) 50%, rgba(255, 215, 0, 0.05) 100%);
+
+    h2 {
+      color: var(--nivel-primary);
+
+      i {
+        color: var(--nivel-educational);
+      }
+    }
+  }
+}
+
+// Form wrapper
+.modern-form-wrapper {
+  @include modern-form-wrapper;
+}
+
+// Form principal
+.modern-form {
+  @include modern-form-base;
+}
+
+// Seções do formulário
+.form-section {
+  @include form-section;
+
+  .section-title {
+    color: var(--nivel-primary);
+    border-color: var(--nivel-accent);
+
+    i {
+      color: var(--nivel-educational);
+    }
+  }
+
+  // Cores específicas por seção
+  &:nth-child(4) .section-title {
+    // Basic Information
+    i {
+      color: var(--azul-vibrante);
+    }
+  }
+
+  &:nth-child(5) .section-title {
+    // Age Requirements
+    i {
+      color: #fd7e14;
+    } // Orange para idade
+  }
+
+  &:nth-child(6) .section-title {
+    // Duration
+    i {
+      color: #6f42c1;
+    } // Purple para duração
+  }
+
+  &:nth-child(7) .section-title {
+    // Classes
+    i {
+      color: #20c997;
+    } // Teal para classes
+  }
+
+  &:nth-child(8) .section-title {
+    // Additional Info
+    i {
+      color: var(--nivel-educational);
+    }
+  }
+}
+
+// Form labels modernos
+.form-label {
+  color: var(--azul-carregado);
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+
+  i {
+    color: var(--nivel-primary);
+    font-size: 1rem;
+  }
+
+  .required {
+    color: #dc3545;
+    margin-left: 0.25rem;
+    font-weight: 600;
+  }
+}
+
+// Form groups
+.form-group {
+  margin-bottom: 1.5rem;
+
+  &:focus-within .form-label {
+    color: var(--nivel-primary);
+    transform: translateY(-2px);
+  }
+}
+
+// Form controls
+.form-control,
+.form-select {
+  border: 2px solid rgba(var(--bs-primary-rgb), 0.2);
+  border-radius: 10px;
+  padding: 1rem 0.75rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
+
+  &:focus {
+    border-color: var(--nivel-primary);
+    box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.25);
+    background: white;
+  }
+
+  &.is-invalid {
+    border-color: #dc3545;
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+    }
+  }
+
+  &::placeholder {
+    color: #6c757d;
+    opacity: 0.7;
+  }
+}
+
+// Textarea específico
+textarea.form-control {
+  min-height: 100px;
+  resize: vertical;
+}
+
+// Select específico
+.form-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 6 7 7 7-7'/%3e%3c/svg%3e");
+  background-position: right 0.75rem center;
+  background-size: 16px 12px;
+}
+
+// Validação
+.invalid-feedback {
+  display: block;
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  animation: slideInDown 0.3s ease;
+}
+
+// Form text (helper text)
+.form-text {
+  color: #6c757d;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  font-style: italic;
+}
+
+// Action buttons
+.form-actions {
+  @include form-actions;
+
+  .btn {
+    position: relative;
+    overflow: hidden;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 0.75rem 2rem;
+    transition: all 0.3s ease;
+
+    i {
+      transition: transform 0.3s ease;
+    }
+
+    &:hover i {
+      transform: scale(1.1);
+    }
+
+    &.btn-primary {
+      background: linear-gradient(135deg, var(--nivel-primary), var(--azul-carregado));
+      border: none;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(30, 144, 255, 0.3);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        transform: none;
+        box-shadow: none;
+      }
+    }
+
+    &.btn-secondary {
+      background: linear-gradient(135deg, var(--prata), #e9ecef);
+      border: none;
+      color: #495057;
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(192, 192, 192, 0.3);
+      }
+    }
+  }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .modern-form-container {
+    padding: 1rem;
+  }
+
+  .modern-form-wrapper {
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 1rem;
+
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .row .col-md-6 {
+    margin-bottom: 1rem;
+  }
+}
+
+// Animações de entrada
+.modern-form {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.form-section {
+  animation: slideInLeft 0.4s ease-out;
+  animation-fill-mode: both;
+
+  &:nth-child(4) {
+    animation-delay: 0.1s;
+  } // Basic Information
+  &:nth-child(5) {
+    animation-delay: 0.2s;
+  } // Age Requirements
+  &:nth-child(6) {
+    animation-delay: 0.3s;
+  } // Duration
+  &:nth-child(7) {
+    animation-delay: 0.4s;
+  } // Classes
+  &:nth-child(8) {
+    animation-delay: 0.5s;
+  } // Additional Info
+}
+
+.form-actions {
+  animation: slideInUp 0.4s ease-out;
+  animation-delay: 0.6s;
+  animation-fill-mode: both;
+}
+
+// Estados de hover para campos
+.form-group {
+  &:hover .form-control,
+  &:hover .form-select {
+    border-color: rgba(var(--bs-primary-rgb), 0.4);
+  }
+}
+
+// Efeitos especiais para campos numéricos
+input[type='number'] {
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  &[type='number'] {
+    -moz-appearance: textfield;
+  }
+}
+
+// Loading state
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+}
+
+// Melhorias visuais específicas
+.col-12 .form-group {
+  // Campos de largura total têm destaque especial
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    background: var(--nivel-accent);
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:focus-within::before {
+    opacity: 1;
+  }
+}
+
+// Indicadores visuais por tipo de seção
+.form-section {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--nivel-primary) 0%, var(--nivel-educational) 100%);
+    border-radius: 2px;
+    opacity: 0.3;
+  }
+}

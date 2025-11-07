@@ -1,0 +1,395 @@
+// ================================================================
+// Formulário de Período de Lançamento de Nota - Estilos Modernos
+// ================================================================
+
+@import '../../../../content/scss/modern-forms';
+@import '../../../../content/scss/animations';
+
+// Variáveis específicas do período de lançamento
+:host {
+  --periodo-primary: var(--azul-vibrante);
+  --periodo-secondary: var(--prata);
+  --periodo-accent: var(--amarelo);
+  --periodo-calendar: #28a745; // Verde para calendário
+  --periodo-eval: #fd7e14; // Laranja para avaliação
+}
+
+// Container principal
+.modern-form-container {
+  @include modern-form-container;
+
+  // Tema específico para período de lançamento
+  .form-header {
+    background: linear-gradient(135deg, rgba(30, 144, 255, 0.1) 0%, rgba(40, 167, 69, 0.05) 50%, rgba(253, 126, 20, 0.05) 100%);
+
+    h2 {
+      color: var(--periodo-primary);
+
+      i {
+        color: var(--periodo-calendar);
+      }
+    }
+  }
+}
+
+// Form wrapper
+.modern-form-wrapper {
+  @include modern-form-wrapper;
+}
+
+// Form principal
+.modern-form {
+  @include modern-form-base;
+}
+
+// Seções do formulário
+.form-section {
+  @include form-section;
+
+  .section-title {
+    color: var(--periodo-primary);
+    border-color: var(--periodo-accent);
+
+    i {
+      color: var(--periodo-eval);
+    }
+  }
+
+  // Cores específicas por seção
+  &:nth-child(4) .section-title {
+    // Evaluation Configuration
+    i {
+      color: var(--periodo-eval);
+    }
+  }
+
+  &:nth-child(5) .section-title {
+    // Period Configuration
+    i {
+      color: var(--periodo-calendar);
+    }
+  }
+
+  &:nth-child(6) .section-title {
+    // System Information
+    i {
+      color: #6c757d;
+    } // Cinza para sistema
+  }
+
+  &:nth-child(7) .section-title {
+    // Class Selection
+    i {
+      color: var(--azul-vibrante);
+    }
+  }
+}
+
+// Form labels modernos
+.form-label {
+  color: var(--azul-carregado);
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+
+  i {
+    color: var(--periodo-primary);
+    font-size: 1rem;
+  }
+
+  .required {
+    color: #dc3545;
+    margin-left: 0.25rem;
+    font-weight: 600;
+  }
+}
+
+// Form groups
+.form-group {
+  margin-bottom: 1.5rem;
+
+  &:focus-within .form-label {
+    color: var(--periodo-primary);
+    transform: translateY(-2px);
+  }
+}
+
+// Form controls
+.form-control,
+.form-select {
+  border: 2px solid rgba(var(--bs-primary-rgb), 0.2);
+  border-radius: 10px;
+  padding: 1rem 0.75rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
+
+  &:focus {
+    border-color: var(--periodo-primary);
+    box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.25);
+    background: white;
+  }
+
+  &.is-invalid {
+    border-color: #dc3545;
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+    }
+  }
+
+  &::placeholder {
+    color: #6c757d;
+    opacity: 0.7;
+  }
+}
+
+// Campos de data/hora específicos
+input[type='datetime-local'] {
+  position: relative;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 249, 250, 0.9) 100%);
+
+  &:focus {
+    background: white;
+    border-color: var(--periodo-calendar);
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+  }
+
+  // Estilo para o ícone de calendário nativo
+  &::-webkit-calendar-picker-indicator {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='%2328a745' d='M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 4v10a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V4H2z'/%3e%3c/svg%3e");
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+// Select múltiplo específico
+select[multiple] {
+  min-height: 150px !important;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.95) 100%);
+
+  option {
+    padding: 0.5rem;
+    border-radius: 4px;
+    margin: 2px 0;
+
+    &:checked {
+      background: linear-gradient(135deg, var(--periodo-primary), var(--azul-carregado));
+      color: white;
+    }
+
+    &:hover:not(:checked) {
+      background: rgba(var(--bs-primary-rgb), 0.1);
+    }
+  }
+}
+
+// Validação
+.invalid-feedback {
+  display: block;
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  animation: slideInDown 0.3s ease;
+}
+
+// Form text (helper text)
+.form-text {
+  color: #6c757d;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  font-style: italic;
+
+  i {
+    color: var(--periodo-accent);
+  }
+}
+
+// Action buttons
+.form-actions {
+  @include form-actions;
+
+  .btn {
+    position: relative;
+    overflow: hidden;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 0.75rem 2rem;
+    transition: all 0.3s ease;
+
+    i {
+      transition: transform 0.3s ease;
+    }
+
+    &:hover i {
+      transform: scale(1.1);
+    }
+
+    &.btn-primary {
+      background: linear-gradient(135deg, var(--periodo-primary), var(--azul-carregado));
+      border: none;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(30, 144, 255, 0.3);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        transform: none;
+        box-shadow: none;
+      }
+    }
+
+    &.btn-secondary {
+      background: linear-gradient(135deg, var(--prata), #e9ecef);
+      border: none;
+      color: #495057;
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(192, 192, 192, 0.3);
+      }
+    }
+  }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .modern-form-container {
+    padding: 1rem;
+  }
+
+  .modern-form-wrapper {
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 1rem;
+
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .row .col-md-6 {
+    margin-bottom: 1rem;
+  }
+
+  // Select múltiplo em mobile
+  select[multiple] {
+    min-height: 120px !important;
+    font-size: 0.9rem;
+  }
+}
+
+// Animações de entrada
+.modern-form {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.form-section {
+  animation: slideInLeft 0.4s ease-out;
+  animation-fill-mode: both;
+
+  &:nth-child(4) {
+    animation-delay: 0.1s;
+  } // Evaluation Configuration
+  &:nth-child(5) {
+    animation-delay: 0.2s;
+  } // Period Configuration
+  &:nth-child(6) {
+    animation-delay: 0.3s;
+  } // System Information
+  &:nth-child(7) {
+    animation-delay: 0.4s;
+  } // Class Selection
+}
+
+.form-actions {
+  animation: slideInUp 0.4s ease-out;
+  animation-delay: 0.5s;
+  animation-fill-mode: both;
+}
+
+// Estados de hover para campos
+.form-group {
+  &:hover .form-control,
+  &:hover .form-select {
+    border-color: rgba(var(--bs-primary-rgb), 0.4);
+  }
+}
+
+// Loading state
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+}
+
+// Efeitos especiais para campos principais
+.col-12 .form-group {
+  // Campos de largura total têm destaque especial
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    background: var(--periodo-accent);
+    border-radius: 2px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:focus-within::before {
+    opacity: 1;
+  }
+}
+
+// Indicadores visuais por tipo de campo
+.form-group {
+  // Campos de data/hora
+  &:has(input[type='datetime-local']) {
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--periodo-calendar) 0%, transparent 100%);
+      border-radius: 2px;
+      opacity: 0.3;
+    }
+  }
+
+  // Campo de seleção múltipla
+  &:has(select[multiple]) {
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(to bottom, var(--periodo-primary) 0%, var(--azul-carregado) 100%);
+      border-radius: 2px;
+      opacity: 0.3;
+    }
+  }
+}

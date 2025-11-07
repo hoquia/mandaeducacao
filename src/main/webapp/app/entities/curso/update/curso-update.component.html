@@ -1,115 +1,207 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="app-curso-heading" data-cy="CursoCreateUpdateHeading" appTranslate="longonkeloApp.curso.home.createOrEditLabel">
-        Criar ou editar Curso
-      </h2>
+<div class="modern-form-container">
+  <div class="modern-form-wrapper">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm" class="modern-form">
+      <!-- Form Header -->
+      <div class="form-header">
+        <h2 id="app-curso-heading" data-cy="CursoCreateUpdateHeading" appTranslate="longonkeloApp.curso.home.createOrEditLabel">
+          <i class="fas fa-graduation-cap me-2"></i>
+          Criar ou editar Curso
+        </h2>
+        <p class="form-subtitle">Configure as informações do curso de forma organizada</p>
+      </div>
 
-      <div>
-        <app-alert-error></app-alert-error>
+      <app-alert-error></app-alert-error>
 
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+      <!-- Hidden ID field -->
+      <input type="hidden" *ngIf="editForm.controls.id.value !== null" formControlName="id" />
+
+      <!-- Basic Information Section -->
+      <fieldset class="form-section">
+        <legend class="section-title">
+          <i class="fas fa-info-circle me-2"></i>
+          Informações Básicas
+        </legend>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="field_codigo" class="form-label">
+                <i class="fas fa-hashtag me-2"></i>
+                <span appTranslate="longonkeloApp.curso.codigo">Código</span>
+                <span class="required">*</span>
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                name="codigo"
+                id="field_codigo"
+                placeholder="Código do curso"
+                data-cy="codigo"
+                formControlName="codigo"
+                [class.is-invalid]="editForm.get('codigo')!.invalid && (editForm.get('codigo')!.dirty || editForm.get('codigo')!.touched)"
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="editForm.get('codigo')!.invalid && (editForm.get('codigo')!.dirty || editForm.get('codigo')!.touched)"
+              >
+                <small *ngIf="editForm.get('codigo')?.errors?.required" appTranslate="entity.validation.required">
+                  O campo é obrigatório.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="field_nome" class="form-label">
+                <i class="fas fa-user-graduate me-2"></i>
+                <span appTranslate="longonkeloApp.curso.nome">Nome do Curso</span>
+                <span class="required">*</span>
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                name="nome"
+                id="field_nome"
+                placeholder="Nome do curso"
+                data-cy="nome"
+                formControlName="nome"
+                [class.is-invalid]="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)"
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)"
+              >
+                <small *ngIf="editForm.get('nome')?.errors?.required" appTranslate="entity.validation.required">
+                  O campo é obrigatório.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="form-group">
+              <label for="field_areaFormacao" class="form-label">
+                <i class="fas fa-sitemap me-2"></i>
+                <span appTranslate="longonkeloApp.curso.areaFormacao">Área de Formação</span>
+                <span class="required">*</span>
+              </label>
+              <select
+                class="form-select"
+                id="field_areaFormacao"
+                data-cy="areaFormacao"
+                name="areaFormacao"
+                formControlName="areaFormacao"
+                [compareWith]="compareAreaFormacao"
+                [class.is-invalid]="
+                  editForm.get(['areaFormacao'])!.invalid &&
+                  (editForm.get(['areaFormacao'])!.dirty || editForm.get(['areaFormacao'])!.touched)
+                "
+              >
+                <option *ngIf="editForm.get(['areaFormacao'])!.value == null" [ngValue]="null" selected>
+                  Selecione uma área de formação...
+                </option>
+                <option [ngValue]="areaFormacaoOption" *ngFor="let areaFormacaoOption of areaFormacaosSharedCollection">
+                  {{ areaFormacaoOption.nome }}
+                </option>
+              </select>
+              <div
+                class="invalid-feedback"
+                *ngIf="
+                  editForm.get(['areaFormacao'])!.invalid &&
+                  (editForm.get(['areaFormacao'])!.dirty || editForm.get(['areaFormacao'])!.touched)
+                "
+              >
+                <small *ngIf="editForm.get(['areaFormacao'])?.errors?.required" appTranslate="entity.validation.required">
+                  O campo é obrigatório.
+                </small>
+              </div>
+            </div>
+          </div>
         </div>
+      </fieldset>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.curso.imagem" for="field_imagem">Imagem</label>
-          <div>
+      <!-- Description Section -->
+      <fieldset class="form-section">
+        <legend class="section-title">
+          <i class="fas fa-align-left me-2"></i>
+          Descrição
+        </legend>
+        <div class="form-group">
+          <label for="field_descricao" class="form-label">
+            <i class="fas fa-edit me-2"></i>
+            <span appTranslate="longonkeloApp.curso.descricao">Descrição</span>
+          </label>
+          <textarea
+            class="form-control description-textarea"
+            name="descricao"
+            id="field_descricao"
+            placeholder="Descrição detalhada do curso"
+            data-cy="descricao"
+            formControlName="descricao"
+            rows="4"
+          ></textarea>
+          <div class="form-text">Descreva os objetivos e conteúdo do curso</div>
+        </div>
+      </fieldset>
+
+      <!-- Image Upload Section -->
+      <fieldset class="form-section">
+        <legend class="section-title">
+          <i class="fas fa-image me-2"></i>
+          Imagem do Curso
+        </legend>
+
+        <div class="image-upload-container">
+          <div class="current-image" *ngIf="editForm.get('imagem')!.value">
             <img
               [src]="'data:' + editForm.get('imagemContentType')!.value + ';base64,' + editForm.get('imagem')!.value"
-              style="max-height: 100px"
-              *ngIf="editForm.get('imagem')!.value"
-              alt="curso image"
+              alt="Imagem do curso"
+              class="preview-image"
             />
-            <div *ngIf="editForm.get('imagem')!.value" class="form-text text-danger clearfix">
-              <span class="pull-start">{{ editForm.get('imagemContentType')!.value }}, {{ byteSize(editForm.get('imagem')!.value!) }}</span>
+            <div class="image-info">
+              <span class="file-details">
+                {{ editForm.get('imagemContentType')!.value }},
+                {{ byteSize(editForm.get('imagem')!.value!) }}
+              </span>
               <button
                 type="button"
                 (click)="clearInputImage('imagem', 'imagemContentType', 'file_imagem')"
-                class="btn btn-secondary btn-xs pull-end"
+                class="btn btn-outline-danger btn-sm"
+                title="Remover imagem"
               >
-                <fa-icon icon="times"></fa-icon>
+                <i class="fas fa-trash"></i>
+                Remover
               </button>
             </div>
+          </div>
+
+          <div class="upload-area" [class.has-image]="editForm.get('imagem')!.value">
             <input
               type="file"
               id="file_imagem"
               data-cy="imagem"
               (change)="setFileData($event, 'imagem', true)"
               accept="image/*"
-              appTranslate="entity.action.addimage"
+              class="file-input"
             />
+            <label for="file_imagem" class="upload-label">
+              <div class="upload-content">
+                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                <div class="upload-text"><strong>Clique para escolher</strong> ou arraste uma imagem</div>
+                <div class="upload-hint">PNG, JPG até 5MB</div>
+              </div>
+            </label>
           </div>
-          <input type="hidden" class="form-control" name="imagem" id="field_imagem" data-cy="imagem" formControlName="imagem" />
-          <input
-            type="hidden"
-            class="form-control"
-            name="imagemContentType"
-            id="field_imagemContentType"
-            formControlName="imagemContentType"
-          />
-        </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.curso.codigo" for="field_codigo">Codigo</label>
-          <input type="text" class="form-control" name="codigo" id="field_codigo" data-cy="codigo" formControlName="codigo" />
-          <div *ngIf="editForm.get('codigo')!.invalid && (editForm.get('codigo')!.dirty || editForm.get('codigo')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('codigo')?.errors?.required" appTranslate="entity.validation.required">
-              O campo é obrigatório.
-            </small>
-          </div>
+          <!-- Hidden inputs for form -->
+          <input type="hidden" formControlName="imagem" />
+          <input type="hidden" formControlName="imagemContentType" />
         </div>
+      </fieldset>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.curso.nome" for="field_nome">Nome</label>
-          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
-          <div *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('nome')?.errors?.required" appTranslate="entity.validation.required">
-              O campo é obrigatório.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.curso.descricao" for="field_descricao">Descricao</label>
-          <textarea class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao"></textarea>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.curso.areaFormacao" for="field_areaFormacao">Area Formacao</label>
-          <select
-            class="form-control"
-            id="field_areaFormacao"
-            data-cy="areaFormacao"
-            name="areaFormacao"
-            formControlName="areaFormacao"
-            [compareWith]="compareAreaFormacao"
-          >
-            <option *ngIf="editForm.get(['areaFormacao'])!.value == null" [ngValue]="null" selected></option>
-            <option [ngValue]="areaFormacaoOption" *ngFor="let areaFormacaoOption of areaFormacaosSharedCollection">
-              {{ areaFormacaoOption.nome }}
-            </option>
-          </select>
-        </div>
-        <div
-          *ngIf="
-            editForm.get(['areaFormacao'])!.invalid && (editForm.get(['areaFormacao'])!.dirty || editForm.get(['areaFormacao'])!.touched)
-          "
-        >
-          <small
-            class="form-text text-danger"
-            *ngIf="editForm.get(['areaFormacao'])?.errors?.required"
-            appTranslate="entity.validation.required"
-          >
-            O campo é obrigatório.
-          </small>
-        </div>
-      </div>
-
-      <div>
+      <!-- Action Buttons -->
+      <div class="form-actions">
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+          <i class="fas fa-times me-2"></i>
+          <span appTranslate="entity.action.cancel">Cancelar</span>
         </button>
 
         <button
@@ -119,7 +211,11 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+          <i class="fas fa-save me-2"></i>
+          <span appTranslate="entity.action.save">Salvar</span>
+          <span *ngIf="isSaving" class="spinner-border spinner-border-sm ms-2" role="status">
+            <span class="visually-hidden">Salvando...</span>
+          </span>
         </button>
       </div>
     </form>

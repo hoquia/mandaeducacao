@@ -1,251 +1,235 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="app-ocorrencia-heading"
-        data-cy="OcorrenciaCreateUpdateHeading"
-        appTranslate="longonkeloApp.ocorrencia.home.createOrEditLabel"
-      >
-        Criar ou editar Ocorrencia
+<div class="modern-form-container">
+  <div class="modern-form-wrapper">
+    <div class="modern-form-header">
+      <h2 class="modern-form-title">
+        <fa-icon [icon]="['fas', 'exclamation-triangle']" class="me-2"></fa-icon>
+        <span appTranslate="longonkeloApp.ocorrencia.home.createOrEditLabel"> Criar ou editar Ocorrencia </span>
       </h2>
+    </div>
 
-      <div>
-        <app-alert-error></app-alert-error>
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm" class="modern-form">
+      <app-alert-error></app-alert-error>
 
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
+      <!-- Hidden ID field -->
+      <input type="hidden" name="id" formControlName="id" *ngIf="editForm.controls.id.value !== null" />
 
-        <!-- <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.ocorrencia.uniqueOcorrencia" for="field_uniqueOcorrencia"
-            >Unique Ocorrencia</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="uniqueOcorrencia"
-            id="field_uniqueOcorrencia"
-            data-cy="uniqueOcorrencia"
-            formControlName="uniqueOcorrencia"
-          />
-          <div
-            *ngIf="
-              editForm.get('uniqueOcorrencia')!.invalid &&
-              (editForm.get('uniqueOcorrencia')!.dirty || editForm.get('uniqueOcorrencia')!.touched)
-            "
-          ></div>
-        </div> -->
+      <!-- Seção 1: Descrição da Ocorrência -->
+      <fieldset class="modern-form-section">
+        <legend class="modern-form-section-title">
+          <fa-icon [icon]="['fas', 'file-alt']" class="section-icon me-2"></fa-icon>
+          <span>Descrição da Ocorrência</span>
+        </legend>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.ocorrencia.descricao" for="field_descricao">Descricao</label>
-          <textarea class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao"></textarea>
-          <div *ngIf="editForm.get('descricao')!.invalid && (editForm.get('descricao')!.dirty || editForm.get('descricao')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('descricao')?.errors?.required"
-              appTranslate="entity.validation.required"
-            >
-              O campo é obrigatório.
-            </small>
-          </div>
-        </div>
-
-        <!-- <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.ocorrencia.evidencia" for="field_evidencia">Evidencia</label>
-          <div>
-            <div *ngIf="editForm.get('evidencia')!.value" class="form-text text-danger clearfix">
-              <a
-                class="pull-start"
-                (click)="openFile(editForm.get('evidencia')!.value!, editForm.get('evidenciaContentType')!.value!)"
-                appTranslate="entity.action.open"
-                >Abrir</a
-              ><br />
-              <span class="pull-start"
-                >{{ editForm.get('evidenciaContentType')!.value }}, {{ byteSize(editForm.get('evidencia')!.value!) }}</span
-              >
-              <button
-                type="button"
-                (click)="editForm.patchValue({ evidencia: undefined, evidenciaContentType: undefined })"
-                class="btn btn-secondary btn-xs pull-end"
-              >
-                <fa-icon icon="times"></fa-icon>
-              </button>
-            </div>
-            <input
-              type="file"
-              id="file_evidencia"
-              data-cy="evidencia"
-              (change)="setFileData($event, 'evidencia', false)"
-              appTranslate="entity.action.addblob"
-            />
-          </div>
-          <input type="hidden" class="form-control" name="evidencia" id="field_evidencia" data-cy="evidencia" formControlName="evidencia" />
-          <input
-            type="hidden"
-            class="form-control"
-            name="evidenciaContentType"
-            id="field_evidenciaContentType"
-            formControlName="evidenciaContentType"
-          />
-        </div> -->
-
-        <!-- <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.ocorrencia.hash" for="field_hash">Hash</label>
-          <input type="text" class="form-control" name="hash" id="field_hash" data-cy="hash" formControlName="hash" />
-        </div> -->
-
-        <!-- <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.ocorrencia.timestamp" for="field_timestamp">Timestamp</label>
-          <div class="d-flex">
-            <input
-              id="field_timestamp"
-              data-cy="timestamp"
-              type="datetime-local"
+        <div class="row">
+          <div class="col-12 mb-3">
+            <label class="form-label" for="field_descricao">
+              <fa-icon [icon]="['fas', 'align-left']" class="me-1"></fa-icon>
+              <span appTranslate="longonkeloApp.ocorrencia.descricao">Descrição</span>
+              <span class="text-danger">*</span>
+            </label>
+            <textarea
               class="form-control"
-              name="timestamp"
-              formControlName="timestamp"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
+              name="descricao"
+              id="field_descricao"
+              data-cy="descricao"
+              formControlName="descricao"
+              rows="4"
+              placeholder="Descreva detalhadamente a ocorrência..."
+              [class.is-invalid]="
+                editForm.get('descricao')!.invalid && (editForm.get('descricao')!.dirty || editForm.get('descricao')!.touched)
+              "
+            ></textarea>
+            <div *ngIf="editForm.get('descricao')!.invalid && (editForm.get('descricao')!.dirty || editForm.get('descricao')!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get('descricao')?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                O campo é obrigatório.
+              </small>
+            </div>
+            <small class="form-text text-muted"> Forneça uma descrição clara e detalhada da ocorrência </small>
           </div>
-          <div *ngIf="editForm.get('timestamp')!.invalid && (editForm.get('timestamp')!.dirty || editForm.get('timestamp')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('timestamp')?.errors?.required"
-              appTranslate="entity.validation.required"
+        </div>
+      </fieldset>
+
+      <!-- Seção 2: Pessoas Envolvidas -->
+      <fieldset class="modern-form-section">
+        <legend class="modern-form-section-title">
+          <fa-icon [icon]="['fas', 'users']" class="section-icon me-2"></fa-icon>
+          <span>Pessoas Envolvidas</span>
+        </legend>
+
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label class="form-label" for="field_docente">
+              <fa-icon [icon]="['fas', 'chalkboard-teacher']" class="me-1"></fa-icon>
+              <span appTranslate="longonkeloApp.ocorrencia.docente">Docente Responsável</span>
+              <span class="text-danger">*</span>
+            </label>
+            <select
+              class="form-control"
+              id="field_docente"
+              data-cy="docente"
+              name="docente"
+              formControlName="docente"
+              [compareWith]="compareDocente"
+              [class.is-invalid]="
+                editForm.get(['docente'])!.invalid && (editForm.get(['docente'])!.dirty || editForm.get(['docente'])!.touched)
+              "
             >
-              O campo é obrigatório.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('timestamp')?.errors?.datetimelocal"
-              appTranslate="entity.validation.datetimelocal"
-            >
-              Este campo é do tipo data/hora.
-            </small>
+              <option *ngIf="editForm.get(['docente'])!.value == null" [ngValue]="null" selected>Selecione um docente</option>
+              <option [ngValue]="docenteOption" *ngFor="let docenteOption of docentesSharedCollection">
+                {{ docenteOption.nome }}
+              </option>
+            </select>
+            <div *ngIf="editForm.get(['docente'])!.invalid && (editForm.get(['docente'])!.dirty || editForm.get(['docente'])!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get(['docente'])?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                O campo é obrigatório.
+              </small>
+            </div>
           </div>
-        </div> -->
 
-        <!-- <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.ocorrencia.utilizador" for="field_utilizador">Utilizador</label>
-          <select
-            class="form-control"
-            id="field_utilizador"
-            data-cy="utilizador"
-            name="utilizador"
-            formControlName="utilizador"
-            [compareWith]="compareUser"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
-          </select>
-        </div> -->
+          <div class="col-md-6 mb-3">
+            <label class="form-label" for="field_matricula">
+              <fa-icon [icon]="['fas', 'user-graduate']" class="me-1"></fa-icon>
+              <span appTranslate="longonkeloApp.ocorrencia.matricula">Estudante Envolvido</span>
+              <span class="text-danger">*</span>
+            </label>
+            <select
+              class="form-control"
+              id="field_matricula"
+              data-cy="matricula"
+              name="matricula"
+              formControlName="matricula"
+              [compareWith]="compareMatricula"
+              [class.is-invalid]="
+                editForm.get(['matricula'])!.invalid && (editForm.get(['matricula'])!.dirty || editForm.get(['matricula'])!.touched)
+              "
+            >
+              <option *ngIf="editForm.get(['matricula'])!.value == null" [ngValue]="null" selected>Selecione um estudante</option>
+              <option [ngValue]="matriculaOption" *ngFor="let matriculaOption of matriculasSharedCollection">
+                {{ matriculaOption.numeroMatricula }}
+              </option>
+            </select>
+            <div
+              *ngIf="editForm.get(['matricula'])!.invalid && (editForm.get(['matricula'])!.dirty || editForm.get(['matricula'])!.touched)"
+            >
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get(['matricula'])?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                O campo é obrigatório.
+              </small>
+            </div>
+          </div>
+        </div>
+      </fieldset>
 
-        <!-- <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.ocorrencia.referencia" for="field_referencia">Referencia</label>
-          <select
-            class="form-control"
-            id="field_referencia"
-            data-cy="referencia"
-            name="referencia"
-            formControlName="referencia"
-            [compareWith]="compareOcorrencia"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="ocorrenciaOption" *ngFor="let ocorrenciaOption of ocorrenciasSharedCollection">
-              {{ ocorrenciaOption.id }}
-            </option>
-          </select>
-        </div> -->
+      <!-- Seção 3: Contexto e Classificação -->
+      <fieldset class="modern-form-section">
+        <legend class="modern-form-section-title">
+          <fa-icon [icon]="['fas', 'tags']" class="section-icon me-2"></fa-icon>
+          <span>Contexto e Classificação</span>
+        </legend>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.ocorrencia.docente" for="field_docente">Docente</label>
-          <select
-            class="form-control"
-            id="field_docente"
-            data-cy="docente"
-            name="docente"
-            formControlName="docente"
-            [compareWith]="compareDocente"
-          >
-            <option *ngIf="editForm.get(['docente'])!.value == null" [ngValue]="null" selected></option>
-            <option [ngValue]="docenteOption" *ngFor="let docenteOption of docentesSharedCollection">{{ docenteOption.nome }}</option>
-          </select>
-        </div>
-        <div *ngIf="editForm.get(['docente'])!.invalid && (editForm.get(['docente'])!.dirty || editForm.get(['docente'])!.touched)">
-          <small
-            class="form-text text-danger"
-            *ngIf="editForm.get(['docente'])?.errors?.required"
-            appTranslate="entity.validation.required"
-          >
-            O campo é obrigatório.
-          </small>
-        </div>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label class="form-label" for="field_estado">
+              <fa-icon [icon]="['fas', 'flag']" class="me-1"></fa-icon>
+              <span appTranslate="longonkeloApp.ocorrencia.estado">Categoria da Ocorrência</span>
+              <span class="text-danger">*</span>
+            </label>
+            <select
+              class="form-control"
+              id="field_estado"
+              data-cy="estado"
+              name="estado"
+              formControlName="estado"
+              [compareWith]="compareCategoriaOcorrencia"
+              [class.is-invalid]="
+                editForm.get(['estado'])!.invalid && (editForm.get(['estado'])!.dirty || editForm.get(['estado'])!.touched)
+              "
+            >
+              <option *ngIf="editForm.get(['estado'])!.value == null" [ngValue]="null" selected>Selecione uma categoria</option>
+              <option [ngValue]="categoriaOcorrenciaOption" *ngFor="let categoriaOcorrenciaOption of categoriaOcorrenciasSharedCollection">
+                {{ categoriaOcorrenciaOption.descricao }}
+              </option>
+            </select>
+            <div *ngIf="editForm.get(['estado'])!.invalid && (editForm.get(['estado'])!.dirty || editForm.get(['estado'])!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get(['estado'])?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                O campo é obrigatório.
+              </small>
+            </div>
+          </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.ocorrencia.matricula" for="field_matricula">Matricula</label>
-          <select
-            class="form-control"
-            id="field_matricula"
-            data-cy="matricula"
-            name="matricula"
-            formControlName="matricula"
-            [compareWith]="compareMatricula"
-          >
-            <option *ngIf="editForm.get(['matricula'])!.value == null" [ngValue]="null" selected></option>
-            <option [ngValue]="matriculaOption" *ngFor="let matriculaOption of matriculasSharedCollection">
-              {{ matriculaOption.numeroMatricula }}
-            </option>
-          </select>
-        </div>
-        <div *ngIf="editForm.get(['matricula'])!.invalid && (editForm.get(['matricula'])!.dirty || editForm.get(['matricula'])!.touched)">
-          <small
-            class="form-text text-danger"
-            *ngIf="editForm.get(['matricula'])?.errors?.required"
-            appTranslate="entity.validation.required"
-          >
-            O campo é obrigatório.
-          </small>
-        </div>
+          <div class="col-md-4 mb-3">
+            <label class="form-label" for="field_licao">
+              <fa-icon [icon]="['fas', 'book-open']" class="me-1"></fa-icon>
+              <span appTranslate="longonkeloApp.ocorrencia.licao">Lição Relacionada</span>
+              <span class="text-danger">*</span>
+            </label>
+            <select
+              class="form-control"
+              id="field_licao"
+              data-cy="licao"
+              name="licao"
+              formControlName="licao"
+              [compareWith]="compareLicao"
+              [class.is-invalid]="editForm.get(['licao'])!.invalid && (editForm.get(['licao'])!.dirty || editForm.get(['licao'])!.touched)"
+            >
+              <option *ngIf="editForm.get(['licao'])!.value == null" [ngValue]="null" selected>Selecione uma lição</option>
+              <option [ngValue]="licaoOption" *ngFor="let licaoOption of licaosSharedCollection">Lição {{ licaoOption.numero }}</option>
+            </select>
+            <div *ngIf="editForm.get(['licao'])!.invalid && (editForm.get(['licao'])!.dirty || editForm.get(['licao'])!.touched)">
+              <small
+                class="form-text text-danger"
+                *ngIf="editForm.get(['licao'])?.errors?.required"
+                appTranslate="entity.validation.required"
+              >
+                O campo é obrigatório.
+              </small>
+            </div>
+          </div>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.ocorrencia.estado" for="field_estado">Estado</label>
-          <select
-            class="form-control"
-            id="field_estado"
-            data-cy="estado"
-            name="estado"
-            formControlName="estado"
-            [compareWith]="compareCategoriaOcorrencia"
-          >
-            <option *ngIf="editForm.get(['estado'])!.value == null" [ngValue]="null" selected></option>
-            <option [ngValue]="categoriaOcorrenciaOption" *ngFor="let categoriaOcorrenciaOption of categoriaOcorrenciasSharedCollection">
-              {{ categoriaOcorrenciaOption.descricao }}
-            </option>
-          </select>
+          <div class="col-md-4 mb-3">
+            <div class="severity-indicator">
+              <label class="form-label">
+                <fa-icon [icon]="['fas', 'thermometer-half']" class="me-1"></fa-icon>
+                Nível de Gravidade
+              </label>
+              <div class="severity-levels">
+                <div class="severity-level low">
+                  <div class="severity-dot"></div>
+                  <span>Baixo</span>
+                </div>
+                <div class="severity-level medium">
+                  <div class="severity-dot"></div>
+                  <span>Médio</span>
+                </div>
+                <div class="severity-level high">
+                  <div class="severity-dot"></div>
+                  <span>Alto</span>
+                </div>
+              </div>
+              <small class="form-text text-muted"> Classificação visual baseada na categoria selecionada </small>
+            </div>
+          </div>
         </div>
-        <div *ngIf="editForm.get(['estado'])!.invalid && (editForm.get(['estado'])!.dirty || editForm.get(['estado'])!.touched)">
-          <small class="form-text text-danger" *ngIf="editForm.get(['estado'])?.errors?.required" appTranslate="entity.validation.required">
-            O campo é obrigatório.
-          </small>
-        </div>
+      </fieldset>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.ocorrencia.licao" for="field_licao">Licao</label>
-          <select class="form-control" id="field_licao" data-cy="licao" name="licao" formControlName="licao" [compareWith]="compareLicao">
-            <option *ngIf="editForm.get(['licao'])!.value == null" [ngValue]="null" selected></option>
-            <option [ngValue]="licaoOption" *ngFor="let licaoOption of licaosSharedCollection">{{ licaoOption.numero }}</option>
-          </select>
-        </div>
-        <div *ngIf="editForm.get(['licao'])!.invalid && (editForm.get(['licao'])!.dirty || editForm.get(['licao'])!.touched)">
-          <small class="form-text text-danger" *ngIf="editForm.get(['licao'])?.errors?.required" appTranslate="entity.validation.required">
-            O campo é obrigatório.
-          </small>
-        </div>
-      </div>
-
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+      <!-- Botões de Ação -->
+      <div class="modern-form-actions">
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary me-2" (click)="previousState()">
           <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
         </button>
 

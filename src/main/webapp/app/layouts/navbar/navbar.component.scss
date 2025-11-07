@@ -7,19 +7,40 @@ Navbar
 
 .navbar-version {
   font-size: 0.65em;
-  color: $navbar-dark-color;
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .profile-image {
   height: 1.75em;
   width: 1.75em;
+  border-radius: 50%;
+  border: 2px solid #ffd700;
+  transition: all 0.3s ease;
+}
+
+.profile-image:hover {
+  transform: scale(1.1);
+  border-color: #ffffff;
 }
 
 .navbar {
-  padding: 0.2rem 1rem;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #0a0f5b 0%, #1e90ff 100%) !important;
+  box-shadow: 0 4px 20px rgba(10, 15, 91, 0.15);
+  backdrop-filter: blur(10px);
 
   a.nav-link {
-    font-weight: 400;
+    font-weight: 500;
+    color: #ffffff !important;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+  }
+
+  a.nav-link:hover {
+    color: #ffd700 !important;
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
   }
 }
 
@@ -33,4 +54,12 @@ Logo styles
   vertical-align: middle;
   background: url('../../../content/images/Longokelo.png') no-repeat center center;
   background-size: contain;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.logo-img:hover {
+  transform: scale(1.05) rotate(5deg);
+  background-color: rgba(255, 215, 0, 0.1);
 }

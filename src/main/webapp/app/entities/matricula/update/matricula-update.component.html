@@ -1,284 +1,359 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2 id="app-matricula-heading" data-cy="MatriculaCreateUpdateHeading" appTranslate="longonkeloApp.matricula.home.createOrEditLabel">
-        Criar ou editar Matricula
+<div class="modern-form-container">
+  <div class="modern-form-wrapper">
+    <div class="modern-form-header">
+      <h2 class="modern-form-title">
+        <fa-icon icon="user-graduate" class="me-2 text-primary"></fa-icon>
+        <span appTranslate="longonkeloApp.matricula.home.createOrEditLabel">Criar ou editar Matrícula</span>
       </h2>
+    </div>
 
-      <div>
-        <app-alert-error></app-alert-error>
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm" class="modern-form">
+      <app-alert-error></app-alert-error>
 
-        <div class="mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+      <!-- ID Field (Only for Edit Mode) -->
+      <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+        <div class="col-12">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">
+            <fa-icon icon="key" class="me-2 text-secondary"></fa-icon>ID
+          </label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
         </div>
-
-        <!-- <div class=" mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.matricula.numeroMatricula" for="field_numeroMatricula"
-            >Numero Matricula</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            name="numeroMatricula"
-            id="field_numeroMatricula"
-            data-cy="numeroMatricula"
-            formControlName="numeroMatricula"
-          />
-          <div
-            *ngIf="
-              editForm.get('numeroMatricula')!.invalid &&
-              (editForm.get('numeroMatricula')!.dirty || editForm.get('numeroMatricula')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('numeroMatricula')?.errors?.required"
-              appTranslate="entity.validation.required"
-            >
-              O campo é obrigatório.
-            </small>
-          </div>
-        </div> -->
-
-        <div class="mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.matricula.referencia" for="field_referencia">Referencia</label>
-          <ng-select
-            id="field_referencia"
-            data-cy="referencia"
-            name="referencia"
-            formControlName="referencia"
-            [compareWith]="compareMatricula"
-          >
-            <ng-option [value]="null"></ng-option>
-            <ng-option [value]="matriculaOption" *ngFor="let matriculaOption of matriculasSharedCollection">{{
-              matriculaOption.id
-            }}</ng-option>
-          </ng-select>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.matricula.responsavelFinanceiro" for="field_responsavelFinanceiro"
-            >Responsavel Financeiro</label
-          >
-          <ng-select
-            id="field_responsavelFinanceiro"
-            data-cy="responsavelFinanceiro"
-            name="responsavelFinanceiro"
-            formControlName="responsavelFinanceiro"
-            [compareWith]="compareEncarregadoEducacao"
-          >
-            <ng-option [value]="null"></ng-option>
-            <ng-option [value]="encarregadoEducacaoOption" *ngFor="let encarregadoEducacaoOption of encarregadoEducacaosSharedCollection">
-              {{ encarregadoEducacaoOption.nome }}
-            </ng-option>
-          </ng-select>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.matricula.discente" for="field_discente">Discente</label>
-          <ng-select id="field_discente" data-cy="discente" name="discente" formControlName="discente" [compareWith]="compareDiscente">
-            <ng-option *ngIf="editForm.get(['discente'])!.value == null" [value]="null" selected></ng-option>
-            <ng-option [value]="discenteOption" *ngFor="let discenteOption of discentesSharedCollection">{{
-              discenteOption.nome
-            }}</ng-option>
-          </ng-select>
-          <div *ngIf="editForm.get(['discente'])!.invalid && (editForm.get(['discente'])!.dirty || editForm.get(['discente'])!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get(['discente'])?.errors?.required"
-              appTranslate="entity.validation.required"
-            >
-              O campo é obrigatório.
-            </small>
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.matricula.turma" for="field_turma">Turma</label>
-          <ng-select id="field_turma" data-cy="turma" name="turma" formControlName="turma" [compareWith]="compareTurma">
-            <ng-option *ngIf="editForm.get(['turma'])!.value == null" [value]="null" selected></ng-option>
-            <ng-option [value]="turmaOption" *ngFor="let turmaOption of turmasSharedCollection">{{ turmaOption.descricao }}</ng-option>
-          </ng-select>
-          <div *ngIf="editForm.get(['turma'])!.invalid && (editForm.get(['turma'])!.dirty || editForm.get(['turma'])!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get(['turma'])?.errors?.required"
-              appTranslate="entity.validation.required"
-            >
-              O campo é obrigatório.
-            </small>
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.matricula.estado" for="field_estado">Estado</label>
-          <select class="form-control" name="estado" formControlName="estado" id="field_estado" data-cy="estado">
-            <option [ngValue]="null">{{ 'longonkeloApp.EstadoAcademico.null' | translate }}</option>
-            <option *ngFor="let estadoAcademico of estadoAcademicoValues" [value]="estadoAcademico">
-              {{ 'longonkeloApp.EstadoAcademico.' + estadoAcademico | translate }}
-            </option>
-          </select>
-          <div *ngIf="editForm.get('estado')!.invalid && (editForm.get('estado')!.dirty || editForm.get('estado')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('estado')?.errors?.required" appTranslate="entity.validation.required">
-              O campo é obrigatório.
-            </small>
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label appTranslate="longonkeloApp.matricula.categoriasMatriculas" for="field_categoriasMatriculas">Categorias Matriculas</label>
-          <ng-select
-            id="field_categoriasMatriculas"
-            data-cy="categoriasMatriculas"
-            [multiple]="true"
-            name="categoriasMatriculas"
-            formControlName="categoriasMatriculas"
-            [compareWith]="comparePlanoDesconto"
-          >
-            <ng-option [value]="planoDescontoOption" *ngFor="let planoDescontoOption of planoDescontosSharedCollection">
-              {{ planoDescontoOption.nome }}
-            </ng-option>
-          </ng-select>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.matricula.numeroChamada" for="field_numeroChamada">Numero Chamada</label>
-          <input
-            type="number"
-            class="form-control"
-            name="numeroChamada"
-            id="field_numeroChamada"
-            data-cy="numeroChamada"
-            formControlName="numeroChamada"
-          />
-          <div
-            *ngIf="
-              editForm.get('numeroChamada')!.invalid && (editForm.get('numeroChamada')!.dirty || editForm.get('numeroChamada')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('numeroChamada')?.errors?.min"
-              appTranslate="entity.validation.min"
-              [translateValues]="{ min: 0 }"
-            >
-              Este campo deve ser maior que 0.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('numeroChamada')?.errors?.number"
-              appTranslate="entity.validation.number"
-            >
-              Este campo é do tipo número.
-            </small>
-          </div>
-        </div>
-        <!-- <div class=" mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.matricula.timestamp" for="field_timestamp">Timestamp</label>
-          <div class="d-flex">
-            <input
-              id="field_timestamp"
-              data-cy="timestamp"
-              type="datetime-local"
-              class="form-control"
-              name="timestamp"
-              formControlName="timestamp"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-        </div> -->
-
-        <div class="mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.matricula.termosCompromissos" for="field_termosCompromissos"
-            >Termos Compromissos</label
-          >
-          <div>
-            <div *ngIf="editForm.get('termosCompromissos')!.value" class="form-text text-danger clearfix">
-              <a
-                class="pull-start"
-                (click)="openFile(editForm.get('termosCompromissos')!.value!, editForm.get('termosCompromissosContentType')!.value!)"
-                appTranslate="entity.action.open"
-                >Abrir</a
-              ><br />
-              <span class="pull-start"
-                >{{ editForm.get('termosCompromissosContentType')!.value }},
-                {{ byteSize(editForm.get('termosCompromissos')!.value!) }}</span
-              >
-              <button
-                type="button"
-                (click)="editForm.patchValue({ termosCompromissos: undefined, termosCompromissosContentType: undefined })"
-                class="btn btn-secondary btn-xs pull-end"
-              >
-                <fa-icon icon="times"></fa-icon>
-              </button>
-            </div>
-            <input
-              type="file"
-              id="file_termosCompromissos"
-              data-cy="termosCompromissos"
-              (change)="setFileData($event, 'termosCompromissos', false)"
-              appTranslate="entity.action.addblob"
-            />
-          </div>
-          <input
-            type="hidden"
-            class="form-control"
-            name="termosCompromissos"
-            id="field_termosCompromissos"
-            data-cy="termosCompromissos"
-            formControlName="termosCompromissos"
-          />
-          <input
-            type="hidden"
-            class="form-control"
-            name="termosCompromissosContentType"
-            id="field_termosCompromissosContentType"
-            formControlName="termosCompromissosContentType"
-          />
-        </div>
-
-        <div class="mb-3">
-          <input
-            type="checkbox"
-            class="form-check-input"
-            name="isAceiteTermosCompromisso"
-            id="field_isAceiteTermosCompromisso"
-            data-cy="isAceiteTermosCompromisso"
-            formControlName="isAceiteTermosCompromisso"
-          />
-          <span
-            class="form-check-label"
-            appTranslate="longonkeloApp.matricula.isAceiteTermosCompromisso"
-            for="field_isAceiteTermosCompromisso"
-            >Is Aceite Termos Compromisso</span
-          >
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.matricula.descricao" for="field_descricao">Descricao</label>
-          <textarea class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao"></textarea>
-        </div>
-
-        <!-- <div class=" mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.matricula.utilizador" for="field_utilizador">Utilizador</label>
-          <select
-            class="form-control"
-            id="field_utilizador"
-            data-cy="utilizador"
-            name="utilizador"
-            formControlName="utilizador"
-            [compareWith]="compareUser"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
-          </select>
-        </div> -->
       </div>
 
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+      <!-- Section 1: Student Information -->
+      <fieldset class="modern-form-section">
+        <legend class="modern-form-section-title">
+          <fa-icon icon="user" class="section-icon"></fa-icon>
+          Dados do Discente
+        </legend>
+        <div class="modern-form-section-content">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="form-label" appTranslate="longonkeloApp.matricula.discente" for="field_discente">
+                <fa-icon icon="user-graduate" class="me-2 text-primary"></fa-icon>Discente
+              </label>
+              <ng-select
+                id="field_discente"
+                data-cy="discente"
+                name="discente"
+                formControlName="discente"
+                [compareWith]="compareDiscente"
+                placeholder="Selecionar discente..."
+              >
+                <ng-option *ngIf="editForm.get(['discente'])!.value == null" [value]="null" selected></ng-option>
+                <ng-option [value]="discenteOption" *ngFor="let discenteOption of discentesSharedCollection">{{
+                  discenteOption.nome
+                }}</ng-option>
+              </ng-select>
+              <div
+                *ngIf="editForm.get(['discente'])!.invalid && (editForm.get(['discente'])!.dirty || editForm.get(['discente'])!.touched)"
+              >
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get(['discente'])?.errors?.required"
+                  appTranslate="entity.validation.required"
+                >
+                  O campo é obrigatório.
+                </small>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" appTranslate="longonkeloApp.matricula.numeroChamada" for="field_numeroChamada">
+                <fa-icon icon="list-ol" class="me-2 text-primary"></fa-icon>Número de Chamada
+              </label>
+              <input
+                type="number"
+                class="form-control"
+                name="numeroChamada"
+                id="field_numeroChamada"
+                data-cy="numeroChamada"
+                formControlName="numeroChamada"
+                placeholder="Ex: 1, 2, 3..."
+              />
+              <div
+                *ngIf="
+                  editForm.get('numeroChamada')!.invalid && (editForm.get('numeroChamada')!.dirty || editForm.get('numeroChamada')!.touched)
+                "
+              >
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('numeroChamada')?.errors?.min"
+                  appTranslate="entity.validation.min"
+                  [translateValues]="{ min: 0 }"
+                >
+                  Este campo deve ser maior que 0.
+                </small>
+                <small
+                  class="form-text text-danger"
+                  [hidden]="!editForm.get('numeroChamada')?.errors?.number"
+                  appTranslate="entity.validation.number"
+                >
+                  Este campo é do tipo número.
+                </small>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <label class="form-label" appTranslate="longonkeloApp.matricula.responsavelFinanceiro" for="field_responsavelFinanceiro">
+                <fa-icon icon="credit-card" class="me-2 text-primary"></fa-icon>Responsável Financeiro
+              </label>
+              <ng-select
+                id="field_responsavelFinanceiro"
+                data-cy="responsavelFinanceiro"
+                name="responsavelFinanceiro"
+                formControlName="responsavelFinanceiro"
+                [compareWith]="compareEncarregadoEducacao"
+                placeholder="Selecionar responsável financeiro..."
+              >
+                <ng-option [value]="null"></ng-option>
+                <ng-option
+                  [value]="encarregadoEducacaoOption"
+                  *ngFor="let encarregadoEducacaoOption of encarregadoEducacaosSharedCollection"
+                >
+                  {{ encarregadoEducacaoOption.nome }}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Section 2: Academic Assignment -->
+      <fieldset class="modern-form-section">
+        <legend class="modern-form-section-title">
+          <fa-icon icon="graduation-cap" class="section-icon"></fa-icon>
+          Atribuição Acadêmica
+        </legend>
+        <div class="modern-form-section-content">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="form-label" appTranslate="longonkeloApp.matricula.turma" for="field_turma">
+                <fa-icon icon="users" class="me-2 text-success"></fa-icon>Turma
+              </label>
+              <ng-select
+                id="field_turma"
+                data-cy="turma"
+                name="turma"
+                formControlName="turma"
+                [compareWith]="compareTurma"
+                placeholder="Selecionar turma..."
+              >
+                <ng-option *ngIf="editForm.get(['turma'])!.value == null" [value]="null" selected></ng-option>
+                <ng-option [value]="turmaOption" *ngFor="let turmaOption of turmasSharedCollection">{{ turmaOption.descricao }}</ng-option>
+              </ng-select>
+              <div *ngIf="editForm.get(['turma'])!.invalid && (editForm.get(['turma'])!.dirty || editForm.get(['turma'])!.touched)">
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get(['turma'])?.errors?.required"
+                  appTranslate="entity.validation.required"
+                >
+                  O campo é obrigatório.
+                </small>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label" appTranslate="longonkeloApp.matricula.estado" for="field_estado">
+                <fa-icon icon="flag" class="me-2 text-success"></fa-icon>Estado Acadêmico
+              </label>
+              <select class="form-select" name="estado" formControlName="estado" id="field_estado" data-cy="estado">
+                <option [ngValue]="null">{{ 'longonkeloApp.EstadoAcademico.null' | translate }}</option>
+                <option *ngFor="let estadoAcademico of estadoAcademicoValues" [value]="estadoAcademico">
+                  {{ 'longonkeloApp.EstadoAcademico.' + estadoAcademico | translate }}
+                </option>
+              </select>
+              <div *ngIf="editForm.get('estado')!.invalid && (editForm.get('estado')!.dirty || editForm.get('estado')!.touched)">
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('estado')?.errors?.required"
+                  appTranslate="entity.validation.required"
+                >
+                  O campo é obrigatório.
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Section 3: Financial Configuration -->
+      <fieldset class="modern-form-section">
+        <legend class="modern-form-section-title">
+          <fa-icon icon="tags" class="section-icon"></fa-icon>
+          Configuração Financeira
+        </legend>
+        <div class="modern-form-section-content">
+          <div class="row">
+            <div class="col-12">
+              <label appTranslate="longonkeloApp.matricula.categoriasMatriculas" for="field_categoriasMatriculas">
+                <fa-icon icon="percent" class="me-2 text-warning"></fa-icon>Categorias de Desconto
+              </label>
+              <ng-select
+                id="field_categoriasMatriculas"
+                data-cy="categoriasMatriculas"
+                [multiple]="true"
+                name="categoriasMatriculas"
+                formControlName="categoriasMatriculas"
+                [compareWith]="comparePlanoDesconto"
+                placeholder="Selecionar planos de desconto..."
+              >
+                <ng-option [value]="planoDescontoOption" *ngFor="let planoDescontoOption of planoDescontosSharedCollection">
+                  {{ planoDescontoOption.nome }}
+                </ng-option>
+              </ng-select>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Section 4: Documentation and Terms -->
+      <fieldset class="modern-form-section">
+        <legend class="modern-form-section-title">
+          <fa-icon icon="file-contract" class="section-icon"></fa-icon>
+          Documentação e Termos
+        </legend>
+        <div class="modern-form-section-content">
+          <div class="row">
+            <div class="col-12">
+              <label class="form-label" appTranslate="longonkeloApp.matricula.termosCompromissos" for="field_termosCompromissos">
+                <fa-icon icon="file-pdf" class="me-2 text-info"></fa-icon>Termos de Compromisso
+              </label>
+              <div class="file-upload-container">
+                <div class="file-preview" *ngIf="editForm.get('termosCompromissos')!.value">
+                  <div class="file-info">
+                    <a
+                      class="file-link"
+                      (click)="openFile(editForm.get('termosCompromissos')!.value!, editForm.get('termosCompromissosContentType')!.value!)"
+                      appTranslate="entity.action.open"
+                    >
+                      <fa-icon icon="external-link-alt" class="me-2"></fa-icon>Abrir documento
+                    </a>
+                    <span class="file-details">
+                      {{ editForm.get('termosCompromissosContentType')!.value }},
+                      {{ byteSize(editForm.get('termosCompromissos')!.value!) }}
+                    </span>
+                    <button
+                      type="button"
+                      (click)="editForm.patchValue({ termosCompromissos: undefined, termosCompromissosContentType: undefined })"
+                      class="btn btn-outline-danger btn-sm"
+                      title="Remover arquivo"
+                    >
+                      <fa-icon icon="times"></fa-icon>
+                    </button>
+                  </div>
+                </div>
+                <div class="file-input-wrapper">
+                  <input
+                    type="file"
+                    id="file_termosCompromissos"
+                    data-cy="termosCompromissos"
+                    (change)="setFileData($event, 'termosCompromissos', false)"
+                    class="file-input"
+                  />
+                  <label for="file_termosCompromissos" class="file-input-label">
+                    <fa-icon icon="upload" class="me-2"></fa-icon>
+                    <span appTranslate="entity.action.addblob">Escolher arquivo</span>
+                  </label>
+                </div>
+              </div>
+              <input
+                type="hidden"
+                class="form-control"
+                name="termosCompromissos"
+                id="field_termosCompromissos"
+                data-cy="termosCompromissos"
+                formControlName="termosCompromissos"
+              />
+              <input
+                type="hidden"
+                class="form-control"
+                name="termosCompromissosContentType"
+                id="field_termosCompromissosContentType"
+                formControlName="termosCompromissosContentType"
+              />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="form-check form-switch">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  name="isAceiteTermosCompromisso"
+                  id="field_isAceiteTermosCompromisso"
+                  data-cy="isAceiteTermosCompromisso"
+                  formControlName="isAceiteTermosCompromisso"
+                />
+                <label
+                  class="form-check-label"
+                  appTranslate="longonkeloApp.matricula.isAceiteTermosCompromisso"
+                  for="field_isAceiteTermosCompromisso"
+                >
+                  <fa-icon icon="check-circle" class="me-2 text-success"></fa-icon>Aceite dos Termos de Compromisso
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Section 5: Additional Information -->
+      <fieldset class="modern-form-section">
+        <legend class="modern-form-section-title">
+          <fa-icon icon="sticky-note" class="section-icon"></fa-icon>
+          Informações Adicionais
+        </legend>
+        <div class="modern-form-section-content">
+          <div class="row">
+            <div class="col-md-6">
+              <label class="form-label" appTranslate="longonkeloApp.matricula.referencia" for="field_referencia">
+                <fa-icon icon="link" class="me-2 text-secondary"></fa-icon>Referência
+              </label>
+              <ng-select
+                id="field_referencia"
+                data-cy="referencia"
+                name="referencia"
+                formControlName="referencia"
+                [compareWith]="compareMatricula"
+                placeholder="Selecionar referência..."
+              >
+                <ng-option [value]="null"></ng-option>
+                <ng-option [value]="matriculaOption" *ngFor="let matriculaOption of matriculasSharedCollection">{{
+                  matriculaOption.id
+                }}</ng-option>
+              </ng-select>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <label class="form-label" appTranslate="longonkeloApp.matricula.descricao" for="field_descricao">
+                <fa-icon icon="comment" class="me-2 text-secondary"></fa-icon>Observações
+              </label>
+              <textarea
+                class="form-control"
+                name="descricao"
+                id="field_descricao"
+                data-cy="descricao"
+                formControlName="descricao"
+                rows="3"
+                placeholder="Digite observações sobre a matrícula..."
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Form Actions -->
+      <div class="modern-form-actions">
+        <button
+          type="button"
+          id="cancel-save"
+          data-cy="entityCreateCancelButton"
+          class="btn btn-outline-secondary"
+          (click)="previousState()"
+        >
+          <fa-icon icon="ban" class="me-2"></fa-icon>
+          <span appTranslate="entity.action.cancel">Cancelar</span>
         </button>
 
         <button
@@ -288,7 +363,8 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+          <fa-icon icon="save" class="me-2"></fa-icon>
+          <span appTranslate="entity.action.save">Guardar</span>
         </button>
       </div>
     </form>

@@ -1,0 +1,336 @@
+@import '../../../../content/scss/modern-forms';
+@import '../../../../content/scss/animations';
+
+.modern-form-container {
+  @include modern-form-base;
+
+  .modern-form-header {
+    .modern-form-title {
+      color: #0a0f5b;
+      background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+      border-left: 4px solid #ff9800;
+      padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+      border-radius: 8px;
+      font-weight: 600;
+
+      .fa-icon {
+        color: #ff9800;
+      }
+    }
+  }
+
+  .modern-form {
+    .modern-form-section {
+      @include modern-form-section-base;
+      margin-bottom: 2rem;
+
+      &:nth-child(3) {
+        // Dados da Transferência Section
+        .modern-form-section-title {
+          background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+          color: #0a0f5b;
+          border-left: 4px solid #1e90ff;
+
+          .section-icon {
+            color: #1e90ff;
+          }
+        }
+      }
+
+      &:nth-child(4) {
+        // Turmas da Transferência Section
+        .modern-form-section-title {
+          background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+          color: #0a0f5b;
+          border-left: 4px solid #ff9800;
+
+          .section-icon {
+            color: #ff9800;
+          }
+        }
+      }
+
+      &:nth-child(5) {
+        // Informações Complementares Section
+        .modern-form-section-title {
+          background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+          color: #0a0f5b;
+          border-left: 4px solid #9c27b0;
+
+          .section-icon {
+            color: #9c27b0;
+          }
+        }
+      }
+    }
+
+    // Form Controls Styling
+    .form-control {
+      @include modern-form-control;
+
+      &:focus {
+        border-color: #ff9800;
+        box-shadow: 0 0 0 0.2rem rgba(255, 152, 0, 0.25);
+      }
+
+      &.is-invalid {
+        border-color: #dc3545;
+        background-image: none;
+
+        &:focus {
+          box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+        }
+      }
+    }
+
+    // Labels with Icons
+    .form-label {
+      @include modern-form-label;
+
+      .fa-icon {
+        color: #ff9800;
+        opacity: 0.8;
+        margin-right: 0.25rem;
+      }
+    }
+
+    // Transfer Flow Indicator
+    .transfer-flow-indicator {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+      border-radius: 12px;
+      border: 2px dashed #ff9800;
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 152, 0, 0.1), transparent);
+        animation: transferFlow 3s ease-in-out infinite;
+      }
+
+      .transfer-arrow {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        .arrow-icon {
+          font-size: 2rem;
+          color: #ff9800;
+          margin-bottom: 0.5rem;
+          animation: arrowPulse 2s ease-in-out infinite;
+        }
+
+        .arrow-text {
+          font-weight: 600;
+          color: #0a0f5b;
+          font-size: 0.9rem;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+        }
+      }
+    }
+
+    // Select Styling
+    select.form-control {
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 6 7 7 7-7'/%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 0.75rem center;
+      background-size: 16px 12px;
+      padding-right: 2.5rem;
+
+      option {
+        padding: 0.5rem;
+
+        &:first-child {
+          color: #6c757d;
+          font-style: italic;
+        }
+      }
+    }
+
+    // Datetime Input Styling
+    input[type='datetime-local'] {
+      position: relative;
+
+      &::-webkit-calendar-picker-indicator {
+        color: #ff9800;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+
+    // Validation Messages
+    .text-danger {
+      color: #dc3545 !important;
+      font-size: 0.875rem;
+      margin-top: 0.25rem;
+      display: block;
+    }
+
+    // Required Field Indicator
+    .text-danger {
+      font-weight: bold;
+
+      &::before {
+        content: ' ';
+      }
+    }
+
+    // Help Text
+    .form-text {
+      &.text-muted {
+        color: #6c757d !important;
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+        font-style: italic;
+      }
+    }
+
+    // Action Buttons
+    .modern-form-actions {
+      @include modern-form-actions;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 2px solid #e9ecef;
+
+      .btn {
+        padding: 0.75rem 2rem;
+        font-weight: 500;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+
+        &.btn-secondary {
+          background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+          border: none;
+          color: #ffffff;
+
+          &:hover {
+            background: linear-gradient(135deg, #5a6268 0%, #495057 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+          }
+        }
+
+        &.btn-primary {
+          background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+          border: none;
+          color: #ffffff;
+
+          &:hover:not(:disabled) {
+            background: linear-gradient(135deg, #f57c00 0%, #ef6c00 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+          }
+
+          &:disabled {
+            background: linear-gradient(135deg, #c0c0c0 0%, #a6a6a6 100%);
+            opacity: 0.7;
+            cursor: not-allowed;
+          }
+        }
+
+        .fa-icon {
+          margin-right: 0.5rem;
+        }
+      }
+    }
+  }
+}
+
+// Animations
+@keyframes transferFlow {
+  0% {
+    left: -100%;
+  }
+  50% {
+    left: 100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes arrowPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .modern-form-container {
+    .modern-form {
+      .modern-form-section {
+        .row {
+          .col-md-6 {
+            margin-bottom: 1rem;
+          }
+        }
+      }
+
+      .transfer-flow-indicator {
+        margin: 1.5rem 0;
+        padding: 1rem;
+
+        .transfer-arrow {
+          .arrow-icon {
+            font-size: 1.5rem;
+          }
+
+          .arrow-text {
+            font-size: 0.8rem;
+          }
+        }
+      }
+
+      .modern-form-actions {
+        .btn {
+          width: 100%;
+          margin-bottom: 0.5rem;
+
+          &:last-child {
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Animation for form load
+@keyframes formSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modern-form-container {
+  animation: formSlideIn 0.6s ease-out;
+}

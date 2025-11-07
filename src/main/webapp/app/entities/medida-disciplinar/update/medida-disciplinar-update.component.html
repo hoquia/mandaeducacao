@@ -1,96 +1,171 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="app-medida-disciplinar-heading"
-        data-cy="MedidaDisciplinarCreateUpdateHeading"
-        appTranslate="longonkeloApp.medidaDisciplinar.home.createOrEditLabel"
-      >
-        Criar ou editar Medida Disciplinar
-      </h2>
-
-      <div>
-        <app-alert-error></app-alert-error>
-
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.medidaDisciplinar.descricao" for="field_descricao">Descricao</label>
-          <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
-          <div *ngIf="editForm.get('descricao')!.invalid && (editForm.get('descricao')!.dirty || editForm.get('descricao')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('descricao')?.errors?.required"
-              appTranslate="entity.validation.required"
-            >
-              O campo é obrigatório.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.medidaDisciplinar.periodo" for="field_periodo">Periodo</label>
-          <select class="form-control" name="periodo" formControlName="periodo" id="field_periodo" data-cy="periodo">
-            <option [ngValue]="null">{{ 'longonkeloApp.UnidadeDuracao.null' | translate }}</option>
-            <option *ngFor="let unidadeDuracao of unidadeDuracaoValues" [value]="unidadeDuracao">
-              {{ 'longonkeloApp.UnidadeDuracao.' + unidadeDuracao | translate }}
-            </option>
-          </select>
-          <div *ngIf="editForm.get('periodo')!.invalid && (editForm.get('periodo')!.dirty || editForm.get('periodo')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('periodo')?.errors?.required"
-              appTranslate="entity.validation.required"
-            >
-              O campo é obrigatório.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.medidaDisciplinar.suspensao" for="field_suspensao">Suspensao</label>
-          <select class="form-control" name="suspensao" formControlName="suspensao" id="field_suspensao" data-cy="suspensao">
-            <option [ngValue]="null">{{ 'longonkeloApp.Suspensao.null' | translate }}</option>
-            <option *ngFor="let suspensao of suspensaoValues" [value]="suspensao">
-              {{ 'longonkeloApp.Suspensao.' + suspensao | translate }}
-            </option>
-          </select>
-          <div *ngIf="editForm.get('suspensao')!.invalid && (editForm.get('suspensao')!.dirty || editForm.get('suspensao')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('suspensao')?.errors?.required"
-              appTranslate="entity.validation.required"
-            >
-              O campo é obrigatório.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.medidaDisciplinar.tempo" for="field_tempo">Tempo</label>
-          <input type="number" class="form-control" name="tempo" id="field_tempo" data-cy="tempo" formControlName="tempo" />
-          <div *ngIf="editForm.get('tempo')!.invalid && (editForm.get('tempo')!.dirty || editForm.get('tempo')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('tempo')?.errors?.min"
-              appTranslate="entity.validation.min"
-              [translateValues]="{ min: 0 }"
-            >
-              Este campo deve ser maior que 0.
-            </small>
-            <small class="form-text text-danger" [hidden]="!editForm.get('tempo')?.errors?.number" appTranslate="entity.validation.number">
-              Este campo é do tipo número.
-            </small>
-          </div>
-        </div>
+<div class="modern-form-container">
+  <div class="modern-form-wrapper">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm" class="modern-form">
+      <!-- Form Header -->
+      <div class="form-header">
+        <h2
+          id="app-medida-disciplinar-heading"
+          data-cy="MedidaDisciplinarCreateUpdateHeading"
+          appTranslate="longonkeloApp.medidaDisciplinar.home.createOrEditLabel"
+        >
+          <i class="fas fa-gavel me-2"></i>
+          Criar ou editar Medida Disciplinar
+        </h2>
+        <p class="form-subtitle">Configure as informações da medida disciplinar de forma organizada</p>
       </div>
 
-      <div>
+      <app-alert-error></app-alert-error>
+
+      <!-- Hidden ID field -->
+      <input type="hidden" *ngIf="editForm.controls.id.value !== null" formControlName="id" />
+
+      <!-- Basic Information Section -->
+      <fieldset class="form-section">
+        <legend class="section-title">
+          <i class="fas fa-info-circle me-2"></i>
+          Informações Básicas
+        </legend>
+        <div class="row g-3">
+          <!-- Descrição - Campo principal -->
+          <div class="col-12">
+            <label class="form-label" for="field_descricao">
+              <i class="fas fa-edit me-2"></i>
+              <span appTranslate="longonkeloApp.medidaDisciplinar.descricao">Descrição</span>
+              <span class="required">*</span>
+            </label>
+            <textarea
+              class="form-control description-textarea"
+              name="descricao"
+              id="field_descricao"
+              placeholder="Descrição da medida disciplinar"
+              data-cy="descricao"
+              formControlName="descricao"
+              rows="3"
+              [class.is-invalid]="
+                editForm.get('descricao')!.invalid && (editForm.get('descricao')!.dirty || editForm.get('descricao')!.touched)
+              "
+            ></textarea>
+            <div
+              class="invalid-feedback"
+              *ngIf="editForm.get('descricao')!.invalid && (editForm.get('descricao')!.dirty || editForm.get('descricao')!.touched)"
+            >
+              <small *ngIf="editForm.get('descricao')?.errors?.required" appTranslate="entity.validation.required">
+                O campo é obrigatório.
+              </small>
+            </div>
+            <div class="form-text">Descreva detalhadamente a medida disciplinar aplicada</div>
+          </div>
+
+          <!-- Tipo de Suspensão -->
+          <div class="col-md-6">
+            <label class="form-label" for="field_suspensao">
+              <i class="fas fa-ban me-2"></i>
+              <span appTranslate="longonkeloApp.medidaDisciplinar.suspensao">Tipo de Suspensão</span>
+              <span class="required">*</span>
+            </label>
+            <select
+              class="form-select"
+              name="suspensao"
+              formControlName="suspensao"
+              id="field_suspensao"
+              data-cy="suspensao"
+              [class.is-invalid]="
+                editForm.get('suspensao')!.invalid && (editForm.get('suspensao')!.dirty || editForm.get('suspensao')!.touched)
+              "
+            >
+              <option [ngValue]="null">Selecione o tipo de suspensão...</option>
+              <option *ngFor="let suspensao of suspensaoValues" [value]="suspensao">
+                {{ 'longonkeloApp.Suspensao.' + suspensao | translate }}
+              </option>
+            </select>
+            <div
+              class="invalid-feedback"
+              *ngIf="editForm.get('suspensao')!.invalid && (editForm.get('suspensao')!.dirty || editForm.get('suspensao')!.touched)"
+            >
+              <small *ngIf="editForm.get('suspensao')?.errors?.required" appTranslate="entity.validation.required">
+                O campo é obrigatório.
+              </small>
+            </div>
+          </div>
+
+          <!-- Período -->
+          <div class="col-md-6">
+            <label class="form-label" for="field_periodo">
+              <i class="fas fa-calendar-alt me-2"></i>
+              <span appTranslate="longonkeloApp.medidaDisciplinar.periodo">Unidade de Período</span>
+              <span class="required">*</span>
+            </label>
+            <select
+              class="form-select"
+              name="periodo"
+              formControlName="periodo"
+              id="field_periodo"
+              data-cy="periodo"
+              [class.is-invalid]="editForm.get('periodo')!.invalid && (editForm.get('periodo')!.dirty || editForm.get('periodo')!.touched)"
+            >
+              <option [ngValue]="null">Selecione a unidade de tempo...</option>
+              <option *ngFor="let unidadeDuracao of unidadeDuracaoValues" [value]="unidadeDuracao">
+                {{ 'longonkeloApp.UnidadeDuracao.' + unidadeDuracao | translate }}
+              </option>
+            </select>
+            <div
+              class="invalid-feedback"
+              *ngIf="editForm.get('periodo')!.invalid && (editForm.get('periodo')!.dirty || editForm.get('periodo')!.touched)"
+            >
+              <small *ngIf="editForm.get('periodo')?.errors?.required" appTranslate="entity.validation.required">
+                O campo é obrigatório.
+              </small>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Duration Section -->
+      <fieldset class="form-section">
+        <legend class="section-title">
+          <i class="fas fa-clock me-2"></i>
+          Duração da Medida
+        </legend>
+        <div class="row g-3">
+          <div class="col-12">
+            <label class="form-label" for="field_tempo">
+              <i class="fas fa-hourglass-half me-2"></i>
+              <span appTranslate="longonkeloApp.medidaDisciplinar.tempo">Tempo de Duração</span>
+              <span class="required">*</span>
+            </label>
+            <input
+              type="number"
+              class="form-control"
+              name="tempo"
+              id="field_tempo"
+              placeholder="Duração em números"
+              data-cy="tempo"
+              formControlName="tempo"
+              min="0"
+              step="1"
+              [class.is-invalid]="editForm.get('tempo')!.invalid && (editForm.get('tempo')!.dirty || editForm.get('tempo')!.touched)"
+            />
+            <div
+              class="invalid-feedback"
+              *ngIf="editForm.get('tempo')!.invalid && (editForm.get('tempo')!.dirty || editForm.get('tempo')!.touched)"
+            >
+              <small *ngIf="editForm.get('tempo')?.errors?.min" appTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                Este campo deve ser maior que 0.
+              </small>
+              <small *ngIf="editForm.get('tempo')?.errors?.number" appTranslate="entity.validation.number">
+                Este campo é do tipo número.
+              </small>
+            </div>
+            <div class="form-text">Especifique a duração numérica da medida disciplinar</div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Action Buttons -->
+      <div class="form-actions">
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+          <i class="fas fa-times me-2"></i>
+          <span appTranslate="entity.action.cancel">Cancelar</span>
         </button>
 
         <button
@@ -100,7 +175,11 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+          <i class="fas fa-save me-2"></i>
+          <span appTranslate="entity.action.save">Salvar</span>
+          <span *ngIf="isSaving" class="spinner-border spinner-border-sm ms-2" role="status">
+            <span class="visually-hidden">Salvando...</span>
+          </span>
         </button>
       </div>
     </form>

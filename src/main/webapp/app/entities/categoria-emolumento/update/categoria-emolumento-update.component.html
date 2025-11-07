@@ -1,96 +1,198 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="app-categoria-emolumento-heading"
-        data-cy="CategoriaEmolumentoCreateUpdateHeading"
-        appTranslate="longonkeloApp.categoriaEmolumento.home.createOrEditLabel"
-      >
-        Criar ou editar Categoria Emolumento
+<div class="modern-form-container">
+  <div class="modern-form-wrapper">
+    <div class="modern-form-header">
+      <h2 class="modern-form-title">
+        <fa-icon icon="money-bill-wave" class="me-2 text-success"></fa-icon>
+        <span appTranslate="longonkeloApp.categoriaEmolumento.home.createOrEditLabel">Criar ou editar Categoria Emolumento</span>
       </h2>
+    </div>
 
-      <div>
-        <app-alert-error></app-alert-error>
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm" class="modern-form">
+      <app-alert-error></app-alert-error>
 
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
+      <!-- ID Field (Only for Edit Mode) -->
+      <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+        <div class="col-12">
+          <label class="form-label" appTranslate="global.field.id" for="field_id">
+            <fa-icon icon="key" class="me-2 text-secondary"></fa-icon>ID
+          </label>
           <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.categoriaEmolumento.nome" for="field_nome">Nome</label>
-          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
-          <div *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('nome')?.errors?.required" appTranslate="entity.validation.required">
-              O campo é obrigatório.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.categoriaEmolumento.isServico" for="field_isServico">Is Servico</label>
-          <input type="checkbox" class="form-check" name="isServico" id="field_isServico" data-cy="isServico" formControlName="isServico" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.categoriaEmolumento.cor" for="field_cor">Cor</label>
-          <input type="text" class="form-control" name="cor" id="field_cor" data-cy="cor" formControlName="cor" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.categoriaEmolumento.descricao" for="field_descricao">Descricao</label>
-          <textarea class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao"></textarea>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.categoriaEmolumento.isIsentoMulta" for="field_isIsentoMulta"
-            >Is Isento Multa</label
-          >
-          <input
-            type="checkbox"
-            class="form-check"
-            name="isIsentoMulta"
-            id="field_isIsentoMulta"
-            data-cy="isIsentoMulta"
-            formControlName="isIsentoMulta"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.categoriaEmolumento.isIsentoJuro" for="field_isIsentoJuro"
-            >Is Isento Juro</label
-          >
-          <input
-            type="checkbox"
-            class="form-check"
-            name="isIsentoJuro"
-            id="field_isIsentoJuro"
-            data-cy="isIsentoJuro"
-            formControlName="isIsentoJuro"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.categoriaEmolumento.planoMulta" for="field_planoMulta">Plano Multa</label>
-          <select
-            class="form-control"
-            id="field_planoMulta"
-            data-cy="planoMulta"
-            name="planoMulta"
-            formControlName="planoMulta"
-            [compareWith]="comparePlanoMulta"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="planoMultaOption" *ngFor="let planoMultaOption of planoMultasSharedCollection">
-              {{ planoMultaOption.descricao }}
-            </option>
-          </select>
         </div>
       </div>
 
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+      <!-- Section 1: Basic Information -->
+      <fieldset class="modern-form-section">
+        <legend class="modern-form-section-title">
+          <fa-icon icon="info-circle" class="section-icon"></fa-icon>
+          Informações Básicas
+        </legend>
+        <div class="modern-form-section-content">
+          <div class="row">
+            <div class="col-md-8">
+              <label class="form-label" appTranslate="longonkeloApp.categoriaEmolumento.nome" for="field_nome">
+                <fa-icon icon="tag" class="me-2 text-primary"></fa-icon>Nome da Categoria
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                name="nome"
+                id="field_nome"
+                data-cy="nome"
+                formControlName="nome"
+                placeholder="Ex: Propina, Matrícula, Exame..."
+              />
+              <div *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)">
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('nome')?.errors?.required"
+                  appTranslate="entity.validation.required"
+                >
+                  O campo é obrigatório.
+                </small>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label" appTranslate="longonkeloApp.categoriaEmolumento.cor" for="field_cor">
+                <fa-icon icon="palette" class="me-2 text-primary"></fa-icon>Cor de Identificação
+              </label>
+              <div class="color-input-container">
+                <input type="color" class="form-control form-control-color" name="cor" id="field_cor" data-cy="cor" formControlName="cor" />
+                <input
+                  type="text"
+                  class="form-control color-text"
+                  name="corText"
+                  placeholder="#FFFFFF"
+                  [value]="editForm.get('cor')?.value"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <label class="form-label" appTranslate="longonkeloApp.categoriaEmolumento.descricao" for="field_descricao">
+                <fa-icon icon="file-alt" class="me-2 text-primary"></fa-icon>Descrição
+              </label>
+              <textarea
+                class="form-control"
+                name="descricao"
+                id="field_descricao"
+                data-cy="descricao"
+                formControlName="descricao"
+                rows="3"
+                placeholder="Descreva o propósito e características desta categoria de emolumento..."
+              ></textarea>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Section 2: Type and Configuration -->
+      <fieldset class="modern-form-section">
+        <legend class="modern-form-section-title">
+          <fa-icon icon="cogs" class="section-icon"></fa-icon>
+          Tipo e Configuração
+        </legend>
+        <div class="modern-form-section-content">
+          <div class="row">
+            <div class="col-12">
+              <div class="form-check form-switch mb-3">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  name="isServico"
+                  id="field_isServico"
+                  data-cy="isServico"
+                  formControlName="isServico"
+                />
+                <label class="form-check-label" appTranslate="longonkeloApp.categoriaEmolumento.isServico" for="field_isServico">
+                  <fa-icon icon="concierge-bell" class="me-2 text-info"></fa-icon>É Categoria de Serviço
+                </label>
+                <small class="form-text text-muted d-block mt-1">
+                  Marque se esta categoria representa um serviço específico da instituição
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Section 3: Financial Rules -->
+      <fieldset class="modern-form-section">
+        <legend class="modern-form-section-title">
+          <fa-icon icon="calculator" class="section-icon"></fa-icon>
+          Regras Financeiras
+        </legend>
+        <div class="modern-form-section-content">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-check form-switch mb-3">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  name="isIsentoMulta"
+                  id="field_isIsentoMulta"
+                  data-cy="isIsentoMulta"
+                  formControlName="isIsentoMulta"
+                />
+                <label class="form-check-label" appTranslate="longonkeloApp.categoriaEmolumento.isIsentoMulta" for="field_isIsentoMulta">
+                  <fa-icon icon="shield-alt" class="me-2 text-warning"></fa-icon>Isento de Multa
+                </label>
+                <small class="form-text text-muted d-block mt-1"> Categoria não sofre aplicação de multas por atraso </small>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-check form-switch mb-3">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  name="isIsentoJuro"
+                  id="field_isIsentoJuro"
+                  data-cy="isIsentoJuro"
+                  formControlName="isIsentoJuro"
+                />
+                <label class="form-check-label" appTranslate="longonkeloApp.categoriaEmolumento.isIsentoJuro" for="field_isIsentoJuro">
+                  <fa-icon icon="percentage" class="me-2 text-warning"></fa-icon>Isento de Juros
+                </label>
+                <small class="form-text text-muted d-block mt-1"> Categoria não sofre aplicação de juros por atraso </small>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <label class="form-label" appTranslate="longonkeloApp.categoriaEmolumento.planoMulta" for="field_planoMulta">
+                <fa-icon icon="exclamation-triangle" class="me-2 text-warning"></fa-icon>Plano de Multa Associado
+              </label>
+              <select
+                class="form-select"
+                id="field_planoMulta"
+                data-cy="planoMulta"
+                name="planoMulta"
+                formControlName="planoMulta"
+                [compareWith]="comparePlanoMulta"
+              >
+                <option [ngValue]="null">Selecionar plano de multa...</option>
+                <option [ngValue]="planoMultaOption" *ngFor="let planoMultaOption of planoMultasSharedCollection">
+                  {{ planoMultaOption.descricao }}
+                </option>
+              </select>
+              <small class="form-text text-muted"> Define qual plano de multa será aplicado quando não há isenção </small>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Form Actions -->
+      <div class="modern-form-actions">
+        <button
+          type="button"
+          id="cancel-save"
+          data-cy="entityCreateCancelButton"
+          class="btn btn-outline-secondary"
+          (click)="previousState()"
+        >
+          <fa-icon icon="ban" class="me-2"></fa-icon>
+          <span appTranslate="entity.action.cancel">Cancelar</span>
         </button>
 
         <button
@@ -100,7 +202,8 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+          <fa-icon icon="save" class="me-2"></fa-icon>
+          <span appTranslate="entity.action.save">Guardar</span>
         </button>
       </div>
     </form>

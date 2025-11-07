@@ -1,156 +1,244 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="app-periodo-lancamento-nota-heading"
-        data-cy="PeriodoLancamentoNotaCreateUpdateHeading"
-        appTranslate="longonkeloApp.periodoLancamentoNota.home.createOrEditLabel"
-      >
-        Criar ou editar Periodo Lancamento Nota
-      </h2>
-
-      <div>
-        <app-alert-error></app-alert-error>
-
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.periodoLancamentoNota.tipoAvaliacao" for="field_tipoAvaliacao"
-            >Tipo Avaliacao</label
-          >
-          <select
-            class="form-control"
-            name="tipoAvaliacao"
-            formControlName="tipoAvaliacao"
-            id="field_tipoAvaliacao"
-            data-cy="tipoAvaliacao"
-          >
-            <option [ngValue]="null">{{ 'longonkeloApp.TipoAvaliacao.null' | translate }}</option>
-            <option *ngFor="let tipoAvaliacao of tipoAvaliacaoValues" [value]="tipoAvaliacao">
-              {{ 'longonkeloApp.TipoAvaliacao.' + tipoAvaliacao | translate }}
-            </option>
-          </select>
-          <div
-            *ngIf="
-              editForm.get('tipoAvaliacao')!.invalid && (editForm.get('tipoAvaliacao')!.dirty || editForm.get('tipoAvaliacao')!.touched)
-            "
-          >
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('tipoAvaliacao')?.errors?.required"
-              appTranslate="entity.validation.required"
-            >
-              O campo é obrigatório.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.periodoLancamentoNota.de" for="field_de">De</label>
-          <div class="d-flex">
-            <input
-              id="field_de"
-              data-cy="de"
-              type="datetime-local"
-              class="form-control"
-              name="de"
-              formControlName="de"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-          <div *ngIf="editForm.get('de')!.invalid && (editForm.get('de')!.dirty || editForm.get('de')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('de')?.errors?.required" appTranslate="entity.validation.required">
-              O campo é obrigatório.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('de')?.errors?.datetimelocal"
-              appTranslate="entity.validation.datetimelocal"
-            >
-              Este campo é do tipo data/hora.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.periodoLancamentoNota.ate" for="field_ate">Ate</label>
-          <div class="d-flex">
-            <input
-              id="field_ate"
-              data-cy="ate"
-              type="datetime-local"
-              class="form-control"
-              name="ate"
-              formControlName="ate"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-          <div *ngIf="editForm.get('ate')!.invalid && (editForm.get('ate')!.dirty || editForm.get('ate')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('ate')?.errors?.required" appTranslate="entity.validation.required">
-              O campo é obrigatório.
-            </small>
-            <small
-              class="form-text text-danger"
-              [hidden]="!editForm.get('ate')?.errors?.datetimelocal"
-              appTranslate="entity.validation.datetimelocal"
-            >
-              Este campo é do tipo data/hora.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.periodoLancamentoNota.timestamp" for="field_timestamp">Timestamp</label>
-          <div class="d-flex">
-            <input
-              id="field_timestamp"
-              data-cy="timestamp"
-              type="datetime-local"
-              class="form-control"
-              name="timestamp"
-              formControlName="timestamp"
-              placeholder="YYYY-MM-DD HH:mm"
-            />
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.periodoLancamentoNota.utilizador" for="field_utilizador">Utilizador</label>
-          <select
-            class="form-control"
-            id="field_utilizador"
-            data-cy="utilizador"
-            name="utilizador"
-            formControlName="utilizador"
-            [compareWith]="compareUser"
-          >
-            <option [ngValue]="null"></option>
-            <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">{{ userOption.login }}</option>
-          </select>
-        </div>
-
-        <div class="row mb-3">
-          <label appTranslate="longonkeloApp.periodoLancamentoNota.classe" for="field_classes">Classe</label>
-          <select
-            class="form-control"
-            id="field_classes"
-            data-cy="classe"
-            multiple
-            name="classes"
-            formControlName="classes"
-            [compareWith]="compareClasse"
-          >
-            <option [ngValue]="classeOption" *ngFor="let classeOption of classesSharedCollection">{{ classeOption.descricao }}</option>
-          </select>
-        </div>
+<div class="modern-form-container">
+  <div class="modern-form-wrapper">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm" class="modern-form">
+      <!-- Form Header -->
+      <div class="form-header">
+        <h2
+          id="app-periodo-lancamento-nota-heading"
+          data-cy="PeriodoLancamentoNotaCreateUpdateHeading"
+          appTranslate="longonkeloApp.periodoLancamentoNota.home.createOrEditLabel"
+        >
+          <i class="fas fa-calendar-check me-2"></i>
+          Criar ou editar Período de Lançamento de Nota
+        </h2>
+        <p class="form-subtitle">Configure o período para lançamento de notas de avaliação</p>
       </div>
 
-      <div>
+      <app-alert-error></app-alert-error>
+
+      <!-- Hidden ID field -->
+      <input type="hidden" *ngIf="editForm.controls.id.value !== null" formControlName="id" />
+
+      <!-- Evaluation Configuration Section -->
+      <fieldset class="form-section">
+        <legend class="section-title">
+          <i class="fas fa-clipboard-check me-2"></i>
+          Configuração de Avaliação
+        </legend>
+
+        <div class="row g-3">
+          <!-- Tipo de Avaliação -->
+          <div class="col-12">
+            <div class="form-group">
+              <label for="field_tipoAvaliacao" class="form-label">
+                <i class="fas fa-tasks me-2"></i>
+                <span appTranslate="longonkeloApp.periodoLancamentoNota.tipoAvaliacao">Tipo de Avaliação</span>
+                <span class="required">*</span>
+              </label>
+              <select
+                class="form-select"
+                name="tipoAvaliacao"
+                formControlName="tipoAvaliacao"
+                id="field_tipoAvaliacao"
+                data-cy="tipoAvaliacao"
+                [class.is-invalid]="
+                  editForm.get('tipoAvaliacao')!.invalid && (editForm.get('tipoAvaliacao')!.dirty || editForm.get('tipoAvaliacao')!.touched)
+                "
+              >
+                <option [ngValue]="null">Selecione o tipo de avaliação...</option>
+                <option *ngFor="let tipoAvaliacao of tipoAvaliacaoValues" [value]="tipoAvaliacao">
+                  {{ 'longonkeloApp.TipoAvaliacao.' + tipoAvaliacao | translate }}
+                </option>
+              </select>
+              <div
+                class="invalid-feedback"
+                *ngIf="
+                  editForm.get('tipoAvaliacao')!.invalid && (editForm.get('tipoAvaliacao')!.dirty || editForm.get('tipoAvaliacao')!.touched)
+                "
+              >
+                <small *ngIf="editForm.get('tipoAvaliacao')?.errors?.required" appTranslate="entity.validation.required">
+                  O campo é obrigatório.
+                </small>
+              </div>
+              <div class="form-text">Selecione o tipo de avaliação para este período</div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Period Configuration Section -->
+      <fieldset class="form-section">
+        <legend class="section-title">
+          <i class="fas fa-clock me-2"></i>
+          Configuração de Período
+        </legend>
+
+        <div class="row g-3">
+          <!-- Data de Início -->
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="field_de" class="form-label">
+                <i class="fas fa-play me-2"></i>
+                <span appTranslate="longonkeloApp.periodoLancamentoNota.de">Data de Início</span>
+                <span class="required">*</span>
+              </label>
+              <input
+                id="field_de"
+                data-cy="de"
+                type="datetime-local"
+                class="form-control"
+                name="de"
+                formControlName="de"
+                placeholder="YYYY-MM-DD HH:mm"
+                [class.is-invalid]="editForm.get('de')!.invalid && (editForm.get('de')!.dirty || editForm.get('de')!.touched)"
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="editForm.get('de')!.invalid && (editForm.get('de')!.dirty || editForm.get('de')!.touched)"
+              >
+                <small *ngIf="editForm.get('de')?.errors?.required" appTranslate="entity.validation.required">
+                  O campo é obrigatório.
+                </small>
+                <small *ngIf="editForm.get('de')?.errors?.datetimelocal" appTranslate="entity.validation.datetimelocal">
+                  Este campo é do tipo data/hora.
+                </small>
+              </div>
+              <div class="form-text">Início do período de lançamento</div>
+            </div>
+          </div>
+
+          <!-- Data de Fim -->
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="field_ate" class="form-label">
+                <i class="fas fa-stop me-2"></i>
+                <span appTranslate="longonkeloApp.periodoLancamentoNota.ate">Data de Fim</span>
+                <span class="required">*</span>
+              </label>
+              <input
+                id="field_ate"
+                data-cy="ate"
+                type="datetime-local"
+                class="form-control"
+                name="ate"
+                formControlName="ate"
+                placeholder="YYYY-MM-DD HH:mm"
+                [class.is-invalid]="editForm.get('ate')!.invalid && (editForm.get('ate')!.dirty || editForm.get('ate')!.touched)"
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="editForm.get('ate')!.invalid && (editForm.get('ate')!.dirty || editForm.get('ate')!.touched)"
+              >
+                <small *ngIf="editForm.get('ate')?.errors?.required" appTranslate="entity.validation.required">
+                  O campo é obrigatório.
+                </small>
+                <small *ngIf="editForm.get('ate')?.errors?.datetimelocal" appTranslate="entity.validation.datetimelocal">
+                  Este campo é do tipo data/hora.
+                </small>
+              </div>
+              <div class="form-text">Fim do período de lançamento</div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- System Information Section -->
+      <fieldset class="form-section">
+        <legend class="section-title">
+          <i class="fas fa-cogs me-2"></i>
+          Informações do Sistema
+        </legend>
+
+        <div class="row g-3">
+          <!-- Timestamp -->
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="field_timestamp" class="form-label">
+                <i class="fas fa-history me-2"></i>
+                <span appTranslate="longonkeloApp.periodoLancamentoNota.timestamp">Timestamp</span>
+              </label>
+              <input
+                id="field_timestamp"
+                data-cy="timestamp"
+                type="datetime-local"
+                class="form-control"
+                name="timestamp"
+                formControlName="timestamp"
+                placeholder="YYYY-MM-DD HH:mm"
+              />
+              <div class="form-text">Data/hora de criação do registro</div>
+            </div>
+          </div>
+
+          <!-- Utilizador -->
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="field_utilizador" class="form-label">
+                <i class="fas fa-user me-2"></i>
+                <span appTranslate="longonkeloApp.periodoLancamentoNota.utilizador">Utilizador</span>
+              </label>
+              <select
+                class="form-select"
+                id="field_utilizador"
+                data-cy="utilizador"
+                name="utilizador"
+                formControlName="utilizador"
+                [compareWith]="compareUser"
+              >
+                <option [ngValue]="null">Selecione um utilizador...</option>
+                <option [ngValue]="userOption" *ngFor="let userOption of usersSharedCollection">
+                  {{ userOption.login }}
+                </option>
+              </select>
+              <div class="form-text">Utilizador responsável pelo período</div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Class Selection Section -->
+      <fieldset class="form-section">
+        <legend class="section-title">
+          <i class="fas fa-users-class me-2"></i>
+          Seleção de Classes
+        </legend>
+
+        <div class="row g-3">
+          <!-- Classes -->
+          <div class="col-12">
+            <div class="form-group">
+              <label for="field_classes" class="form-label">
+                <i class="fas fa-school me-2"></i>
+                <span appTranslate="longonkeloApp.periodoLancamentoNota.classe">Classes</span>
+              </label>
+              <select
+                class="form-select"
+                id="field_classes"
+                data-cy="classe"
+                multiple
+                name="classes"
+                formControlName="classes"
+                [compareWith]="compareClasse"
+                size="6"
+              >
+                <option [ngValue]="classeOption" *ngFor="let classeOption of classesSharedCollection">
+                  {{ classeOption.descricao }}
+                </option>
+              </select>
+              <div class="form-text">
+                <i class="fas fa-info-circle me-1"></i>
+                Selecione múltiplas classes mantendo Ctrl pressionado (Cmd no Mac)
+              </div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Action Buttons -->
+      <div class="form-actions">
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+          <i class="fas fa-times me-2"></i>
+          <span appTranslate="entity.action.cancel">Cancelar</span>
         </button>
 
         <button
@@ -160,7 +248,11 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+          <i class="fas fa-save me-2"></i>
+          <span appTranslate="entity.action.save">Guardar</span>
+          <span *ngIf="isSaving" class="spinner-border spinner-border-sm ms-2" role="status">
+            <span class="visually-hidden">Salvando...</span>
+          </span>
         </button>
       </div>
     </form>

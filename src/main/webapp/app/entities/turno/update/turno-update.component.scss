@@ -1,0 +1,230 @@
+// ================================================================
+// Formulário de Turno - Estilos Modernos
+// ================================================================
+
+@import '../../../../content/scss/modern-forms';
+@import '../../../../content/scss/animations';
+
+// Variáveis específicas do turno
+:host {
+  --turno-primary: var(--azul-vibrante);
+  --turno-secondary: var(--prata);
+  --turno-accent: var(--amarelo);
+}
+
+// Container principal
+.modern-form-container {
+  @include modern-form-container;
+
+  // Tema específico para turno
+  .form-header {
+    background: linear-gradient(135deg, rgba(30, 144, 255, 0.1) 0%, rgba(255, 215, 0, 0.05) 100%);
+
+    h2 {
+      color: var(--turno-primary);
+
+      i {
+        color: var(--turno-accent);
+      }
+    }
+  }
+}
+
+// Form wrapper
+.modern-form-wrapper {
+  @include modern-form-wrapper;
+}
+
+// Form principal
+.modern-form {
+  @include modern-form-base;
+}
+
+// Seções do formulário
+.form-section {
+  @include form-section;
+
+  .section-title {
+    color: var(--turno-primary);
+    border-color: var(--turno-accent);
+
+    i {
+      color: var(--turno-accent);
+    }
+  }
+}
+
+// Form labels modernos
+.form-label {
+  color: var(--azul-carregado);
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+
+  i {
+    color: var(--turno-primary);
+    font-size: 1rem;
+  }
+
+  .required {
+    color: #dc3545;
+    margin-left: 0.25rem;
+    font-weight: 600;
+  }
+}
+
+// Form groups
+.form-group {
+  margin-bottom: 1.5rem;
+
+  &:focus-within .form-label {
+    color: var(--turno-primary);
+    transform: translateY(-2px);
+  }
+}
+
+// Form controls
+.form-control {
+  border: 2px solid rgba(var(--bs-primary-rgb), 0.2);
+  border-radius: 10px;
+  padding: 1rem 0.75rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
+
+  &:focus {
+    border-color: var(--turno-primary);
+    box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.25);
+    background: white;
+  }
+
+  &.is-invalid {
+    border-color: #dc3545;
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+    }
+  }
+
+  &::placeholder {
+    color: #6c757d;
+    opacity: 0.7;
+  }
+}
+
+// Validação
+.invalid-feedback {
+  display: block;
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  animation: slideInDown 0.3s ease;
+}
+
+// Action buttons
+.form-actions {
+  @include form-actions;
+
+  .btn {
+    position: relative;
+    overflow: hidden;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 0.75rem 2rem;
+    transition: all 0.3s ease;
+
+    i {
+      transition: transform 0.3s ease;
+    }
+
+    &:hover i {
+      transform: scale(1.1);
+    }
+
+    &.btn-primary {
+      background: linear-gradient(135deg, var(--turno-primary), var(--azul-carregado));
+      border: none;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(30, 144, 255, 0.3);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        transform: none;
+        box-shadow: none;
+      }
+    }
+
+    &.btn-secondary {
+      background: linear-gradient(135deg, var(--prata), #e9ecef);
+      border: none;
+      color: #495057;
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(192, 192, 192, 0.3);
+      }
+    }
+  }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .modern-form-container {
+    padding: 1rem;
+  }
+
+  .modern-form-wrapper {
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    gap: 1rem;
+
+    .btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .row .col-md-6 {
+    margin-bottom: 1rem;
+  }
+}
+
+// Animações de entrada
+.modern-form {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.form-section {
+  animation: slideInLeft 0.4s ease-out;
+  animation-delay: 0.2s;
+  animation-fill-mode: both;
+}
+
+.form-actions {
+  animation: slideInUp 0.4s ease-out;
+  animation-delay: 0.4s;
+  animation-fill-mode: both;
+}
+
+// Estados de hover para campos
+.form-group {
+  &:hover .form-control {
+    border-color: rgba(var(--bs-primary-rgb), 0.4);
+  }
+}
+
+// Loading state
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+}

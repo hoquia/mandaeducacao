@@ -17,6 +17,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Random;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -938,25 +939,27 @@ public class FacturaPagamentoDoisLadosReport {
                 false
             )
         );
+        String quatroLetras = gerarLetrasAleatorias(4).toLowerCase();
 
         // Codigo encriptacao da factura
-        // layoutTable.addCell(
-        //     makeCellText(
-        //         factura.getHashShort() + "-Processado por programa valido nº.n31.1/AGT20 | Longonkelo",
-        //         Element.ALIGN_MIDDLE,
-        //         Element.ALIGN_LEFT,
-        //         fontNormal,
-        //         leading,
-        //         padding,
-        //         borderNone,
-        //         true,
-        //         false
-        //     )
-        // );
+        layoutTable.addCell(
+            makeCellText(
+                quatroLetras + "-Processado por programa valido nº 473/AGT/2024 MANDA ERP",
+                Element.ALIGN_MIDDLE,
+                Element.ALIGN_LEFT,
+                fontNormal,
+                leading,
+                padding,
+                borderNone,
+                true,
+                false
+            )
+        );
 
         layoutTable.addCell(
             makeCellText("", Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
         );
+        /*
         layoutTable.addCell(
             makeCellText(
                 "Resumo do imposto",
@@ -971,11 +974,10 @@ public class FacturaPagamentoDoisLadosReport {
             )
         );
 
-        // Resumo Imposto
-
         layoutTable.addCell(
             makeCellTable(resumoImpostoTable, Element.ALIGN_TOP, Element.ALIGN_CENTER, leading, padding, borderNone, true, false)
         );
+        */
 
         layoutTable.addCell(
             makeCellText(getLinhaTracos(), Element.ALIGN_TOP, Element.ALIGN_RIGHT, fontBoldLarge, leading, padding, borderNone, true, false)
@@ -1017,6 +1019,18 @@ public class FacturaPagamentoDoisLadosReport {
         );
 
         return layoutTable;
+    }
+
+    private static final String LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final Random RANDOM = new Random();
+
+    public static String gerarLetrasAleatorias(int length) {
+        StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            int idx = RANDOM.nextInt(LETTERS.length());
+            sb.append(LETTERS.charAt(idx));
+        }
+        return sb.toString();
     }
 
     private String getLinhaTracos() {

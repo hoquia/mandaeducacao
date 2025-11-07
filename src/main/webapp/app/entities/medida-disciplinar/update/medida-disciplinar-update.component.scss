@@ -1,0 +1,361 @@
+/* =========================================================================
+   Medida Disciplinar Update Component Styles
+   Estilos específicos para o formulário de medidas disciplinares
+   ========================================================================= */
+
+@import '../../../../content/scss/modern-forms';
+@import '../../../../content/scss/animations';
+
+.modern-form-container {
+  min-height: 100vh;
+  padding: 2rem 0;
+  background: linear-gradient(135deg, var(--primary-gradient-start) 0%, var(--primary-gradient-end) 100%);
+
+  .modern-form-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 1rem;
+
+    .modern-form {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      animation: fadeInUp 0.6s ease-out;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  }
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid rgba(var(--bs-primary-rgb), 0.1);
+  padding-bottom: 1.5rem;
+
+  h2 {
+    color: var(--azul-carregado);
+    font-weight: 700;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+
+    i {
+      color: #dc3545;
+      font-size: 1.8rem;
+    }
+  }
+
+  .form-subtitle {
+    color: #6c757d;
+    font-size: 1rem;
+    margin: 0;
+  }
+}
+
+.form-section {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(var(--bs-primary-rgb), 0.1);
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .section-title {
+    color: var(--azul-carregado);
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid #dc3545;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    i {
+      color: #dc3545;
+    }
+  }
+}
+
+// Form labels with modern styling
+.form-label {
+  color: var(--azul-carregado);
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  i {
+    color: #dc3545;
+
+    &.fa-edit {
+      color: var(--azul-vibrante);
+    }
+
+    &.fa-hourglass-half {
+      color: #ffc107;
+    }
+
+    &.fa-calendar-alt {
+      color: #17a2b8;
+    }
+  }
+
+  .required {
+    color: #dc3545;
+    margin-left: 0.25rem;
+    font-weight: 700;
+  }
+}
+
+.form-control,
+.form-select {
+  border: 2px solid rgba(var(--bs-primary-rgb), 0.2);
+  border-radius: 10px;
+  padding: 1rem 0.75rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.9);
+
+  &:focus {
+    border-color: var(--azul-vibrante);
+    box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.25);
+    background: white;
+  }
+
+  &.is-invalid {
+    border-color: #dc3545;
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+    }
+  }
+}
+
+.description-textarea {
+  min-height: 100px !important;
+  resize: vertical;
+}
+
+// Campo de número com estilo especial
+input[type='number'] {
+  position: relative;
+
+  &:focus {
+    background: linear-gradient(45deg, rgba(255, 193, 7, 0.05) 0%, rgba(255, 255, 255, 1) 20%);
+  }
+}
+
+// Seletores com estilo específico para medidas disciplinares
+select[name='suspensao'] {
+  background-color: rgba(220, 53, 69, 0.05);
+
+  &:focus {
+    background-color: white;
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+  }
+}
+
+select[name='periodo'] {
+  background-color: rgba(23, 162, 184, 0.05);
+
+  &:focus {
+    background-color: white;
+    border-color: #17a2b8;
+    box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
+  }
+}
+
+.invalid-feedback {
+  display: block;
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+  animation: slideInDown 0.3s ease;
+}
+
+.form-text {
+  color: #6c757d;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+}
+
+// Action buttons
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(var(--bs-primary-rgb), 0.1);
+
+  .btn {
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    border: none;
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    &:hover::before {
+      left: 100%;
+    }
+
+    i {
+      transition: transform 0.3s ease;
+    }
+
+    &:hover i {
+      transform: scale(1.1);
+    }
+  }
+
+  .btn-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+    color: white;
+
+    &:hover {
+      background: linear-gradient(135deg, #5a6268 0%, #495057 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    }
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: white;
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px rgba(220, 53, 69, 0.3);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// Indicadores visuais para o tipo de formulário (disciplinar)
+.form-section:first-of-type {
+  border-left: 4px solid #dc3545;
+
+  &:before {
+    content: '⚖️';
+    position: absolute;
+    top: -15px;
+    left: -5px;
+    background: #dc3545;
+    color: white;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+  }
+}
+
+.form-section:last-of-type {
+  border-left: 4px solid #ffc107;
+
+  &:before {
+    content: '⏱️';
+    position: absolute;
+    top: -15px;
+    left: -5px;
+    background: #ffc107;
+    color: #212529;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .modern-form-container {
+    padding: 1rem 0;
+
+    .modern-form-wrapper {
+      padding: 0 0.5rem;
+
+      .modern-form {
+        padding: 1.5rem;
+        border-radius: 15px;
+      }
+    }
+  }
+
+  .form-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .form-section {
+    padding: 1rem;
+  }
+
+  .form-actions {
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+// Dark mode support
+@media (prefers-color-scheme: dark) {
+  .modern-form-container {
+    .modern-form {
+      background: rgba(33, 37, 41, 0.95);
+      color: #f8f9fa;
+    }
+  }
+
+  .form-section {
+    background: rgba(52, 58, 64, 0.8);
+  }
+
+  .form-control,
+  .form-select {
+    background: rgba(52, 58, 64, 0.9);
+    color: #f8f9fa;
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+}

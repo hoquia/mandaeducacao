@@ -1,112 +1,180 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="app-periodo-horario-heading"
-        data-cy="PeriodoHorarioCreateUpdateHeading"
-        appTranslate="longonkeloApp.periodoHorario.home.createOrEditLabel"
-      >
-        Criar ou editar Periodo Horario
-      </h2>
-
-      <div>
-        <app-alert-error></app-alert-error>
-
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-
-        <!-- <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.periodoHorario.descricao" for="field_descricao">Descricao</label>
-          <input type="text" class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao" />
-          <div *ngIf="editForm.get('descricao')!.invalid && (editForm.get('descricao')!.dirty || editForm.get('descricao')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('descricao')?.errors?.required"
-              appTranslate="entity.validation.required"
-            >
-              O campo é obrigatório.
-            </small>
-          </div>
-        </div> -->
-
-        <div class="row">
-          <div class="col-md-3 col-sm-12 mb-3">
-            <label class="form-label" appTranslate="longonkeloApp.periodoHorario.tempo" for="field_tempo">Tempo</label>
-            <input type="number" class="form-control" name="tempo" id="field_tempo" data-cy="tempo" formControlName="tempo" />
-            <div *ngIf="editForm.get('tempo')!.invalid && (editForm.get('tempo')!.dirty || editForm.get('tempo')!.touched)">
-              <small
-                class="form-text text-danger"
-                *ngIf="editForm.get('tempo')?.errors?.required"
-                appTranslate="entity.validation.required"
-              >
-                O campo é obrigatório.
-              </small>
-              <small
-                class="form-text text-danger"
-                *ngIf="editForm.get('tempo')?.errors?.min"
-                appTranslate="entity.validation.min"
-                [translateValues]="{ min: 1 }"
-              >
-                Este campo deve ser maior que 1.
-              </small>
-              <small
-                class="form-text text-danger"
-                [hidden]="!editForm.get('tempo')?.errors?.number"
-                appTranslate="entity.validation.number"
-              >
-                Este campo é do tipo número.
-              </small>
-            </div>
-          </div>
-
-          <div class="col-md-3 col-sm-12 mb-3">
-            <label class="form-label" appTranslate="longonkeloApp.periodoHorario.turno" for="field_turno">Turno</label>
-            <select class="form-control" id="field_turno" data-cy="turno" name="turno" formControlName="turno" [compareWith]="compareTurno">
-              <option *ngIf="editForm.get(['turno'])!.value == null" [ngValue]="null" selected></option>
-              <option [ngValue]="turnoOption" *ngFor="let turnoOption of turnosSharedCollection">{{ turnoOption.nome }}</option>
-            </select>
-          </div>
-          <div *ngIf="editForm.get(['turno'])!.invalid && (editForm.get(['turno'])!.dirty || editForm.get(['turno'])!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get(['turno'])?.errors?.required"
-              appTranslate="entity.validation.required"
-            >
-              O campo é obrigatório.
-            </small>
-          </div>
-
-          <div class="col-md-3 col-sm-12 mb-3">
-            <label class="form-label" appTranslate="longonkeloApp.periodoHorario.inicio" for="field_inicio">Inicio</label>
-            <input type="time" class="form-control" name="inicio" id="field_inicio" data-cy="inicio" formControlName="inicio" />
-            <div *ngIf="editForm.get('inicio')!.invalid && (editForm.get('inicio')!.dirty || editForm.get('inicio')!.touched)">
-              <small
-                class="form-text text-danger"
-                *ngIf="editForm.get('inicio')?.errors?.required"
-                appTranslate="entity.validation.required"
-              >
-                O campo é obrigatório.
-              </small>
-            </div>
-          </div>
-
-          <div class="col-md-3 col-sm-12 mb-3">
-            <label class="form-label" appTranslate="longonkeloApp.periodoHorario.fim" for="field_fim">Fim</label>
-            <input type="time" class="form-control" name="fim" id="field_fim" data-cy="fim" formControlName="fim" />
-            <div *ngIf="editForm.get('fim')!.invalid && (editForm.get('fim')!.dirty || editForm.get('fim')!.touched)">
-              <small class="form-text text-danger" *ngIf="editForm.get('fim')?.errors?.required" appTranslate="entity.validation.required">
-                O campo é obrigatório.
-              </small>
-            </div>
-          </div>
-        </div>
+<div class="modern-form-container">
+  <div class="modern-form-wrapper">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm" class="modern-form">
+      <!-- Form Header -->
+      <div class="form-header">
+        <h2
+          id="app-periodo-horario-heading"
+          data-cy="PeriodoHorarioCreateUpdateHeading"
+          appTranslate="longonkeloApp.periodoHorario.home.createOrEditLabel"
+        >
+          <i class="fas fa-clock me-2"></i>
+          Criar ou editar Período Horário
+        </h2>
+        <p class="form-subtitle">Configure os horários de funcionamento por turno</p>
       </div>
 
-      <div>
+      <app-alert-error></app-alert-error>
+
+      <!-- Hidden ID field -->
+      <input type="hidden" *ngIf="editForm.controls.id.value !== null" formControlName="id" />
+
+      <!-- Basic Configuration Section -->
+      <fieldset class="form-section">
+        <legend class="section-title">
+          <i class="fas fa-cogs me-2"></i>
+          Configuração Básica
+        </legend>
+
+        <div class="row g-3">
+          <!-- Tempo (Duração) -->
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="field_tempo" class="form-label">
+                <i class="fas fa-hourglass-half me-2"></i>
+                <span appTranslate="longonkeloApp.periodoHorario.tempo">Duração (minutos)</span>
+                <span class="required">*</span>
+              </label>
+              <input
+                type="number"
+                class="form-control"
+                name="tempo"
+                id="field_tempo"
+                placeholder="Duração em minutos"
+                data-cy="tempo"
+                formControlName="tempo"
+                min="1"
+                [class.is-invalid]="editForm.get('tempo')!.invalid && (editForm.get('tempo')!.dirty || editForm.get('tempo')!.touched)"
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="editForm.get('tempo')!.invalid && (editForm.get('tempo')!.dirty || editForm.get('tempo')!.touched)"
+              >
+                <small *ngIf="editForm.get('tempo')?.errors?.required" appTranslate="entity.validation.required">
+                  O campo é obrigatório.
+                </small>
+                <small *ngIf="editForm.get('tempo')?.errors?.min" appTranslate="entity.validation.min" [translateValues]="{ min: 1 }">
+                  Este campo deve ser maior que 1.
+                </small>
+                <small *ngIf="editForm.get('tempo')?.errors?.number" appTranslate="entity.validation.number">
+                  Este campo é do tipo número.
+                </small>
+              </div>
+              <div class="form-text">Duração do período em minutos</div>
+            </div>
+          </div>
+
+          <!-- Turno -->
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="field_turno" class="form-label">
+                <i class="fas fa-sun me-2"></i>
+                <span appTranslate="longonkeloApp.periodoHorario.turno">Turno</span>
+                <span class="required">*</span>
+              </label>
+              <select
+                class="form-select"
+                id="field_turno"
+                data-cy="turno"
+                name="turno"
+                formControlName="turno"
+                [compareWith]="compareTurno"
+                [class.is-invalid]="
+                  editForm.get(['turno'])!.invalid && (editForm.get(['turno'])!.dirty || editForm.get(['turno'])!.touched)
+                "
+              >
+                <option [ngValue]="null">Selecione um turno...</option>
+                <option [ngValue]="turnoOption" *ngFor="let turnoOption of turnosSharedCollection">
+                  {{ turnoOption.nome }}
+                </option>
+              </select>
+              <div
+                class="invalid-feedback"
+                *ngIf="editForm.get(['turno'])!.invalid && (editForm.get(['turno'])!.dirty || editForm.get(['turno'])!.touched)"
+              >
+                <small *ngIf="editForm.get(['turno'])?.errors?.required" appTranslate="entity.validation.required">
+                  O campo é obrigatório.
+                </small>
+              </div>
+              <div class="form-text">Turno associado ao período</div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Time Configuration Section -->
+      <fieldset class="form-section">
+        <legend class="section-title">
+          <i class="fas fa-clock me-2"></i>
+          Configuração de Horário
+        </legend>
+
+        <div class="row g-3">
+          <!-- Horário de Início -->
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="field_inicio" class="form-label">
+                <i class="fas fa-play me-2"></i>
+                <span appTranslate="longonkeloApp.periodoHorario.inicio">Horário de Início</span>
+                <span class="required">*</span>
+              </label>
+              <input
+                type="time"
+                class="form-control time-input"
+                name="inicio"
+                id="field_inicio"
+                data-cy="inicio"
+                formControlName="inicio"
+                [class.is-invalid]="editForm.get('inicio')!.invalid && (editForm.get('inicio')!.dirty || editForm.get('inicio')!.touched)"
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="editForm.get('inicio')!.invalid && (editForm.get('inicio')!.dirty || editForm.get('inicio')!.touched)"
+              >
+                <small *ngIf="editForm.get('inicio')?.errors?.required" appTranslate="entity.validation.required">
+                  O campo é obrigatório.
+                </small>
+              </div>
+              <div class="form-text">Horário de início do período</div>
+            </div>
+          </div>
+
+          <!-- Horário de Fim -->
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="field_fim" class="form-label">
+                <i class="fas fa-stop me-2"></i>
+                <span appTranslate="longonkeloApp.periodoHorario.fim">Horário de Fim</span>
+                <span class="required">*</span>
+              </label>
+              <input
+                type="time"
+                class="form-control time-input"
+                name="fim"
+                id="field_fim"
+                data-cy="fim"
+                formControlName="fim"
+                [class.is-invalid]="editForm.get('fim')!.invalid && (editForm.get('fim')!.dirty || editForm.get('fim')!.touched)"
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="editForm.get('fim')!.invalid && (editForm.get('fim')!.dirty || editForm.get('fim')!.touched)"
+              >
+                <small *ngIf="editForm.get('fim')?.errors?.required" appTranslate="entity.validation.required">
+                  O campo é obrigatório.
+                </small>
+              </div>
+              <div class="form-text">Horário de fim do período</div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Action Buttons -->
+      <div class="form-actions">
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+          <i class="fas fa-times me-2"></i>
+          <span appTranslate="entity.action.cancel">Cancelar</span>
         </button>
 
         <button
@@ -116,7 +184,11 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+          <i class="fas fa-save me-2"></i>
+          <span appTranslate="entity.action.save">Guardar</span>
+          <span *ngIf="isSaving" class="spinner-border spinner-border-sm ms-2" role="status">
+            <span class="visually-hidden">Salvando...</span>
+          </span>
         </button>
       </div>
     </form>

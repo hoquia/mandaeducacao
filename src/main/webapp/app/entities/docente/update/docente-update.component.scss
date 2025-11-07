@@ -1,0 +1,494 @@
+// Docente Form Modern Styling
+// Applies consistent modern design pattern with logical organization
+
+// Import base modern form styles and animations
+@import 'content/scss/modern-forms';
+@import 'content/scss/animations';
+
+// Docente-specific theme colors (professional education theme)
+:host {
+  --docente-primary: var(--azul-carregado);
+  --docente-secondary: var(--azul-vibrante);
+  --docente-accent: var(--prata);
+  --docente-success: #28a745;
+  --docente-info: #17a2b8;
+  --docente-warning: #ffc107;
+  --docente-danger: #dc3545;
+}
+
+.modern-form-container {
+  @include modern-form-base;
+
+  .form-header {
+    background: linear-gradient(135deg, var(--docente-primary) 0%, var(--docente-secondary) 100%);
+    color: var(--branco);
+    padding: 2rem;
+    border-radius: 12px 12px 0 0;
+    margin-bottom: 0;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(10, 15, 91, 0.15);
+
+    h2 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+
+      i {
+        font-size: 2rem;
+        opacity: 0.9;
+      }
+    }
+
+    .form-subtitle {
+      margin: 0.75rem 0 0 0;
+      opacity: 0.9;
+      font-size: 1rem;
+      font-weight: 300;
+    }
+  }
+
+  .modern-form {
+    .form-section {
+      @include form-section-base;
+      animation: slideInUp 0.6s ease-out;
+
+      &:nth-child(2) {
+        animation-delay: 0.1s;
+      } // Photo section
+      &:nth-child(3) {
+        animation-delay: 0.2s;
+      } // Personal data
+      &:nth-child(4) {
+        animation-delay: 0.3s;
+      } // Documentation
+      &:nth-child(5) {
+        animation-delay: 0.4s;
+      } // Contact
+      &:nth-child(6) {
+        animation-delay: 0.5s;
+      } // Address
+      &:nth-child(7) {
+        animation-delay: 0.6s;
+      } // Professional
+      &:nth-child(8) {
+        animation-delay: 0.7s;
+      } // Academic
+      &:nth-child(9) {
+        animation-delay: 0.8s;
+      } // Observations
+
+      .section-title {
+        @include section-title-base;
+        color: var(--docente-primary);
+        border-left: 4px solid var(--docente-secondary);
+
+        i {
+          color: var(--docente-secondary);
+        }
+      }
+
+      // Photo section specific styling
+      &:has(.photo-upload-container) {
+        .section-title {
+          background: linear-gradient(90deg, rgba(40, 167, 69, 0.1) 0%, transparent 100%);
+          border-left-color: var(--docente-success);
+
+          i {
+            color: var(--docente-success);
+          }
+        }
+      }
+
+      // Documentation section specific styling
+      &:has([data-cy='nif']) {
+        .section-title {
+          background: linear-gradient(90deg, rgba(255, 193, 7, 0.1) 0%, transparent 100%);
+          border-left-color: var(--docente-warning);
+
+          i {
+            color: var(--docente-warning);
+          }
+        }
+      }
+
+      // Contact section specific styling
+      &:has([data-cy='telefonePrincipal']) {
+        .section-title {
+          background: linear-gradient(90deg, rgba(23, 162, 184, 0.1) 0%, transparent 100%);
+          border-left-color: var(--docente-info);
+
+          i {
+            color: var(--docente-info);
+          }
+        }
+      }
+
+      // Professional section specific styling
+      &:has([data-cy='dataInicioFuncoes']) {
+        .section-title {
+          background: linear-gradient(90deg, rgba(108, 117, 125, 0.1) 0%, transparent 100%);
+          border-left-color: var(--docente-accent);
+
+          i {
+            color: var(--docente-accent);
+          }
+        }
+      }
+
+      // Academic section specific styling
+      &:has([data-cy='grauAcademico']) {
+        .section-title {
+          background: linear-gradient(90deg, rgba(102, 16, 242, 0.1) 0%, transparent 100%);
+          border-left-color: #6610f2;
+
+          i {
+            color: #6610f2;
+          }
+        }
+      }
+    }
+
+    .form-group {
+      @include form-group-base;
+
+      .form-label {
+        @include form-label-base;
+        color: var(--docente-primary);
+
+        i {
+          color: var(--docente-secondary);
+        }
+
+        .required {
+          color: var(--docente-danger);
+        }
+      }
+
+      .form-control,
+      .form-select {
+        @include form-control-base;
+        border: 2px solid #e9ecef;
+        transition: all 0.3s ease;
+
+        &:focus {
+          border-color: var(--docente-secondary);
+          box-shadow: 0 0 0 0.25rem rgba(30, 144, 255, 0.15);
+        }
+
+        &.is-invalid {
+          border-color: var(--docente-danger);
+          box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.15);
+        }
+      }
+
+      .form-text {
+        @include form-help-text;
+        color: var(--docente-accent);
+      }
+
+      .invalid-feedback {
+        @include invalid-feedback-base;
+      }
+    }
+
+    // Photo upload specific styling
+    .photo-upload-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 2rem;
+      background: linear-gradient(135deg, rgba(40, 167, 69, 0.05) 0%, rgba(255, 255, 255, 0.1) 100%);
+      border: 2px dashed #28a745;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        border-color: var(--docente-success);
+        background: linear-gradient(135deg, rgba(40, 167, 69, 0.08) 0%, rgba(255, 255, 255, 0.15) 100%);
+      }
+
+      .current-photo {
+        text-align: center;
+
+        .docente-photo {
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 4px solid var(--branco);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+          margin-bottom: 1rem;
+        }
+
+        .photo-info {
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+          align-items: center;
+
+          .photo-details {
+            font-size: 0.875rem;
+            color: var(--docente-accent);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+          }
+        }
+      }
+
+      .photo-upload {
+        text-align: center;
+
+        .upload-label {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.75rem 1.5rem;
+          background: var(--docente-success);
+          color: var(--branco);
+          border-radius: 8px;
+          cursor: pointer;
+          font-weight: 500;
+          transition: all 0.3s ease;
+          text-decoration: none;
+
+          &:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+          }
+
+          i {
+            font-size: 1.1rem;
+          }
+        }
+
+        .file-input {
+          display: none;
+        }
+      }
+    }
+
+    // Form check styling (checkbox/switch)
+    .form-check {
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid #e9ecef;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.8);
+        border-color: var(--docente-secondary);
+      }
+
+      .form-check-input {
+        &:checked {
+          background-color: var(--docente-secondary);
+          border-color: var(--docente-secondary);
+        }
+
+        &:focus {
+          box-shadow: 0 0 0 0.25rem rgba(30, 144, 255, 0.15);
+        }
+      }
+
+      .form-check-label {
+        color: var(--docente-primary);
+        font-weight: 500;
+        cursor: pointer;
+
+        i {
+          color: var(--docente-secondary);
+        }
+      }
+    }
+
+    // Input group styling (date pickers)
+    .input-group {
+      .btn {
+        border: 2px solid #e9ecef;
+        border-left: none;
+        background: var(--branco);
+        color: var(--docente-secondary);
+        transition: all 0.3s ease;
+
+        &:hover {
+          background: var(--docente-secondary);
+          color: var(--branco);
+          border-color: var(--docente-secondary);
+        }
+      }
+
+      .form-control:focus + .btn {
+        border-color: var(--docente-secondary);
+      }
+    }
+
+    // Textarea specific styling
+    textarea.form-control {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    // Form actions
+    .form-actions {
+      @include form-actions-base;
+      background: linear-gradient(135deg, rgba(10, 15, 91, 0.05) 0%, rgba(30, 144, 255, 0.05) 100%);
+
+      .action-buttons {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+
+        .btn {
+          @include modern-button-base;
+          padding: 0.75rem 2rem;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          transition: all 0.3s ease;
+
+          &.btn-primary {
+            background: linear-gradient(135deg, var(--docente-primary) 0%, var(--docente-secondary) 100%);
+            border: none;
+            box-shadow: 0 4px 15px rgba(30, 144, 255, 0.3);
+
+            &:hover:not(:disabled) {
+              transform: translateY(-2px);
+              box-shadow: 0 6px 25px rgba(30, 144, 255, 0.4);
+            }
+
+            &:disabled {
+              opacity: 0.6;
+              cursor: not-allowed;
+              transform: none;
+            }
+          }
+
+          &.btn-outline-secondary {
+            color: var(--docente-accent);
+            border: 2px solid var(--docente-accent);
+            background: transparent;
+
+            &:hover {
+              background: var(--docente-accent);
+              color: var(--branco);
+              transform: translateY(-2px);
+              box-shadow: 0 4px 15px rgba(192, 192, 192, 0.3);
+            }
+          }
+
+          i {
+            margin-right: 0.5rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .modern-form-container {
+    margin: 0.5rem;
+
+    .form-header {
+      padding: 1.5rem;
+      border-radius: 8px 8px 0 0;
+
+      h2 {
+        font-size: 1.5rem;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .form-subtitle {
+        font-size: 0.9rem;
+      }
+    }
+
+    .modern-form {
+      .form-section {
+        margin-bottom: 1.5rem;
+        padding: 1.5rem;
+
+        .section-title {
+          font-size: 1.1rem;
+          margin-bottom: 1rem;
+        }
+      }
+
+      .photo-upload-container {
+        padding: 1.5rem;
+
+        .current-photo .docente-photo {
+          width: 100px;
+          height: 100px;
+        }
+      }
+
+      .form-actions .action-buttons {
+        flex-direction: column;
+
+        .btn {
+          width: 100%;
+          padding: 1rem;
+        }
+      }
+    }
+  }
+}
+
+// Print styles
+@media print {
+  .modern-form-container {
+    box-shadow: none;
+    border: 1px solid #ddd;
+
+    .form-header {
+      background: #f8f9fa !important;
+      color: #333 !important;
+    }
+
+    .form-actions {
+      display: none;
+    }
+  }
+}
+
+// High contrast mode
+@media (prefers-contrast: high) {
+  .modern-form-container {
+    .form-section .section-title {
+      background: #fff;
+      color: #000;
+      border: 2px solid #000;
+    }
+
+    .form-control,
+    .form-select {
+      border: 2px solid #000;
+    }
+  }
+}
+
+// Reduced motion
+@media (prefers-reduced-motion: reduce) {
+  .modern-form-container {
+    .form-section {
+      animation: none;
+    }
+
+    .btn,
+    .form-control,
+    .form-select {
+      transition: none;
+    }
+  }
+}

@@ -1,6 +1,10 @@
 @import 'bootstrap-variables';
 @import '~bootstrap/scss/functions';
 @import '~bootstrap/scss/variables';
+@import 'animations';
+@import 'modern-components';
+@import 'modern-forms';
+@import 'image-upload';
 
 /* ==============================================================
 Bootstrap tweaks
@@ -11,17 +15,35 @@ h1,
 h2,
 h3,
 h4 {
-  font-weight: 300;
+  font-weight: 400;
+  color: #0a0f5b;
+}
+
+/* Design moderno para headers */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  background: linear-gradient(135deg, #1e90ff 0%, #0a0f5b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1.5rem;
 }
 
 /* Increase contrast of links to get 100% on Lighthouse Accessability Audit. Override this color if you want to change the link color, or use a Bootswatch theme */
 a {
-  color: #533f03;
-  font-weight: bold;
+  color: #1e90ff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
 a:hover {
-  color: #533f03;
+  color: #0a0f5b;
+  text-decoration: underline;
 }
 
 /* override hover color for dropdown-item forced by bootstrap to all a:not([href]):not([tabindex]) elements in _reboot.scss */
@@ -70,9 +92,18 @@ Generic styles
 /* other generic styles */
 
 .jh-card {
-  padding: 1.5%;
+  padding: 2rem;
   margin-top: 20px;
   border: none;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(10, 15, 91, 0.1);
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  transition: all 0.3s ease;
+}
+
+.jh-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(10, 15, 91, 0.15);
 }
 
 .error {
@@ -98,6 +129,16 @@ Generic styles
 }
 
 .form-control {
+  background-color: #fff;
+  border: 2px solid #c0c0c0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #1e90ff;
+  box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.1);
   background-color: #fff;
 }
 
@@ -250,4 +291,154 @@ label {
 legend {
   margin-top: 1em !important;
   font-weight: bold;
+}
+
+/* ==========================================================================
+Design Moderno - Componentes Personalizados
+========================================================================== */
+
+/* Botões modernos */
+.btn {
+  border-radius: 8px;
+  font-weight: 600;
+  padding: 12px 24px;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #1e90ff 0%, #0a0f5b 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(30, 144, 255, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(30, 144, 255, 0.4);
+  background: linear-gradient(135deg, #0a0f5b 0%, #1e90ff 100%);
+}
+
+.btn-warning {
+  background: linear-gradient(135deg, #ffd700 0%, #ffc000 100%);
+  color: #0a0f5b;
+  box-shadow: 0 4px 16px rgba(255, 215, 0, 0.3);
+}
+
+.btn-warning:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 215, 0, 0.4);
+  color: #0a0f5b;
+}
+
+.btn-secondary {
+  background: linear-gradient(135deg, #c0c0c0 0%, #a8a8a8 100%);
+  color: #0a0f5b;
+  box-shadow: 0 4px 16px rgba(192, 192, 192, 0.3);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(192, 192, 192, 0.4);
+  color: #0a0f5b;
+}
+
+/* Cards com design moderno */
+.card {
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(10, 15, 91, 0.08);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(10, 15, 91, 0.12);
+}
+
+.card-header {
+  background: linear-gradient(135deg, #1e90ff 0%, #0a0f5b 100%);
+  color: #ffffff;
+  border: none;
+  padding: 1.5rem;
+  font-weight: 600;
+}
+
+/* Navbar moderna */
+.navbar {
+  background: linear-gradient(135deg, #0a0f5b 0%, #1e90ff 100%) !important;
+  box-shadow: 0 4px 20px rgba(10, 15, 91, 0.15);
+  backdrop-filter: blur(10px);
+}
+
+.navbar-brand,
+.navbar-nav .nav-link {
+  color: #ffffff !important;
+  transition: all 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ffd700 !important;
+  transform: translateY(-1px);
+}
+
+/* Alertas modernos */
+.alert {
+  border: none;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.alert-primary {
+  background: linear-gradient(135deg, rgba(30, 144, 255, 0.1) 0%, rgba(10, 15, 91, 0.05) 100%);
+  border-left: 4px solid #1e90ff;
+  color: #0a0f5b;
+}
+
+.alert-warning {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 192, 0, 0.05) 100%);
+  border-left: 4px solid #ffd700;
+  color: #0a0f5b;
+}
+
+/* Tabelas modernas */
+.table {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(10, 15, 91, 0.08);
+}
+
+.table thead th {
+  background: linear-gradient(135deg, #1e90ff 0%, #0a0f5b 100%);
+  color: #ffffff;
+  border: none;
+  padding: 1rem;
+  font-weight: 600;
+}
+
+.table tbody tr {
+  transition: all 0.3s ease;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(30, 144, 255, 0.05);
+  transform: scale(1.01);
+}
+
+/* Breadcrumbs modernos */
+.breadcrumb {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(192, 192, 192, 0.1) 100%);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(10, 15, 91, 0.05);
+}
+
+.breadcrumb-item a {
+  color: #1e90ff;
+}
+
+.breadcrumb-item.active {
+  color: #0a0f5b;
+  font-weight: 600;
 }

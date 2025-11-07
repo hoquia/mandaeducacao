@@ -1,69 +1,162 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="app-estado-dissertacao-heading"
-        data-cy="EstadoDissertacaoCreateUpdateHeading"
-        appTranslate="longonkeloApp.estadoDissertacao.home.createOrEditLabel"
-      >
-        Criar ou editar Estado Dissertacao
-      </h2>
-
-      <div>
-        <app-alert-error></app-alert-error>
-
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.estadoDissertacao.codigo" for="field_codigo">Codigo</label>
-          <input type="text" class="form-control" name="codigo" id="field_codigo" data-cy="codigo" formControlName="codigo" />
-          <div *ngIf="editForm.get('codigo')!.invalid && (editForm.get('codigo')!.dirty || editForm.get('codigo')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('codigo')?.errors?.required" appTranslate="entity.validation.required">
-              O campo é obrigatório.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.estadoDissertacao.nome" for="field_nome">Nome</label>
-          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
-          <div *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('nome')?.errors?.required" appTranslate="entity.validation.required">
-              O campo é obrigatório.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.estadoDissertacao.etapa" for="field_etapa">Etapa</label>
-          <input type="number" class="form-control" name="etapa" id="field_etapa" data-cy="etapa" formControlName="etapa" />
-          <div *ngIf="editForm.get('etapa')!.invalid && (editForm.get('etapa')!.dirty || editForm.get('etapa')!.touched)">
-            <small
-              class="form-text text-danger"
-              *ngIf="editForm.get('etapa')?.errors?.min"
-              appTranslate="entity.validation.min"
-              [translateValues]="{ min: 0 }"
-            >
-              Este campo deve ser maior que 0.
-            </small>
-            <small class="form-text text-danger" [hidden]="!editForm.get('etapa')?.errors?.number" appTranslate="entity.validation.number">
-              Este campo é do tipo número.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.estadoDissertacao.descricao" for="field_descricao">Descricao</label>
-          <textarea class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao"></textarea>
-        </div>
+<div class="modern-form-container">
+  <div class="modern-form-wrapper">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm" class="modern-form">
+      <!-- Form Header -->
+      <div class="form-header">
+        <h2
+          id="app-estado-dissertacao-heading"
+          data-cy="EstadoDissertacaoCreateUpdateHeading"
+          appTranslate="longonkeloApp.estadoDissertacao.home.createOrEditLabel"
+        >
+          <i class="fas fa-graduation-cap me-2"></i>
+          Criar ou editar Estado Dissertação
+        </h2>
+        <p class="form-subtitle">Configure os estados de progresso da dissertação</p>
       </div>
 
-      <div>
+      <app-alert-error></app-alert-error>
+
+      <!-- Hidden ID field -->
+      <input type="hidden" *ngIf="editForm.controls.id.value !== null" formControlName="id" />
+
+      <!-- Basic Information Section -->
+      <fieldset class="form-section">
+        <legend class="section-title">
+          <i class="fas fa-info-circle me-2"></i>
+          Informações Básicas
+        </legend>
+
+        <div class="row g-3">
+          <!-- Código -->
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="field_codigo" class="form-label">
+                <i class="fas fa-hashtag me-2"></i>
+                <span appTranslate="longonkeloApp.estadoDissertacao.codigo">Código</span>
+                <span class="required">*</span>
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                name="codigo"
+                id="field_codigo"
+                placeholder="Código identificador do estado"
+                data-cy="codigo"
+                formControlName="codigo"
+                [class.is-invalid]="editForm.get('codigo')!.invalid && (editForm.get('codigo')!.dirty || editForm.get('codigo')!.touched)"
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="editForm.get('codigo')!.invalid && (editForm.get('codigo')!.dirty || editForm.get('codigo')!.touched)"
+              >
+                <small *ngIf="editForm.get('codigo')?.errors?.required" appTranslate="entity.validation.required">
+                  O campo é obrigatório.
+                </small>
+              </div>
+              <div class="form-text">Código único para identificar o estado</div>
+            </div>
+          </div>
+
+          <!-- Nome -->
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="field_nome" class="form-label">
+                <i class="fas fa-tag me-2"></i>
+                <span appTranslate="longonkeloApp.estadoDissertacao.nome">Nome</span>
+                <span class="required">*</span>
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                name="nome"
+                id="field_nome"
+                placeholder="Nome descritivo do estado"
+                data-cy="nome"
+                formControlName="nome"
+                [class.is-invalid]="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)"
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)"
+              >
+                <small *ngIf="editForm.get('nome')?.errors?.required" appTranslate="entity.validation.required">
+                  O campo é obrigatório.
+                </small>
+              </div>
+              <div class="form-text">Nome apresentado ao usuário</div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Progress Configuration Section -->
+      <fieldset class="form-section">
+        <legend class="section-title">
+          <i class="fas fa-steps me-2"></i>
+          Configuração de Progresso
+        </legend>
+
+        <div class="row g-3">
+          <!-- Etapa -->
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="field_etapa" class="form-label">
+                <i class="fas fa-sort-numeric-up me-2"></i>
+                <span appTranslate="longonkeloApp.estadoDissertacao.etapa">Etapa</span>
+              </label>
+              <input
+                type="number"
+                class="form-control"
+                name="etapa"
+                id="field_etapa"
+                placeholder="Número da etapa (ex: 1, 2, 3...)"
+                data-cy="etapa"
+                formControlName="etapa"
+                min="0"
+                [class.is-invalid]="editForm.get('etapa')!.invalid && (editForm.get('etapa')!.dirty || editForm.get('etapa')!.touched)"
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="editForm.get('etapa')!.invalid && (editForm.get('etapa')!.dirty || editForm.get('etapa')!.touched)"
+              >
+                <small *ngIf="editForm.get('etapa')?.errors?.min" appTranslate="entity.validation.min" [translateValues]="{ min: 0 }">
+                  Este campo deve ser maior que 0.
+                </small>
+                <small *ngIf="editForm.get('etapa')?.errors?.number" appTranslate="entity.validation.number">
+                  Este campo é do tipo número.
+                </small>
+              </div>
+              <div class="form-text">Ordem sequencial da etapa</div>
+            </div>
+          </div>
+
+          <!-- Descrição -->
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="field_descricao" class="form-label">
+                <i class="fas fa-file-text me-2"></i>
+                <span appTranslate="longonkeloApp.estadoDissertacao.descricao">Descrição</span>
+              </label>
+              <textarea
+                class="form-control"
+                name="descricao"
+                id="field_descricao"
+                placeholder="Descrição detalhada do estado da dissertação"
+                data-cy="descricao"
+                formControlName="descricao"
+                rows="4"
+              ></textarea>
+              <div class="form-text">Descrição detalhada do estado</div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- Action Buttons -->
+      <div class="form-actions">
         <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
+          <i class="fas fa-times me-2"></i>
+          <span appTranslate="entity.action.cancel">Cancelar</span>
         </button>
 
         <button
@@ -73,7 +166,11 @@
           [disabled]="editForm.invalid || isSaving"
           class="btn btn-primary"
         >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
+          <i class="fas fa-save me-2"></i>
+          <span appTranslate="entity.action.save">Guardar</span>
+          <span *ngIf="isSaving" class="spinner-border spinner-border-sm ms-2" role="status">
+            <span class="visually-hidden">Salvando...</span>
+          </span>
         </button>
       </div>
     </form>

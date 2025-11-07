@@ -1,129 +1,238 @@
-<div class="d-flex justify-content-center">
-  <div class="col-8">
-    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-      <h2
-        id="app-area-formacao-heading"
-        data-cy="AreaFormacaoCreateUpdateHeading"
-        appTranslate="longonkeloApp.areaFormacao.home.createOrEditLabel"
-      >
-        Criar ou editar Area Formacao
-      </h2>
+<div class="container-fluid fade-in-up">
+  <div class="row justify-content-center">
+    <div class="col-12 col-lg-8">
+      <!-- Header Section -->
+      <div class="modern-form-header mb-4">
+        <h1
+          class="gradient-text mb-2"
+          id="app-area-formacao-heading"
+          data-cy="AreaFormacaoCreateUpdateHeading"
+          appTranslate="longonkeloApp.areaFormacao.home.createOrEditLabel"
+        >
+          Criar ou editar Área de Formação
+        </h1>
+        <p class="text-muted">
+          Preencha os campos abaixo para {{ editForm.controls.id.value ? 'atualizar' : 'criar' }} uma nova área de formação
+        </p>
+      </div>
 
-      <div>
+      <!-- Alert Section -->
+      <div class="mb-4">
         <app-alert-error></app-alert-error>
+      </div>
 
-        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
-          <label class="form-label" appTranslate="global.field.id" for="field_id">ID</label>
-          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
-        </div>
+      <!-- Form Card -->
+      <div class="jh-card">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+          <!-- ID Field (hidden when creating) -->
+          <div class="modern-form-group" *ngIf="editForm.controls.id.value !== null">
+            <label class="modern-form-label" appTranslate="global.field.id" for="field_id">ID</label>
+            <input type="number" class="modern-form-input" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+          <!-- Basic Information Section -->
+          <fieldset class="modern-fieldset mb-4">
+            <legend class="modern-legend">Informações Básicas</legend>
 
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.areaFormacao.imagem" for="field_imagem">Imagem</label>
-          <div>
-            <img
-              [src]="'data:' + editForm.get('imagemContentType')!.value + ';base64,' + editForm.get('imagem')!.value"
-              style="max-height: 100px"
-              *ngIf="editForm.get('imagem')!.value"
-              alt="areaFormacao image"
-            />
-            <div *ngIf="editForm.get('imagem')!.value" class="form-text text-danger clearfix">
-              <span class="pull-start">{{ editForm.get('imagemContentType')!.value }}, {{ byteSize(editForm.get('imagem')!.value!) }}</span>
-              <button
-                type="button"
-                (click)="clearInputImage('imagem', 'imagemContentType', 'file_imagem')"
-                class="btn btn-secondary btn-xs pull-end"
+            <!-- Codigo Field -->
+            <div class="modern-form-group">
+              <label class="modern-form-label required" appTranslate="longonkeloApp.areaFormacao.codigo" for="field_codigo">
+                <i class="fas fa-code me-2"></i>Código
+              </label>
+              <input
+                type="text"
+                class="modern-form-input"
+                [class.error]="editForm.get('codigo')!.invalid && (editForm.get('codigo')!.dirty || editForm.get('codigo')!.touched)"
+                name="codigo"
+                id="field_codigo"
+                data-cy="codigo"
+                formControlName="codigo"
+                placeholder="Digite o código da área de formação"
+              />
+              <div
+                class="modern-form-error"
+                *ngIf="editForm.get('codigo')!.invalid && (editForm.get('codigo')!.dirty || editForm.get('codigo')!.touched)"
               >
-                <fa-icon icon="times"></fa-icon>
-              </button>
+                <i class="fas fa-exclamation-circle me-1"></i>
+                <span *ngIf="editForm.get('codigo')?.errors?.required" appTranslate="entity.validation.required">
+                  O campo é obrigatório.
+                </span>
+              </div>
             </div>
-            <input
-              type="file"
-              id="file_imagem"
-              data-cy="imagem"
-              (change)="setFileData($event, 'imagem', true)"
-              accept="image/*"
-              appTranslate="entity.action.addimage"
-            />
+
+            <!-- Nome Field -->
+            <div class="modern-form-group">
+              <label class="modern-form-label required" appTranslate="longonkeloApp.areaFormacao.nome" for="field_nome">
+                <i class="fas fa-tag me-2"></i>Nome
+              </label>
+              <input
+                type="text"
+                class="modern-form-input"
+                [class.error]="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)"
+                name="nome"
+                id="field_nome"
+                data-cy="nome"
+                formControlName="nome"
+                placeholder="Digite o nome da área de formação"
+              />
+              <div
+                class="modern-form-error"
+                *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)"
+              >
+                <i class="fas fa-exclamation-circle me-1"></i>
+                <span *ngIf="editForm.get('nome')?.errors?.required" appTranslate="entity.validation.required">
+                  O campo é obrigatório.
+                </span>
+              </div>
+            </div>
+
+            <!-- Nivel Ensino Field -->
+            <div class="modern-form-group">
+              <label class="modern-form-label required" appTranslate="longonkeloApp.areaFormacao.nivelEnsino" for="field_nivelEnsino">
+                <i class="fas fa-graduation-cap me-2"></i>Nível de Ensino
+              </label>
+              <select
+                class="modern-form-input"
+                [class.error]="
+                  editForm.get(['nivelEnsino'])!.invalid && (editForm.get(['nivelEnsino'])!.dirty || editForm.get(['nivelEnsino'])!.touched)
+                "
+                id="field_nivelEnsino"
+                data-cy="nivelEnsino"
+                name="nivelEnsino"
+                formControlName="nivelEnsino"
+                [compareWith]="compareNivelEnsino"
+              >
+                <option *ngIf="editForm.get(['nivelEnsino'])!.value == null" [ngValue]="null" selected>Selecione um nível de ensino</option>
+                <option [ngValue]="nivelEnsinoOption" *ngFor="let nivelEnsinoOption of nivelEnsinosSharedCollection">
+                  {{ nivelEnsinoOption.nome }}
+                </option>
+              </select>
+              <div
+                class="modern-form-error"
+                *ngIf="
+                  editForm.get(['nivelEnsino'])!.invalid && (editForm.get(['nivelEnsino'])!.dirty || editForm.get(['nivelEnsino'])!.touched)
+                "
+              >
+                <i class="fas fa-exclamation-circle me-1"></i>
+                <span *ngIf="editForm.get(['nivelEnsino'])?.errors?.required" appTranslate="entity.validation.required">
+                  O campo é obrigatório.
+                </span>
+              </div>
+            </div>
+          </fieldset>
+          <!-- Description Section -->
+          <fieldset class="modern-fieldset mb-4">
+            <legend class="modern-legend">Descrição e Detalhes</legend>
+
+            <!-- Descricao Field -->
+            <div class="modern-form-group">
+              <label class="modern-form-label" appTranslate="longonkeloApp.areaFormacao.descricao" for="field_descricao">
+                <i class="fas fa-align-left me-2"></i>Descrição
+              </label>
+              <textarea
+                class="modern-form-input"
+                name="descricao"
+                id="field_descricao"
+                data-cy="descricao"
+                formControlName="descricao"
+                rows="4"
+                placeholder="Digite uma descrição detalhada da área de formação..."
+              ></textarea>
+              <small class="form-text text-muted">
+                <i class="fas fa-info-circle me-1"></i>
+                Descreva os objetivos e características principais desta área de formação
+              </small>
+            </div>
+          </fieldset>
+
+          <!-- Image Section -->
+          <fieldset class="modern-fieldset mb-4">
+            <legend class="modern-legend">Imagem Representativa</legend>
+
+            <div class="modern-form-group">
+              <label class="modern-form-label" appTranslate="longonkeloApp.areaFormacao.imagem" for="field_imagem">
+                <i class="fas fa-image me-2"></i>Imagem
+              </label>
+
+              <!-- Image Preview -->
+              <div class="image-upload-container" *ngIf="editForm.get('imagem')!.value">
+                <div class="current-image-preview">
+                  <img
+                    [src]="'data:' + editForm.get('imagemContentType')!.value + ';base64,' + editForm.get('imagem')!.value"
+                    class="preview-image"
+                    alt="Imagem da área de formação"
+                  />
+                  <div class="image-info">
+                    <span class="image-details">
+                      <i class="fas fa-file-alt me-1"></i>
+                      {{ editForm.get('imagemContentType')!.value }}, {{ byteSize(editForm.get('imagem')!.value!) }}
+                    </span>
+                    <button
+                      type="button"
+                      (click)="clearInputImage('imagem', 'imagemContentType', 'file_imagem')"
+                      class="btn btn-outline-danger btn-sm"
+                    >
+                      <i class="fas fa-trash me-1"></i>Remover
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- File Input -->
+              <div class="file-upload-area" [class.has-image]="editForm.get('imagem')!.value">
+                <label for="file_imagem" class="file-upload-label">
+                  <div class="upload-content">
+                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                    <span class="upload-text">
+                      {{ editForm.get('imagem')!.value ? 'Alterar imagem' : 'Clique para selecionar uma imagem' }}
+                    </span>
+                    <small class="upload-hint">PNG, JPG, GIF até 5MB</small>
+                  </div>
+                </label>
+                <input
+                  type="file"
+                  id="file_imagem"
+                  data-cy="imagem"
+                  (change)="setFileData($event, 'imagem', true)"
+                  accept="image/*"
+                  class="file-upload-input"
+                />
+              </div>
+
+              <!-- Hidden Fields -->
+              <input type="hidden" name="imagem" id="field_imagem" data-cy="imagem" formControlName="imagem" />
+              <input type="hidden" name="imagemContentType" id="field_imagemContentType" formControlName="imagemContentType" />
+            </div>
+          </fieldset>
+
+          <!-- Action Buttons -->
+          <div class="form-actions">
+            <button
+              type="button"
+              id="cancel-save"
+              data-cy="entityCreateCancelButton"
+              class="btn btn-secondary me-3"
+              (click)="previousState()"
+            >
+              <i class="fas fa-times me-2"></i>
+              <span appTranslate="entity.action.cancel">Cancelar</span>
+            </button>
+
+            <button
+              type="submit"
+              id="save-entity"
+              data-cy="entityCreateSaveButton"
+              [disabled]="editForm.invalid || isSaving"
+              class="btn btn-primary"
+            >
+              <i class="fas fa-save me-2"></i>
+              <span appTranslate="entity.action.save">{{ editForm.controls.id.value ? 'Atualizar' : 'Salvar' }}</span>
+              <span *ngIf="isSaving" class="ms-2">
+                <i class="fas fa-spinner fa-spin"></i>
+              </span>
+            </button>
           </div>
-          <input type="hidden" class="form-control" name="imagem" id="field_imagem" data-cy="imagem" formControlName="imagem" />
-          <input
-            type="hidden"
-            class="form-control"
-            name="imagemContentType"
-            id="field_imagemContentType"
-            formControlName="imagemContentType"
-          />
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.areaFormacao.codigo" for="field_codigo">Codigo</label>
-          <input type="text" class="form-control" name="codigo" id="field_codigo" data-cy="codigo" formControlName="codigo" />
-          <div *ngIf="editForm.get('codigo')!.invalid && (editForm.get('codigo')!.dirty || editForm.get('codigo')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('codigo')?.errors?.required" appTranslate="entity.validation.required">
-              O campo é obrigatório.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.areaFormacao.nome" for="field_nome">Nome</label>
-          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
-          <div *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('nome')?.errors?.required" appTranslate="entity.validation.required">
-              O campo é obrigatório.
-            </small>
-          </div>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.areaFormacao.descricao" for="field_descricao">Descricao</label>
-          <textarea class="form-control" name="descricao" id="field_descricao" data-cy="descricao" formControlName="descricao"></textarea>
-        </div>
-
-        <div class="row mb-3">
-          <label class="form-label" appTranslate="longonkeloApp.areaFormacao.nivelEnsino" for="field_nivelEnsino">Nivel Ensino</label>
-          <select
-            class="form-control"
-            id="field_nivelEnsino"
-            data-cy="nivelEnsino"
-            name="nivelEnsino"
-            formControlName="nivelEnsino"
-            [compareWith]="compareNivelEnsino"
-          >
-            <option *ngIf="editForm.get(['nivelEnsino'])!.value == null" [ngValue]="null" selected></option>
-            <option [ngValue]="nivelEnsinoOption" *ngFor="let nivelEnsinoOption of nivelEnsinosSharedCollection">
-              {{ nivelEnsinoOption.nome }}
-            </option>
-          </select>
-        </div>
-        <div
-          *ngIf="editForm.get(['nivelEnsino'])!.invalid && (editForm.get(['nivelEnsino'])!.dirty || editForm.get(['nivelEnsino'])!.touched)"
-        >
-          <small
-            class="form-text text-danger"
-            *ngIf="editForm.get(['nivelEnsino'])?.errors?.required"
-            appTranslate="entity.validation.required"
-          >
-            O campo é obrigatório.
-          </small>
-        </div>
+        </form>
       </div>
-
-      <div>
-        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
-          <fa-icon icon="ban"></fa-icon>&nbsp;<span appTranslate="entity.action.cancel">Cancelar</span>
-        </button>
-
-        <button
-          type="submit"
-          id="save-entity"
-          data-cy="entityCreateSaveButton"
-          [disabled]="editForm.invalid || isSaving"
-          class="btn btn-primary"
-        >
-          <fa-icon icon="save"></fa-icon>&nbsp;<span appTranslate="entity.action.save">Guardar</span>
-        </button>
-      </div>
-    </form>
+    </div>
   </div>
 </div>

@@ -27,25 +27,25 @@ Main page styles
 }
 
 .bg-c-blue {
-  background: linear-gradient(45deg, #4099ff, #73b4ff);
+  background: linear-gradient(135deg, #1e90ff, #0a0f5b);
 }
 
 .bg-c-green {
-  background: linear-gradient(45deg, #2ed8b6, #59e0c5);
+  background: linear-gradient(135deg, #2ed8b6, #59e0c5);
 }
 
 .bg-c-yellow {
-  background: linear-gradient(45deg, #ffb64d, #ffcb80);
+  background: linear-gradient(135deg, #ffd700, #ffc000);
 }
 
 .bg-c-pink {
-  background: linear-gradient(45deg, #ff5370, #ff869a);
+  background: linear-gradient(135deg, #ff5370, #ff869a);
 }
 
 .card {
-  border-radius: 5px;
-  -webkit-box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
-  box-shadow: 0 1px 2.94px 0.06px rgba(4, 26, 55, 0.16);
+  border-radius: 16px;
+  -webkit-box-shadow: 0 8px 32px rgba(10, 15, 91, 0.1);
+  box-shadow: 0 8px 32px rgba(10, 15, 91, 0.1);
   border: none;
   margin-bottom: 30px;
   -webkit-transition: all 0.3s ease-in-out;
