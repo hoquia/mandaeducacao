@@ -3,6 +3,7 @@ package com.ravunana.longonkelo.service.impl;
 import com.ravunana.longonkelo.config.SendSmsInfobip;
 import com.ravunana.longonkelo.domain.Ocorrencia;
 import com.ravunana.longonkelo.repository.OcorrenciaRepository;
+import com.ravunana.longonkelo.service.MailService;
 import com.ravunana.longonkelo.service.OcorrenciaService;
 import com.ravunana.longonkelo.service.dto.OcorrenciaDTO;
 import com.ravunana.longonkelo.service.mapper.OcorrenciaMapper;
@@ -27,11 +28,18 @@ public class OcorrenciaServiceImpl implements OcorrenciaService {
 
     private final OcorrenciaMapper ocorrenciaMapper;
     private final SendSmsInfobip smsInfobip;
+    private final MailService mailService;
 
-    public OcorrenciaServiceImpl(OcorrenciaRepository ocorrenciaRepository, OcorrenciaMapper ocorrenciaMapper, SendSmsInfobip smsInfobip) {
+    public OcorrenciaServiceImpl(
+        OcorrenciaRepository ocorrenciaRepository,
+        OcorrenciaMapper ocorrenciaMapper,
+        SendSmsInfobip smsInfobip,
+        MailService mailService
+    ) {
         this.ocorrenciaRepository = ocorrenciaRepository;
         this.ocorrenciaMapper = ocorrenciaMapper;
         this.smsInfobip = smsInfobip;
+        this.mailService = mailService;
     }
 
     @Override
@@ -44,7 +52,14 @@ public class OcorrenciaServiceImpl implements OcorrenciaService {
         String telefone = ocorrencia.getMatricula().getDiscente().getTelefoneParente();
         ocorrencia = ocorrenciaRepository.save(ocorrencia);
 
-        smsInfobip.send( telefone, descricao );
+        smsInfobip.send(telefone, descricao);
+        mailService.sendEmail(
+            ocorrenciaDTO.getMatricula().getDiscente().getEmail(),
+            "Manda School",
+            ocorrencia.getDescricao(),
+            false,
+            false
+        );
 
         return ocorrenciaMapper.toDto(ocorrencia);
     }

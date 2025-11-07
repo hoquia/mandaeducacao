@@ -62,7 +62,11 @@ public class HorarioServiceImpl implements HorarioService {
 
         // tipoHorarioDocente-pofessorId-tempo-diaSemana
         // O docente não pode estar no mesmo periodo em duas turmas diferentes
-        var chaveComposta2 = horarioDTO.getDocente().getId() + horarioDTO.getPeriodo().getTempo() + horarioDTO.getDiaSemana().name();
+        var chaveComposta2 =
+            horarioDTO.getDocente().getId() +
+            horarioDTO.getPeriodo().getTempo() +
+            horarioDTO.getDiaSemana().name() +
+            horarioDTO.getTurma().getId();
 
         var chaveComposta2Result = horarioRepository
             .findAll()

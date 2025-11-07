@@ -30,6 +30,30 @@
         </div> -->
       </div>
 
+      <div class="row">
+        <!-- BOLETIM DE NOTAS -->
+        <div class="mb-3">
+          <label class="form-label" appTranslate="longonkeloApp.notasPeriodicaDisciplina.periodoLancamento" for="field_periodoLancamento"
+            >Periodo de Lançamento</label
+          >
+          <ng-select
+            id="field_periodoLancamento"
+            data-cy="periodoLancamento"
+            name="periodoLancamento"
+            #periodoLancamentoVar
+            [(ngModel)]="periodoSelecionado"
+          >
+            <ng-option [value]="periodoOption" *ngFor="let periodoOption of periodosSharedCollection">
+              {{ periodoOption }}º Trimestre
+            </ng-option>
+          </ng-select>
+        </div>
+
+        <div>
+          <button [disabled]="periodoSelecionado === 0" class="btn btn-warning" (click)="gerarMiniPauta(turma.id)">Mini Pauta</button>
+        </div>
+      </div>
+
       <div class="row mb-3">
         <div class="col">
           <div class="mb-3">

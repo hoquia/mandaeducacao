@@ -1,10 +1,12 @@
 package com.ravunana.longonkelo.service.impl;
 
 import com.ravunana.longonkelo.domain.EstadoDisciplinaCurricular;
+import com.ravunana.longonkelo.domain.enumeration.CategoriaClassificacao;
 import com.ravunana.longonkelo.repository.EstadoDisciplinaCurricularRepository;
 import com.ravunana.longonkelo.service.EstadoDisciplinaCurricularService;
 import com.ravunana.longonkelo.service.dto.EstadoDisciplinaCurricularDTO;
 import com.ravunana.longonkelo.service.mapper.EstadoDisciplinaCurricularMapper;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -94,5 +96,34 @@ public class EstadoDisciplinaCurricularServiceImpl implements EstadoDisciplinaCu
     public List<EstadoDisciplinaCurricularDTO> findAll() {
         var listaEstados = estadoDisciplinaCurricularRepository.findAll().stream().collect(Collectors.toList());
         return estadoDisciplinaCurricularMapper.toDto(listaEstados);
+    }
+
+    public void registrarEstadosDefault() {
+        List<EstadoDisciplinaCurricularDTO> estadosDefault = new ArrayList<>();
+
+        EstadoDisciplinaCurricularDTO aprovado = new EstadoDisciplinaCurricularDTO();
+        aprovado.setClassificacao(CategoriaClassificacao.APROVADO);
+        aprovado.setCodigo("APROVADO");
+        aprovado.setDescricao("APROVADO");
+        aprovado.setCor("Verde");
+        aprovado.setValor(10D);
+
+        estadosDefault.add(aprovado);
+
+        EstadoDisciplinaCurricularDTO reprovado = new EstadoDisciplinaCurricularDTO();
+        reprovado.setClassificacao(CategoriaClassificacao.REPROVADO);
+        reprovado.setCodigo("REPROVADO");
+        reprovado.setDescricao("REPROVADO");
+        reprovado.setCor("Vermelho");
+        reprovado.setValor(9D);
+        estadosDefault.add(reprovado);
+
+        for (var estado : estadosDefault) {
+            if (estadoDisciplinaCurricularRepository.findByClassificacao(estado.getClassificacao()).isPresent()) {
+                continue;
+            }
+
+            save(estado);
+        }
     }
 }

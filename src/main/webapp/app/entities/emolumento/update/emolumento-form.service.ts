@@ -54,9 +54,7 @@ export class EmolumentoFormService {
       ),
       imagem: new FormControl(emolumentoRawValue.imagem),
       imagemContentType: new FormControl(emolumentoRawValue.imagemContentType),
-      numero: new FormControl(emolumentoRawValue.numero, {
-        validators: [Validators.required],
-      }),
+      numero: new FormControl(emolumentoRawValue.numero),
       nome: new FormControl(emolumentoRawValue.nome, {
         validators: [Validators.required],
       }),

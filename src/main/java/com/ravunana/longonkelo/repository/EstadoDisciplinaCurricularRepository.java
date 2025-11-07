@@ -1,6 +1,7 @@
 package com.ravunana.longonkelo.repository;
 
 import com.ravunana.longonkelo.domain.EstadoDisciplinaCurricular;
+import com.ravunana.longonkelo.domain.enumeration.CategoriaClassificacao;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -32,4 +33,6 @@ public interface EstadoDisciplinaCurricularRepository
     default Page<EstadoDisciplinaCurricular> findAllWithEagerRelationships(Pageable pageable) {
         return this.fetchBagRelationships(this.findAll(pageable));
     }
+
+    Optional<EstadoDisciplinaCurricular> findByClassificacao(CategoriaClassificacao classificacao);
 }
